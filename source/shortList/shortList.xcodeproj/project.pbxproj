@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3A67B00A491460F0C0119307 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0D5FB60B95EE1C6AAD8165 /* libPods.a */; };
+		461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */; };
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
 		46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD41AED715800BF1DF3 /* AppDelegate.m */; };
 		46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */; };
@@ -21,6 +22,7 @@
 		46CB6B101AED80FD00BF1DF3 /* SLBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B0F1AED80FD00BF1DF3 /* SLBaseVC.m */; };
 		46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B141AED842200BF1DF3 /* SLStyle.m */; };
 		46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */; };
+		46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 /* Begin PBXFileReference section */
 		1415B849DC8FE7440FF77432 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		387B84E873048CE78F83CF11 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		461FC9FC1AED98F9001C3F46 /* SLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLTabBarController.h; sourceTree = "<group>"; };
+		461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLTabBarController.m; sourceTree = "<group>"; };
 		46CB6ACC1AED715800BF1DF3 /* shortList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shortList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46CB6AD01AED715800BF1DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46CB6AD11AED715800BF1DF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -61,6 +65,8 @@
 		46CB6B141AED842200BF1DF3 /* SLStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLStyle.m; sourceTree = "<group>"; };
 		46CB6B161AED850200BF1DF3 /* UIColor+SLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SLStyle.h"; sourceTree = "<group>"; };
 		46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SLStyle.m"; sourceTree = "<group>"; };
+		46CB6B191AED94D600BF1DF3 /* SLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLNavigationController.h; sourceTree = "<group>"; };
+		46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLNavigationController.m; sourceTree = "<group>"; };
 		CE0D5FB60B95EE1C6AAD8165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -83,6 +89,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		461FC9F91AED9888001C3F46 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				461FC9FB1AED98B6001C3F46 /* Tab */,
+				461FC9FA1AED98A8001C3F46 /* Navigation */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		461FC9FA1AED98A8001C3F46 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				46CB6B191AED94D600BF1DF3 /* SLNavigationController.h */,
+				46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */,
+			);
+			name = Navigation;
+			sourceTree = "<group>";
+		};
+		461FC9FB1AED98B6001C3F46 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				461FC9FC1AED98F9001C3F46 /* SLTabBarController.h */,
+				461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */,
+			);
+			name = Tab;
+			sourceTree = "<group>";
+		};
 		46CB6AC31AED715800BF1DF3 = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +187,7 @@
 		46CB6AFA1AED76F400BF1DF3 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				461FC9F91AED9888001C3F46 /* Components */,
 				46CB6B121AED83F000BF1DF3 /* SL Style */,
 				46CB6B111AED83D700BF1DF3 /* SL Sections */,
 				46CB6B0E1AED80FD00BF1DF3 /* SLBaseVC.h */,
@@ -375,11 +409,13 @@
 				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
 				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
+				46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */,
 				46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */,
 				46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */,
 				46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */,
 				46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
+				461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */,
 				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

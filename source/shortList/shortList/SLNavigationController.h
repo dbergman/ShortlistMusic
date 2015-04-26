@@ -1,5 +1,5 @@
 //
-//  SLListsVC.h
+//  SLNavigationController.h
 //  shortList
 //
 //  Created by Dustin Bergman on 4/26/15.
@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SLBaseVC.h"
 
-@interface SLListsVC : SLBaseVC
+@interface SLNavigationController : UINavigationController
 
 @end

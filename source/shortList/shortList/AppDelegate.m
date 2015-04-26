@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "SLNavigationController.h"
+#import "SLTabBarController.h"
 #import "SLFeedVC.h"
 #import "SLListsVC.h"
 #import "SLProfileVC.h"
@@ -64,18 +66,18 @@
     shortListFeedNav.tabBarItem.title = NSLocalizedString(@"Feed", nil);
 
     SLListsVC *slListsVC = [SLListsVC new];
-    UINavigationController *shortListsNav = [[UINavigationController alloc] initWithRootViewController:slListsVC];
+    SLNavigationController *shortListsNav = [[SLNavigationController alloc] initWithRootViewController:slListsVC];
     shortListsNav.tabBarItem.title = NSLocalizedString(@"ShortLists", nil);
     
     SLProfileVC *slProfileVC = [SLProfileVC new];
-    UINavigationController *shortListProfileNav = [[UINavigationController alloc] initWithRootViewController:slProfileVC];
+    SLNavigationController *shortListProfileNav = [[SLNavigationController alloc] initWithRootViewController:slProfileVC];
     shortListProfileNav.tabBarItem.title = NSLocalizedString(@"Profile", nil);
     
     SLMoreVC *slMoreVC = [SLMoreVC new];
     UINavigationController *shortListMoreNav = [[UINavigationController alloc] initWithRootViewController:slMoreVC];
     shortListMoreNav.tabBarItem.title = NSLocalizedString(@"More", nil);
     
-    UITabBarController *tabBarController = [UITabBarController new];
+    SLTabBarController *tabBarController = [SLTabBarController new];
     [tabBarController setViewControllers:@[shortListFeedNav, shortListsNav, shortListProfileNav, shortListMoreNav]];
     tabBarController.tabBar.backgroundColor = [UIColor blackColor];
     tabBarController.tabBar.translucent = NO;
