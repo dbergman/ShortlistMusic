@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "SLFeedVC.h"
+#import "SLListsVC.h"
+#import "SLProfileVC.h"
+#import "SLMoreVC.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +20,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+
+    self.window.rootViewController = [self shortListTabController];
+    
     return YES;
 }
 
@@ -42,6 +51,30 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+}
+
+- (UIViewController *)shortListTabController {
+    UITabBarController *tabBarController = [UITabBarController new];
+
+    SLFeedVC *slFeedVC = [SLFeedVC new];
+    UINavigationController *shortListFeedNav = [[UINavigationController alloc] initWithRootViewController:slFeedVC];
+    shortListFeedNav.tabBarItem.title = NSLocalizedString(@"Feed", nil);
+    
+    SLListsVC *slListsVC = [SLListsVC new];
+    UINavigationController *shortListsNav = [[UINavigationController alloc] initWithRootViewController:slListsVC];
+    shortListsNav.tabBarItem.title = NSLocalizedString(@"ShortLists", nil);
+    
+    SLProfileVC *slProfileVC = [SLProfileVC new];
+    UINavigationController *shortListProfileNav = [[UINavigationController alloc] initWithRootViewController:slProfileVC];
+    shortListProfileNav.tabBarItem.title = NSLocalizedString(@"Profile", nil);
+    
+    SLMoreVC *slMoreVC = [SLMoreVC new];
+    UINavigationController *shortListMoreNav = [[UINavigationController alloc] initWithRootViewController:slMoreVC];
+    shortListMoreNav.tabBarItem.title = NSLocalizedString(@"More", nil);
+    
+    [tabBarController setViewControllers:@[shortListFeedNav, shortListsNav, shortListProfileNav, shortListMoreNav]];
+    
+    return tabBarController;
 }
 
 #pragma mark - Core Data stack

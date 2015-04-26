@@ -11,11 +11,13 @@
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
 		46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD41AED715800BF1DF3 /* AppDelegate.m */; };
 		46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */; };
-		46CB6ADB1AED715800BF1DF3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6ADA1AED715800BF1DF3 /* ViewController.m */; };
-		46CB6ADE1AED715800BF1DF3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46CB6ADC1AED715800BF1DF3 /* Main.storyboard */; };
 		46CB6AE01AED715800BF1DF3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46CB6ADF1AED715800BF1DF3 /* Images.xcassets */; };
 		46CB6AE31AED715800BF1DF3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46CB6AE11AED715800BF1DF3 /* LaunchScreen.xib */; };
 		46CB6AEF1AED715900BF1DF3 /* shortListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AEE1AED715900BF1DF3 /* shortListTests.m */; };
+		46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B001AED797A00BF1DF3 /* SLFeedVC.m */; };
+		46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */; };
+		46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B081AED7BB100BF1DF3 /* SLProfileVC.m */; };
+		46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B0C1AED7C9900BF1DF3 /* SLMoreVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,14 +39,19 @@
 		46CB6AD31AED715800BF1DF3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46CB6AD41AED715800BF1DF3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		46CB6AD71AED715800BF1DF3 /* shortList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = shortList.xcdatamodel; sourceTree = "<group>"; };
-		46CB6AD91AED715800BF1DF3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		46CB6ADA1AED715800BF1DF3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		46CB6ADD1AED715800BF1DF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		46CB6ADF1AED715800BF1DF3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		46CB6AE21AED715800BF1DF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		46CB6AE81AED715800BF1DF3 /* shortListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = shortListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		46CB6AED1AED715900BF1DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46CB6AEE1AED715900BF1DF3 /* shortListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = shortListTests.m; sourceTree = "<group>"; };
+		46CB6AFF1AED797A00BF1DF3 /* SLFeedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLFeedVC.h; sourceTree = "<group>"; };
+		46CB6B001AED797A00BF1DF3 /* SLFeedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLFeedVC.m; sourceTree = "<group>"; };
+		46CB6B031AED7ADC00BF1DF3 /* SLListsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListsVC.h; sourceTree = "<group>"; };
+		46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListsVC.m; sourceTree = "<group>"; };
+		46CB6B071AED7BB100BF1DF3 /* SLProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLProfileVC.h; sourceTree = "<group>"; };
+		46CB6B081AED7BB100BF1DF3 /* SLProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLProfileVC.m; sourceTree = "<group>"; };
+		46CB6B0B1AED7C9900BF1DF3 /* SLMoreVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLMoreVC.h; sourceTree = "<group>"; };
+		46CB6B0C1AED7C9900BF1DF3 /* SLMoreVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLMoreVC.m; sourceTree = "<group>"; };
 		CE0D5FB60B95EE1C6AAD8165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,9 +99,8 @@
 			children = (
 				46CB6AD31AED715800BF1DF3 /* AppDelegate.h */,
 				46CB6AD41AED715800BF1DF3 /* AppDelegate.m */,
-				46CB6AD91AED715800BF1DF3 /* ViewController.h */,
-				46CB6ADA1AED715800BF1DF3 /* ViewController.m */,
-				46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */,
+				46CB6AFA1AED76F400BF1DF3 /* UI */,
+				46CB6AF91AED76EB00BF1DF3 /* Model */,
 				46CB6ACF1AED715800BF1DF3 /* Supporting Files */,
 			);
 			path = shortList;
@@ -103,7 +109,7 @@
 		46CB6ACF1AED715800BF1DF3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				46CB6ADC1AED715800BF1DF3 /* Main.storyboard */,
+				46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */,
 				46CB6ADF1AED715800BF1DF3 /* Images.xcassets */,
 				46CB6AE11AED715800BF1DF3 /* LaunchScreen.xib */,
 				46CB6AD01AED715800BF1DF3 /* Info.plist */,
@@ -127,6 +133,60 @@
 				46CB6AED1AED715900BF1DF3 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		46CB6AF91AED76EB00BF1DF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		46CB6AFA1AED76F400BF1DF3 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				46CB6B0A1AED7C8300BF1DF3 /* More */,
+				46CB6B061AED7B9A00BF1DF3 /* Profile */,
+				46CB6B021AED7A9100BF1DF3 /* Lists */,
+				46CB6AFE1AED794000BF1DF3 /* Feed */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		46CB6AFE1AED794000BF1DF3 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				46CB6AFF1AED797A00BF1DF3 /* SLFeedVC.h */,
+				46CB6B001AED797A00BF1DF3 /* SLFeedVC.m */,
+			);
+			name = Feed;
+			sourceTree = "<group>";
+		};
+		46CB6B021AED7A9100BF1DF3 /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				46CB6B031AED7ADC00BF1DF3 /* SLListsVC.h */,
+				46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */,
+			);
+			name = Lists;
+			sourceTree = "<group>";
+		};
+		46CB6B061AED7B9A00BF1DF3 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				46CB6B071AED7BB100BF1DF3 /* SLProfileVC.h */,
+				46CB6B081AED7BB100BF1DF3 /* SLProfileVC.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		46CB6B0A1AED7C8300BF1DF3 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				46CB6B0B1AED7C9900BF1DF3 /* SLMoreVC.h */,
+				46CB6B0C1AED7C9900BF1DF3 /* SLMoreVC.m */,
+			);
+			name = More;
 			sourceTree = "<group>";
 		};
 		E1761E54DFFFFE8F0167477C /* Frameworks */ = {
@@ -228,7 +288,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46CB6ADE1AED715800BF1DF3 /* Main.storyboard in Resources */,
 				46CB6AE31AED715800BF1DF3 /* LaunchScreen.xib in Resources */,
 				46CB6AE01AED715800BF1DF3 /* Images.xcassets in Resources */,
 			);
@@ -281,10 +340,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
+				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
+				46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */,
 				46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */,
-				46CB6ADB1AED715800BF1DF3 /* ViewController.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
+				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,14 +369,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		46CB6ADC1AED715800BF1DF3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				46CB6ADD1AED715800BF1DF3 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		46CB6AE11AED715800BF1DF3 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

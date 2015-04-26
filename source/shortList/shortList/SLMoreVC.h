@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SLMoreVC.h
 //  shortList
 //
 //  Created by Dustin Bergman on 4/26/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SLMoreVC : UIViewController
 
 @end
-
