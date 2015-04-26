@@ -18,6 +18,9 @@
 		46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */; };
 		46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B081AED7BB100BF1DF3 /* SLProfileVC.m */; };
 		46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B0C1AED7C9900BF1DF3 /* SLMoreVC.m */; };
+		46CB6B101AED80FD00BF1DF3 /* SLBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B0F1AED80FD00BF1DF3 /* SLBaseVC.m */; };
+		46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B141AED842200BF1DF3 /* SLStyle.m */; };
+		46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,12 @@
 		46CB6B081AED7BB100BF1DF3 /* SLProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLProfileVC.m; sourceTree = "<group>"; };
 		46CB6B0B1AED7C9900BF1DF3 /* SLMoreVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLMoreVC.h; sourceTree = "<group>"; };
 		46CB6B0C1AED7C9900BF1DF3 /* SLMoreVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLMoreVC.m; sourceTree = "<group>"; };
+		46CB6B0E1AED80FD00BF1DF3 /* SLBaseVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLBaseVC.h; sourceTree = "<group>"; };
+		46CB6B0F1AED80FD00BF1DF3 /* SLBaseVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLBaseVC.m; sourceTree = "<group>"; };
+		46CB6B131AED842200BF1DF3 /* SLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLStyle.h; sourceTree = "<group>"; };
+		46CB6B141AED842200BF1DF3 /* SLStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLStyle.m; sourceTree = "<group>"; };
+		46CB6B161AED850200BF1DF3 /* UIColor+SLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SLStyle.h"; sourceTree = "<group>"; };
+		46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SLStyle.m"; sourceTree = "<group>"; };
 		CE0D5FB60B95EE1C6AAD8165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -145,10 +154,10 @@
 		46CB6AFA1AED76F400BF1DF3 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				46CB6B0A1AED7C8300BF1DF3 /* More */,
-				46CB6B061AED7B9A00BF1DF3 /* Profile */,
-				46CB6B021AED7A9100BF1DF3 /* Lists */,
-				46CB6AFE1AED794000BF1DF3 /* Feed */,
+				46CB6B121AED83F000BF1DF3 /* SL Style */,
+				46CB6B111AED83D700BF1DF3 /* SL Sections */,
+				46CB6B0E1AED80FD00BF1DF3 /* SLBaseVC.h */,
+				46CB6B0F1AED80FD00BF1DF3 /* SLBaseVC.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -187,6 +196,28 @@
 				46CB6B0C1AED7C9900BF1DF3 /* SLMoreVC.m */,
 			);
 			name = More;
+			sourceTree = "<group>";
+		};
+		46CB6B111AED83D700BF1DF3 /* SL Sections */ = {
+			isa = PBXGroup;
+			children = (
+				46CB6B0A1AED7C8300BF1DF3 /* More */,
+				46CB6B061AED7B9A00BF1DF3 /* Profile */,
+				46CB6B021AED7A9100BF1DF3 /* Lists */,
+				46CB6AFE1AED794000BF1DF3 /* Feed */,
+			);
+			name = "SL Sections";
+			sourceTree = "<group>";
+		};
+		46CB6B121AED83F000BF1DF3 /* SL Style */ = {
+			isa = PBXGroup;
+			children = (
+				46CB6B131AED842200BF1DF3 /* SLStyle.h */,
+				46CB6B141AED842200BF1DF3 /* SLStyle.m */,
+				46CB6B161AED850200BF1DF3 /* UIColor+SLStyle.h */,
+				46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */,
+			);
+			name = "SL Style";
 			sourceTree = "<group>";
 		};
 		E1761E54DFFFFE8F0167477C /* Frameworks */ = {
@@ -340,11 +371,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46CB6B101AED80FD00BF1DF3 /* SLBaseVC.m in Sources */,
 				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
 				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
 				46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */,
 				46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */,
+				46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */,
+				46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
 				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
 			);

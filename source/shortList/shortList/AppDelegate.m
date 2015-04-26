@@ -11,6 +11,7 @@
 #import "SLListsVC.h"
 #import "SLProfileVC.h"
 #import "SLMoreVC.h"
+#import "SLStyle.h"
 
 @interface AppDelegate ()
 
@@ -18,12 +19,16 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
 
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UITabBar appearance] setTintColor:[UIColor sl_Red]];
+    
     self.window.rootViewController = [self shortListTabController];
     
     return YES;
@@ -54,12 +59,10 @@
 }
 
 - (UIViewController *)shortListTabController {
-    UITabBarController *tabBarController = [UITabBarController new];
-
     SLFeedVC *slFeedVC = [SLFeedVC new];
     UINavigationController *shortListFeedNav = [[UINavigationController alloc] initWithRootViewController:slFeedVC];
     shortListFeedNav.tabBarItem.title = NSLocalizedString(@"Feed", nil);
-    
+
     SLListsVC *slListsVC = [SLListsVC new];
     UINavigationController *shortListsNav = [[UINavigationController alloc] initWithRootViewController:slListsVC];
     shortListsNav.tabBarItem.title = NSLocalizedString(@"ShortLists", nil);
@@ -72,7 +75,10 @@
     UINavigationController *shortListMoreNav = [[UINavigationController alloc] initWithRootViewController:slMoreVC];
     shortListMoreNav.tabBarItem.title = NSLocalizedString(@"More", nil);
     
+    UITabBarController *tabBarController = [UITabBarController new];
     [tabBarController setViewControllers:@[shortListFeedNav, shortListsNav, shortListProfileNav, shortListMoreNav]];
+    tabBarController.tabBar.backgroundColor = [UIColor blackColor];
+    tabBarController.tabBar.translucent = NO;
     
     return tabBarController;
 }
