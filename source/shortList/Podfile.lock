@@ -1,0 +1,73 @@
+PODS:
+  - AFNetworking (2.5.3):
+    - AFNetworking/NSURLConnection (= 2.5.3)
+    - AFNetworking/NSURLSession (= 2.5.3)
+    - AFNetworking/Reachability (= 2.5.3)
+    - AFNetworking/Security (= 2.5.3)
+    - AFNetworking/Serialization (= 2.5.3)
+    - AFNetworking/UIKit (= 2.5.3)
+  - AFNetworking/NSURLConnection (2.5.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.3)
+  - AFNetworking/Security (2.5.3)
+  - AFNetworking/Serialization (2.5.3)
+  - AFNetworking/UIKit (2.5.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - Mantle (2.0):
+    - Mantle/extobjc (= 2.0)
+  - Mantle/extobjc (2.0)
+  - QBValidator (1.0.0)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
+  - URBNAlert (1.5):
+    - URBNConvenience (~> 0.8.2)
+  - URBNConvenience (0.8.3)
+  - URBNDataSource (1.0)
+  - URBNEnvironmentPicker (0.2.1)
+
+DEPENDENCIES:
+  - AFNetworking
+  - BlocksKit (= 2.2.5)
+  - Mantle
+  - QBValidator
+  - SDWebImage
+  - URBNAlert
+  - URBNConvenience
+  - URBNDataSource
+  - URBNEnvironmentPicker
+
+SPEC CHECKSUMS:
+  AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  Mantle: 17de73ef929db2234d76fde2aacfb89ab11c61e8
+  QBValidator: 6e019b6f22d750c668315807459f49a3c316a017
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  URBNAlert: 2aaad0f593fcecb78e4aad4750e35577132159f1
+  URBNConvenience: 77b8b316cc0820f8fb7c09e6ba3a5f15023438c6
+  URBNDataSource: 52c4aba738348bb23544994cf490430b4b0da4ca
+  URBNEnvironmentPicker: 36a1a62986f73167ee0772015442a6729d1d9317
+
+COCOAPODS: 0.36.3

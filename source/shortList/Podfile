@@ -1,0 +1,25 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+
+#We'll add this back in later
+#inhibit_all_warnings!
+
+
+#URBN
+pod 'URBNConvenience'
+pod 'URBNDataSource'
+pod 'URBNEnvironmentPicker'
+pod 'URBNAlert'
+
+#Foundation Helpers
+pod 'BlocksKit', '2.2.5'
+
+#Model
+pod 'Mantle'
+pod 'QBValidator'
+
+#Networking
+pod 'AFNetworking'
+pod 'SDWebImage'
+
+#UI
