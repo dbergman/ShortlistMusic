@@ -62,7 +62,7 @@
 
 - (UIViewController *)shortListTabController {
     SLFeedVC *slFeedVC = [SLFeedVC new];
-    UINavigationController *shortListFeedNav = [[UINavigationController alloc] initWithRootViewController:slFeedVC];
+    SLNavigationController *shortListFeedNav = [[SLNavigationController alloc] initWithRootViewController:slFeedVC];
     shortListFeedNav.tabBarItem.title = NSLocalizedString(@"Feed", nil);
 
     SLListsVC *slListsVC = [SLListsVC new];
@@ -74,7 +74,7 @@
     shortListProfileNav.tabBarItem.title = NSLocalizedString(@"Profile", nil);
     
     SLMoreVC *slMoreVC = [SLMoreVC new];
-    UINavigationController *shortListMoreNav = [[UINavigationController alloc] initWithRootViewController:slMoreVC];
+    SLNavigationController *shortListMoreNav = [[SLNavigationController alloc] initWithRootViewController:slMoreVC];
     shortListMoreNav.tabBarItem.title = NSLocalizedString(@"More", nil);
     
     SLTabBarController *tabBarController = [SLTabBarController new];
