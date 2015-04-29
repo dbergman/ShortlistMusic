@@ -19,9 +19,9 @@ typedef void(^SLItunesFetchResultsBlock)(id responseObject, NSError *error);
 -(void)getSearchResultsWithBlock:(NSString *)artist completion:(SLItunesFetchResultsBlock)completion;
 
 //Albums
-- (void)getAlbumsForArtist:(NSNumber *) artistId completion:(SLItunesFetchResultsBlock)completion;
+- (void)getAlbumsForArtist:(NSNumber *)artistId completion:(SLItunesFetchResultsBlock)completion;
 
 //Tracks
-- (void)getTracksForAlbumID:(NSString *)albumID success:(void (^)(NSMutableArray* results))successBlock failure:(void (^)(NSError* error))failureBlock;
+- (void)getTracksForAlbumID:(NSString *)albumID completion:(SLItunesFetchResultsBlock)completion;
 
 @end

@@ -22,15 +22,13 @@
 //        NSLog(@"");
 //    }];
     
-    [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:@136975 completion:^(id responseObject, NSError *error) {
+//    [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:@136975 completion:^(id responseObject, NSError *error) {
+//        NSLog(@"");
+//    }];
+    
+    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:@"401186200" completion:^(id responseObject, NSError *error) {
         NSLog(@"");
     }];
-    
-//    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:@"401186200" success:^(NSMutableArray *results) {
-//        NSLog(@"");
-//    } failure:^(NSError *error) {
-//        NSLog(@"Error");
-//    }];
     
     
 }

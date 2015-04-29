@@ -9,6 +9,7 @@
 #import "ItunesSearchAPIController.h"
 #import "ItunesSearchArtist.h"
 #import "ItunesSearchAlbum.h"
+#import "ItunesSearchTracks.h"
 #import <Mantle/Mantle.h>
 
 static NSString * const kBaseURL = @"https://itunes.apple.com/";
@@ -82,17 +83,26 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
     }];
 }
 
-- (void)getTracksForAlbumID:(NSString *)albumID success:(void (^)(NSMutableArray* results))successBlock failure:(void (^)(NSError* error))failureBlock {
+- (void)getTracksForAlbumID:(NSString *)albumID completion:(SLItunesFetchResultsBlock)completion{
     [[self operationQueue] cancelAllOperations];
     
     NSDictionary *params = @{@"id": albumID, @"entity": @"song"};
     
     [self GET:@"lookup" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableArray *searchResults =  [(NSDictionary*)responseObject objectForKey:@"results"];
-        successBlock(searchResults);
+        NSError *error;
+        ItunesSearchTracks *itunesSearchTracks = [MTLJSONAdapter modelOfClass:[ItunesSearchTracks class] fromJSONDictionary:responseObject error:&error];
+        if (error) {
+            if (completion) {
+                completion(nil, error);
+            }
+        }
+        else {
+            if (completion) {
+                completion(itunesSearchTracks, nil);
+            }
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error);
-        NSLog(@" getSearchResultsWithBlock:: %@",error);
+        NSLog(@"FAILURE");
     }];
 }
 
