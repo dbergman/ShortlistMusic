@@ -16,12 +16,14 @@
 		46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094101AF06FDF0091C7F7 /* ItunesSearchAlbum.m */; };
 		46A094141AF072730091C7F7 /* ItunesTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094131AF072730091C7F7 /* ItunesTrack.m */; };
 		46A094171AF076C80091C7F7 /* ItunesSearchTracks.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094161AF076C80091C7F7 /* ItunesSearchTracks.m */; };
+		46A0941A1AF079120091C7F7 /* ItunesArtistSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A094191AF079120091C7F7 /* ItunesArtistSearchResults.JSON */; };
+		46A0941E1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */; };
+		46A094201AF07C140091C7F7 /* ItunesTracksSearchResult.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */; };
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
 		46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD41AED715800BF1DF3 /* AppDelegate.m */; };
 		46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */; };
 		46CB6AE01AED715800BF1DF3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46CB6ADF1AED715800BF1DF3 /* Images.xcassets */; };
 		46CB6AE31AED715800BF1DF3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46CB6AE11AED715800BF1DF3 /* LaunchScreen.xib */; };
-		46CB6AEF1AED715900BF1DF3 /* shortListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AEE1AED715900BF1DF3 /* shortListTests.m */; };
 		46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B001AED797A00BF1DF3 /* SLFeedVC.m */; };
 		46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */; };
 		46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B081AED7BB100BF1DF3 /* SLProfileVC.m */; };
@@ -61,6 +63,9 @@
 		46A094131AF072730091C7F7 /* ItunesTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesTrack.m; sourceTree = "<group>"; };
 		46A094151AF076C80091C7F7 /* ItunesSearchTracks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesSearchTracks.h; sourceTree = "<group>"; };
 		46A094161AF076C80091C7F7 /* ItunesSearchTracks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchTracks.m; sourceTree = "<group>"; };
+		46A094191AF079120091C7F7 /* ItunesArtistSearchResults.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesArtistSearchResults.JSON; sourceTree = "<group>"; };
+		46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesAlbumSearchResults.JSON; sourceTree = "<group>"; };
+		46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesTracksSearchResult.JSON; sourceTree = "<group>"; };
 		46CB6ACC1AED715800BF1DF3 /* shortList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shortList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46CB6AD01AED715800BF1DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46CB6AD11AED715800BF1DF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -71,7 +76,6 @@
 		46CB6AE21AED715800BF1DF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		46CB6AE81AED715800BF1DF3 /* shortListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = shortListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		46CB6AED1AED715900BF1DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		46CB6AEE1AED715900BF1DF3 /* shortListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = shortListTests.m; sourceTree = "<group>"; };
 		46CB6AFF1AED797A00BF1DF3 /* SLFeedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLFeedVC.h; sourceTree = "<group>"; };
 		46CB6B001AED797A00BF1DF3 /* SLFeedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLFeedVC.m; sourceTree = "<group>"; };
 		46CB6B031AED7ADC00BF1DF3 /* SLListsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListsVC.h; sourceTree = "<group>"; };
@@ -174,6 +178,16 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		46A094181AF078270091C7F7 /* Itunes API Test Files */ = {
+			isa = PBXGroup;
+			children = (
+				46A094191AF079120091C7F7 /* ItunesArtistSearchResults.JSON */,
+				46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */,
+				46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */,
+			);
+			name = "Itunes API Test Files";
+			sourceTree = "<group>";
+		};
 		46CB6AC31AED715800BF1DF3 = {
 			isa = PBXGroup;
 			children = (
@@ -221,7 +235,7 @@
 		46CB6AEB1AED715800BF1DF3 /* shortListTests */ = {
 			isa = PBXGroup;
 			children = (
-				46CB6AEE1AED715900BF1DF3 /* shortListTests.m */,
+				46A094181AF078270091C7F7 /* Itunes API Test Files */,
 				46CB6AEC1AED715900BF1DF3 /* Supporting Files */,
 			);
 			path = shortListTests;
@@ -421,6 +435,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A0941E1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
+				46A094201AF07C140091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
+				46A0941A1AF079120091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,7 +507,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46CB6AEF1AED715900BF1DF3 /* shortListTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
