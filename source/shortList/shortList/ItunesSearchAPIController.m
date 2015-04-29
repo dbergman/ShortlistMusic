@@ -7,6 +7,9 @@
 //
 
 #import "ItunesSearchAPIController.h"
+#import "ItunesSearchArtist.h"
+#import "ItunesSearchAlbum.h"
+#import <Mantle/Mantle.h>
 
 static NSString * const kBaseURL = @"https://itunes.apple.com/";
 
@@ -33,31 +36,49 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
     return self;
 }
 
--(void)getSearchResultsWithBlock:(NSString *)artist success:(void (^)(NSMutableArray* results))successBlock failure:(void (^)(NSError* error))failureBlock {
+-(void)getSearchResultsWithBlock:(NSString *)artist completion:(SLItunesFetchResultsBlock)completion {
     [[self operationQueue] cancelAllOperations];
     
     NSDictionary *params = @{@"term": artist, @"media": @"music", @"entity": @"musicArtist", @"attribute": @"artistTerm", @"limit": @"200"};
     
     [self GET:@"search" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableArray *searchResults =  [(NSDictionary*)responseObject objectForKey:@"results"];
-        successBlock(searchResults);
+        NSError *error;
+        ItunesSearchArtist *itunesSearchArtist = [MTLJSONAdapter modelOfClass:[ItunesSearchArtist class] fromJSONDictionary:responseObject error:&error];
+        if (error) {
+            if (completion) {
+                completion(nil, error);
+            }
+        }
+        else {
+            if (completion) {
+                completion(itunesSearchArtist, nil);
+            }
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error);
-        NSLog(@" getSearchResultsWithBlock:: %@",error);
+        NSLog(@"FAILURE");
     }];
 }
 
-- (void)getAlbumsForArtist:(NSNumber *) artistId success:(void (^)(NSMutableArray* results))successBlock failure:(void (^)(NSError* error))failureBlock {
+- (void)getAlbumsForArtist:(NSNumber *) artistId completion:(SLItunesFetchResultsBlock)completion {
     [[self operationQueue] cancelAllOperations];
     
     NSDictionary *params = @{@"id": artistId, @"media": @"music", @"entity": @"album", @"limit": @"200"};
     
     [self GET:@"lookup" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableArray *searchResults =  [(NSDictionary*)responseObject objectForKey:@"results"];
-        successBlock(searchResults);
+        NSError *error;
+        ItunesSearchAlbum *itunesSearchAlbum = [MTLJSONAdapter modelOfClass:[ItunesSearchAlbum class] fromJSONDictionary:responseObject error:&error];
+        if (error) {
+            if (completion) {
+                completion(nil, error);
+            }
+        }
+        else {
+            if (completion) {
+                completion(itunesSearchAlbum, nil);
+            }
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error);
-        NSLog(@" getSearchResultsWithBlock:: %@",error);
+        NSLog(@"FAILURE");
     }];
 }
 

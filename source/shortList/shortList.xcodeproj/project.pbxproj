@@ -10,6 +10,10 @@
 		3A67B00A491460F0C0119307 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0D5FB60B95EE1C6AAD8165 /* libPods.a */; };
 		461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */; };
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
+		46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094051AF061C00091C7F7 /* ItunesArtist.m */; };
+		46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */; };
+		46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */; };
+		46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094101AF06FDF0091C7F7 /* ItunesSearchAlbum.m */; };
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
 		46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD41AED715800BF1DF3 /* AppDelegate.m */; };
 		46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */; };
@@ -43,6 +47,14 @@
 		461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLTabBarController.m; sourceTree = "<group>"; };
 		461FCA001AED9C8E001C3F46 /* ItunesSearchAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesSearchAPIController.h; sourceTree = "<group>"; };
 		461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchAPIController.m; sourceTree = "<group>"; };
+		46A094041AF061C00091C7F7 /* ItunesArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesArtist.h; sourceTree = "<group>"; };
+		46A094051AF061C00091C7F7 /* ItunesArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesArtist.m; sourceTree = "<group>"; };
+		46A094091AF06A3F0091C7F7 /* ItunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesAlbum.h; sourceTree = "<group>"; };
+		46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesAlbum.m; sourceTree = "<group>"; };
+		46A0940C1AF06DDA0091C7F7 /* ItunesSearchArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesSearchArtist.h; sourceTree = "<group>"; };
+		46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchArtist.m; sourceTree = "<group>"; };
+		46A0940F1AF06FDF0091C7F7 /* ItunesSearchAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesSearchAlbum.h; sourceTree = "<group>"; };
+		46A094101AF06FDF0091C7F7 /* ItunesSearchAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchAlbum.m; sourceTree = "<group>"; };
 		46CB6ACC1AED715800BF1DF3 /* shortList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shortList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46CB6AD01AED715800BF1DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46CB6AD11AED715800BF1DF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -128,6 +140,30 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		46A094071AF061E60091C7F7 /* itunes API */ = {
+			isa = PBXGroup;
+			children = (
+				46A094081AF061FD0091C7F7 /* Models */,
+				461FC9FF1AED9A68001C3F46 /* Controllers */,
+			);
+			name = "itunes API";
+			sourceTree = "<group>";
+		};
+		46A094081AF061FD0091C7F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				46A0940C1AF06DDA0091C7F7 /* ItunesSearchArtist.h */,
+				46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */,
+				46A0940F1AF06FDF0091C7F7 /* ItunesSearchAlbum.h */,
+				46A094101AF06FDF0091C7F7 /* ItunesSearchAlbum.m */,
+				46A094041AF061C00091C7F7 /* ItunesArtist.h */,
+				46A094051AF061C00091C7F7 /* ItunesArtist.m */,
+				46A094091AF06A3F0091C7F7 /* ItunesAlbum.h */,
+				46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		46CB6AC31AED715800BF1DF3 = {
 			isa = PBXGroup;
 			children = (
@@ -154,7 +190,7 @@
 				46CB6AD31AED715800BF1DF3 /* AppDelegate.h */,
 				46CB6AD41AED715800BF1DF3 /* AppDelegate.m */,
 				46CB6AFA1AED76F400BF1DF3 /* UI */,
-				46CB6AF91AED76EB00BF1DF3 /* Model */,
+				46CB6AF91AED76EB00BF1DF3 /* Models */,
 				46CB6ACF1AED715800BF1DF3 /* Supporting Files */,
 			);
 			path = shortList;
@@ -189,12 +225,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		46CB6AF91AED76EB00BF1DF3 /* Model */ = {
+		46CB6AF91AED76EB00BF1DF3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				461FC9FF1AED9A68001C3F46 /* Controllers */,
+				46A094071AF061E60091C7F7 /* itunes API */,
 			);
-			name = Model;
+			name = Models;
 			sourceTree = "<group>";
 		};
 		46CB6AFA1AED76F400BF1DF3 /* UI */ = {
@@ -419,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46CB6B101AED80FD00BF1DF3 /* SLBaseVC.m in Sources */,
+				46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */,
 				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
 				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
@@ -430,7 +467,10 @@
 				46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
 				461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */,
+				46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */,
 				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
+				46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */,
+				46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

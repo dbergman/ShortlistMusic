@@ -9,15 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "AFHTTPRequestOperationManager.h"
 
+typedef void(^SLItunesFetchResultsBlock)(id responseObject, NSError *error);
+
 @interface ItunesSearchAPIController : AFHTTPRequestOperationManager
 
 + (ItunesSearchAPIController *)sharedManager;
 
 //search
--(void)getSearchResultsWithBlock:(NSString *)artist success:(void (^)(NSMutableArray* results))successBlock failure:(void (^)(NSError* error))failureBlock;
+-(void)getSearchResultsWithBlock:(NSString *)artist completion:(SLItunesFetchResultsBlock)completion;
 
 //Albums
-- (void)getAlbumsForArtist:(NSNumber *) artistId success:(void (^)(NSMutableArray* results))successBlock failure:(void (^)(NSError* error))failureBlock;
+- (void)getAlbumsForArtist:(NSNumber *) artistId completion:(SLItunesFetchResultsBlock)completion;
 
 //Tracks
 - (void)getTracksForAlbumID:(NSString *)albumID success:(void (^)(NSMutableArray* results))successBlock failure:(void (^)(NSError* error))failureBlock;
