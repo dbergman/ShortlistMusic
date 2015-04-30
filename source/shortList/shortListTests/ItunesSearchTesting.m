@@ -13,42 +13,36 @@
 #import "ItunesSearchTracks.h"
 
 @interface ItunesSearchTesting : XCTestCase
-
 @end
 
 @implementation ItunesSearchTesting
 
 - (void)testSearchAlbumsResponse {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"ItunesAlbumSearchResults" ofType:@"JSON"];
-    NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
-    NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil];
-    
     NSError *error;
-    ItunesSearchAlbum *itunesSearchAlbums = [MTLJSONAdapter modelOfClass:[ItunesSearchAlbum class] fromJSONDictionary:jsonDictionary error:&error];
+    ItunesSearchAlbum *itunesSearchAlbums = [MTLJSONAdapter modelOfClass:[ItunesSearchAlbum class] fromJSONDictionary:[self getJSONDictionaryFromBundle:@"ItunesAlbumSearchResults"] error:&error];
     
     XCTAssertNotNil(itunesSearchAlbums, @"Found Items");
 }
 
 - (void)testSearchArtistResponse {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"ItunesArtistSearchResults" ofType:@"JSON"];
-    NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
-    NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil];
-    
     NSError *error;
-    ItunesSearchArtist *itunesSearchArtist = [MTLJSONAdapter modelOfClass:[ItunesSearchArtist class] fromJSONDictionary:jsonDictionary error:&error];
+    ItunesSearchArtist *itunesSearchArtist = [MTLJSONAdapter modelOfClass:[ItunesSearchArtist class] fromJSONDictionary:[self getJSONDictionaryFromBundle:@"ItunesArtistSearchResults"] error:&error];
     
     XCTAssertNotNil(itunesSearchArtist, @"Found Items");
 }
 
 - (void)testSearchTrackResponse {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"ItunesTracksSearchResult" ofType:@"JSON"];
-    NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
-    NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil];
-    
     NSError *error;
-    ItunesSearchTracks *itunesSearchTracks = [MTLJSONAdapter modelOfClass:[ItunesSearchTracks class] fromJSONDictionary:jsonDictionary error:&error];
+    ItunesSearchTracks *itunesSearchTracks = [MTLJSONAdapter modelOfClass:[ItunesSearchTracks class] fromJSONDictionary:[self getJSONDictionaryFromBundle:@"ItunesTracksSearchResult"] error:&error];
     
     XCTAssertNotNil(itunesSearchTracks, @"Found Items");
+}
+
+- (NSDictionary *)getJSONDictionaryFromBundle:(NSString *)bundleName {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:bundleName ofType:@"JSON"];
+    NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
+    
+    return [NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil];
 }
 
 @end
