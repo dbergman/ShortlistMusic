@@ -20,7 +20,7 @@
       };
 }
 
-+ (NSValueTransformer *)artistResultsJSONTransformer {
++ (NSValueTransformer *)albumResultsJSONTransformer {
     return [MTLJSONAdapter arrayTransformerWithModelClass:ItunesAlbum.class];
 }
 

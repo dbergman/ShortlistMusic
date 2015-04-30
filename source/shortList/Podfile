@@ -23,3 +23,7 @@ pod 'AFNetworking'
 pod 'SDWebImage'
 
 #UI
+
+target :"shortListTests", :exclusive => true do
+pod 'Mantle'
+end

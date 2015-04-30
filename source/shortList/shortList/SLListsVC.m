@@ -15,20 +15,23 @@
 
 @implementation SLListsVC
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
+//- (void)viewDidLoad {
+//    [super viewDidLoad];
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
 //    [[ItunesSearchAPIController sharedManager] getSearchResultsWithBlock:@"beatles" completion:^(id responseObject, NSError *error) {
 //        NSLog(@"");
 //    }];
     
-//    [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:@136975 completion:^(id responseObject, NSError *error) {
-//        NSLog(@"");
-//    }];
-//
-    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:@"401186200" completion:^(id responseObject, NSError *error) {
+    [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:@136975 completion:^(id responseObject, NSError *error) {
         NSLog(@"");
     }];
+//
+//    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:@"401186200" completion:^(id responseObject, NSError *error) {
+//        NSLog(@"");
+//    }];
 }
 
 @end

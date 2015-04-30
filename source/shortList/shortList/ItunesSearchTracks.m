@@ -7,15 +7,20 @@
 //
 
 #import "ItunesSearchTracks.h"
+#import "ItunesTrack.h"
 
 @implementation ItunesSearchTracks
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return
     @{
-      @"resultCount": @"resultCount",
-      @"tracks": @"results"
+      @"resultCount" : @"resultCount",
+      @"tracks" : @"results"
       };
+}
+
++ (NSValueTransformer *)tracksJSONTransformer {
+    return [MTLJSONAdapter arrayTransformerWithModelClass:ItunesTrack.class];
 }
 
 @end

@@ -32,8 +32,17 @@
       @"primaryGenreName": @"primaryGenreName",
       @"releaseDate": @"releaseDate",
       @"trackCount": @"trackCount",
-      @"wrapperType": @"wrapperType"
+      @"wrapperType": @"wrapperType",
+      @"releaseYear": @"releaseDate"
     };
 }
 
++ (NSValueTransformer *)releaseYearJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        if ([(NSString *)value length] > 3) {
+            return [(NSString *)value substringToIndex:4];
+        }
+        return nil;
+    }];
+}
 @end
