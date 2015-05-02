@@ -38,9 +38,8 @@
 }
 
 - (void)startSearchAlbumFlow {
-    self.searchResultsVC = [SLArtistSearchResultsVC new];
     __weak typeof(self) weakSelf = self;
-    [self.searchResultsVC setCompletion:^(NSArray *albums) {
+    self.searchResultsVC = [[SLArtistSearchResultsVC alloc] initWithCompletion:^(NSArray *albums) {
         [weakSelf dismissViewControllerAnimated:YES completion:^{
             SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithAlbums:albums];
             [weakSelf.navigationController pushViewController:albumResltsVC animated:YES];

@@ -15,9 +15,19 @@
 
 @interface SLArtistSearchResultsVC ()
 
+@property (nonatomic, copy) ArtistResultsCompletionBlock completion;
+
 @end
 
 @implementation SLArtistSearchResultsVC
+
+- (instancetype)initWithCompletion:(ArtistResultsCompletionBlock)completion {
+    self = [super init];
+    if (self) {
+        self.completion = completion;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
