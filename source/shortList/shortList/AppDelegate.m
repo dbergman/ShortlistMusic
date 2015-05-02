@@ -27,9 +27,12 @@
     [self.window makeKeyAndVisible];
 
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTranslucent:NO];
+    
     [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
-    [[UITabBar appearance] setTintColor:[UIColor sl_Red]];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor sl_Red]} forState:UIControlStateSelected];
     
     self.window.rootViewController = [self shortListTabController];
     

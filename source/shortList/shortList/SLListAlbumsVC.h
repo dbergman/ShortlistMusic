@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SLBaseVC.h"
 
-@interface SLListAlbumsVC : URBNModel
+@interface SLListAlbumsVC : SLBaseVC
 
 @end
