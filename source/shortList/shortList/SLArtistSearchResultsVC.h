@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^ArtistResultsCompletionBlock)(NSArray *albums);
+
 @interface SLArtistSearchResultsVC : UITableViewController
 
 @property (nonatomic, strong) NSArray *searchResults;
+@property (nonatomic, copy) ArtistResultsCompletionBlock completion;
 
 @end

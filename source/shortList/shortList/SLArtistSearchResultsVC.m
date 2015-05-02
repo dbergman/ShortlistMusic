@@ -64,8 +64,11 @@
 - (void)getArtistReleases:(NSInteger)artistId {
     __weak typeof(self) weakSelf = self;
     [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:[NSNumber numberWithInteger:artistId] completion:^(ItunesSearchAlbum *albumResult, NSError *error) {
-        SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithAlbums:albumResult.albumResults];
-        [weakSelf.navigationController pushViewController:albumResltsVC animated:YES];
+        if (!error) {
+            if (weakSelf.completion) {
+                weakSelf.completion(albumResult.albumResults);
+            }
+        }
     }];
 }
 

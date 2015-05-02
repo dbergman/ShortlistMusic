@@ -10,6 +10,7 @@
 #import "SLArtistSearchResultsVC.h"
 #import "ItunesSearchAPIController.h"
 #import "ItunesSearchArtist.h"
+#import "SLAlbumSearchResultVC.h"
 
 @interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate>
 
@@ -38,7 +39,14 @@
 
 - (void)startSearchAlbumFlow {
     self.searchResultsVC = [SLArtistSearchResultsVC new];
-
+    __weak typeof(self) weakSelf = self;
+    [self.searchResultsVC setCompletion:^(NSArray *albums) {
+        [weakSelf dismissViewControllerAnimated:YES completion:^{
+            SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithAlbums:albums];
+            [weakSelf.navigationController pushViewController:albumResltsVC animated:YES];
+        }];
+    }];
+    
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsVC];
     self.searchController.delegate = self;
     self.searchController.searchBar.delegate = self;
