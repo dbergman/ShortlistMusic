@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SLSearchResultsVC : UITableViewController
+@interface SLArtistSearchResultsVC : UITableViewController
 
 @property (nonatomic, strong) NSArray *searchResults;
 

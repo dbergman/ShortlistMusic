@@ -1,19 +1,32 @@
 //
-//  SLSearchResultsVC.m
+//  SLAlbumSearchResultTableVC.m
 //  shortList
 //
 //  Created by Dustin Bergman on 5/2/15.
 //  Copyright (c) 2015 Dustin Bergman. All rights reserved.
 //
 
-#import "SLSearchResultsVC.h"
-#import "ItunesArtist.h"
+#import "SLAlbumSearchResultVC.h"
+#import "ItunesSearchAPIController.h"
+#import "ItunesAlbum.h"
 
-@interface SLSearchResultsVC ()
+@interface SLAlbumSearchResultVC ()
+
+@property (nonatomic, strong) NSArray *albums;
 
 @end
 
-@implementation SLSearchResultsVC
+
+@implementation SLAlbumSearchResultVC
+
+- (instancetype)initWithAlbums:(NSArray *)albums {
+    self = [super init];
+    if (self) {
+        self.albums = albums;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,7 +36,7 @@
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.searchResults.count;
+    return self.albums.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -34,10 +47,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    ItunesArtist *artist = self.searchResults[indexPath.row];
+    ItunesAlbum *album = self.albums[indexPath.row];
     cell.backgroundColor = [UIColor blackColor];
     cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.text = artist.artistName;
+    cell.textLabel.text = album.collectionName;
     
     return cell;
 }

@@ -7,7 +7,7 @@
 //
 
 #import "SLListAlbumsVC.h"
-#import "SLSearchResultsVC.h"
+#import "SLArtistSearchResultsVC.h"
 #import "ItunesSearchAPIController.h"
 #import "ItunesSearchArtist.h"
 
@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UISearchController *searchController;
-@property (nonatomic, strong) SLSearchResultsVC *searchResultsVC;
+@property (nonatomic, strong) SLArtistSearchResultsVC *searchResultsVC;
 
 @end
 
@@ -37,7 +37,7 @@
 }
 
 - (void)startSearchAlbumFlow {
-    self.searchResultsVC = [SLSearchResultsVC new];
+    self.searchResultsVC = [SLArtistSearchResultsVC new];
 
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsVC];
     self.searchController.delegate = self;
