@@ -10,4 +10,6 @@
 
 @interface SLSearchResultsVC : UITableViewController
 
+@property (nonatomic, strong) NSArray *searchResults;
+
 @end

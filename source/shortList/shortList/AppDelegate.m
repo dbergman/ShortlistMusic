@@ -36,6 +36,8 @@
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor sl_Red]} forState:UIControlStateSelected];
     
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor sl_Red]];
+
     self.window.rootViewController = [self shortListTabController];
     
     return YES;
