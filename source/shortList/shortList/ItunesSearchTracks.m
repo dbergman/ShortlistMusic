@@ -27,7 +27,7 @@
     NSMutableArray *tracks = [NSMutableArray new];
     [self.tracks enumerateObjectsUsingBlock:^(ItunesTrack *track, NSUInteger idx, BOOL *stop) {
         if ([track.wrapperType isEqualToString:@"track"]) {
-            [tracks addObject:tracks];
+            [tracks addObject:track];
         }
     }];
     
