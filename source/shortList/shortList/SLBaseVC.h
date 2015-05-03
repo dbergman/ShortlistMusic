@@ -10,4 +10,6 @@
 
 @interface SLBaseVC : UIViewController
 
+- (void)setTitle:(NSString *)vcTitle;
+
 @end

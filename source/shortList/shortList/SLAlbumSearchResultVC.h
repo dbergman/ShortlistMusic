@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SLBaseVC.h"
 
-@interface SLAlbumSearchResultVC : UITableViewController
+@interface SLAlbumSearchResultVC : SLBaseVC
 
 - (instancetype)initWithArtistName:(NSString *)artistName Albums:(NSArray *)albums;
 

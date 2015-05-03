@@ -9,12 +9,15 @@
 #import "SLAlbumSearchResultVC.h"
 #import "ItunesSearchAPIController.h"
 #import "ItunesAlbum.h"
+#import "ItunesSearchTracks.h"
 #import "SLAlbumSearchResultsCellTableViewCell.h"
+#import "SLAlbumDetailsVC.h"
 
-@interface SLAlbumSearchResultVC ()
+@interface SLAlbumSearchResultVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *albums;
 @property (nonatomic, strong) NSString *artistName;
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -34,10 +37,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
  
-    [self setTitle];
+    [self setTitle:self.artistName];
     
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.tableFooterView = [UITableView new];
+    [self.view addSubview:self.tableView];
 }
 
 #pragma mark - Table view data source
@@ -60,7 +67,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    ItunesAlbum *album = [self.albums objectAtIndex:indexPath.row];
+    
+    [self getAlbumTracks:album];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -73,20 +84,15 @@
     return 120.0;
 }
 
-- (void)setTitle {
-    UILabel *artistTitleLabel = (UILabel *)self.navigationItem.titleView;
-    artistTitleLabel = [UILabel new];
-    artistTitleLabel.numberOfLines = 2;
-    artistTitleLabel.textAlignment = NSTextAlignmentCenter;
-    artistTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    artistTitleLabel.text = self.artistName;
-    artistTitleLabel.textColor = [UIColor whiteColor];
-    [artistTitleLabel sizeToFit];
-    
-    CGRect frame = artistTitleLabel.frame;
-    frame.size.height = CGRectGetHeight(self.navigationController.navigationBar.frame);
-    artistTitleLabel.frame = frame;
-    self.navigationItem.titleView = artistTitleLabel;
+#pragma mark - Itunes Networking
+- (void)getAlbumTracks:(ItunesAlbum *)album {
+    __weak typeof(self) weakSelf = self;
+    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.collectionId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
+        if (!error) {
+            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithAlbumName:album.collectionName Tracks:[albumSearchResults getAlbumTracks]];
+            [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
+        }
+    }];
 }
 
 @end

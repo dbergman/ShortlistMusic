@@ -10,4 +10,6 @@
 
 @interface SLAlbumDetailsVC : SLBaseVC
 
+- (instancetype)initWithAlbumName:(NSString *)albumName Tracks:(NSArray *)tracks;
+
 @end

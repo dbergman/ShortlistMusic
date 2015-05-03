@@ -23,4 +23,15 @@
     return [MTLJSONAdapter arrayTransformerWithModelClass:ItunesTrack.class];
 }
 
+- (NSArray *)getAlbumTracks {
+    NSMutableArray *tracks = [NSMutableArray new];
+    [self.tracks enumerateObjectsUsingBlock:^(ItunesTrack *track, NSUInteger idx, BOOL *stop) {
+        if ([track.wrapperType isEqualToString:@"track"]) {
+            [tracks addObject:tracks];
+        }
+    }];
+    
+    return [NSArray arrayWithArray:tracks];
+}
+
 @end
