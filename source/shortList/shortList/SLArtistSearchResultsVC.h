@@ -12,8 +12,8 @@ typedef void (^ArtistResultsCompletionBlock)(NSString *artistName, NSArray *albu
 
 @interface SLArtistSearchResultsVC : UITableViewController
 
-- (instancetype)initWithCompletion:(ArtistResultsCompletionBlock)completion;
-
 @property (nonatomic, strong) NSArray *searchResults;
+
+- (instancetype)initWithCompletion:(ArtistResultsCompletionBlock)completion;
 
 @end
