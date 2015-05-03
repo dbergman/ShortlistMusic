@@ -61,7 +61,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     ItunesArtist *artist = self.searchResults[indexPath.row];
-    [self getArtistReleases:artist.artistId];
+    [self getArtistReleases:artist];
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -71,12 +71,12 @@
 }
 
 #pragma mark - Itunes Networking
-- (void)getArtistReleases:(NSInteger)artistId {
+- (void)getArtistReleases:(ItunesArtist *)itunesArtist {
     __weak typeof(self) weakSelf = self;
-    [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:[NSNumber numberWithInteger:artistId] completion:^(ItunesSearchAlbum *albumResult, NSError *error) {
+    [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:[NSNumber numberWithInteger:itunesArtist.artistId] completion:^(ItunesSearchAlbum *albumResult, NSError *error) {
         if (!error) {
             if (weakSelf.completion) {
-                weakSelf.completion(albumResult.getArtistAlbums);
+                weakSelf.completion(itunesArtist.artistName, albumResult.getArtistAlbums);
             }
         }
     }];

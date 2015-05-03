@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^ArtistResultsCompletionBlock)(NSArray *albums);
+typedef void (^ArtistResultsCompletionBlock)(NSString *artistName, NSArray *albums);
 
 @interface SLArtistSearchResultsVC : UITableViewController
 

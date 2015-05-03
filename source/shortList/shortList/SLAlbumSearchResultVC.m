@@ -14,16 +14,18 @@
 @interface SLAlbumSearchResultVC ()
 
 @property (nonatomic, strong) NSArray *albums;
+@property (nonatomic, strong) NSString *artistName;
 
 @end
 
 
 @implementation SLAlbumSearchResultVC
 
-- (instancetype)initWithAlbums:(NSArray *)albums {
+- (instancetype)initWithArtistName:(NSString *)artistName Albums:(NSArray *)albums {
     self = [super init];
     if (self) {
         self.albums = albums;
+        self.artistName = artistName;
     }
     
     return self;
@@ -31,6 +33,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+ 
+    [self setTitle];
     
     self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.tableFooterView = [UITableView new];
@@ -51,11 +55,7 @@
     
     ItunesAlbum *album = self.albums[indexPath.row];
     [cell configCellWithItunesAlbum:album];
-    
-    cell.backgroundColor = [UIColor blackColor];
-//    cell.textLabel.textColor = [UIColor whiteColor];
-//    cell.textLabel.text = album.collectionName;
-    
+
     return cell;
 }
 
@@ -71,6 +71,22 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 120.0;
+}
+
+- (void)setTitle {
+    UILabel *artistTitleLabel = (UILabel *)self.navigationItem.titleView;
+    artistTitleLabel = [UILabel new];
+    artistTitleLabel.numberOfLines = 2;
+    artistTitleLabel.textAlignment = NSTextAlignmentCenter;
+    artistTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    artistTitleLabel.text = self.artistName;
+    artistTitleLabel.textColor = [UIColor whiteColor];
+    [artistTitleLabel sizeToFit];
+    
+    CGRect frame = artistTitleLabel.frame;
+    frame.size.height = CGRectGetHeight(self.navigationController.navigationBar.frame);
+    artistTitleLabel.frame = frame;
+    self.navigationItem.titleView = artistTitleLabel;
 }
 
 @end

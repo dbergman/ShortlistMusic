@@ -10,6 +10,6 @@
 
 @interface SLAlbumSearchResultVC : UITableViewController
 
-- (instancetype)initWithAlbums:(NSArray *)albums;
+- (instancetype)initWithArtistName:(NSString *)artistName Albums:(NSArray *)albums;
 
 @end

@@ -39,9 +39,9 @@
 
 - (void)startSearchAlbumFlow {
     __weak typeof(self) weakSelf = self;
-    self.searchResultsVC = [[SLArtistSearchResultsVC alloc] initWithCompletion:^(NSArray *albums) {
+    self.searchResultsVC = [[SLArtistSearchResultsVC alloc] initWithCompletion:^(NSString *artistName, NSArray *albums) {
         [weakSelf dismissViewControllerAnimated:YES completion:^{
-            SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithAlbums:albums];
+            SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithArtistName:artistName Albums:albums];
             [weakSelf.navigationController pushViewController:albumResltsVC animated:YES];
         }];
     }];
@@ -123,9 +123,9 @@
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-        [tableView setSeparatorInset:UIEdgeInsetsZero];
-        [tableView setLayoutMargins:UIEdgeInsetsZero];
-        [cell setLayoutMargins:UIEdgeInsetsZero];
+    [tableView setSeparatorInset:UIEdgeInsetsZero];
+    [tableView setLayoutMargins:UIEdgeInsetsZero];
+    [cell setLayoutMargins:UIEdgeInsetsZero];
 }
 
 @end
