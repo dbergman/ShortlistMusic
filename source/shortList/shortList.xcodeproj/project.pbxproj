@@ -13,6 +13,7 @@
 		467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */; };
 		467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55951AF55F3A005CD607 /* SLArtistSearchResultsVC.m */; };
 		467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55981AF577D0005CD607 /* SLAlbumSearchResultVC.m */; };
+		467D559E1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D559D1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m */; };
 		46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094051AF061C00091C7F7 /* ItunesArtist.m */; };
 		46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */; };
 		46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */; };
@@ -66,6 +67,8 @@
 		467D55951AF55F3A005CD607 /* SLArtistSearchResultsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLArtistSearchResultsVC.m; sourceTree = "<group>"; };
 		467D55971AF577D0005CD607 /* SLAlbumSearchResultVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumSearchResultVC.h; sourceTree = "<group>"; };
 		467D55981AF577D0005CD607 /* SLAlbumSearchResultVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumSearchResultVC.m; sourceTree = "<group>"; };
+		467D559C1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumSearchResultsCellTableViewCell.h; sourceTree = "<group>"; };
+		467D559D1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumSearchResultsCellTableViewCell.m; sourceTree = "<group>"; };
 		46A094041AF061C00091C7F7 /* ItunesArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesArtist.h; sourceTree = "<group>"; };
 		46A094051AF061C00091C7F7 /* ItunesArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesArtist.m; sourceTree = "<group>"; };
 		46A094091AF06A3F0091C7F7 /* ItunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesAlbum.h; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 			children = (
 				467D55971AF577D0005CD607 /* SLAlbumSearchResultVC.h */,
 				467D55981AF577D0005CD607 /* SLAlbumSearchResultVC.m */,
+				467D559C1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.h */,
+				467D559D1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m */,
 			);
 			name = Album;
 			sourceTree = "<group>";
@@ -586,6 +591,7 @@
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
 				467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */,
 				461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */,
+				467D559E1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m in Sources */,
 				46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */,
 				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
 				46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */,

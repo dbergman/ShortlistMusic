@@ -9,6 +9,7 @@
 #import "SLAlbumSearchResultVC.h"
 #import "ItunesSearchAPIController.h"
 #import "ItunesAlbum.h"
+#import "SLAlbumSearchResultsCellTableViewCell.h"
 
 @interface SLAlbumSearchResultVC ()
 
@@ -43,28 +44,33 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    SLAlbumSearchResultsCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[SLAlbumSearchResultsCellTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     ItunesAlbum *album = self.albums[indexPath.row];
+    [cell configCellWithItunesAlbum:album];
+    
     cell.backgroundColor = [UIColor blackColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.text = album.collectionName;
+//    cell.textLabel.textColor = [UIColor whiteColor];
+//    cell.textLabel.text = album.collectionName;
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [cell setSelected:NO animated:YES];
+     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView setSeparatorInset:UIEdgeInsetsZero];
     [tableView setLayoutMargins:UIEdgeInsetsZero];
     [cell setLayoutMargins:UIEdgeInsetsZero];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 120.0;
 }
 
 @end
