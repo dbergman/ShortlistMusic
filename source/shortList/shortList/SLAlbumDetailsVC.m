@@ -8,12 +8,15 @@
 
 #import "SLAlbumDetailsVC.h"
 #import "ItunesTrack.h"
+#import "UIImage+AverageColor.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SLAlbumDetailsVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *tracks;
 @property (nonatomic, strong) NSString *albumName;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIImageView *coverImageView;
 
 @end
 
@@ -24,6 +27,11 @@
     if (self) {
         self.albumName = albumName;
         self.tracks = tracks;
+        
+        ItunesTrack *firstTrack = (ItunesTrack *)[tracks firstObject];
+        self.coverImageView = [UIImageView new];
+        NSURL *albumArtURL = [NSURL URLWithString:[firstTrack.artworkUrl100 stringByReplacingOccurrencesOfString:@"100x100-75.jpg" withString:@"400x400-75.jpg"]];
+        [self.coverImageView sd_setImageWithURL:albumArtURL];
     }
     
     return self;
@@ -31,9 +39,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTitle:self.albumName];
     
+    [self setTitle:self.albumName];
+
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+    self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UITableView new];
@@ -57,11 +67,21 @@
 
     ItunesTrack *track = [self.tracks objectAtIndex:indexPath.row];
     
-    cell.backgroundColor = [UIColor blackColor];
+    cell.backgroundColor = [self getGradientColorWith:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.text = track.trackName;
     
     return cell;
+}
+
+- (UIColor *)getGradientColorWith:(NSInteger)row {
+    UIColor *color = [self.coverImageView.image averageColor];
+    CGFloat hue = 0.0;
+    [color getHue:&hue saturation:nil brightness:nil alpha:nil];
+    return [[UIColor alloc] initWithHue:hue saturation:([self.tracks count] - row)/25.0 brightness:1.0 alpha:1.0];
+}
+
+-(void)dealloc {
 }
 
 @end
