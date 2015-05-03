@@ -106,7 +106,7 @@
     cell.backgroundColor = [UIColor blackColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    cell.textLabel.text = @"Add Album to ShortList";
+    cell.textLabel.text = @"Add Albums to ShortList";
     
     return cell;
 }

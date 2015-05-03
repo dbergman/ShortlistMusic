@@ -33,6 +33,7 @@
     [super viewDidLoad];
     
     self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.tableFooterView = [UITableView new];
 }
 
 #pragma mark - Table view data source
@@ -76,7 +77,7 @@
     [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:[NSNumber numberWithInteger:artistId] completion:^(ItunesSearchAlbum *albumResult, NSError *error) {
         if (!error) {
             if (weakSelf.completion) {
-                weakSelf.completion(albumResult.albumResults);
+                weakSelf.completion(albumResult.getArtistAlbums);
             }
         }
     }];

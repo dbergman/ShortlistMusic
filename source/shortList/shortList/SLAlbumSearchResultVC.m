@@ -32,6 +32,7 @@
     [super viewDidLoad];
     
     self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.tableFooterView = [UITableView new];
 }
 
 #pragma mark - Table view data source

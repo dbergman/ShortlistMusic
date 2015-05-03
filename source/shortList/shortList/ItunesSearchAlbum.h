@@ -13,4 +13,6 @@
 @property (nonatomic, assign, readonly) NSInteger resultCount;
 @property (nonatomic, copy, readonly) NSArray *albumResults;
 
+-(NSArray *)getArtistAlbums;
+
 @end

@@ -24,4 +24,15 @@
     return [MTLJSONAdapter arrayTransformerWithModelClass:ItunesAlbum.class];
 }
 
+-(NSArray *)getArtistAlbums {
+    NSMutableArray *albums = [NSMutableArray new];
+    [self.albumResults enumerateObjectsUsingBlock:^(ItunesAlbum *album, NSUInteger idx, BOOL *stop) {
+        if ([album.wrapperType isEqualToString:@"collection"]) {
+            [albums addObject:album];
+        }
+    }];
+    
+    return [NSArray arrayWithArray:albums];
+}
+
 @end
