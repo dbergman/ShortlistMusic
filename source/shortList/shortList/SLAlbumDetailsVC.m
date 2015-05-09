@@ -10,6 +10,7 @@
 #import "ItunesTrack.h"
 #import "UIImage+AverageColor.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <BlocksKit+UIKit.h>
 
 @interface SLAlbumDetailsVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -27,11 +28,6 @@
     if (self) {
         self.albumName = albumName;
         self.tracks = tracks;
-        
-        ItunesTrack *firstTrack = (ItunesTrack *)[tracks firstObject];
-        self.coverImageView = [UIImageView new];
-        NSURL *albumArtURL = [NSURL URLWithString:[firstTrack.artworkUrl100 stringByReplacingOccurrencesOfString:@"100x100-75.jpg" withString:@"400x400-75.jpg"]];
-        [self.coverImageView sd_setImageWithURL:albumArtURL];
     }
     
     return self;
@@ -39,17 +35,40 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setTitle:self.albumName];
 
+    __weak typeof(self) weakSelf = self;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
+        NSLog(@"Add Album to ShortList");
+    }];
+    
+    self.view.backgroundColor = [UIColor blackColor];
+    [self setTitle:self.albumName];
+    self.automaticallyAdjustsScrollViewInsets = YES;
+
+    ItunesTrack *firstTrack = (ItunesTrack *)[self.tracks firstObject];
+    self.coverImageView = [UIImageView new];
+    self.coverImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.view addSubview:self.coverImageView];
+    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
-    self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UITableView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
-    [self.view addSubview:self.tableView];
+
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:firstTrack.artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        [weakSelf.view addSubview:self.tableView];
+        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+    }];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    self.coverImageView.frame = CGRectMake(0.0, self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, self.view.frame.size.width);
+
+    self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.coverImageView.frame), 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 }
 
 #pragma mark - Table view data source
@@ -78,6 +97,7 @@
     UIColor *color = [self.coverImageView.image averageColor];
     CGFloat hue = 0.0;
     [color getHue:&hue saturation:nil brightness:nil alpha:nil];
+    
     return [[UIColor alloc] initWithHue:hue saturation:([self.tracks count] - row)/25.0 brightness:1.0 alpha:1.0];
 }
 

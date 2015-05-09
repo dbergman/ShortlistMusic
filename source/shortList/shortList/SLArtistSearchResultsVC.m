@@ -12,7 +12,6 @@
 #import "ItunesSearchAlbum.h"
 #import "ItunesArtist.h"
 
-
 @interface SLArtistSearchResultsVC ()
 
 @property (nonatomic, copy) ArtistResultsCompletionBlock completion;
