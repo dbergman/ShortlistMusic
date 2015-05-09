@@ -16,6 +16,7 @@
       @"artistId" : @"artistId",
       @"artistName" : @"artistName",
       @"artistViewUrl" : @"artistViewUrl",
+      @"artworkUrl400" : @"artworkUrl100",
       @"artworkUrl100" : @"artworkUrl100",
       @"artworkUrl30" : @"artworkUrl30",
       @"artworkUrl60" : @"artworkUrl60",
@@ -45,6 +46,12 @@
       @"trackViewUrl" : @"trackViewUrl",
       @"wrapperType": @"wrapperType"
     };
+}
+
++ (NSValueTransformer *)artworkUrl400JSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *url, BOOL *success, NSError *__autoreleasing *error) {
+        return [url stringByReplacingOccurrencesOfString:@"100x100-75.jpg" withString:@"400x400-75.jpg"];
+    }];
 }
 
 @end
