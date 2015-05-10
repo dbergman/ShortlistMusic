@@ -108,7 +108,6 @@ static CGFloat const kSLAlbumDetailsCellHeight = 44.0;
     
     ItunesTrack *track = [self.tracks objectAtIndex:indexPath.row];
     cell.backgroundColor = [self getGradientColorWith:indexPath.row];
-    cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.text = track.trackName;
     
     return cell;

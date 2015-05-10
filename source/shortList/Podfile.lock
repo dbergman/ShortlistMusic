@@ -35,39 +35,36 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
+  - Bolts/Tasks (1.1.5)
   - Mantle (2.0):
     - Mantle/extobjc (= 2.0)
   - Mantle/extobjc (2.0)
+  - Parse (1.7.2.2):
+    - Bolts/Tasks (>= 1.1.5)
+  - ParseUI (1.1.3):
+    - Parse (~> 1.7)
   - QBValidator (1.0.0)
   - SDWebImage (3.7.2):
     - SDWebImage/Core (= 3.7.2)
   - SDWebImage/Core (3.7.2)
-  - URBNAlert (1.5):
-    - URBNConvenience (~> 0.8.2)
-  - URBNConvenience (0.8.3)
-  - URBNDataSource (1.0)
-  - URBNEnvironmentPicker (0.2.1)
 
 DEPENDENCIES:
   - AFNetworking
   - BlocksKit (= 2.2.5)
   - Mantle
+  - Parse
+  - ParseUI
   - QBValidator
   - SDWebImage
-  - URBNAlert
-  - URBNConvenience
-  - URBNDataSource
-  - URBNEnvironmentPicker
 
 SPEC CHECKSUMS:
   AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  Bolts: aac24961496d504aa56fc267cde95162a71bac39
   Mantle: 17de73ef929db2234d76fde2aacfb89ab11c61e8
+  Parse: 6187586a80eb7b4960d755f85e1353148a611f87
+  ParseUI: 1a68e9cebc3bd458eed9605ce7b33d7cc082f473
   QBValidator: 6e019b6f22d750c668315807459f49a3c316a017
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
-  URBNAlert: 2aaad0f593fcecb78e4aad4750e35577132159f1
-  URBNConvenience: 77b8b316cc0820f8fb7c09e6ba3a5f15023438c6
-  URBNDataSource: 52c4aba738348bb23544994cf490430b4b0da4ca
-  URBNEnvironmentPicker: 36a1a62986f73167ee0772015442a6729d1d9317
 
 COCOAPODS: 0.36.3

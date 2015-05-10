@@ -8,7 +8,6 @@
 
 #import "SLBaseVC.h"
 #import "SLStyle.h"
-#import <URBNConvenience/UIView+URBNLayout.h>
 
 @interface SLBaseVC ()
 
