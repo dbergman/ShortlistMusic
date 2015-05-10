@@ -12,6 +12,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <BlocksKit+UIKit.h>
 
+static CGFloat const kSLAlbumDetailsCellHeight = 44.0;
+
 @interface SLAlbumDetailsVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *tracks;
@@ -68,12 +70,24 @@
     
     self.coverImageView.frame = CGRectMake(0.0, self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, self.view.frame.size.width);
 
-    self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.coverImageView.frame), 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
+    self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.coverImageView.frame) - kSLAlbumDetailsCellHeight, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 }
 
 #pragma mark - Table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    }
+    
     return self.tracks.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return kSLAlbumDetailsCellHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -83,9 +97,16 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-
-    ItunesTrack *track = [self.tracks objectAtIndex:indexPath.row];
     
+    if (indexPath.section == 0) {
+        cell.textLabel.text = @"Album Details";
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.3];
+        
+        return cell;
+    }
+    
+    ItunesTrack *track = [self.tracks objectAtIndex:indexPath.row];
     cell.backgroundColor = [self getGradientColorWith:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.text = track.trackName;
@@ -99,9 +120,6 @@
     [color getHue:&hue saturation:nil brightness:nil alpha:nil];
     
     return [[UIColor alloc] initWithHue:hue saturation:([self.tracks count] - row)/25.0 brightness:1.0 alpha:1.0];
-}
-
--(void)dealloc {
 }
 
 @end
