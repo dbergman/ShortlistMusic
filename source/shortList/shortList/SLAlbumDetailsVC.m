@@ -12,6 +12,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <BlocksKit+UIKit.h>
 #import "SLAlbumDetailsCell.h"
+#import "SLAlbumTrackCell.h"
 
 static CGFloat const kSLAlbumDetailsCellHeight = 60.0;
 static CGFloat const kSLAlbumTrackCellHeight = 44.0;
@@ -19,7 +20,7 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
 @interface SLAlbumDetailsVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *tracks;
-@property (nonatomic, strong) NSString *albumName;
+@property (nonatomic, strong) ItunesTrack *albumDetails;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *coverImageView;
 
@@ -27,10 +28,10 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
 
 @implementation SLAlbumDetailsVC
 
-- (instancetype)initWithAlbumName:(NSString *)albumName Tracks:(NSArray *)tracks {
+- (instancetype)initWithAlbumName:(ItunesTrack *)albumDetails Tracks:(NSArray *)tracks {
     self = [super init];
     if (self) {
-        self.albumName = albumName;
+        self.albumDetails = albumDetails;
         self.tracks = tracks;
     }
     
@@ -46,7 +47,7 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
     }];
     
     self.view.backgroundColor = [UIColor blackColor];
-    [self setTitle:self.albumName];
+    [self setTitle:self.albumDetails.collectionName];
     self.automaticallyAdjustsScrollViewInsets = YES;
 
     self.coverImageView = [UIImageView new];
@@ -61,7 +62,7 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
 
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:[self getAlbumDetails].artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [weakSelf.view addSubview:self.tableView];
         [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
     }];
@@ -89,33 +90,38 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *AlbumDetailCellIdentifier = @"AlbumDetailCell";
     
     if (indexPath.section == 0) {
-        SLAlbumDetailsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        SLAlbumDetailsCell *cell = [tableView dequeueReusableCellWithIdentifier:AlbumDetailCellIdentifier];
         if (cell == nil) {
-            cell = [[SLAlbumDetailsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[SLAlbumDetailsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AlbumDetailCellIdentifier];
         }
         
         return [self configureAlbumDetails:cell];
     }
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *TrackDetailCellIdentifier = @"TrackDetailCell";
+    
+    SLAlbumTrackCell *cell = [tableView dequeueReusableCellWithIdentifier:TrackDetailCellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[SLAlbumTrackCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TrackDetailCellIdentifier];
     }
-    
-    ItunesTrack *track = [self.tracks objectAtIndex:indexPath.row];
-    cell.backgroundColor = [self getGradientColorWith:indexPath.row];
-    cell.textLabel.text = track.trackName;
-    
-    return cell;
+
+    return [self configureAlbumTrack:cell indexPath:indexPath];
 }
 
 - (SLAlbumDetailsCell *)configureAlbumDetails:(SLAlbumDetailsCell *)albumDetailsCell {
-    [albumDetailsCell configureAlbumDetailCell:[self getAlbumDetails]];
+    [albumDetailsCell configureAlbumDetailCell:self.albumDetails];
     
     return albumDetailsCell;
+}
+
+- (SLAlbumTrackCell *)configureAlbumTrack:(SLAlbumTrackCell *)albumTrackCell indexPath:(NSIndexPath *)indexPath {
+    albumTrackCell.backgroundColor = [self getGradientColorWith:indexPath.row];
+    [albumTrackCell configureAlbumTrackCell:self.tracks[indexPath.row]];
+    
+    return albumTrackCell;
 }
 
 - (UIColor *)getGradientColorWith:(NSInteger)row {
@@ -124,10 +130,6 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
     [color getHue:&hue saturation:nil brightness:nil alpha:nil];
     
     return [[UIColor alloc] initWithHue:hue saturation:([self.tracks count] - row)/25.0 brightness:1.0 alpha:.9];
-}
-
-- (ItunesTrack *)getAlbumDetails {
-    return (ItunesTrack *)[self.tracks firstObject];
 }
 
 @end

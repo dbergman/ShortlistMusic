@@ -7,9 +7,10 @@
 //
 
 #import "SLBaseVC.h"
+@class ItunesTrack;
 
 @interface SLAlbumDetailsVC : SLBaseVC
 
-- (instancetype)initWithAlbumName:(NSString *)albumName Tracks:(NSArray *)tracks;
+- (instancetype)initWithAlbumName:(ItunesTrack *)albumDetails Tracks:(NSArray *)tracks;
 
 @end

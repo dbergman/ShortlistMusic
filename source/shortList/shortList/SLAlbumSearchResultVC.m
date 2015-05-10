@@ -88,7 +88,7 @@
     __weak typeof(self) weakSelf = self;
     [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.collectionId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
         if (!error) {
-            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithAlbumName:album.collectionName Tracks:[albumSearchResults getAlbumTracks]];
+            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithAlbumName:[albumSearchResults getAlbumInfo] Tracks:[albumSearchResults getAlbumTracks]];
             [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
         }
     }];
