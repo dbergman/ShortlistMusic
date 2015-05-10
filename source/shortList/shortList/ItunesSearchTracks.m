@@ -25,13 +25,23 @@
 
 - (NSArray *)getAlbumTracks {
     NSMutableArray *tracks = [NSMutableArray new];
-    [self.tracks enumerateObjectsUsingBlock:^(ItunesTrack *track, NSUInteger idx, BOOL *stop) {
+    for (ItunesTrack *track in self.tracks ) {
         if ([track.wrapperType isEqualToString:@"track"]) {
             [tracks addObject:track];
         }
-    }];
+    }
     
     return [NSArray arrayWithArray:tracks];
+}
+
+- (ItunesTrack *)getAlbumInfo {
+    for (ItunesTrack *track in self.tracks ) {
+        if ([track.wrapperType isEqualToString:@"collection"]) {
+            return track;
+        }
+    }
+    
+    return nil;
 }
 
 @end
