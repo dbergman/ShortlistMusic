@@ -11,8 +11,10 @@
 #import "UIImage+AverageColor.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <BlocksKit+UIKit.h>
+#import "SLAlbumDetailsCell.h"
 
-static CGFloat const kSLAlbumDetailsCellHeight = 44.0;
+static CGFloat const kSLAlbumDetailsCellHeight = 60.0;
+static CGFloat const kSLAlbumTrackCellHeight = 44.0;
 
 @interface SLAlbumDetailsVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -47,7 +49,6 @@ static CGFloat const kSLAlbumDetailsCellHeight = 44.0;
     [self setTitle:self.albumName];
     self.automaticallyAdjustsScrollViewInsets = YES;
 
-    ItunesTrack *firstTrack = (ItunesTrack *)[self.tracks firstObject];
     self.coverImageView = [UIImageView new];
     self.coverImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:self.coverImageView];
@@ -58,8 +59,9 @@ static CGFloat const kSLAlbumDetailsCellHeight = 44.0;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UITableView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.allowsSelection = NO;
 
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:firstTrack.artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:[self getAlbumDetails].artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [weakSelf.view addSubview:self.tableView];
         [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
     }];
@@ -79,31 +81,28 @@ static CGFloat const kSLAlbumDetailsCellHeight = 44.0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 1;
-    }
-    
-    return self.tracks.count;
+    return (section == 0) ? 1 : self.tracks.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kSLAlbumDetailsCellHeight;
+    return (indexPath.section == 0) ? kSLAlbumDetailsCellHeight : kSLAlbumTrackCellHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
+    if (indexPath.section == 0) {
+        SLAlbumDetailsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[SLAlbumDetailsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
+        return [self configureAlbumDetails:cell];
+    }
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    
-    if (indexPath.section == 0) {
-        cell.textLabel.text = @"Album Details";
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.3];
-        
-        return cell;
     }
     
     ItunesTrack *track = [self.tracks objectAtIndex:indexPath.row];
@@ -113,12 +112,22 @@ static CGFloat const kSLAlbumDetailsCellHeight = 44.0;
     return cell;
 }
 
+- (SLAlbumDetailsCell *)configureAlbumDetails:(SLAlbumDetailsCell *)albumDetailsCell {
+    [albumDetailsCell configureAlbumDetailCell:[self getAlbumDetails]];
+    
+    return albumDetailsCell;
+}
+
 - (UIColor *)getGradientColorWith:(NSInteger)row {
     UIColor *color = [self.coverImageView.image averageColor];
     CGFloat hue = 0.0;
     [color getHue:&hue saturation:nil brightness:nil alpha:nil];
     
-    return [[UIColor alloc] initWithHue:hue saturation:([self.tracks count] - row)/25.0 brightness:1.0 alpha:1.0];
+    return [[UIColor alloc] initWithHue:hue saturation:([self.tracks count] - row)/25.0 brightness:1.0 alpha:.9];
+}
+
+- (ItunesTrack *)getAlbumDetails {
+    return (ItunesTrack *)[self.tracks firstObject];
 }
 
 @end

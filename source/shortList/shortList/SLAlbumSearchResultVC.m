@@ -69,9 +69,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     ItunesAlbum *album = [self.albums objectAtIndex:indexPath.row];
-    
     [self getAlbumTracks:album];
 }
 
