@@ -17,6 +17,7 @@
 		467D55A31AF69746005CD607 /* SLAlbumDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55A21AF69746005CD607 /* SLAlbumDetailsVC.m */; };
 		467D55A71AF6D98F005CD607 /* UIImage+AverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55A61AF6D98F005CD607 /* UIImage+AverageColor.m */; };
 		468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */; };
+		468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925671B00026B00A7D98C /* SLAlbumTrackCell.m */; };
 		46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094051AF061C00091C7F7 /* ItunesArtist.m */; };
 		46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */; };
 		46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */; };
@@ -78,6 +79,8 @@
 		467D55A61AF6D98F005CD607 /* UIImage+AverageColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AverageColor.m"; sourceTree = "<group>"; };
 		468925631AFFE10500A7D98C /* SLAlbumDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumDetailsCell.h; sourceTree = "<group>"; };
 		468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumDetailsCell.m; sourceTree = "<group>"; };
+		468925661B00026B00A7D98C /* SLAlbumTrackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumTrackCell.h; sourceTree = "<group>"; };
+		468925671B00026B00A7D98C /* SLAlbumTrackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumTrackCell.m; sourceTree = "<group>"; };
 		46A094041AF061C00091C7F7 /* ItunesArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesArtist.h; sourceTree = "<group>"; };
 		46A094051AF061C00091C7F7 /* ItunesArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesArtist.m; sourceTree = "<group>"; };
 		46A094091AF06A3F0091C7F7 /* ItunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesAlbum.h; sourceTree = "<group>"; };
@@ -213,10 +216,9 @@
 		467D55A01AF696FF005CD607 /* Album Details */ = {
 			isa = PBXGroup;
 			children = (
+				468925691B00027400A7D98C /* Cells */,
 				467D55A11AF69746005CD607 /* SLAlbumDetailsVC.h */,
 				467D55A21AF69746005CD607 /* SLAlbumDetailsVC.m */,
-				468925631AFFE10500A7D98C /* SLAlbumDetailsCell.h */,
-				468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */,
 			);
 			name = "Album Details";
 			sourceTree = "<group>";
@@ -228,6 +230,17 @@
 				467D55A61AF6D98F005CD607 /* UIImage+AverageColor.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		468925691B00027400A7D98C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				468925631AFFE10500A7D98C /* SLAlbumDetailsCell.h */,
+				468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */,
+				468925661B00026B00A7D98C /* SLAlbumTrackCell.h */,
+				468925671B00026B00A7D98C /* SLAlbumTrackCell.m */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		46A094071AF061E60091C7F7 /* itunes API */ = {
@@ -623,6 +636,7 @@
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
 				467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */,
 				461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */,
+				468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */,
 				467D559E1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m in Sources */,
 				46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */,
 				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
