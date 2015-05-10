@@ -44,9 +44,27 @@
       @"trackPrice" : @"trackPrice",
       @"trackTimeMillis" : @"trackTimeMillis",
       @"trackViewUrl" : @"trackViewUrl",
-      @"wrapperType": @"wrapperType",
-      @"releaseYear": @"releaseDate"
+      @"wrapperType" : @"wrapperType",
+      @"releaseYear" : @"releaseDate",
+      @"trackDuration" : @"trackTimeMillis"
     };
+}
+
++ (NSValueTransformer *)trackDurationJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSNumber *duration, BOOL *success, NSError *__autoreleasing *error) {
+        int totalSeconds = [duration floatValue] / 1000;
+        int min = totalSeconds / 60;
+        int sec = totalSeconds % 60;
+        
+        NSString *minutes = [NSString stringWithFormat:@"%i", min];
+        NSString *seconds = [NSString stringWithFormat:@"%i", sec];
+        
+        if([seconds length] < 2) {
+            seconds = [NSString stringWithFormat:@"0%@", seconds];
+        }
+        
+        return [NSString stringWithFormat:@"%@:%@", minutes ,seconds];
+    }];
 }
 
 + (NSValueTransformer *)releaseYearJSONTransformer {
@@ -63,6 +81,9 @@
         return [url stringByReplacingOccurrencesOfString:@"100x100-75.jpg" withString:@"400x400-75.jpg"];
     }];
 }
+
+
+
 
 @end
 

@@ -46,5 +46,6 @@
 
 //Custom
 @property (nonatomic, copy, readonly) NSString *releaseYear;
+@property (nonatomic, copy, readonly) NSString *trackDuration;
 
 @end

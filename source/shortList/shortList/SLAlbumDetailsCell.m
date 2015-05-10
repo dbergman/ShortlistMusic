@@ -31,31 +31,23 @@
         self.contentView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.6];
         
         self.albumNameLabel = [UILabel new];
-        [self.albumNameLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        self.albumNameLabel.textColor = [UIColor whiteColor];
-        [self.contentView addSubview:self.albumNameLabel];
-        
+        self.albumNameLabel.numberOfLines = 1;
         self.artistNameLabel = [UILabel new];
-        [self.artistNameLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        self.artistNameLabel.textColor = [UIColor whiteColor];
-        [self.contentView addSubview:self.artistNameLabel];
-        
         self.releaseYearLabel = [UILabel new];
-        [self.releaseYearLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        self.releaseYearLabel.textColor = [UIColor whiteColor];
-        [self.contentView addSubview:self.releaseYearLabel];
-        
         self.trackCountLabel = [UILabel new];
-        [self.trackCountLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        self.trackCountLabel.textColor = [UIColor whiteColor];
-        [self.contentView addSubview:self.trackCountLabel];
+
+        for (UILabel *cellLabel in @[self.albumNameLabel, self.artistNameLabel, self.releaseYearLabel, self.trackCountLabel ]) {
+            [cellLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+            cellLabel.textColor = [UIColor whiteColor];
+            [self.contentView addSubview:cellLabel];
+        }
         
         NSDictionary *views = NSDictionaryOfVariableBindings(_albumNameLabel, _artistNameLabel, _releaseYearLabel, _trackCountLabel);
-        NSDictionary *metrics = @{@"smallMargin":@(MarginSizes.small)};
+        NSDictionary *metrics = @{@"smallMargin":@(MarginSizes.small), @"labelWidth":@((self.contentView.frame.size.width- 2 * MarginSizes.small))};
         
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_albumNameLabel]" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_albumNameLabel(labelWidth)]" options:0 metrics:metrics views:views]];
         
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_artistNameLabel]" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_artistNameLabel(labelWidth)]" options:0 metrics:metrics views:views]];
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_releaseYearLabel]" options:0 metrics:metrics views:views]];
 
