@@ -32,7 +32,11 @@
         }
     }];
     
-    return [NSArray arrayWithArray:albums];
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"releaseYear" ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    return [NSArray arrayWithArray:[albums sortedArrayUsingDescriptors:sortDescriptors]];
 }
 
 @end
