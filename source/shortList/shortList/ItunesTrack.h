@@ -11,7 +11,7 @@
 @interface ItunesTrack : MTLModel <MTLJSONSerializing>
 
 @property (nonatomic, assign, readonly) NSInteger artistId;
-@property (nonatomic, assign, readonly) NSString *artistName;
+@property (nonatomic, copy, readonly) NSString *artistName;
 @property (nonatomic, copy, readonly) NSString *artistViewUrl;
 @property (nonatomic, copy, readonly) NSString *artworkUrl100;
 @property (nonatomic, copy, readonly) NSString *artworkUrl400;
@@ -43,5 +43,8 @@
 @property (nonatomic, assign, readonly) NSInteger trackTimeMillis;
 @property (nonatomic, copy, readonly) NSString *trackViewUrl;
 @property (nonatomic, copy, readonly) NSString *wrapperType;
+
+//Custom
+@property (nonatomic, copy, readonly) NSString *releaseYear;
 
 @end
