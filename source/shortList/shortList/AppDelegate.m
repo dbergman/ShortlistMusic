@@ -15,6 +15,7 @@
 #import "SLMoreVC.h"
 #import "SLStyle.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import <Parse/Parse.h>
 
 @interface AppDelegate ()
 
@@ -26,6 +27,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [self setUpParse];
 
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
@@ -94,6 +97,13 @@
     tabBarController.selectedViewController=[tabBarController.viewControllers objectAtIndex:1];
 
     return tabBarController;
+}
+
+- (void)setUpParse {
+    NSDictionary *appKeys = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"appKeys" ofType:@"plist"]];
+    NSAssert(appKeys, @"You Must Add /opt/shortList/appKeys to your local File System!!!");
+    
+    [Parse setApplicationId:appKeys[@"ParseAppId"] clientKey:appKeys[@"ParseClientKey"]];
 }
 
 #pragma mark - Core Data stack

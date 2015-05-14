@@ -7,6 +7,7 @@
 //
 
 #import "SLProfileVC.h"
+#import "UIViewController+SLLoginGate.h"
 
 @interface SLProfileVC ()
 
@@ -18,6 +19,15 @@
     [super viewDidLoad];
     
     [self setTitle:NSLocalizedString(@"Profile", nil)];
+    
+    [self showLoginGateWithCompletion:^{
+        NSLog(@"SLProfileVC LOG");
+    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
 }
 
 @end

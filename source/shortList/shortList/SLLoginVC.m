@@ -10,4 +10,12 @@
 
 @implementation SLLoginVC
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor blackColor];
+    
+    self.logInView.logo = nil;
+}
+
 @end

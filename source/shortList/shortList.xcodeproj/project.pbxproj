@@ -34,6 +34,7 @@
 		46AB4A9C1B0429FF0056EC35 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46AB4A9B1B0429FF0056EC35 /* appKeys.plist */; };
 		46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */; };
 		46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA41B042F570056EC35 /* SLLoginVC.m */; };
+		46C8EBBF1B0437EA0082A2BB /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46AB4A9B1B0429FF0056EC35 /* appKeys.plist */; };
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
 		46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD41AED715800BF1DF3 /* AppDelegate.m */; };
 		46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */; };
@@ -552,6 +553,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46C8EBBF1B0437EA0082A2BB /* appKeys.plist in Resources */,
 				46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
 				46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
 				46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
@@ -601,7 +603,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -e ${SRCROOT}/appKeys.plist ];\nthen\nrm ${SRCROOT}/appKeys.plist\nfi\n\nif [ -e /opt/shortListKeys/appKeys.plist ];\nthen\necho \"Adding /opt/shortListKeys/appKeys.plist  to fp source\"\ncp /opt/shortListKeys/appKeys.plist  ${SRCROOT}/\nelse\necho \"You Must Add /opt/shortListKeys/appKeys.plis to your local File System!!!\"\nfi\n";
+			shellScript = "if [ -e ${SRCROOT}/shortList/appKeys.plist ];\nthen\nrm ${SRCROOT}/shortList/appKeys.plist\nfi\n\nif [ -e /opt/shortListKeys/appKeys.plist ];\nthen\necho \"Adding /opt/shortListKeys/appKeys.plist  to fp source\"\ncp /opt/shortListKeys/appKeys.plist  ${SRCROOT}/shortList/\nelse\necho \"You Must Add /opt/shortListKeys/appKeys.plis to your local File System!!!\"\nfi\n";
 		};
 		A0861F878F72317DFCE57765 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
