@@ -31,6 +31,7 @@
 		46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A094191AF079120091C7F7 /* ItunesArtistSearchResults.JSON */; };
 		46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */; };
 		46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */; };
+		46AB4A9C1B0429FF0056EC35 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46AB4A9B1B0429FF0056EC35 /* appKeys.plist */; };
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
 		46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD41AED715800BF1DF3 /* AppDelegate.m */; };
 		46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */; };
@@ -97,6 +98,7 @@
 		46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesAlbumSearchResults.JSON; sourceTree = "<group>"; };
 		46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesTracksSearchResult.JSON; sourceTree = "<group>"; };
 		46A094271AF1B3E70091C7F7 /* ItunesSearchTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchTesting.m; sourceTree = "<group>"; };
+		46AB4A9B1B0429FF0056EC35 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = SOURCE_ROOT; };
 		46CB6ACC1AED715800BF1DF3 /* shortList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shortList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46CB6AD01AED715800BF1DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46CB6AD11AED715800BF1DF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				46CB6AED1AED715900BF1DF3 /* Info.plist */,
+				46AB4A9B1B0429FF0056EC35 /* appKeys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				AADDE83235A427A52B52687E /* Check Pods Manifest.lock */,
 				46CB6AC81AED715800BF1DF3 /* Sources */,
 				46CB6AC91AED715800BF1DF3 /* Frameworks */,
+				46AB4A9E1B042B680056EC35 /* Copy ShortList Keys */,
 				46CB6ACA1AED715800BF1DF3 /* Resources */,
 				46714766D042C982A4C328BD /* Copy Pods Resources */,
 			);
@@ -542,6 +546,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46AB4A9C1B0429FF0056EC35 /* appKeys.plist in Resources */,
 				46A0941E1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
 				46A094201AF07C140091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
 				46A0941A1AF079120091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
@@ -565,6 +570,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		46AB4A9E1B042B680056EC35 /* Copy ShortList Keys */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy ShortList Keys";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -e ${SRCROOT}/appKeys.plist ];\nthen\nrm ${SRCROOT}/appKeys.plist\nfi\n\nif [ -e /opt/shortListKeys/appKeys.plist ];\nthen\necho \"Adding /opt/shortListKeys/appKeys.plist  to fp source\"\ncp /opt/shortListKeys/appKeys.plist  ${SRCROOT}/\nelse\necho \"You Must Add /opt/shortListKeys/appKeys.plis to your local File System!!!\"\nfi\n";
 		};
 		A0861F878F72317DFCE57765 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -64,7 +64,7 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
 
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [weakSelf.view addSubview:self.tableView];
-        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }];
 }
 
@@ -72,7 +72,6 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
     [super viewWillLayoutSubviews];
     
     self.coverImageView.frame = CGRectMake(0.0, self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, self.view.frame.size.width);
-
     self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.coverImageView.frame) - kSLAlbumDetailsCellHeight, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 }
 
