@@ -22,26 +22,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setTitle:NSLocalizedString(@"ShortLists", nil)];
+    
     __weak typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
         [weakSelf.navigationController pushViewController:[SLListAlbumsVC new] animated:YES];
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-//    [[ItunesSearchAPIController sharedManager] getSearchResultsWithBlock:@"beatles" completion:^(id responseObject, NSError *error) {
-//        NSLog(@"");
-//    }];
-    
-//    [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:@136975 completion:^(id responseObject, NSError *error) {
-//        NSLog(@"");
-//    }];
-//
-//    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:@"401186200" completion:^(id responseObject, NSError *error) {
-//        NSLog(@"");
-//    }];
 }
 
 @end

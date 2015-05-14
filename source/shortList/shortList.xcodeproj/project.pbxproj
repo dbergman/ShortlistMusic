@@ -32,6 +32,8 @@
 		46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */; };
 		46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */; };
 		46AB4A9C1B0429FF0056EC35 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46AB4A9B1B0429FF0056EC35 /* appKeys.plist */; };
+		46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */; };
+		46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA41B042F570056EC35 /* SLLoginVC.m */; };
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
 		46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD41AED715800BF1DF3 /* AppDelegate.m */; };
 		46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */; };
@@ -99,6 +101,10 @@
 		46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesTracksSearchResult.JSON; sourceTree = "<group>"; };
 		46A094271AF1B3E70091C7F7 /* ItunesSearchTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchTesting.m; sourceTree = "<group>"; };
 		46AB4A9B1B0429FF0056EC35 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = SOURCE_ROOT; };
+		46AB4AA01B042EC50056EC35 /* UIViewController+SLLoginGate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLLoginGate.h"; sourceTree = "<group>"; };
+		46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLLoginGate.m"; sourceTree = "<group>"; };
+		46AB4AA31B042F570056EC35 /* SLLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLoginVC.h; sourceTree = "<group>"; };
+		46AB4AA41B042F570056EC35 /* SLLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLLoginVC.m; sourceTree = "<group>"; };
 		46CB6ACC1AED715800BF1DF3 /* shortList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shortList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46CB6AD01AED715800BF1DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46CB6AD11AED715800BF1DF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -153,6 +159,7 @@
 		461FC9F91AED9888001C3F46 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				46AB4A9F1B042E850056EC35 /* Login */,
 				461FC9FB1AED98B6001C3F46 /* Tab */,
 				461FC9FA1AED98A8001C3F46 /* Navigation */,
 			);
@@ -281,6 +288,17 @@
 				46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */,
 			);
 			name = "Itunes API Test Files";
+			sourceTree = "<group>";
+		};
+		46AB4A9F1B042E850056EC35 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				46AB4AA01B042EC50056EC35 /* UIViewController+SLLoginGate.h */,
+				46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */,
+				46AB4AA31B042F570056EC35 /* SLLoginVC.h */,
+				46AB4AA41B042F570056EC35 /* SLLoginVC.m */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		46CB6AC31AED715800BF1DF3 = {
@@ -659,8 +677,10 @@
 				467D559E1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m in Sources */,
 				46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */,
 				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
+				46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */,
 				468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */,
 				467D55A31AF69746005CD607 /* SLAlbumDetailsVC.m in Sources */,
+				46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */,
 				46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */,
 				46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */,
 				467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */,

@@ -90,7 +90,9 @@
     [tabBarController setViewControllers:@[shortListFeedNav, shortListsNav, shortListProfileNav, shortListMoreNav]];
     tabBarController.tabBar.backgroundColor = [UIColor blackColor];
     tabBarController.tabBar.translucent = NO;
-    
+
+    tabBarController.selectedViewController=[tabBarController.viewControllers objectAtIndex:1];
+
     return tabBarController;
 }
 

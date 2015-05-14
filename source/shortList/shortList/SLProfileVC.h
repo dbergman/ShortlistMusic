@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Dustin Bergman. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SLBaseVC.h"
 
-@interface SLProfileVC : UIViewController
+@interface SLProfileVC : SLBaseVC
 
 @end

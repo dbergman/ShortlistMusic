@@ -40,7 +40,7 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     __weak typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
         NSLog(@"Add Album to ShortList");

@@ -16,6 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setTitle:NSLocalizedString(@"Profile", nil)];
 }
 
 @end

@@ -35,5 +35,4 @@
     self.navigationItem.titleView = artistTitleLabel;
 }
 
-
 @end
