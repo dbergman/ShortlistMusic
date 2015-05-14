@@ -19,6 +19,9 @@ profile
 
 *.moved-aside*
 
+#Files
+appKeys.plist
+
 # IB
 *~.nib
 *~.xib
