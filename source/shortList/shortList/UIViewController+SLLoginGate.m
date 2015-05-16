@@ -25,6 +25,9 @@
 
         [self presentViewController:loginVC animated:YES completion:NULL];
     }
+    else {
+        PFUser *user = [PFUser currentUser];
+    }
 }
 
 @end
