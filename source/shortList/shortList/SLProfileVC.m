@@ -8,6 +8,8 @@
 
 #import "SLProfileVC.h"
 #import "UIViewController+SLLoginGate.h"
+#import <BlocksKit+UIKit.h>
+#import <Parse/Parse.h>
 
 @interface SLProfileVC ()
 
@@ -19,15 +21,51 @@
     [super viewDidLoad];
     
     [self setTitle:NSLocalizedString(@"Profile", nil)];
-    
-    [self showLoginGateWithCompletion:^{
-        NSLog(@"SLProfileVC LOG");
-    }];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
+    [self setupRightBarButton];
+}
+
+- (void)setupRightBarButton {
+    UIBarButtonItem *rightBarButton;
+
+    if ([PFUser currentUser]) {
+        rightBarButton = [self showLogoutRightBarButton];
+    }
+    else {
+       rightBarButton = [self showLoginRightBarButton];
+    }
+   
+    self.navigationItem.rightBarButtonItem = rightBarButton;
+}
+
+- (UIBarButtonItem *)showLoginRightBarButton {
+    __weak typeof(self) weakSelf = self;
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Login", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
+        [weakSelf showLoginGateWithCompletion:^{
+            if ([PFUser currentUser]) {
+                weakSelf.navigationItem.rightBarButtonItem = [weakSelf showLogoutRightBarButton];
+            }
+        }];
+        
+    }];
+    
+    return rightBarButton;
+}
+
+- (UIBarButtonItem *)showLogoutRightBarButton {
+    __weak typeof(self) weakSelf = self;
+    UIBarButtonItem *        rightBarButton = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Logout", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
+        if ([PFUser currentUser]) {
+            [PFUser logOut];
+            weakSelf.navigationItem.rightBarButtonItem =  [weakSelf showLoginRightBarButton];
+        }
+    }];
+    
+    return rightBarButton;
 }
 
 @end
