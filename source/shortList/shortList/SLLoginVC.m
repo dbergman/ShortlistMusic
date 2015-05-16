@@ -7,6 +7,7 @@
 //
 
 #import "SLLoginVC.h"
+#import "SLStyle.h"
 
 @implementation SLLoginVC
 
@@ -14,8 +15,18 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor blackColor];
+    self.logInView.logo = [SLLoginVC getTempLogo:self.logInView.logo.frame];
+}
+
++ (UILabel *)getTempLogo:(CGRect)parseLogoFrame {
+    UILabel *logoLabel = [UILabel new];
+    logoLabel.frame = parseLogoFrame;
+    logoLabel.backgroundColor = [UIColor clearColor];
+    logoLabel.textColor = [UIColor sl_Red];
+    logoLabel.font = [UIFont boldSystemFontOfSize:28.0];
+    logoLabel.text = @"ShortList Music";
     
-    self.logInView.logo = nil;
+    return logoLabel;
 }
 
 @end

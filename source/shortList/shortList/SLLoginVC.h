@@ -10,4 +10,6 @@
 
 @interface SLLoginVC : PFLogInViewController
 
++ (UILabel *)getTempLogo:(CGRect)parseLogoFrame;
+
 @end

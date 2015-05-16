@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3A67B00A491460F0C0119307 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0D5FB60B95EE1C6AAD8165 /* libPods.a */; };
+		461801121B077E6C003C0A92 /* SLUserSignUpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801111B077E6C003C0A92 /* SLUserSignUpVC.m */; };
 		461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */; };
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
 		467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */; };
@@ -65,6 +66,8 @@
 		1415B849DC8FE7440FF77432 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		387B84E873048CE78F83CF11 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4541FC2A6E9CC99BEBFB5502 /* Pods-shortListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.release.xcconfig"; sourceTree = "<group>"; };
+		461801101B077E6C003C0A92 /* SLUserSignUpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLUserSignUpVC.h; sourceTree = "<group>"; };
+		461801111B077E6C003C0A92 /* SLUserSignUpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLUserSignUpVC.m; sourceTree = "<group>"; };
 		461FC9FC1AED98F9001C3F46 /* SLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLTabBarController.h; sourceTree = "<group>"; };
 		461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLTabBarController.m; sourceTree = "<group>"; };
 		461FCA001AED9C8E001C3F46 /* ItunesSearchAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesSearchAPIController.h; sourceTree = "<group>"; };
@@ -298,6 +301,8 @@
 				46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */,
 				46AB4AA31B042F570056EC35 /* SLLoginVC.h */,
 				46AB4AA41B042F570056EC35 /* SLLoginVC.m */,
+				461801101B077E6C003C0A92 /* SLUserSignUpVC.h */,
+				461801111B077E6C003C0A92 /* SLUserSignUpVC.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -669,6 +674,7 @@
 				461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */,
 				467D55A71AF6D98F005CD607 /* UIImage+AverageColor.m in Sources */,
 				46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */,
+				461801121B077E6C003C0A92 /* SLUserSignUpVC.m in Sources */,
 				46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */,
 				46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */,
 				46A094171AF076C80091C7F7 /* ItunesSearchTracks.m in Sources */,
