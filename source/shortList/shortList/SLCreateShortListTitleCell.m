@@ -23,7 +23,7 @@
         createTitleLabel.textColor = [UIColor whiteColor];
         [self.contentView addSubview:createTitleLabel];
         
-        createTitleLabel.text = NSLocalizedString(@"Create ShortList", nil);
+        createTitleLabel.text = NSLocalizedString(@"Create a new ShortList", nil);
         
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:createTitleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:1.0]];
 

@@ -46,7 +46,6 @@
     NSLog(@"");
 }
 
-
 - (void)createNewShortListView {
     self.createShortListVC = [SLCreateShortListVC new];
     [self.createShortListVC.view setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -56,7 +55,7 @@
     [self addChildViewController:self.createShortListVC];
     
     NSDictionary *views = @{@"createShortListVC":self.createShortListVC.view};
-    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(88), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
+    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(132), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
     
     self.createSLVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[createShortListVC(viewHeight)]" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views];
     

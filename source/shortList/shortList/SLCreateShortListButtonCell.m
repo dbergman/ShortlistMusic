@@ -59,13 +59,4 @@
     return self;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    NSLog(@"");
-}
-
-
-
-
 @end

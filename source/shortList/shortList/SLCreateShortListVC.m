@@ -9,6 +9,7 @@
 #import "SLCreateShortListVC.h"
 #import "SLCreateShortListTitleCell.h"
 #import "SLCreateShortListButtonCell.h"
+#import "SLCreateShortListEnterName.h"
 
 @interface SLCreateShortListVC ()
 
@@ -40,12 +41,13 @@
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *TitleCellIdentifier = @"TitleCell";
     static NSString *ButtonCellIdentifier = @"ButtonCell";
+    static NSString *NameCellIdentifier = @"NameCell";
     
     if (indexPath.row == 0) {
         SLCreateShortListTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:TitleCellIdentifier];
@@ -56,6 +58,15 @@
         return cell;
     }
 
+    if (indexPath.row == 1) {
+        SLCreateShortListEnterName *cell = [tableView dequeueReusableCellWithIdentifier:NameCellIdentifier];
+        if (cell == nil) {
+            cell = [[SLCreateShortListEnterName alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NameCellIdentifier];
+        }
+        
+        return cell;
+    }
+    
     SLCreateShortListButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:ButtonCellIdentifier];
     if (cell == nil) {
         cell = [[SLCreateShortListButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ButtonCellIdentifier];

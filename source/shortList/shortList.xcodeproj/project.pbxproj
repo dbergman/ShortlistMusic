@@ -12,6 +12,7 @@
 		461801161B08D7A4003C0A92 /* SLCreateShortListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */; };
 		4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */; };
 		4618011D1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4618011C1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m */; };
+		461801201B09361E003C0A92 /* SLCreateShortListEnterName.m in Sources */ = {isa = PBXBuildFile; fileRef = 4618011F1B09361E003C0A92 /* SLCreateShortListEnterName.m */; };
 		461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */; };
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
 		467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */; };
@@ -77,6 +78,8 @@
 		461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListTitleCell.m; sourceTree = "<group>"; };
 		4618011B1B08E9E5003C0A92 /* SLCreateShortListButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListButtonCell.h; sourceTree = "<group>"; };
 		4618011C1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListButtonCell.m; sourceTree = "<group>"; };
+		4618011E1B09361E003C0A92 /* SLCreateShortListEnterName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListEnterName.h; sourceTree = "<group>"; };
+		4618011F1B09361E003C0A92 /* SLCreateShortListEnterName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListEnterName.m; sourceTree = "<group>"; };
 		461FC9FC1AED98F9001C3F46 /* SLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLTabBarController.h; sourceTree = "<group>"; };
 		461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLTabBarController.m; sourceTree = "<group>"; };
 		461FCA001AED9C8E001C3F46 /* ItunesSearchAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesSearchAPIController.h; sourceTree = "<group>"; };
@@ -186,6 +189,8 @@
 				461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */,
 				4618011B1B08E9E5003C0A92 /* SLCreateShortListButtonCell.h */,
 				4618011C1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m */,
+				4618011E1B09361E003C0A92 /* SLCreateShortListEnterName.h */,
+				4618011F1B09361E003C0A92 /* SLCreateShortListEnterName.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -704,6 +709,7 @@
 				467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */,
 				46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */,
 				461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */,
+				461801201B09361E003C0A92 /* SLCreateShortListEnterName.m in Sources */,
 				467D55A71AF6D98F005CD607 /* UIImage+AverageColor.m in Sources */,
 				46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */,
 				461801121B077E6C003C0A92 /* SLUserSignUpVC.m in Sources */,
