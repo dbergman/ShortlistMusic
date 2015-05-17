@@ -11,6 +11,7 @@
 #import "SLListAlbumsVC.h"
 #import "SLCreateShortListVC.h"
 #import <BlocksKit+UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface SLListsVC ()
 
@@ -49,11 +50,13 @@
 - (void)createNewShortListView {
     self.createShortListVC = [SLCreateShortListVC new];
     [self.createShortListVC.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    self.createShortListVC.view.layer.cornerRadius = 10;
+    self.createShortListVC.view.layer.masksToBounds = YES;
     [self.view addSubview:self.createShortListVC.view];
     [self addChildViewController:self.createShortListVC];
     
     NSDictionary *views = @{@"createShortListVC":self.createShortListVC.view};
-    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(200), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
+    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(88), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
     
     self.createSLVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[createShortListVC(viewHeight)]" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views];
     
@@ -62,8 +65,8 @@
     }
 
 - (void)showCreateNewShortListView {
-    NSLayoutConstraint *heightConstraint = [self.createSLVerticalConstraints firstObject];
-    heightConstraint.constant = 200.0;
+    NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
+    topMarginConstraint.constant = 200.0;
     
     [self.view addConstraints:self.createSLVerticalConstraints];
     

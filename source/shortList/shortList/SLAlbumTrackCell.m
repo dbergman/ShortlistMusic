@@ -57,7 +57,7 @@
     return self;
 }
 
--(void)configureAlbumTrackCell:(ItunesTrack *)itunesTrack {
+- (void)configureAlbumTrackCell:(ItunesTrack *)itunesTrack {
     self.trackNumberLabel.text = [NSString stringWithFormat:@"%ld.", (long)itunesTrack.trackNumber];
     self.trackNameLabel.text = itunesTrack.trackName;
     self.trackDurationLabel.text = [NSString stringWithFormat:@"%@", itunesTrack.trackDuration];

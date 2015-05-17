@@ -18,13 +18,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor orangeColor];
-    
+
     self.tableView.backgroundColor = [UIColor yellowColor];
-    self.tableView.tableHeaderView = [UIView new];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.scrollEnabled = NO;
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    CGRect frame = self.tableView.bounds;
+    frame.origin.y = 0.0;
+    self.tableView.bounds = frame;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSLog(@"");
 }
 
 #pragma mark - Table view data source
@@ -49,6 +60,8 @@
     if (cell == nil) {
         cell = [[SLCreateShortListButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ButtonCellIdentifier];
     }
+    [cell setCancelBlock:^ {
+    }];
     
     return cell;
 }

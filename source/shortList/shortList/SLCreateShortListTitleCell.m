@@ -15,7 +15,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        self.backgroundColor = [UIColor purpleColor];
+        self.backgroundColor = [UIColor blackColor];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         UILabel *createTitleLabel = [UILabel new];
         [createTitleLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
