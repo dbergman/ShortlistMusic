@@ -30,42 +30,32 @@
 }
 
 - (void)setupRightBarButton {
-    UIBarButtonItem *rightBarButton;
-
-    if ([PFUser currentUser]) {
-        rightBarButton = [self showLogoutRightBarButton];
-    }
-    else {
-       rightBarButton = [self showLoginRightBarButton];
-    }
-   
-    self.navigationItem.rightBarButtonItem = rightBarButton;
+    ([PFUser currentUser]) ? [self showLogoutRightBarButton] : [self showLoginRightBarButton];
 }
 
-- (UIBarButtonItem *)showLoginRightBarButton {
+- (void)showLoginRightBarButton {
     __weak typeof(self) weakSelf = self;
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Login", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
         [weakSelf showLoginGateWithCompletion:^{
             if ([PFUser currentUser]) {
-                weakSelf.navigationItem.rightBarButtonItem = [weakSelf showLogoutRightBarButton];
+                [weakSelf showLogoutRightBarButton];
             }
         }];
-        
     }];
     
-    return rightBarButton;
+    weakSelf.navigationItem.rightBarButtonItem = rightBarButton;
 }
 
-- (UIBarButtonItem *)showLogoutRightBarButton {
+- (void)showLogoutRightBarButton {
     __weak typeof(self) weakSelf = self;
-    UIBarButtonItem *        rightBarButton = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Logout", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
+    UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Logout", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
         if ([PFUser currentUser]) {
             [PFUser logOut];
-            weakSelf.navigationItem.rightBarButtonItem =  [weakSelf showLoginRightBarButton];
+            [weakSelf showLoginRightBarButton];
         }
     }];
     
-    return rightBarButton;
+    weakSelf.navigationItem.rightBarButtonItem = rightBarButton;
 }
 
 @end
