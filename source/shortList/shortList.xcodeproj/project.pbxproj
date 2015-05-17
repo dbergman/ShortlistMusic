@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3A67B00A491460F0C0119307 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0D5FB60B95EE1C6AAD8165 /* libPods.a */; };
 		461801121B077E6C003C0A92 /* SLUserSignUpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801111B077E6C003C0A92 /* SLUserSignUpVC.m */; };
+		461801161B08D7A4003C0A92 /* SLCreateShortListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */; };
+		4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */; };
+		4618011D1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4618011C1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m */; };
 		461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */; };
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
 		467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */; };
@@ -68,6 +71,12 @@
 		4541FC2A6E9CC99BEBFB5502 /* Pods-shortListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.release.xcconfig"; sourceTree = "<group>"; };
 		461801101B077E6C003C0A92 /* SLUserSignUpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLUserSignUpVC.h; sourceTree = "<group>"; };
 		461801111B077E6C003C0A92 /* SLUserSignUpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLUserSignUpVC.m; sourceTree = "<group>"; };
+		461801141B08D7A4003C0A92 /* SLCreateShortListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListVC.h; sourceTree = "<group>"; };
+		461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListVC.m; sourceTree = "<group>"; };
+		461801181B08E6A0003C0A92 /* SLCreateShortListTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListTitleCell.h; sourceTree = "<group>"; };
+		461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListTitleCell.m; sourceTree = "<group>"; };
+		4618011B1B08E9E5003C0A92 /* SLCreateShortListButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListButtonCell.h; sourceTree = "<group>"; };
+		4618011C1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListButtonCell.m; sourceTree = "<group>"; };
 		461FC9FC1AED98F9001C3F46 /* SLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLTabBarController.h; sourceTree = "<group>"; };
 		461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLTabBarController.m; sourceTree = "<group>"; };
 		461FCA001AED9C8E001C3F46 /* ItunesSearchAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesSearchAPIController.h; sourceTree = "<group>"; };
@@ -160,6 +169,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		461801131B08D590003C0A92 /* Create ShortList */ = {
+			isa = PBXGroup;
+			children = (
+				461801171B08E668003C0A92 /* Cells */,
+				461801141B08D7A4003C0A92 /* SLCreateShortListVC.h */,
+				461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */,
+			);
+			name = "Create ShortList";
+			sourceTree = "<group>";
+		};
+		461801171B08E668003C0A92 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				461801181B08E6A0003C0A92 /* SLCreateShortListTitleCell.h */,
+				461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */,
+				4618011B1B08E9E5003C0A92 /* SLCreateShortListButtonCell.h */,
+				4618011C1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
 		461FC9F91AED9888001C3F46 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +433,7 @@
 		46CB6B021AED7A9100BF1DF3 /* Lists */ = {
 			isa = PBXGroup;
 			children = (
+				461801131B08D590003C0A92 /* Create ShortList */,
 				467D55A01AF696FF005CD607 /* Album Details */,
 				467D55931AF55E71005CD607 /* Search */,
 				46CB6B031AED7ADC00BF1DF3 /* SLListsVC.h */,
@@ -667,6 +698,7 @@
 				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
 				46A094141AF072730091C7F7 /* ItunesTrack.m in Sources */,
 				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
+				4618011D1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
 				46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */,
 				467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */,
@@ -683,8 +715,10 @@
 				461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */,
 				468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */,
 				467D559E1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m in Sources */,
+				461801161B08D7A4003C0A92 /* SLCreateShortListVC.m in Sources */,
 				46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */,
 				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
+				4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */,
 				46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */,
 				468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */,
 				467D55A31AF69746005CD607 /* SLAlbumDetailsVC.m in Sources */,

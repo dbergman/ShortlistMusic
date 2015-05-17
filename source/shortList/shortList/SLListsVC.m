@@ -9,11 +9,14 @@
 #import "SLListsVC.h"
 #import "ItunesSearchAPIController.h"
 #import "SLListAlbumsVC.h"
+#import "SLCreateShortListVC.h"
 #import <BlocksKit+UIKit.h>
 
 @interface SLListsVC ()
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) SLCreateShortListVC *createShortListVC;
+@property (nonatomic, strong) NSArray *createSLVerticalConstraints;
 
 @end
 
@@ -24,9 +27,48 @@
     
     [self setTitle:NSLocalizedString(@"ShortLists", nil)];
     
+    [self createNewShortListView];
+    
     __weak typeof(self) weakSelf = self;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
         [weakSelf.navigationController pushViewController:[SLListAlbumsVC new] animated:YES];
+    }];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemCompose handler:^(id sender) {
+        [weakSelf showCreateNewShortListView];
+    }];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    NSLog(@"");
+}
+
+
+- (void)createNewShortListView {
+    self.createShortListVC = [SLCreateShortListVC new];
+    [self.createShortListVC.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.view addSubview:self.createShortListVC.view];
+    [self addChildViewController:self.createShortListVC];
+    
+    NSDictionary *views = @{@"createShortListVC":self.createShortListVC.view};
+    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(200), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
+    
+    self.createSLVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[createShortListVC(viewHeight)]" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views];
+    
+    [self.view addConstraints:self.createSLVerticalConstraints];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-sideMargin-[createShortListVC(viewWidth)]-sideMargin-|" options:0 metrics:metrics views:views]];
+    }
+
+- (void)showCreateNewShortListView {
+    NSLayoutConstraint *heightConstraint = [self.createSLVerticalConstraints firstObject];
+    heightConstraint.constant = 200.0;
+    
+    [self.view addConstraints:self.createSLVerticalConstraints];
+    
+    [UIView animateWithDuration:.2 animations:^{
+        [self.view layoutIfNeeded];
     }];
 }
 
