@@ -1,5 +1,5 @@
 //
-//  SLCreateShortListEnterName.h
+//  SLCreateShortListEnterYearCell.h
 //  shortList
 //
 //  Created by Dustin Bergman on 5/17/15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SLCreateShortListEnterName : UITableViewCell
+@interface SLCreateShortListEnterYearCell : UITableViewCell
 
 @end

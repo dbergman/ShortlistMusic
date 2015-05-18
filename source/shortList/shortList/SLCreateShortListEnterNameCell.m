@@ -6,18 +6,18 @@
 //  Copyright (c) 2015 Dustin Bergman. All rights reserved.
 //
 
-#import "SLCreateShortListEnterName.h"
+#import "SLCreateShortListEnterNameCell.h"
 #import "SLStyle.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface SLCreateShortListEnterName ()
+@interface SLCreateShortListEnterNameCell ()
 
 @property (nonatomic, strong) UILabel *shortListNameLabel;
 @property (nonatomic, strong) UITextField *shortListNameTextfield;
 
 @end
 
-@implementation SLCreateShortListEnterName
+@implementation SLCreateShortListEnterNameCell
 
 #pragma mark Initilization
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

@@ -8,6 +8,7 @@
 
 #import "SLListsVC.h"
 #import "ItunesSearchAPIController.h"
+#import "SLStyle.h"
 #import "SLListAlbumsVC.h"
 #import "SLCreateShortListVC.h"
 #import <BlocksKit+UIKit.h>
@@ -51,11 +52,12 @@
     [self.createShortListVC.view setTranslatesAutoresizingMaskIntoConstraints:NO];
     self.createShortListVC.view.layer.cornerRadius = 10;
     self.createShortListVC.view.layer.masksToBounds = YES;
+    self.createShortListVC.view.alpha = .8;
     [self.view addSubview:self.createShortListVC.view];
     [self addChildViewController:self.createShortListVC];
     
     NSDictionary *views = @{@"createShortListVC":self.createShortListVC.view};
-    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(132), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
+    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(338), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
     
     self.createSLVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[createShortListVC(viewHeight)]" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views];
     
