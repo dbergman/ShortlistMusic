@@ -12,6 +12,7 @@
 @interface SLCreateShortListEnterYearCell () <UIPickerViewDelegate>
 
 @property (nonatomic, strong) UILabel *shortListYearLabel;
+@property (nonatomic, strong) UILabel *tempYearLabel;
 @property (nonatomic, strong) UIPickerView *yearPicker;
 @property (nonatomic, strong) NSArray *yearFilterArray;
 
@@ -29,7 +30,7 @@
         
         self.shortListYearLabel = [UILabel new];
         [self.shortListYearLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        self.shortListYearLabel.text = NSLocalizedString(@"ShortList Year:", nil);
+        self.shortListYearLabel.text = NSLocalizedString(@"Filter Year:", nil);
         self.shortListYearLabel.textColor = [UIColor whiteColor];
         [self.shortListYearLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
         [self.contentView addSubview:self.shortListYearLabel];
@@ -41,16 +42,31 @@
         self.yearPicker.alpha = 0.0;
         [self.contentView addSubview:self.yearPicker];
         
+        self.tempYearLabel = [UILabel new];
+        [self.tempYearLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+        self.tempYearLabel.text = NSLocalizedString(@"All Years", nil);
+        self.tempYearLabel.textColor = [UIColor sl_Red];
+        [self.tempYearLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+        [self.contentView addSubview:self.tempYearLabel];
+
         self.yearFilterArray = [self generateYearList];
 
-        NSDictionary *views = NSDictionaryOfVariableBindings(_shortListYearLabel, _yearPicker);
-        NSDictionary *metrics = @{@"margin":@(MarginSizes.medium), @"space":@(MarginSizes.small), @"pickerWidth":@(80.0)};
+        NSDictionary *views = NSDictionaryOfVariableBindings(_shortListYearLabel, _yearPicker, _tempYearLabel);
+        NSDictionary *metrics = @{@"margin":@(MarginSizes.medium), @"space":@(MarginSizes.small), @"pickerWidth":@(self.contentView.frame.size.width/3.0)};
+        
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[_shortListYearLabel][_yearPicker(pickerWidth)]" options:0 metrics:metrics views:views]];
         
-       // [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_shortListYearLabel][_yearPicker]" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[_shortListYearLabel]" options:0 metrics:metrics views:views]];
         
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.shortListYearLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+        
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.yearPicker attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+        
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.yearPicker attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+        
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.tempYearLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
+        
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.tempYearLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     }
     
     return self;
@@ -61,10 +77,10 @@
     
     if (selected) {
         [UIView animateWithDuration:.2 delay:.2 options:UIViewAnimationOptionLayoutSubviews animations:^{
+            self.tempYearLabel.alpha = 0.0;
             self.yearPicker.alpha = 1.0;
         } completion:nil];
     }
-    
 }
 
 #pragma mark - uipicker delegate
@@ -75,13 +91,13 @@
 - (UIView*)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
     UILabel *pickerLabel = (UILabel *)view;
     if (pickerLabel == nil) {
-        CGRect frame = CGRectMake(0.0, 0.0, 80, 32);
-        pickerLabel = [[UILabel alloc] initWithFrame:frame];
+        pickerLabel = [[UILabel alloc] init];
         [pickerLabel setTextAlignment:NSTextAlignmentCenter];
         pickerLabel.textColor = [UIColor whiteColor];
         [pickerLabel setBackgroundColor:[UIColor clearColor]];
     }
     [pickerLabel setText:[self.yearFilterArray objectAtIndex:row]];
+    [pickerLabel sizeToFit];
     
     return pickerLabel;
 }
@@ -95,7 +111,6 @@
 }
 
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-   // self.selectedYearLabel.text = [self.yearFilterArray objectAtIndex:row];
 }
 
 - (NSArray *)generateYearList {
@@ -104,9 +119,9 @@
     NSString *theYear = [formatter stringFromDate:[NSDate date]];
     
     NSMutableArray *years = [[NSMutableArray alloc]init];
-    [years addObject:@"All"];
+    [years addObject:@"All Years"];
     
-    NSString *earlyYear = @"1960";
+    NSString *earlyYear = @"1959";
     
     while (![theYear isEqualToString: earlyYear]) {
         [years addObject:theYear];
