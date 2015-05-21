@@ -14,7 +14,8 @@
 #import "SLCreateShortListEnterYearCell.h"
 #import <QuartzCore/QuartzCore.h>
 
-static CGFloat const SLCreateShortListPickerHeight = 180.0;
+CGFloat const kSLCreateShortListPickerHeight = 180.0;
+CGFloat const kSLCreateShortListCellHeight = 44.0;
 
 @interface SLCreateShortListVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -103,7 +104,7 @@ static CGFloat const SLCreateShortListPickerHeight = 180.0;
         [self.tableView endUpdates];
         
         if ([self.delegate respondsToSelector:@selector(createShortList:willDisplayPickerWithHeight:)]) {
-            [self.delegate createShortList:self willDisplayPickerWithHeight:SLCreateShortListPickerHeight];
+            [self.delegate createShortList:self willDisplayPickerWithHeight:kSLCreateShortListPickerHeight];
         }
     }
 }
@@ -111,11 +112,11 @@ static CGFloat const SLCreateShortListPickerHeight = 180.0;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2) {
         if (self.showingYearPicker) {
-             return 180.0;
+             return kSLCreateShortListPickerHeight;
         }
     }
     
-    return 44.0;
+    return kSLCreateShortListCellHeight;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {

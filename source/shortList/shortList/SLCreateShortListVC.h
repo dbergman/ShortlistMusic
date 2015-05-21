@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const kSLCreateShortListPickerHeight;
+extern CGFloat const kSLCreateShortListCellHeight;
+
+
 @class SLCreateShortListVC;
 
 @protocol SLCreateShortListDelegate <NSObject>

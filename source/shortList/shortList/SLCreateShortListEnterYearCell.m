@@ -31,6 +31,8 @@
         self.shortListYearLabel = [UILabel new];
         [self.shortListYearLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.shortListYearLabel.text = NSLocalizedString(@"Filter Year:", nil);
+        self.shortListYearLabel.numberOfLines = 2;
+        self.shortListYearLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.shortListYearLabel.textColor = [UIColor whiteColor];
         [self.shortListYearLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
         [self.contentView addSubview:self.shortListYearLabel];
@@ -55,9 +57,7 @@
         NSDictionary *metrics = @{@"margin":@(MarginSizes.medium), @"space":@(MarginSizes.small), @"pickerWidth":@(self.contentView.frame.size.width/3.0)};
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[_shortListYearLabel][_yearPicker(pickerWidth)]" options:0 metrics:metrics views:views]];
-        
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[_shortListYearLabel]" options:0 metrics:metrics views:views]];
-        
+
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.shortListYearLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
         
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.yearPicker attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];

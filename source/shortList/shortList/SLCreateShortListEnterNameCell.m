@@ -30,6 +30,8 @@
         self.shortListNameLabel = [UILabel new];
         [self.shortListNameLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.shortListNameLabel.text = NSLocalizedString(@"ShortList Name:", nil);
+        self.shortListNameLabel.numberOfLines = 2;
+        self.shortListNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.shortListNameLabel.textColor = [UIColor whiteColor];
         [self.shortListNameLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
         [self.contentView addSubview:self.shortListNameLabel];

@@ -71,7 +71,7 @@
 #pragma mark SLCreateShortListDelegate
 - (void)createShortList:(SLCreateShortListVC *)viewController willDisplayPickerWithHeight:(CGFloat)pickerHeight {
     NSLayoutConstraint *createSLHeightConstraint = self.createSLVerticalConstraints[1];
-    createSLHeightConstraint.constant = createSLHeightConstraint.constant + (pickerHeight - 44);
+    createSLHeightConstraint.constant = createSLHeightConstraint.constant + (pickerHeight - kSLCreateShortListCellHeight);
     
     [self.view addConstraints:self.createSLVerticalConstraints];
     
