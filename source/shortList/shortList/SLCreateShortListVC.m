@@ -12,10 +12,14 @@
 #import "SLCreateShortListButtonCell.h"
 #import "SLCreateShortListEnterNameCell.h"
 #import "SLCreateShortListEnterYearCell.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface SLCreateShortListVC ()
+static CGFloat const SLCreateShortListPickerHeight = 180.0;
+
+@interface SLCreateShortListVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, assign) BOOL showingYearPicker;
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -24,26 +28,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.tableView.backgroundColor = [UIColor yellowColor];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+    self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.separatorColor = [UIColor sl_Red];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.layer.cornerRadius = 10;
+    self.tableView.alpha = .8;
     self.tableView.scrollEnabled = NO;
-    
+    [self.tableView setAutoresizesSubviews:YES];
+    [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
 
+    [self.view addSubview:self.tableView];
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
+- (void)showCreateShortList {
     
-//    CGRect frame = self.view.bounds;
-//    frame.origin.y = 0.0;
-//    self.tableView.bounds = frame;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    NSLog(@"");
 }
 
 #pragma mark - Table view data source
@@ -81,6 +82,7 @@
         
         return cell;
     }
+    
     SLCreateShortListButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:ButtonCellIdentifier];
     if (cell == nil) {
         cell = [[SLCreateShortListButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ButtonCellIdentifier];
@@ -94,18 +96,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 2) {
-        self.showingYearPicker = !self.showingYearPicker;
+    if (indexPath.row == 2 && !self.showingYearPicker) {
+
+        self.showingYearPicker = YES;
         [self.tableView beginUpdates];
         [self.tableView endUpdates];
-        //[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        if ([self.delegate respondsToSelector:@selector(createShortList:willDisplayPickerWithHeight:)]) {
+            [self.delegate createShortList:self willDisplayPickerWithHeight:SLCreateShortListPickerHeight];
+        }
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2) {
         if (self.showingYearPicker) {
-             return 162.0;
+             return 180.0;
         }
     }
     

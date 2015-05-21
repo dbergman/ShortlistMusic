@@ -7,6 +7,7 @@
 //
 
 #import "SLCreateShortListButtonCell.h"
+#import "SLStyle.h"
 #import <BlocksKit+UIKit.h>
 
 @interface SLCreateShortListButtonCell ()
@@ -23,7 +24,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        self.contentView.backgroundColor = [UIColor whiteColor];
+        self.contentView.backgroundColor = [UIColor sl_Red];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];

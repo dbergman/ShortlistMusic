@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SLCreateShortListVC : UITableViewController
+@class SLCreateShortListVC;
+
+@protocol SLCreateShortListDelegate <NSObject>
+
+- (void)createShortList:(SLCreateShortListVC *)viewController willDisplayPickerWithHeight:(CGFloat)pickerHeight;
+
+@end
+
+@interface SLCreateShortListVC : UIViewController
+
+@property (nonatomic, weak) id <SLCreateShortListDelegate> delegate;
 
 @end

@@ -44,12 +44,13 @@
         self.yearFilterArray = [self generateYearList];
 
         NSDictionary *views = NSDictionaryOfVariableBindings(_shortListYearLabel, _yearPicker);
-        NSDictionary *metrics = @{@"margin":@(MarginSizes.medium), @"space":@(MarginSizes.small)};
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[_shortListYearLabel][_yearPicker]" options:0 metrics:metrics views:views]];
+        NSDictionary *metrics = @{@"margin":@(MarginSizes.medium), @"space":@(MarginSizes.small), @"pickerWidth":@(80.0)};
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-margin-[_shortListYearLabel][_yearPicker(pickerWidth)]" options:0 metrics:metrics views:views]];
         
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_shortListYearLabel][_yearPicker]|" options:0 metrics:metrics views:views]];
+       // [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_shortListYearLabel][_yearPicker]" options:0 metrics:metrics views:views]];
         
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.shortListYearLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.yearPicker attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
     }
     
     return self;

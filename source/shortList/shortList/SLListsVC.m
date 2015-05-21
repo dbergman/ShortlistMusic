@@ -12,9 +12,8 @@
 #import "SLListAlbumsVC.h"
 #import "SLCreateShortListVC.h"
 #import <BlocksKit+UIKit.h>
-#import <QuartzCore/QuartzCore.h>
 
-@interface SLListsVC ()
+@interface SLListsVC () <SLCreateShortListDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SLCreateShortListVC *createShortListVC;
@@ -41,33 +40,38 @@
     }];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    NSLog(@"");
-}
-
 - (void)createNewShortListView {
     self.createShortListVC = [SLCreateShortListVC new];
+    self.createShortListVC.delegate = self;
     [self.createShortListVC.view setTranslatesAutoresizingMaskIntoConstraints:NO];
-    self.createShortListVC.view.layer.cornerRadius = 10;
-    self.createShortListVC.view.layer.masksToBounds = YES;
-    self.createShortListVC.view.alpha = .8;
     [self.view addSubview:self.createShortListVC.view];
-    [self addChildViewController:self.createShortListVC];
     
     NSDictionary *views = @{@"createShortListVC":self.createShortListVC.view};
-    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(338), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
+    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(176), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
     
-    self.createSLVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[createShortListVC(viewHeight)]" options:NSLayoutFormatAlignAllCenterX metrics:metrics views:views];
+    self.createSLVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[createShortListVC(viewHeight)]" options:0 metrics:metrics views:views];
     
     [self.view addConstraints:self.createSLVerticalConstraints];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-sideMargin-[createShortListVC(viewWidth)]-sideMargin-|" options:0 metrics:metrics views:views]];
+    
+    [self.view updateConstraints];
     }
 
 - (void)showCreateNewShortListView {
     NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
-    topMarginConstraint.constant = 200.0;
+    topMarginConstraint.constant = 100.0;
+    
+    [self.view addConstraints:self.createSLVerticalConstraints];
+    
+    [UIView animateWithDuration:.2 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+}
+
+#pragma mark SLCreateShortListDelegate
+- (void)createShortList:(SLCreateShortListVC *)viewController willDisplayPickerWithHeight:(CGFloat)pickerHeight {
+    NSLayoutConstraint *createSLHeightConstraint = self.createSLVerticalConstraints[1];
+    createSLHeightConstraint.constant = createSLHeightConstraint.constant + (pickerHeight - 44);
     
     [self.view addConstraints:self.createSLVerticalConstraints];
     
