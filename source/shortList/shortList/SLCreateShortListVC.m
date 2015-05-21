@@ -16,6 +16,7 @@
 
 CGFloat const kSLCreateShortListPickerHeight = 180.0;
 CGFloat const kSLCreateShortListCellHeight = 44.0;
+NSInteger const kSLCreateShortListCellCount = 4;
 
 @interface SLCreateShortListVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -44,13 +45,9 @@ CGFloat const kSLCreateShortListCellHeight = 44.0;
     [self.view addSubview:self.tableView];
 }
 
-- (void)showCreateShortList {
-    
-}
-
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return kSLCreateShortListCellCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -88,7 +85,11 @@ CGFloat const kSLCreateShortListCellHeight = 44.0;
     if (cell == nil) {
         cell = [[SLCreateShortListButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ButtonCellIdentifier];
     }
+    __weak typeof(self) weakSelf = self;
     [cell setCancelBlock:^ {
+        if (weakSelf.cancelButtonAction) {
+            weakSelf.cancelButtonAction();
+        }
     }];
     
     return cell;

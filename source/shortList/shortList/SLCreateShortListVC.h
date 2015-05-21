@@ -10,7 +10,7 @@
 
 extern CGFloat const kSLCreateShortListPickerHeight;
 extern CGFloat const kSLCreateShortListCellHeight;
-
+extern NSInteger const kSLCreateShortListCellCount;
 
 @class SLCreateShortListVC;
 
@@ -23,5 +23,6 @@ extern CGFloat const kSLCreateShortListCellHeight;
 @interface SLCreateShortListVC : UIViewController
 
 @property (nonatomic, weak) id <SLCreateShortListDelegate> delegate;
+@property (nonatomic, copy) dispatch_block_t cancelButtonAction;
 
 @end

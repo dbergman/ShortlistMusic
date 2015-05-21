@@ -47,7 +47,7 @@
     [self.view addSubview:self.createShortListVC.view];
     
     NSDictionary *views = @{@"createShortListVC":self.createShortListVC.view};
-    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(176), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
+    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(kSLCreateShortListCellCount * kSLCreateShortListCellHeight), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
     
     self.createSLVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[createShortListVC(viewHeight)]" options:0 metrics:metrics views:views];
     
@@ -60,11 +60,20 @@
 - (void)showCreateNewShortListView {
     NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
     topMarginConstraint.constant = 100.0;
-    
     [self.view addConstraints:self.createSLVerticalConstraints];
     
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:.2 animations:^{
-        [self.view layoutIfNeeded];
+        [weakSelf.view layoutIfNeeded];
+    }];
+    
+    [self.createShortListVC setCancelButtonAction:^{
+        topMarginConstraint.constant = weakSelf.view.frame.size.height;
+        
+        [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
+        [UIView animateWithDuration:.2 animations:^{
+            [weakSelf.view layoutIfNeeded];
+        }];
     }];
 }
 

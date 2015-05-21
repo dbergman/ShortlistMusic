@@ -34,8 +34,10 @@
         [self.contentView addSubview:self.cancelButton];
         [self.cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
         self.cancelButton.backgroundColor = [UIColor blackColor];
+        
+        __weak typeof(self) weakSelf = self;
         [self.cancelButton bk_addEventHandler:^(id sender) {
-            NSLog(@"Cancel@!@!@@@");
+            weakSelf.cancelBlock();
         } forControlEvents:UIControlEventTouchUpInside];
         
         self.createButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -45,6 +47,7 @@
         [self.contentView addSubview:self.createButton];
         [self.createButton setTitle:NSLocalizedString(@"Create", nil) forState:UIControlStateNormal];
         self.createButton.backgroundColor = [UIColor blackColor];
+        
         [self.createButton bk_addEventHandler:^(id sender) {
             NSLog(@"Create@!@!@@@");
         } forControlEvents:UIControlEventTouchUpInside];
