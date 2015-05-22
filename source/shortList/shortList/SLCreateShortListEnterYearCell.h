@@ -10,4 +10,6 @@
 
 @interface SLCreateShortListEnterYearCell : UITableViewCell
 
+- (void)hidePickerCell;
+
 @end

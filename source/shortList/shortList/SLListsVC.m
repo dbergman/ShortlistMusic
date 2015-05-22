@@ -69,6 +69,8 @@
     
     [self.createShortListVC setCancelButtonAction:^{
         topMarginConstraint.constant = weakSelf.view.frame.size.height;
+        NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];
+        createSLHeightConstraint.constant = kSLCreateShortListCellCount * kSLCreateShortListCellHeight;
         
         [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
         [UIView animateWithDuration:.2 animations:^{

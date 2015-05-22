@@ -22,6 +22,7 @@ NSInteger const kSLCreateShortListCellCount = 4;
 
 @property (nonatomic, assign) BOOL showingYearPicker;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) SLCreateShortListEnterYearCell *yearPickerCell;
 
 @end
 
@@ -77,6 +78,7 @@ NSInteger const kSLCreateShortListCellCount = 4;
         if (cell == nil) {
             cell = [[SLCreateShortListEnterYearCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:YearCellIdentifier];
         }
+        self.yearPickerCell = cell;
         
         return cell;
     }
@@ -87,6 +89,10 @@ NSInteger const kSLCreateShortListCellCount = 4;
     }
     __weak typeof(self) weakSelf = self;
     [cell setCancelBlock:^ {
+        weakSelf.showingYearPicker = NO;
+        [weakSelf.yearPickerCell hidePickerCell];
+        [weakSelf.tableView beginUpdates];
+        [weakSelf.tableView endUpdates];
         if (weakSelf.cancelButtonAction) {
             weakSelf.cancelButtonAction();
         }
@@ -99,10 +105,10 @@ NSInteger const kSLCreateShortListCellCount = 4;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.row == 2 && !self.showingYearPicker) {
-
         self.showingYearPicker = YES;
         [self.tableView beginUpdates];
         [self.tableView endUpdates];
+        
         
         if ([self.delegate respondsToSelector:@selector(createShortList:willDisplayPickerWithHeight:)]) {
             [self.delegate createShortList:self willDisplayPickerWithHeight:kSLCreateShortListPickerHeight];
