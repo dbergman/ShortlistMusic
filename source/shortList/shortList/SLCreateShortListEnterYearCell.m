@@ -120,6 +120,9 @@
 }
 
 - (void)pickerView:(UIPickerView *)thePickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if (self.createYearAction) {
+        self.createYearAction([self.yearFilterArray objectAtIndex:row]);
+    }
 }
 
 - (NSArray *)generateYearList {

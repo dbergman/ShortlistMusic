@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^SLCreateYearAction)(NSString *shortListYear);
+
 @interface SLCreateShortListEnterYearCell : UITableViewCell
+
+@property (nonatomic, copy) SLCreateYearAction createYearAction;
 
 - (void)hidePickerCell;
 

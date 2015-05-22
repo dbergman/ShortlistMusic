@@ -10,7 +10,7 @@
 #import "SLStyle.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface SLCreateShortListEnterNameCell ()
+@interface SLCreateShortListEnterNameCell () <UITextFieldDelegate>
 
 @property (nonatomic, strong) UILabel *shortListNameLabel;
 @property (nonatomic, strong) UITextField *shortListNameTextfield;
@@ -37,6 +37,7 @@
         [self.contentView addSubview:self.shortListNameLabel];
         
         self.shortListNameTextfield = [UITextField new];
+        self.shortListNameTextfield.delegate = self;
         [self.shortListNameTextfield setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.shortListNameTextfield.layer.cornerRadius= 3.0f;
         self.shortListNameTextfield.layer.masksToBounds = YES;
@@ -54,6 +55,17 @@
     }
     
     return self;
+}
+
+#pragma mark UITextFieldDelegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *currentShortListName = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (self.createNameAction) {
+        self.createNameAction(currentShortListName);
+    }
+
+    return YES;
 }
 
 @end
