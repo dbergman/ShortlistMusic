@@ -33,6 +33,7 @@
         self.cancelButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:self.cancelButton];
         [self.cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
+        [self.cancelButton setTitleColor:[UIColor sl_Red] forState:UIControlStateHighlighted];
         self.cancelButton.backgroundColor = [UIColor blackColor];
         
         __weak typeof(self) weakSelf = self;
@@ -46,6 +47,7 @@
         self.createButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:self.createButton];
         [self.createButton setTitle:NSLocalizedString(@"Create", nil) forState:UIControlStateNormal];
+        [self.createButton setTitleColor:[UIColor greenColor] forState:UIControlStateHighlighted];
         self.createButton.backgroundColor = [UIColor blackColor];
         
         [self.createButton bk_addEventHandler:^(id sender) {

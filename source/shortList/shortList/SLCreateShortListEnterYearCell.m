@@ -87,7 +87,9 @@
     [UIView animateWithDuration:.2 delay:.2 options:UIViewAnimationOptionLayoutSubviews animations:^{
         self.allYearLabel.alpha = 1.0;
         self.yearPicker.alpha = 0.0;
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [self.yearPicker selectRow:0 inComponent:0 animated:NO];
+    }];
 }
 
 #pragma mark - uipicker delegate
