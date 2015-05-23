@@ -35,11 +35,9 @@ static CGFloat const delayPerCharacter = baseDelay / baseLength;
     [self showBannerAtHeight:defaultNavBarHeight withMessage:message bannerStyle:bannerStyle tappedBlock:tappedBlock];
 }
 
-+ (void)showBannerAtHeight:(CGFloat)height withMessage:(NSString *)message bannerStyle:(SLBannerStyle)bannerStyle tappedBlock:(SLBannerControllerTappedBlock)tappedBlock
-{
++ (void)showBannerAtHeight:(CGFloat)height withMessage:(NSString *)message bannerStyle:(SLBannerStyle)bannerStyle tappedBlock:(SLBannerControllerTappedBlock)tappedBlock {
     // If we're already displaying a banner, queue up this method call.
     if (bannerVisible) {
-        
         SLBannerConfig *c = [SLBannerConfig new];
         c.message = message;
         c.bannerStyle = bannerStyle;
@@ -67,7 +65,6 @@ static CGFloat const delayPerCharacter = baseDelay / baseLength;
     }];
     [banner addGestureRecognizer:tap];
     
-    
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] bk_initWithHandler:^(UIGestureRecognizer *sender, UIGestureRecognizerState state, CGPoint location) {
         [self dismissBanner:sender];
     }];
@@ -94,7 +91,6 @@ static CGFloat const delayPerCharacter = baseDelay / baseLength;
      */
     
     NSInteger numberOfCharactersOverBaseLength = MAX(message.length - baseLength, 0);
-    
     CGFloat delay = baseDelay + (delayPerCharacter * numberOfCharactersOverBaseLength) / growthLimitingNumber;
     
     return delay;
@@ -112,8 +108,7 @@ static CGFloat const delayPerCharacter = baseDelay / baseLength;
     }];
 }
 
-+ (void)enqueueConfig:(SLBannerConfig *)config
-{
++ (void)enqueueConfig:(SLBannerConfig *)config {
     if (!queue) {
         queue = [[NSMutableArray alloc] init];
     }
@@ -121,12 +116,12 @@ static CGFloat const delayPerCharacter = baseDelay / baseLength;
     [queue addObject:config];
 }
 
-+ (SLBannerConfig *)dequeueConfig
-{
++ (SLBannerConfig *)dequeueConfig {
     SLBannerConfig *queuedConfig = [queue firstObject];
     if (queuedConfig) {
         [queue removeObjectAtIndex:0];
     }
+    
     return queuedConfig;
 }
 
