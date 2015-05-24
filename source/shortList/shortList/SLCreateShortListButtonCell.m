@@ -7,6 +7,7 @@
 //
 
 #import "SLCreateShortListButtonCell.h"
+#import "SLBannerController.h"
 #import "SLStyle.h"
 #import <BlocksKit+UIKit.h>
 

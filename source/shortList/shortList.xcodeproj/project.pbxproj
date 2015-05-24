@@ -24,8 +24,6 @@
 		467D55A71AF6D98F005CD607 /* UIImage+AverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55A61AF6D98F005CD607 /* UIImage+AverageColor.m */; };
 		468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */; };
 		468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925671B00026B00A7D98C /* SLAlbumTrackCell.m */; };
-		468FB8B01B113ACE0004DC14 /* SLBannerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 468FB8AF1B113ACE0004DC14 /* SLBannerController.m */; };
-		468FB8B41B113FA60004DC14 /* SLBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 468FB8B31B113FA60004DC14 /* SLBannerView.m */; };
 		46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094051AF061C00091C7F7 /* ItunesArtist.m */; };
 		46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */; };
 		46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */; };
@@ -105,10 +103,6 @@
 		468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumDetailsCell.m; sourceTree = "<group>"; };
 		468925661B00026B00A7D98C /* SLAlbumTrackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumTrackCell.h; sourceTree = "<group>"; };
 		468925671B00026B00A7D98C /* SLAlbumTrackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumTrackCell.m; sourceTree = "<group>"; };
-		468FB8AE1B113ACE0004DC14 /* SLBannerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLBannerController.h; sourceTree = "<group>"; };
-		468FB8AF1B113ACE0004DC14 /* SLBannerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLBannerController.m; sourceTree = "<group>"; };
-		468FB8B21B113FA60004DC14 /* SLBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLBannerView.h; sourceTree = "<group>"; };
-		468FB8B31B113FA60004DC14 /* SLBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLBannerView.m; sourceTree = "<group>"; };
 		46A094041AF061C00091C7F7 /* ItunesArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesArtist.h; sourceTree = "<group>"; };
 		46A094051AF061C00091C7F7 /* ItunesArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesArtist.m; sourceTree = "<group>"; };
 		46A094091AF06A3F0091C7F7 /* ItunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesAlbum.h; sourceTree = "<group>"; };
@@ -306,10 +300,6 @@
 		468FB8B11B113AE20004DC14 /* Banner */ = {
 			isa = PBXGroup;
 			children = (
-				468FB8AE1B113ACE0004DC14 /* SLBannerController.h */,
-				468FB8AF1B113ACE0004DC14 /* SLBannerController.m */,
-				468FB8B21B113FA60004DC14 /* SLBannerView.h */,
-				468FB8B31B113FA60004DC14 /* SLBannerView.m */,
 			);
 			name = Banner;
 			sourceTree = "<group>";
@@ -740,7 +730,6 @@
 				46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */,
 				46A094171AF076C80091C7F7 /* ItunesSearchTracks.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
-				468FB8B41B113FA60004DC14 /* SLBannerView.m in Sources */,
 				467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */,
 				461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */,
 				468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */,
@@ -754,7 +743,6 @@
 				461801231B095206003C0A92 /* SLCreateShortListEnterYearCell.m in Sources */,
 				467D55A31AF69746005CD607 /* SLAlbumDetailsVC.m in Sources */,
 				46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */,
-				468FB8B01B113ACE0004DC14 /* SLBannerController.m in Sources */,
 				46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */,
 				46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */,
 				467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */,
