@@ -23,6 +23,7 @@ NSInteger const kSLCreateShortListCellCount = 4;
 @property (nonatomic, assign) BOOL showingYearPicker;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SLCreateShortListEnterYearCell *yearPickerCell;
+@property (nonatomic, strong) SLCreateShortListEnterNameCell *shortListNameCell;
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;
 
@@ -76,7 +77,7 @@ NSInteger const kSLCreateShortListCellCount = 4;
         [cell setCreateNameAction:^(NSString *shortListName){
             weakself.shortListName = shortListName;
         }];
-        
+        self.shortListNameCell = cell;
         return cell;
     }
     else if (indexPath.row == 2) {
@@ -101,6 +102,7 @@ NSInteger const kSLCreateShortListCellCount = 4;
     [cell setCancelBlock:^ {
         weakSelf.showingYearPicker = NO;
         [weakSelf.yearPickerCell hidePickerCell];
+        [weakSelf.shortListNameCell clearShortListName];
         [weakSelf.tableView beginUpdates];
         [weakSelf.tableView endUpdates];
         if (weakSelf.cancelButtonAction) {

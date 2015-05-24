@@ -57,6 +57,10 @@
     return self;
 }
 
+- (void)clearShortListName {
+    self.shortListNameTextfield.text = [NSString new];
+}
+
 #pragma mark UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *currentShortListName = [textField.text stringByReplacingCharactersInRange:range withString:string];

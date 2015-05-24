@@ -14,4 +14,6 @@ typedef void(^SLCreateNameAction)(NSString *shortListName);
 
 @property (nonatomic, copy) SLCreateNameAction createNameAction;
 
+- (void)clearShortListName;
+
 @end
