@@ -12,6 +12,8 @@
 #import "SLCreateShortListButtonCell.h"
 #import "SLCreateShortListEnterNameCell.h"
 #import "SLCreateShortListEnterYearCell.h"
+#import "Shortlist.h"
+#import "SLParseController.h"
 #import <QuartzCore/QuartzCore.h>
 
 CGFloat const kSLCreateShortListPickerHeight = 180.0;
@@ -26,10 +28,21 @@ NSInteger const kSLCreateShortListCellCount = 4;
 @property (nonatomic, strong) SLCreateShortListEnterNameCell *shortListNameCell;
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;
+@property (nonatomic, copy) dispatch_block_t completion;
 
 @end
 
 @implementation SLCreateShortListVC
+
+- (instancetype)initWithCompletion:(dispatch_block_t)completion {
+    self = [super init];
+    
+    if (self) {
+        self.completion = completion;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -99,18 +112,36 @@ NSInteger const kSLCreateShortListCellCount = 4;
         cell = [[SLCreateShortListButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ButtonCellIdentifier];
     }
     __weak typeof(self) weakSelf = self;
-    [cell setCancelBlock:^ {
-        weakSelf.showingYearPicker = NO;
-        [weakSelf.yearPickerCell hidePickerCell];
-        [weakSelf.shortListNameCell clearShortListName];
-        [weakSelf.tableView beginUpdates];
-        [weakSelf.tableView endUpdates];
-        if (weakSelf.cancelButtonAction) {
-            weakSelf.cancelButtonAction();
+    [cell setCleanUpSLBlock:^ {
+        [weakSelf cleanupCreateShortListView];
+        if (weakSelf.completion) {
+            weakSelf.completion();
+        }
+    }];
+    
+    [cell setCreateSLBlock:^{
+        Shortlist *shortList = [Shortlist new];
+        shortList.shortListName = weakSelf.shortListName;
+        shortList.shortListYear = weakSelf.shortListYear;
+        
+        [SLParseController saveShortlist:shortList];
+        
+        [weakSelf cleanupCreateShortListView];
+        
+        if (weakSelf.completion) {
+            weakSelf.completion();
         }
     }];
     
     return cell;
+}
+
+- (void)cleanupCreateShortListView {
+    self.showingYearPicker = NO;
+    [self.yearPickerCell hidePickerCell];
+    [self.shortListNameCell clearShortListName];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -120,7 +151,6 @@ NSInteger const kSLCreateShortListCellCount = 4;
         self.showingYearPicker = YES;
         [self.tableView beginUpdates];
         [self.tableView endUpdates];
-        
         
         if ([self.delegate respondsToSelector:@selector(createShortList:willDisplayPickerWithHeight:)]) {
             [self.delegate createShortList:self willDisplayPickerWithHeight:kSLCreateShortListPickerHeight];

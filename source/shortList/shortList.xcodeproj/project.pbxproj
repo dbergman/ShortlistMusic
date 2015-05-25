@@ -24,6 +24,8 @@
 		467D55A71AF6D98F005CD607 /* UIImage+AverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55A61AF6D98F005CD607 /* UIImage+AverageColor.m */; };
 		468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */; };
 		468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925671B00026B00A7D98C /* SLAlbumTrackCell.m */; };
+		468FB8B71B125FAC0004DC14 /* SLParseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 468FB8B61B125FAC0004DC14 /* SLParseController.m */; };
+		468FB8BC1B1260DE0004DC14 /* Shortlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 468FB8BB1B1260DE0004DC14 /* Shortlist.m */; };
 		46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094051AF061C00091C7F7 /* ItunesArtist.m */; };
 		46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */; };
 		46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */; };
@@ -103,6 +105,10 @@
 		468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumDetailsCell.m; sourceTree = "<group>"; };
 		468925661B00026B00A7D98C /* SLAlbumTrackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumTrackCell.h; sourceTree = "<group>"; };
 		468925671B00026B00A7D98C /* SLAlbumTrackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumTrackCell.m; sourceTree = "<group>"; };
+		468FB8B51B125FAC0004DC14 /* SLParseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLParseController.h; sourceTree = "<group>"; };
+		468FB8B61B125FAC0004DC14 /* SLParseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLParseController.m; sourceTree = "<group>"; };
+		468FB8BA1B1260DE0004DC14 /* Shortlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shortlist.h; sourceTree = "<group>"; };
+		468FB8BB1B1260DE0004DC14 /* Shortlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shortlist.m; sourceTree = "<group>"; };
 		46A094041AF061C00091C7F7 /* ItunesArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesArtist.h; sourceTree = "<group>"; };
 		46A094051AF061C00091C7F7 /* ItunesArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesArtist.m; sourceTree = "<group>"; };
 		46A094091AF06A3F0091C7F7 /* ItunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesAlbum.h; sourceTree = "<group>"; };
@@ -234,6 +240,8 @@
 			children = (
 				461FCA001AED9C8E001C3F46 /* ItunesSearchAPIController.h */,
 				461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */,
+				468FB8B51B125FAC0004DC14 /* SLParseController.h */,
+				468FB8B61B125FAC0004DC14 /* SLParseController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -304,16 +312,7 @@
 			name = Banner;
 			sourceTree = "<group>";
 		};
-		46A094071AF061E60091C7F7 /* itunes API */ = {
-			isa = PBXGroup;
-			children = (
-				46A094081AF061FD0091C7F7 /* Models */,
-				461FC9FF1AED9A68001C3F46 /* Controllers */,
-			);
-			name = "itunes API";
-			sourceTree = "<group>";
-		};
-		46A094081AF061FD0091C7F7 /* Models */ = {
+		468FB8B81B1260290004DC14 /* itunes */ = {
 			isa = PBXGroup;
 			children = (
 				46A0940C1AF06DDA0091C7F7 /* ItunesSearchArtist.h */,
@@ -328,6 +327,33 @@
 				46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */,
 				46A094121AF072730091C7F7 /* ItunesTrack.h */,
 				46A094131AF072730091C7F7 /* ItunesTrack.m */,
+			);
+			name = itunes;
+			sourceTree = "<group>";
+		};
+		468FB8B91B1260B40004DC14 /* ShortList */ = {
+			isa = PBXGroup;
+			children = (
+				468FB8BA1B1260DE0004DC14 /* Shortlist.h */,
+				468FB8BB1B1260DE0004DC14 /* Shortlist.m */,
+			);
+			name = ShortList;
+			sourceTree = "<group>";
+		};
+		46A094071AF061E60091C7F7 /* itunes API */ = {
+			isa = PBXGroup;
+			children = (
+				46A094081AF061FD0091C7F7 /* Models */,
+				461FC9FF1AED9A68001C3F46 /* Controllers */,
+			);
+			name = "itunes API";
+			sourceTree = "<group>";
+		};
+		46A094081AF061FD0091C7F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				468FB8B91B1260B40004DC14 /* ShortList */,
+				468FB8B81B1260290004DC14 /* itunes */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -719,6 +745,7 @@
 				4618011D1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
 				46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */,
+				468FB8B71B125FAC0004DC14 /* SLParseController.m in Sources */,
 				467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */,
 				46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */,
 				461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */,
@@ -745,6 +772,7 @@
 				46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */,
 				46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */,
 				46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */,
+				468FB8BC1B1260DE0004DC14 /* Shortlist.m in Sources */,
 				467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

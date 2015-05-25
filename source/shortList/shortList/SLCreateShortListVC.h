@@ -23,6 +23,7 @@ extern NSInteger const kSLCreateShortListCellCount;
 @interface SLCreateShortListVC : UIViewController
 
 @property (nonatomic, weak) id <SLCreateShortListDelegate> delegate;
-@property (nonatomic, copy) dispatch_block_t cancelButtonAction;
+
+- (instancetype)initWithCompletion:(dispatch_block_t)completion;
 
 @end

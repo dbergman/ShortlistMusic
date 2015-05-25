@@ -10,6 +10,7 @@
 
 @interface SLCreateShortListButtonCell : UITableViewCell
 
-@property (nonatomic, copy) dispatch_block_t cancelBlock;
+@property (nonatomic, copy) dispatch_block_t cleanUpSLBlock;
+@property (nonatomic, copy) dispatch_block_t createSLBlock;
 
 @end

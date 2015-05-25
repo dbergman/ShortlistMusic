@@ -38,7 +38,9 @@
         
         __weak typeof(self) weakSelf = self;
         [self.cancelButton bk_addEventHandler:^(id sender) {
-            weakSelf.cancelBlock();
+            if (weakSelf.cleanUpSLBlock) {
+                weakSelf.cleanUpSLBlock();
+            }
         } forControlEvents:UIControlEventTouchUpInside];
         
         self.createButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -51,7 +53,9 @@
         self.createButton.backgroundColor = [UIColor blackColor];
         
         [self.createButton bk_addEventHandler:^(id sender) {
-            NSLog(@"Create@!@!@@@");
+            if (weakSelf.createSLBlock) {
+                weakSelf.createSLBlock();
+            }
         } forControlEvents:UIControlEventTouchUpInside];
         
         NSDictionary *views = NSDictionaryOfVariableBindings(_cancelButton, _createButton);

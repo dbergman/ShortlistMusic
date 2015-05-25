@@ -12,6 +12,8 @@
 #import "SLListAlbumsVC.h"
 #import "SLCreateShortListVC.h"
 #import <BlocksKit+UIKit.h>
+#import "UIViewController+SLLoginGate.h"
+#import <Parse/Parse.h>
 
 @interface SLListsVC () <SLCreateShortListDelegate>
 
@@ -35,13 +37,28 @@
         [weakSelf.navigationController pushViewController:[SLListAlbumsVC new] animated:YES];
     }];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemCompose handler:^(id sender) {
-        [weakSelf showCreateNewShortListView];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
+        [weakSelf showLoginGateWithCompletion:^{
+            if ([PFUser currentUser]) {
+                [weakSelf showCreateNewShortListView];
+            }
+        }];
     }];
 }
 
 - (void)createNewShortListView {
-    self.createShortListVC = [SLCreateShortListVC new];
+    __weak typeof(self) weakSelf = self;
+    self.createShortListVC = [[SLCreateShortListVC alloc] initWithCompletion:^{
+        NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
+        topMarginConstraint.constant = weakSelf.view.frame.size.height;
+        NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];
+        createSLHeightConstraint.constant = kSLCreateShortListCellCount * kSLCreateShortListCellHeight;
+        
+        [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
+        [UIView animateWithDuration:.2 animations:^{
+            [weakSelf.view layoutIfNeeded];
+        }];
+    }];
     self.createShortListVC.delegate = self;
     [self.createShortListVC.view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:self.createShortListVC.view];
@@ -55,7 +72,7 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-sideMargin-[createShortListVC(viewWidth)]-sideMargin-|" options:0 metrics:metrics views:views]];
     
     [self.view updateConstraints];
-    }
+}
 
 - (void)showCreateNewShortListView {
     NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
@@ -65,17 +82,6 @@
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:.2 animations:^{
         [weakSelf.view layoutIfNeeded];
-    }];
-    
-    [self.createShortListVC setCancelButtonAction:^{
-        topMarginConstraint.constant = weakSelf.view.frame.size.height;
-        NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];
-        createSLHeightConstraint.constant = kSLCreateShortListCellCount * kSLCreateShortListCellHeight;
-        
-        [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
-        [UIView animateWithDuration:.2 animations:^{
-            [weakSelf.view layoutIfNeeded];
-        }];
     }];
 }
 

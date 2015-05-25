@@ -28,6 +28,10 @@
     else {
         PFUser *user = [PFUser currentUser];
     }
+    
+    if (completion) {
+        completion();
+    }
 }
 
 @end
