@@ -8,6 +8,7 @@
 
 #import "SLAlbumDetailsVC.h"
 #import "ItunesTrack.h"
+#import "SLStyle.h"
 #import "UIImage+AverageColor.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <BlocksKit+UIKit.h>
@@ -16,6 +17,8 @@
 
 static CGFloat const kSLAlbumDetailsCellHeight = 60.0;
 static CGFloat const kSLAlbumTrackCellHeight = 44.0;
+static CGFloat const kSLSpotifyButtonSize = 44.0;
+static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/search/album:%@";
 
 @interface SLAlbumDetailsVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -23,6 +26,7 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
 @property (nonatomic, strong) ItunesTrack *albumDetails;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *coverImageView;
+@property (nonatomic, strong) UIButton *spotifyButton;
 
 @end
 
@@ -66,6 +70,8 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
         [weakSelf.view addSubview:self.tableView];
         [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }];
+    
+    [self setupSpotifyButton];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -73,6 +79,31 @@ static CGFloat const kSLAlbumTrackCellHeight = 44.0;
     
     self.coverImageView.frame = CGRectMake(0.0, self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height, self.view.frame.size.width, self.view.frame.size.width);
     self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.coverImageView.frame) - kSLAlbumDetailsCellHeight, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.spotifyButton removeFromSuperview];
+}
+
+- (void)setupSpotifyButton {
+    self.spotifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.spotifyButton setImage:[UIImage imageNamed:@"spotifyIcon"] forState:UIControlStateNormal];
+    self.spotifyButton.alpha = .7;
+    self.spotifyButton.imageView.layer.cornerRadius = 7.0f;
+    self.spotifyButton.layer.shadowRadius = 3.0f;
+    self.spotifyButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.spotifyButton.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    self.spotifyButton.layer.shadowOpacity = 0.5f;
+    self.spotifyButton.layer.masksToBounds = NO;
+    self.spotifyButton.frame = CGRectMake(self.view.frame.size.width - kSLSpotifyButtonSize - MarginSizes.xLarge, self.view.frame.size.height - MarginSizes.large - kSLSpotifyButtonSize - self.tabBarController.tabBar.frame.size.height, kSLSpotifyButtonSize, kSLSpotifyButtonSize);
+    [self.spotifyButton bk_addEventHandler:^(id sender) {
+        NSString *urlString = [NSString stringWithFormat:kSLSpotifyURL,self.albumDetails.collectionName];
+        NSString *escaped = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:escaped]];
+    } forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.view addSubview:self.spotifyButton];
 }
 
 #pragma mark - Table view data source
