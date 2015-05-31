@@ -88,7 +88,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
         [cell setCreateSLBlock:^{
             Shortlist *shortList = [Shortlist new];
             shortList.shortListName = weakSelf.shortListName;
-            shortList.shortListYear = weakSelf.shortListYear;
+            shortList.shortListYear = (weakSelf.shortListYear) ? weakSelf.shortListYear: NSLocalizedString(@"All", nil);
             
             [SLParseController saveShortlist:shortList];
             

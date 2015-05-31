@@ -13,11 +13,14 @@
 #import "SLCreateShortListVC.h"
 #import <BlocksKit+UIKit.h>
 #import "UIViewController+SLLoginGate.h"
+#import "SLParseController.h"
+#import "Shortlist.h"
 #import <Parse/Parse.h>
 
-@interface SLListsVC () <SLCreateShortListDelegate>
+@interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSArray *shortLists;
 @property (nonatomic, strong) SLCreateShortListVC *createShortListVC;
 @property (nonatomic, strong) NSArray *createSLVerticalConstraints;
 
@@ -29,8 +32,6 @@
     [super viewDidLoad];
     
     [self setTitle:NSLocalizedString(@"ShortLists", nil)];
-    
-    [self createNewShortListView];
     
     __weak typeof(self) weakSelf = self;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
@@ -44,6 +45,32 @@
             }
         }];
     }];
+    
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+    
+    [self createNewShortListView];
+}
+
+#pragma mark - Table view data source
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.shortLists.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"CellIdentifier";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    Shortlist *shortList = (Shortlist *)self.shortLists[indexPath.row];
+    cell.textLabel.text = shortList.shortListName;
+    
+    return cell;
 }
 
 - (void)createNewShortListView {
@@ -57,6 +84,12 @@
         [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
         [UIView animateWithDuration:.2 animations:^{
             [weakSelf.view layoutIfNeeded];
+            //[[self navigationController] setNavigationBarHidden:NO animated:YES];
+        }];
+        
+        [SLParseController getUsersShortLists:^(NSArray *shortLists){
+            weakSelf.shortLists = shortLists;
+            [weakSelf.tableView reloadData];
         }];
     }];
     self.createShortListVC.delegate = self;
@@ -79,10 +112,9 @@
     topMarginConstraint.constant = 100.0;
     [self.view addConstraints:self.createSLVerticalConstraints];
     
-    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:.2 animations:^{
-        [weakSelf.view layoutIfNeeded];
-        //[[weakSelf navigationController] setNavigationBarHidden:YES animated:YES];
+        [self.view layoutIfNeeded];
+        //[[self navigationController] setNavigationBarHidden:YES animated:YES];
     }];
 }
 

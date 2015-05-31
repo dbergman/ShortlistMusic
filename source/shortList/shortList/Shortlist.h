@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
 
-@interface Shortlist : NSObject
+@interface Shortlist : PFObject <PFSubclassing>
 
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;
+@property (nonatomic, strong) NSString *shortListUserId;
 
 @end

@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 @class Shortlist;
 
+typedef void(^SLGetUsersShortListBLock)(NSArray *shortlists);
+
 @interface SLParseController : NSObject
 
 + (void)saveShortlist:(Shortlist *)newShortList;
++ (void)getUsersShortLists:(SLGetUsersShortListBLock)completion;
 
 @end

@@ -14,16 +14,29 @@
 
 + (void)saveShortlist:(Shortlist *)newShortList {
     PFUser *user = [PFUser currentUser];
+    newShortList.shortListUserId = user.objectId;
     
-    PFObject *shortList = [PFObject objectWithClassName:@"ShortList"];
-    shortList[@"name"] = newShortList.shortListName;
-    shortList[@"year"] = (newShortList.shortListYear) ? newShortList.shortListYear: NSLocalizedString(@"All", nil);
-    shortList[@"userId"] = user.objectId;
-    [shortList saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [newShortList saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error) {
             NSInteger errCode = [error code];
             if (kPFErrorConnectionFailed == errCode ||  kPFErrorInternalServer == errCode)
-                [shortList saveEventually];
+                [newShortList saveEventually];
+        }
+    }];
+}
+
++ (void)getUsersShortLists:(SLGetUsersShortListBLock)completion {
+    PFUser *user = [PFUser currentUser];
+    PFQuery *query = [PFQuery queryWithClassName:@"Shortlist"];
+    [query whereKey:@"shortListUserId" equalTo:user.objectId];
+
+    [query findObjectsInBackgroundWithBlock:^(NSArray *shortLists, NSError *error) {
+        if (!error) {
+            if (completion) {
+                completion(shortLists);
+            }
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
 }

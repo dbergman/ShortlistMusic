@@ -15,6 +15,7 @@
 #import "SLMoreVC.h"
 #import "SLStyle.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "Shortlist.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -29,6 +30,7 @@
     [self.window makeKeyAndVisible];
     
     [self setUpParse];
+    [Shortlist registerSubclass];
 
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];

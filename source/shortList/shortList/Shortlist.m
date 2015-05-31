@@ -10,4 +10,12 @@
 
 @implementation Shortlist
 
+@dynamic shortListName;
+@dynamic shortListYear;
+@dynamic shortListUserId;
+
++ (NSString *)parseClassName {
+    return @"Shortlist";
+}
+
 @end
