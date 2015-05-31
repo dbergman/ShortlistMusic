@@ -18,7 +18,7 @@
 
 CGFloat const kSLCreateShortListPickerHeight = 180.0;
 CGFloat const kSLCreateShortListCellHeight = 44.0;
-NSInteger const kSLCreateShortListCellCount = 4;
+NSInteger const kSLCreateShortListCellCount = 3;
 
 @interface SLCreateShortListVC () <UITableViewDelegate, UITableViewDataSource>
 

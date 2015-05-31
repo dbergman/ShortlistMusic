@@ -82,6 +82,7 @@
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:.2 animations:^{
         [weakSelf.view layoutIfNeeded];
+        //[[weakSelf navigationController] setNavigationBarHidden:YES animated:YES];
     }];
 }
 

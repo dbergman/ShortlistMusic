@@ -14,7 +14,6 @@
 
 + (void)saveShortlist:(Shortlist *)newShortList {
     PFUser *user = [PFUser currentUser];
-
     
     PFObject *shortList = [PFObject objectWithClassName:@"ShortList"];
     shortList[@"name"] = newShortList.shortListName;
@@ -26,7 +25,17 @@
             
             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
-                    // The object has been saved.
+                    PFQuery *query = [PFQuery queryWithClassName:@"ShortList"];
+                     [query whereKey:@"objectId" equalTo:[PFUser currentUser].objectId];
+                    
+                    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                        if (!error) {
+                            // The find succeeded. The first 100 objects are available in objects
+                        } else {
+                            // Log details of the failure
+                            NSLog(@"Error: %@ %@", error, [error userInfo]);
+                        }
+                    }];
                 } else {
                     // There was a problem, check error.description
                 }
@@ -35,6 +44,8 @@
             // There was a problem, check error.description
         }
     }];
+    
+
     
 
 }
