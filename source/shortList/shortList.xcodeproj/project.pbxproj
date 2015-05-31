@@ -11,7 +11,6 @@
 		461801121B077E6C003C0A92 /* SLUserSignUpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801111B077E6C003C0A92 /* SLUserSignUpVC.m */; };
 		461801161B08D7A4003C0A92 /* SLCreateShortListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */; };
 		4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */; };
-		4618011D1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4618011C1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m */; };
 		461801201B09361E003C0A92 /* SLCreateShortListEnterNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4618011F1B09361E003C0A92 /* SLCreateShortListEnterNameCell.m */; };
 		461801231B095206003C0A92 /* SLCreateShortListEnterYearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801221B095206003C0A92 /* SLCreateShortListEnterYearCell.m */; };
 		461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */; };
@@ -79,8 +78,6 @@
 		461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListVC.m; sourceTree = "<group>"; };
 		461801181B08E6A0003C0A92 /* SLCreateShortListTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListTitleCell.h; sourceTree = "<group>"; };
 		461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListTitleCell.m; sourceTree = "<group>"; };
-		4618011B1B08E9E5003C0A92 /* SLCreateShortListButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListButtonCell.h; sourceTree = "<group>"; };
-		4618011C1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListButtonCell.m; sourceTree = "<group>"; };
 		4618011E1B09361E003C0A92 /* SLCreateShortListEnterNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListEnterNameCell.h; sourceTree = "<group>"; };
 		4618011F1B09361E003C0A92 /* SLCreateShortListEnterNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListEnterNameCell.m; sourceTree = "<group>"; };
 		461801211B095206003C0A92 /* SLCreateShortListEnterYearCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListEnterYearCell.h; sourceTree = "<group>"; };
@@ -196,8 +193,6 @@
 			children = (
 				461801181B08E6A0003C0A92 /* SLCreateShortListTitleCell.h */,
 				461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */,
-				4618011B1B08E9E5003C0A92 /* SLCreateShortListButtonCell.h */,
-				4618011C1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m */,
 				4618011E1B09361E003C0A92 /* SLCreateShortListEnterNameCell.h */,
 				4618011F1B09361E003C0A92 /* SLCreateShortListEnterNameCell.m */,
 				461801211B095206003C0A92 /* SLCreateShortListEnterYearCell.h */,
@@ -742,7 +737,6 @@
 				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
 				46A094141AF072730091C7F7 /* ItunesTrack.m in Sources */,
 				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
-				4618011D1B08E9E5003C0A92 /* SLCreateShortListButtonCell.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
 				46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */,
 				468FB8B71B125FAC0004DC14 /* SLParseController.m in Sources */,

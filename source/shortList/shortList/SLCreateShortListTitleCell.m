@@ -8,6 +8,7 @@
 
 #import "SLCreateShortListTitleCell.h"
 #import "SLStyle.h"
+#import <BlocksKit+UIKit.h>
 
 @implementation SLCreateShortListTitleCell
 
@@ -41,11 +42,23 @@
         
         UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
-        UIBarButtonItem *createButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:nil action:nil];
+        __weak typeof(self) weakSelf = self;
+        UIBarButtonItem *createButton = [UIBarButtonItem new];
         createButton.tintColor = [UIColor whiteColor];
-        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:nil action:nil];
+        [createButton bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
+            if (weakSelf.createSLBlock) {
+                weakSelf.createSLBlock();
+            }
+        }];
+    
+        UIBarButtonItem *cancelButton = [UIBarButtonItem new];
         cancelButton.tintColor = [UIColor sl_Red];
-
+        [cancelButton bk_initWithBarButtonSystemItem:UIBarButtonSystemItemCancel handler:^(id sender) {
+            if (weakSelf.cleanUpSLBlock) {
+                weakSelf.cleanUpSLBlock();
+            }
+        }];
+        
         NSArray *items = [[NSArray alloc] initWithObjects:marginSpace, cancelButton, flexibleSpace, toolBarTitle, flexibleSpace, createButton, marginSpace, nil];
         
         [titleToolBar setItems:items];
