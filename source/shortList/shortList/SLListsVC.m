@@ -51,6 +51,11 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     
+    [SLParseController getUsersShortLists:^(NSArray *shortLists){
+        weakSelf.shortLists = shortLists;
+        [weakSelf.tableView reloadData];
+    }];
+    
     [self createNewShortListView];
 }
 
@@ -85,11 +90,6 @@
         [UIView animateWithDuration:.2 animations:^{
             [weakSelf.view layoutIfNeeded];
             //[[self navigationController] setNavigationBarHidden:NO animated:YES];
-        }];
-        
-        [SLParseController getUsersShortLists:^(NSArray *shortLists){
-            weakSelf.shortLists = shortLists;
-            [weakSelf.tableView reloadData];
         }];
     }];
     self.createShortListVC.delegate = self;
