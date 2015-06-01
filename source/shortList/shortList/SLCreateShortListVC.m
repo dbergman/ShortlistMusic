@@ -53,7 +53,6 @@ NSInteger const kSLCreateShortListCellCount = 3;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     self.tableView.layer.cornerRadius = 10;
-    self.tableView.alpha = .8;
     self.tableView.scrollEnabled = NO;
     [self.tableView setAutoresizesSubviews:YES];
     [self.tableView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
