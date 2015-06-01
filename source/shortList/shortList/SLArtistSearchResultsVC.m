@@ -12,21 +12,7 @@
 #import "ItunesSearchAlbum.h"
 #import "ItunesArtist.h"
 
-@interface SLArtistSearchResultsVC ()
-
-@property (nonatomic, copy) ArtistResultsCompletionBlock completion;
-
-@end
-
 @implementation SLArtistSearchResultsVC
-
-- (instancetype)initWithCompletion:(ArtistResultsCompletionBlock)completion {
-    self = [super init];
-    if (self) {
-        self.completion = completion;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,9 +60,9 @@
     __weak typeof(self) weakSelf = self;
     [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:[NSNumber numberWithInteger:itunesArtist.artistId] completion:^(ItunesSearchAlbum *albumResult, NSError *error) {
         if (!error) {
-            if (weakSelf.completion) {
-                weakSelf.completion(itunesArtist.artistName, albumResult.getArtistAlbums);
-            }
+            SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithArtistName:itunesArtist.artistName Albums:albumResult.getArtistAlbums];
+            [weakSelf.navController pushViewController:albumResltsVC animated:YES];
+            
         }
     }];
 }

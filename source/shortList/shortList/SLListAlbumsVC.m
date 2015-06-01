@@ -38,13 +38,8 @@
 }
 
 - (void)startSearchAlbumFlow {
-    __weak typeof(self) weakSelf = self;
-    self.searchResultsVC = [[SLArtistSearchResultsVC alloc] initWithCompletion:^(NSString *artistName, NSArray *albums) {
-        [weakSelf dismissViewControllerAnimated:YES completion:^{
-            SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithArtistName:artistName Albums:albums];
-            [weakSelf.navigationController pushViewController:albumResltsVC animated:YES];
-        }];
-    }];
+    self.searchResultsVC = [SLArtistSearchResultsVC new];
+    self.searchResultsVC.navController = self.navigationController;
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsVC];
     self.searchController.delegate = self;

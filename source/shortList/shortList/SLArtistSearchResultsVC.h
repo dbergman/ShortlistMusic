@@ -8,12 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^ArtistResultsCompletionBlock)(NSString *artistName, NSArray *albums);
-
 @interface SLArtistSearchResultsVC : UITableViewController
 
 @property (nonatomic, strong) NSArray *searchResults;
-
-- (instancetype)initWithCompletion:(ArtistResultsCompletionBlock)completion;
+@property (nonatomic, strong) UINavigationController *navController;
 
 @end
