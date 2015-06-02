@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "SLBaseVC.h"
 
+@class Shortlist;
+
 @interface SLListAlbumsVC : SLBaseVC
+
+- (instancetype)initWithShortList:(Shortlist *)shortList NS_DESIGNATED_INITIALIZER;
 
 @end

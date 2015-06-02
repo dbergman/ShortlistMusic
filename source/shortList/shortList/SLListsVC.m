@@ -34,10 +34,6 @@
     [self setTitle:NSLocalizedString(@"ShortLists", nil)];
     
     __weak typeof(self) weakSelf = self;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemSearch handler:^(id sender) {
-        [weakSelf.navigationController pushViewController:[SLListAlbumsVC new] animated:YES];
-    }];
-    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
         [weakSelf showLoginGateWithCompletion:^{
             if ([PFUser currentUser]) {
@@ -76,6 +72,13 @@
     cell.textLabel.text = shortList.shortListName;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    Shortlist *shortList = self.shortLists[indexPath.row];
+    [self.navigationController pushViewController:[[SLListAlbumsVC alloc] initWithShortList:shortList] animated:YES];
 }
 
 - (void)createNewShortListView {

@@ -11,16 +11,28 @@
 #import "ItunesSearchAPIController.h"
 #import "ItunesSearchArtist.h"
 #import "SLAlbumSearchResultVC.h"
+#import "Shortlist.h"
 
 @interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) SLArtistSearchResultsVC *searchResultsVC;
+@property (nonatomic, strong) Shortlist *shortList;
 
 @end
 
 @implementation SLListAlbumsVC
+
+- (instancetype)initWithShortList:(Shortlist *)shortList {
+    self = [super init];
+    
+    if (self) {
+        self.shortList = shortList;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

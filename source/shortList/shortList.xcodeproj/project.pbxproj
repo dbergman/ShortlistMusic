@@ -363,6 +363,13 @@
 			name = "Itunes API Test Files";
 			sourceTree = "<group>";
 		};
+		46A16A991B1D3828007F21FA /* ShortList Albums */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "ShortList Albums";
+			sourceTree = "<group>";
+		};
 		46AB4A9F1B042E850056EC35 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +482,7 @@
 				461801131B08D590003C0A92 /* Create ShortList */,
 				467D55A01AF696FF005CD607 /* Album Details */,
 				467D55931AF55E71005CD607 /* Search */,
+				46A16A991B1D3828007F21FA /* ShortList Albums */,
 				46CB6B031AED7ADC00BF1DF3 /* SLListsVC.h */,
 				46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */,
 				467D55901AF54FB4005CD607 /* SLListAlbumsVC.h */,
