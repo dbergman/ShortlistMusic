@@ -13,9 +13,9 @@
 #import "SLCreateShortListVC.h"
 #import <BlocksKit+UIKit.h>
 #import "UIViewController+SLLoginGate.h"
-#import "SLParseController.h"
 #import "Shortlist.h"
 #import <Parse/Parse.h>
+#import "shortList-Swift.h"
 
 @interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -46,9 +46,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
-    
-    [SLParseController getUsersShortLists:^(NSArray *shortLists){
-        weakSelf.shortLists = shortLists;
+
+    [SLParseController getUsersShortLists:^(NSArray *shortlists) {
+        weakSelf.shortLists = shortlists;
         [weakSelf.tableView reloadData];
     }];
     

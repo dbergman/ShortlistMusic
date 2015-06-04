@@ -12,8 +12,8 @@
 #import "SLCreateShortListEnterNameCell.h"
 #import "SLCreateShortListEnterYearCell.h"
 #import "Shortlist.h"
-#import "SLParseController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "shortList-Swift.h"
 
 CGFloat const kSLCreateShortListPickerHeight = 180.0;
 CGFloat const kSLCreateShortListCellHeight = 44.0;

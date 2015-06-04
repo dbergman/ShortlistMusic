@@ -15,6 +15,7 @@
 		461801231B095206003C0A92 /* SLCreateShortListEnterYearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801221B095206003C0A92 /* SLCreateShortListEnterYearCell.m */; };
 		461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */; };
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
+		4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5511B1E663F00F997F8 /* SLParseController.swift */; };
 		467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */; };
 		467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55951AF55F3A005CD607 /* SLArtistSearchResultsVC.m */; };
 		467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55981AF577D0005CD607 /* SLAlbumSearchResultVC.m */; };
@@ -23,7 +24,6 @@
 		467D55A71AF6D98F005CD607 /* UIImage+AverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55A61AF6D98F005CD607 /* UIImage+AverageColor.m */; };
 		468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */; };
 		468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925671B00026B00A7D98C /* SLAlbumTrackCell.m */; };
-		468FB8B71B125FAC0004DC14 /* SLParseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 468FB8B61B125FAC0004DC14 /* SLParseController.m */; };
 		468FB8BC1B1260DE0004DC14 /* Shortlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 468FB8BB1B1260DE0004DC14 /* Shortlist.m */; };
 		46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094051AF061C00091C7F7 /* ItunesArtist.m */; };
 		46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */; };
@@ -86,6 +86,8 @@
 		461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLTabBarController.m; sourceTree = "<group>"; };
 		461FCA001AED9C8E001C3F46 /* ItunesSearchAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesSearchAPIController.h; sourceTree = "<group>"; };
 		461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchAPIController.m; sourceTree = "<group>"; };
+		4648A5501B1E663E00F997F8 /* shortList-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shortList-Bridging-Header.h"; sourceTree = "<group>"; };
+		4648A5511B1E663F00F997F8 /* SLParseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLParseController.swift; sourceTree = "<group>"; };
 		467D55901AF54FB4005CD607 /* SLListAlbumsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListAlbumsVC.h; sourceTree = "<group>"; };
 		467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAlbumsVC.m; sourceTree = "<group>"; };
 		467D55941AF55F3A005CD607 /* SLArtistSearchResultsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLArtistSearchResultsVC.h; sourceTree = "<group>"; };
@@ -102,8 +104,6 @@
 		468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumDetailsCell.m; sourceTree = "<group>"; };
 		468925661B00026B00A7D98C /* SLAlbumTrackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumTrackCell.h; sourceTree = "<group>"; };
 		468925671B00026B00A7D98C /* SLAlbumTrackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumTrackCell.m; sourceTree = "<group>"; };
-		468FB8B51B125FAC0004DC14 /* SLParseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLParseController.h; sourceTree = "<group>"; };
-		468FB8B61B125FAC0004DC14 /* SLParseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLParseController.m; sourceTree = "<group>"; };
 		468FB8BA1B1260DE0004DC14 /* Shortlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shortlist.h; sourceTree = "<group>"; };
 		468FB8BB1B1260DE0004DC14 /* Shortlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shortlist.m; sourceTree = "<group>"; };
 		46A094041AF061C00091C7F7 /* ItunesArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesArtist.h; sourceTree = "<group>"; };
@@ -235,8 +235,7 @@
 			children = (
 				461FCA001AED9C8E001C3F46 /* ItunesSearchAPIController.h */,
 				461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */,
-				468FB8B51B125FAC0004DC14 /* SLParseController.h */,
-				468FB8B61B125FAC0004DC14 /* SLParseController.m */,
+				4648A5511B1E663F00F997F8 /* SLParseController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -418,6 +417,7 @@
 		46CB6ACF1AED715800BF1DF3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4648A5501B1E663E00F997F8 /* shortList-Bridging-Header.h */,
 				46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */,
 				46CB6ADF1AED715800BF1DF3 /* Images.xcassets */,
 				46CB6AE11AED715800BF1DF3 /* LaunchScreen.xib */,
@@ -747,7 +747,7 @@
 				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
 				46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */,
-				468FB8B71B125FAC0004DC14 /* SLParseController.m in Sources */,
+				4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */,
 				467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */,
 				46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */,
 				461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */,
@@ -829,6 +829,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -848,6 +849,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = shortList;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -873,6 +875,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -885,6 +888,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_MODULE_NAME = shortList;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -896,9 +900,14 @@
 			baseConfigurationReference = 387B84E873048CE78F83CF11 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = shortList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -907,9 +916,13 @@
 			baseConfigurationReference = 1415B849DC8FE7440FF77432 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = shortList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 			};
 			name = Release;
 		};
