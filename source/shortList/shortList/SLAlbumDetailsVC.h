@@ -8,9 +8,11 @@
 
 #import "SLBaseVC.h"
 @class ItunesTrack;
+@class Shortlist;
 
 @interface SLAlbumDetailsVC : SLBaseVC
 
-- (instancetype)initWithAlbumName:(ItunesTrack *)albumDetails Tracks:(NSArray *)tracks;
+- (instancetype)initWithAlbumDetails:(ItunesTrack *)albumDetails Tracks:(NSArray *)tracks;
+- (instancetype)initWithShortList:(Shortlist *)shortList albumDetails:(ItunesTrack *)albumDetails tracks:(NSArray *)tracks;
 
 @end

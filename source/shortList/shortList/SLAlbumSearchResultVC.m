@@ -12,20 +12,33 @@
 #import "ItunesSearchTracks.h"
 #import "SLAlbumSearchResultsCellTableViewCell.h"
 #import "SLAlbumDetailsVC.h"
+#import "Shortlist.h"
 
 @interface SLAlbumSearchResultVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *albums;
 @property (nonatomic, strong) NSString *artistName;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) Shortlist *shortList;
 
 @end
 
 
 @implementation SLAlbumSearchResultVC
 
+- (instancetype)initWithShortList:(Shortlist *)shortList ArtistName:(NSString *)artistName Albums:(NSArray *)albums {
+    self = [self initWithArtistName:artistName Albums:albums];
+    
+    if (self) {
+        self.shortList = shortList;
+    }
+    
+    return self;
+}
+
 - (instancetype)initWithArtistName:(NSString *)artistName Albums:(NSArray *)albums {
     self = [super init];
+    
     if (self) {
         self.albums = albums;
         self.artistName = artistName;
@@ -88,7 +101,7 @@
     __weak typeof(self) weakSelf = self;
     [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.collectionId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
         if (!error) {
-            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithAlbumName:[albumSearchResults getAlbumInfo] Tracks:[albumSearchResults getAlbumTracks]];
+            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:weakSelf.shortList albumDetails:[albumSearchResults getAlbumInfo] tracks:[albumSearchResults getAlbumTracks]];
             [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
         }
     }];

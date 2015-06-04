@@ -1,5 +1,5 @@
 //
-//  SLParseControllerSW.swift
+//  SLParseController.swift
 //  shortList
 //
 //  Created by Dustin Bergman on 6/2/15.
@@ -9,6 +9,8 @@
 typealias SLGetUsersShortListBLock = (shortlists:NSArray) -> Void
 
 import Foundation
+
+let ShortLists = "Shortlist"
 
 class SLParseController : NSObject {
     class func saveShortlist (newShortList:Shortlist) {

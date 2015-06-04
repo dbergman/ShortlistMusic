@@ -14,6 +14,7 @@
 #import <BlocksKit+UIKit.h>
 #import "SLAlbumDetailsCell.h"
 #import "SLAlbumTrackCell.h"
+#import "Shortlist.h"
 
 static CGFloat const kSLAlbumDetailsCellHeight = 60.0;
 static CGFloat const kSLAlbumTrackCellHeight = 44.0;
@@ -26,17 +27,30 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 @property (nonatomic, strong) ItunesTrack *albumDetails;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *coverImageView;
+@property (nonatomic, strong) Shortlist *shortList;
 @property (nonatomic, strong) UIButton *spotifyButton;
 
 @end
 
 @implementation SLAlbumDetailsVC
 
-- (instancetype)initWithAlbumName:(ItunesTrack *)albumDetails Tracks:(NSArray *)tracks {
+- (instancetype)initWithAlbumDetails:(ItunesTrack *)albumDetails Tracks:(NSArray *)tracks {
     self = [super init];
+    
     if (self) {
         self.albumDetails = albumDetails;
         self.tracks = tracks;
+
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithShortList:(Shortlist *)shortList albumDetails:(ItunesTrack *)albumDetails tracks:(NSArray *)tracks {
+    self = [self initWithAlbumDetails:albumDetails Tracks:tracks];
+    
+    if (self) {
+        self.shortList = shortList;
     }
     
     return self;

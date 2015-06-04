@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Shortlist;
 
 @interface SLArtistSearchResultsVC : UITableViewController
 
 @property (nonatomic, strong) NSArray *searchResults;
 @property (nonatomic, strong) UINavigationController *navController;
+@property (nonatomic, strong) Shortlist *shortList;
 
 @end

@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "SLBaseVC.h"
 
+@class Shortlist;
+
 @interface SLAlbumSearchResultVC : SLBaseVC
 
 - (instancetype)initWithArtistName:(NSString *)artistName Albums:(NSArray *)albums;
+- (instancetype)initWithShortList:(Shortlist *)shortList ArtistName:(NSString *)artistName Albums:(NSArray *)albums;
 
 @end
