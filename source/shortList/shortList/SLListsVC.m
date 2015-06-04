@@ -45,6 +45,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self.view addSubview:self.tableView];
 
     [SLParseController getUsersShortLists:^(NSArray *shortlists) {
@@ -81,6 +82,20 @@
     [self.navigationController pushViewController:[[SLListAlbumsVC alloc] initWithShortList:shortList] animated:YES];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    __weak typeof(self) weakSelf = self;
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [SLParseController removeShortList:self.shortLists[indexPath.row] completion:^(NSArray * shortlists) {
+            weakSelf.shortLists = shortlists;
+            [weakSelf.tableView reloadData];
+        }];
+    }
+}
+
 - (void)createNewShortListView {
     __weak typeof(self) weakSelf = self;
     self.createShortListVC = [[SLCreateShortListVC alloc] initWithCompletion:^{
@@ -88,6 +103,11 @@
         topMarginConstraint.constant = weakSelf.view.frame.size.height;
         NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];
         createSLHeightConstraint.constant = kSLCreateShortListCellCount * kSLCreateShortListCellHeight;
+        
+        [SLParseController getUsersShortLists:^(NSArray *shortlists) {
+            weakSelf.shortLists = shortlists;
+            [weakSelf.tableView reloadData];
+        }];
         
         [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
         [UIView animateWithDuration:.2 animations:^{

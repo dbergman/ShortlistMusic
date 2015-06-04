@@ -121,8 +121,6 @@ NSInteger const kSLCreateShortListCellCount = 3;
     [cell setCreateYearAction:^(NSString *shortListYear){
         weakself.shortListYear = shortListYear;
     }];
-
-    
     return cell;
 }
 

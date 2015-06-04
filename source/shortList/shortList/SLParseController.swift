@@ -29,11 +29,17 @@ class SLParseController : NSObject {
         query.findObjectsInBackgroundWithBlock {
             (shortLists: [AnyObject]?, error: NSError?) -> Void in
             if !(error != nil) {
-                    completion(shortlists: shortLists!)
+                completion(shortlists: shortLists!)
             }
             else {
                 //TODO HANDLE ERROR
             }
+        }
+    }
+    
+    class func removeShortList(shortlist:Shortlist, completion:SLGetUsersShortListBLock) {
+        shortlist.deleteInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            SLParseController .getUsersShortLists(completion)
         }
     }
     
