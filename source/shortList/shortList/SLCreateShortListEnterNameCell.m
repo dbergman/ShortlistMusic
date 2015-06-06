@@ -59,6 +59,7 @@
 
 - (void)clearShortListName {
     self.shortListNameTextfield.text = [NSString new];
+    [self.shortListNameTextfield resignFirstResponder];
 }
 
 #pragma mark UITextFieldDelegate

@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSArray *shortLists;
 @property (nonatomic, strong) SLCreateShortListVC *createShortListVC;
 @property (nonatomic, strong) NSArray *createSLVerticalConstraints;
+@property (nonatomic, strong) UIImageView *blurBackgroundView;
 
 @end
 
@@ -30,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self setTitle:NSLocalizedString(@"ShortLists", nil)];
     
     __weak typeof(self) weakSelf = self;
@@ -48,12 +49,19 @@
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self.view addSubview:self.tableView];
 
-    [SLParseController getUsersShortLists:^(NSArray *shortlists) {
-        weakSelf.shortLists = shortlists;
-        [weakSelf.tableView reloadData];
-    }];
-    
     [self createNewShortListView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    __weak typeof(self) weakSelf = self;
+    if ([PFUser currentUser]) {
+        [SLParseController getUsersShortLists:^(NSArray *shortlists) {
+            weakSelf.shortLists = shortlists;
+            [weakSelf.tableView reloadData];
+        }];
+    }
 }
 
 #pragma mark - Table view data source
@@ -112,7 +120,9 @@
         [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
         [UIView animateWithDuration:.2 animations:^{
             [weakSelf.view layoutIfNeeded];
-            //[[self navigationController] setNavigationBarHidden:NO animated:YES];
+            weakSelf.blurBackgroundView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [weakSelf removeBlurBackground];
         }];
     }];
     self.createShortListVC.delegate = self;
@@ -131,13 +141,14 @@
 }
 
 - (void)showCreateNewShortListView {
+    [self addBlurBackground];
     NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
     topMarginConstraint.constant = 100.0;
     [self.view addConstraints:self.createSLVerticalConstraints];
     
     [UIView animateWithDuration:.2 animations:^{
         [self.view layoutIfNeeded];
-        //[[self navigationController] setNavigationBarHidden:YES animated:YES];
+        self.blurBackgroundView.alpha = 1.0;
     }];
 }
 
@@ -151,6 +162,40 @@
     [UIView animateWithDuration:.2 animations:^{
         [self.view layoutIfNeeded];
     }];
+}
+
+- (void)addBlurBackground {
+    self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getScreenShot]];
+    self.blurBackgroundView.userInteractionEnabled = YES;
+    [self.view insertSubview:self.blurBackgroundView atIndex:1];
+
+    UIVisualEffect *blurEffect;
+    blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    
+    UIVisualEffectView *visualEffectView;
+    visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    
+    visualEffectView.frame = self.blurBackgroundView.bounds;
+    [self.blurBackgroundView addSubview:visualEffectView];
+    self.blurBackgroundView.alpha = 0;
+}
+
+- (void)removeBlurBackground {
+    [self.blurBackgroundView removeFromSuperview];
+}
+
+- (UIImage *)getScreenShot {
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+    }
+    else {
+        UIGraphicsBeginImageContext(self.view.bounds.size);
+    }
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *screenShot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return screenShot;
 }
 
 @end
