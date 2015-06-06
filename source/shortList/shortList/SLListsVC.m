@@ -164,6 +164,7 @@
     }];
 }
 
+#pragma mark Blurring Methods
 - (void)addBlurBackground {
     self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getScreenShot]];
     self.blurBackgroundView.userInteractionEnabled = YES;

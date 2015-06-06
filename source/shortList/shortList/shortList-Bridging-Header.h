@@ -3,3 +3,4 @@
 //
 #import <Parse/Parse.h>
 #import "ShortList.h"
+#import "ShortListAlbum.h"

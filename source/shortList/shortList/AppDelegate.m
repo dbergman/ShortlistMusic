@@ -16,6 +16,7 @@
 #import "SLStyle.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "Shortlist.h"
+#import "ShortListAlbum.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -31,6 +32,7 @@
     
     [self setUpParse];
     [Shortlist registerSubclass];
+    [ShortListAlbum registerSubclass];
 
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];

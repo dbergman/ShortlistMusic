@@ -15,6 +15,8 @@
 #import "SLAlbumDetailsCell.h"
 #import "SLAlbumTrackCell.h"
 #import "Shortlist.h"
+#import "ShortListAlbum.h"
+#import "shortList-Swift.h"
 
 static CGFloat const kSLAlbumDetailsCellHeight = 60.0;
 static CGFloat const kSLAlbumTrackCellHeight = 44.0;
@@ -61,7 +63,7 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     
     __weak typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
-        NSLog(@"Add Album to ShortList");
+        [weakSelf addAlbumToShortList];
     }];
     
     self.view.backgroundColor = [UIColor blackColor];
@@ -168,6 +170,18 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     return albumTrackCell;
 }
 
+#pragma mark - Add Shortlist
+- (void)addAlbumToShortList {
+    ShortListAlbum *slAbum = [ShortListAlbum createShortListAlbum:self.albumDetails];
+    slAbum.shortListId = self.shortList.objectId;
+    
+    __weak typeof(self) weakSelf = self;
+    [SLParseController addAlbumToShortList:slAbum completion:^{
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
+#pragma mark - Coloring
 - (UIColor *)getGradientColorWith:(NSInteger)row {
     UIColor *color = [self.coverImageView.image averageColor];
     CGFloat hue = 0.0;

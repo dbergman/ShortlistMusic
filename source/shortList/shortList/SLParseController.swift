@@ -41,7 +41,18 @@ class SLParseController : NSObject {
     
     class func removeShortList(shortlist:Shortlist, completion:SLGetUsersShortListBLock) {
         shortlist.deleteInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            SLParseController .getUsersShortLists(completion)
+            SLParseController.getUsersShortLists(completion)
+        }
+    }
+    
+    class func addAlbumToShortList(shortlistAlbum:ShortListAlbum, completion:dispatch_block_t) {
+        shortlistAlbum.shortListUserId = SLParseController.getCurrentUser().objectId
+        shortlistAlbum.saveInBackgroundWithBlock {
+            (success: Bool, error: NSError?) -> Void in
+            if !success {
+                shortlistAlbum.saveEventually(nil)
+            }
+            completion();
         }
     }
     
