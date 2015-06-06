@@ -60,9 +60,8 @@
     __weak typeof(self) weakSelf = self;
     [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:[NSNumber numberWithInteger:itunesArtist.artistId] completion:^(ItunesSearchAlbum *albumResult, NSError *error) {
         if (!error) {
-            SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithArtistName:itunesArtist.artistName Albums:albumResult.getArtistAlbums];
+            SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithShortList:weakSelf.shortList ArtistName:itunesArtist.artistName Albums:albumResult.getArtistAlbums];
             [weakSelf.navController pushViewController:albumResltsVC animated:YES];
-            
         }
     }];
 }

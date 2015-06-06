@@ -7,10 +7,12 @@
 //
 
 typealias SLGetUsersShortListBLock = (shortlists:NSArray) -> Void
+typealias SLShortListAlbumsBLock = (albums:NSArray) -> Void
 
 import Foundation
 
 let ShortLists = "Shortlist"
+let ShortListAlbums = "ShortListAlbum"
 
 class SLParseController : NSObject {
     class func saveShortlist (newShortList:Shortlist) {
@@ -23,15 +25,30 @@ class SLParseController : NSObject {
             }
         }
     }
-
+    
     class func getUsersShortLists(completion:SLGetUsersShortListBLock) {
-        var query:PFQuery = PFQuery (className: "Shortlist")
+        var query:PFQuery = PFQuery (className: ShortLists)
         query.whereKey("shortListUserId", equalTo: SLParseController.getCurrentUser().objectId!)
         
         query.findObjectsInBackgroundWithBlock {
             (shortLists: [AnyObject]?, error: NSError?) -> Void in
             if !(error != nil) {
                 completion(shortlists: shortLists!)
+            }
+            else {
+                //TODO HANDLE ERROR
+            }
+        }
+    }
+    
+    class func getShortListAlbums(shortList:Shortlist, completion:SLShortListAlbumsBLock) {
+        var query:PFQuery = PFQuery (className: ShortListAlbums)
+        query.whereKey("shortListId", equalTo: shortList.objectId!)
+        
+        query.findObjectsInBackgroundWithBlock {
+            (albums: [AnyObject]?, error: NSError?) -> Void in
+            if !(error != nil) {
+                completion(albums: albums!)
             }
             else {
                 //TODO HANDLE ERROR

@@ -12,6 +12,8 @@
 #import "ItunesSearchArtist.h"
 #import "SLAlbumSearchResultVC.h"
 #import "Shortlist.h"
+#import "ShortListAlbum.h"
+#import "shortList-Swift.h"
 
 @interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate>
 
@@ -19,6 +21,7 @@
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) SLArtistSearchResultsVC *searchResultsVC;
 @property (nonatomic, strong) Shortlist *shortList;
+@property (nonatomic ,strong) NSArray *albums;
 
 @end
 
@@ -45,6 +48,12 @@
     self.tableView.delegate = self;
     self.tableView.tableFooterView = [UIView new];
     [self.view addSubview:self.tableView];
+    
+    __weak typeof(self) weakSelf = self;
+    [SLParseController getShortListAlbums:self.shortList completion:^(NSArray * albums) {
+        weakSelf.albums = albums;
+        [weakSelf.tableView reloadData];
+    }];
 
     self.definesPresentationContext = YES;
 }
@@ -52,6 +61,7 @@
 - (void)startSearchAlbumFlow {
     self.searchResultsVC = [SLArtistSearchResultsVC new];
     self.searchResultsVC.navController = self.navigationController;
+    self.searchResultsVC.shortList = self.shortList;
     
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsVC];
     self.searchController.delegate = self;
@@ -95,19 +105,29 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 1) {
-        return 1;
-    }
-    
-    return 0;
+    return  (section == 0) ? self.albums.count : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *AddAlbumCellIdentifier = @"AddCell";
+    static NSString *AlbumCellIdentifier = @"AlbumCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:AlbumCellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AlbumCellIdentifier];
+        }
+
+        ShortListAlbum *album = self.albums[indexPath.row];
+        cell.textLabel.text = album.albumName;
+        
+        return cell;
+    }
+    
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:AddAlbumCellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AddAlbumCellIdentifier];
     }
     
     cell.backgroundColor = [UIColor blackColor];
