@@ -49,13 +49,17 @@
     self.tableView.tableFooterView = [UIView new];
     [self.view addSubview:self.tableView];
     
+    self.definesPresentationContext = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     __weak typeof(self) weakSelf = self;
     [SLParseController getShortListAlbums:self.shortList completion:^(NSArray * albums) {
         weakSelf.albums = albums;
         [weakSelf.tableView reloadData];
     }];
-
-    self.definesPresentationContext = YES;
 }
 
 - (void)startSearchAlbumFlow {
@@ -124,7 +128,6 @@
         return cell;
     }
     
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:AddAlbumCellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AddAlbumCellIdentifier];
@@ -142,7 +145,9 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     [cell setSelected:NO animated:YES];
     
-    [self startSearchAlbumFlow];
+    if (indexPath.section == 1) {
+        [self startSearchAlbumFlow];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
