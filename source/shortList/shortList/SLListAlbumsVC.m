@@ -160,4 +160,18 @@
     [cell setLayoutMargins:UIEdgeInsetsZero];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return (indexPath.section == 0) ? YES : NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    __weak typeof(self) weakSelf = self;
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:self.albums[indexPath.row] completion:^(NSArray *albums) {
+            weakSelf.albums = albums;
+            [weakSelf.tableView reloadData];
+         }];
+    }
+}
+
 @end
