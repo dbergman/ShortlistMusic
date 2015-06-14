@@ -64,6 +64,29 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    
+    SLBannerMessageView *banner =[SLBannerMessageView showSuccessMessageWithMessage:@"high"];
+    banner.frame = CGRectMake(0, 0, self.view.frame.size.width, 60);
+
+    [self.view addSubview:banner];
+    
+    CGRect frame = banner.frame;
+    frame.origin.y = 64;
+    
+    [UIView animateWithDuration:1.0 animations:^{
+        banner.frame = frame;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:.5 animations:^{
+            banner.frame = CGRectMake(0, 0, self.view.frame.size.width, 60);
+        } completion:nil];
+    }];
+    
+    
+}
+
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.shortLists.count;
