@@ -56,7 +56,7 @@
 		46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */; };
 		46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */; };
 		71B66FE816682F53147BC434 /* libPods-shortListTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96318E4294F9670A88DFF932 /* libPods-shortListTests.a */; };
-		C902DB421B3CD8DA007822A1 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C902DB411B3CD8DA007822A1 /* appKeys.plist */; };
+		C902DB481B3CDA47007822A1 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C902DB471B3CDA47007822A1 /* appKeys.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,7 +158,7 @@
 		46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLNavigationController.m; sourceTree = "<group>"; };
 		6EFCC671B3C3AACECC69EBC0 /* Pods-shortListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.debug.xcconfig"; sourceTree = "<group>"; };
 		96318E4294F9670A88DFF932 /* libPods-shortListTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shortListTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C902DB411B3CD8DA007822A1 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = "<group>"; };
+		C902DB471B3CDA47007822A1 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = "<group>"; };
 		CE0D5FB60B95EE1C6AAD8165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -430,6 +430,7 @@
 				46CB6AE11AED715800BF1DF3 /* LaunchScreen.xib */,
 				46CB6AD01AED715800BF1DF3 /* Info.plist */,
 				46CB6AD11AED715800BF1DF3 /* main.m */,
+				C902DB471B3CDA47007822A1 /* appKeys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -448,7 +449,6 @@
 			isa = PBXGroup;
 			children = (
 				46CB6AED1AED715900BF1DF3 /* Info.plist */,
-				C902DB411B3CD8DA007822A1 /* appKeys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -647,6 +647,7 @@
 				46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
 				46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
 				46CB6AE31AED715800BF1DF3 /* LaunchScreen.xib in Resources */,
+				C902DB481B3CDA47007822A1 /* appKeys.plist in Resources */,
 				46CB6AE01AED715800BF1DF3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -658,7 +659,6 @@
 				46A0941E1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
 				46A094201AF07C140091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
 				46A0941A1AF079120091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
-				C902DB421B3CD8DA007822A1 /* appKeys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
