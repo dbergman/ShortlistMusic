@@ -60,5 +60,5 @@ public class SLBannerMessageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func
+
 }
