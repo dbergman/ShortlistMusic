@@ -39,7 +39,6 @@
 		46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A094191AF079120091C7F7 /* ItunesArtistSearchResults.JSON */; };
 		46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */; };
 		46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */; };
-		46AAEE561B27AB8800E10C42 /* SLBannerMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AAEE551B27AB8800E10C42 /* SLBannerMessageView.swift */; };
 		46AB4A9C1B0429FF0056EC35 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46AB4A9B1B0429FF0056EC35 /* appKeys.plist */; };
 		46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */; };
 		46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA41B042F570056EC35 /* SLLoginVC.m */; };
@@ -126,7 +125,6 @@
 		46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesAlbumSearchResults.JSON; sourceTree = "<group>"; };
 		46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesTracksSearchResult.JSON; sourceTree = "<group>"; };
 		46A094271AF1B3E70091C7F7 /* ItunesSearchTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchTesting.m; sourceTree = "<group>"; };
-		46AAEE551B27AB8800E10C42 /* SLBannerMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLBannerMessageView.swift; sourceTree = "<group>"; };
 		46AB4A9B1B0429FF0056EC35 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = SOURCE_ROOT; };
 		46AB4AA01B042EC50056EC35 /* UIViewController+SLLoginGate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLLoginGate.h"; sourceTree = "<group>"; };
 		46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLLoginGate.m"; sourceTree = "<group>"; };
@@ -209,7 +207,6 @@
 		461FC9F91AED9888001C3F46 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				468FB8B11B113AE20004DC14 /* Banner */,
 				46AB4A9F1B042E850056EC35 /* Login */,
 				461FC9FB1AED98B6001C3F46 /* Tab */,
 				461FC9FA1AED98A8001C3F46 /* Navigation */,
@@ -302,14 +299,6 @@
 				468925671B00026B00A7D98C /* SLAlbumTrackCell.m */,
 			);
 			name = Cells;
-			sourceTree = "<group>";
-		};
-		468FB8B11B113AE20004DC14 /* Banner */ = {
-			isa = PBXGroup;
-			children = (
-				46AAEE551B27AB8800E10C42 /* SLBannerMessageView.swift */,
-			);
-			name = Banner;
 			sourceTree = "<group>";
 		};
 		468FB8B81B1260290004DC14 /* itunes */ = {
@@ -769,7 +758,6 @@
 				46A094171AF076C80091C7F7 /* ItunesSearchTracks.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
 				467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */,
-				46AAEE561B27AB8800E10C42 /* SLBannerMessageView.swift in Sources */,
 				461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */,
 				468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */,
 				467D559E1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m in Sources */,
