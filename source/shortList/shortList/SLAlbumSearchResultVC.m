@@ -52,12 +52,13 @@
  
     [self setTitle:self.artistName];
     
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.tableFooterView = [UITableView new];
     self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.tableView];
 }
 

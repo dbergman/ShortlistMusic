@@ -30,6 +30,8 @@ static CGFloat const kSLAlbumArtSize = 100.0;
     if (self) {
         self.contentView.backgroundColor = [UIColor blackColor];
         
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
         self.albumArt = [UIImageView new];
         [self.albumArt setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.contentView addSubview:self.albumArt];
@@ -39,22 +41,20 @@ static CGFloat const kSLAlbumArtSize = 100.0;
         self.albumNameLabel.numberOfLines = 3;
         self.albumNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.albumNameLabel.textColor = [UIColor whiteColor];
-        self.albumNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - kSLAlbumArtSize;
         [self.contentView addSubview:self.albumNameLabel];
         
         self.albumReleaseYearLabel = [UILabel new];
         [self.albumReleaseYearLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.albumReleaseYearLabel.numberOfLines = 1;
         self.albumReleaseYearLabel.textColor = [UIColor whiteColor];
-        self.albumReleaseYearLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - kSLAlbumArtSize;
         [self.contentView addSubview:self.albumReleaseYearLabel];
 
         NSDictionary *views = NSDictionaryOfVariableBindings(_albumArt, _albumNameLabel, _albumReleaseYearLabel);
         NSDictionary *metrics = @{@"albumArtSize":@(kSLAlbumArtSize), @"smallMargin":@(MarginSizes.small)};
         
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_albumArt(albumArtSize)]-smallMargin-[_albumNameLabel]" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_albumArt(albumArtSize)]-smallMargin-[_albumNameLabel]|" options:0 metrics:metrics views:views]];
         
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_albumArt(albumArtSize)]-smallMargin-[_albumReleaseYearLabel]" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_albumArt(albumArtSize)]-smallMargin-[_albumReleaseYearLabel]|" options:0 metrics:metrics views:views]];
         
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.albumArt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:1.0]];
         
@@ -64,6 +64,13 @@ static CGFloat const kSLAlbumArtSize = 100.0;
     }
     
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    self.albumReleaseYearLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - kSLAlbumArtSize;
+    self.albumNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - kSLAlbumArtSize;
 }
 
 - (void)configCellWithItunesAlbum:(ItunesAlbum *)album {

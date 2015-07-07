@@ -53,7 +53,7 @@
     
         UIBarButtonItem *cancelButton = [UIBarButtonItem new];
         cancelButton.tintColor = [UIColor sl_Red];
-        [cancelButton bk_initWithBarButtonSystemItem:UIBarButtonSystemItemCancel handler:^(id sender) {
+        [cancelButton bk_initWithBarButtonSystemItem:UIBarButtonSystemItemStop handler:^(id sender) {
             if (weakSelf.cleanUpSLBlock) {
                 weakSelf.cleanUpSLBlock();
             }
