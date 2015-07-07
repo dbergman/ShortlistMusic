@@ -39,10 +39,9 @@
 		46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A094191AF079120091C7F7 /* ItunesArtistSearchResults.JSON */; };
 		46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */; };
 		46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */; };
-		46AB4A9C1B0429FF0056EC35 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46AB4A9B1B0429FF0056EC35 /* appKeys.plist */; };
+		46AAEE561B27AB8800E10C42 /* SLBannerMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AAEE551B27AB8800E10C42 /* SLBannerMessageView.swift */; };
 		46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */; };
 		46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA41B042F570056EC35 /* SLLoginVC.m */; };
-		46C8EBBF1B0437EA0082A2BB /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46AB4A9B1B0429FF0056EC35 /* appKeys.plist */; };
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
 		46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD41AED715800BF1DF3 /* AppDelegate.m */; };
 		46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */; };
@@ -57,6 +56,7 @@
 		46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */; };
 		46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */; };
 		71B66FE816682F53147BC434 /* libPods-shortListTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96318E4294F9670A88DFF932 /* libPods-shortListTests.a */; };
+		C902DB481B3CDA47007822A1 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C902DB471B3CDA47007822A1 /* appKeys.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,7 +125,7 @@
 		46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesAlbumSearchResults.JSON; sourceTree = "<group>"; };
 		46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesTracksSearchResult.JSON; sourceTree = "<group>"; };
 		46A094271AF1B3E70091C7F7 /* ItunesSearchTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchTesting.m; sourceTree = "<group>"; };
-		46AB4A9B1B0429FF0056EC35 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = SOURCE_ROOT; };
+		46AAEE551B27AB8800E10C42 /* SLBannerMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLBannerMessageView.swift; sourceTree = "<group>"; };
 		46AB4AA01B042EC50056EC35 /* UIViewController+SLLoginGate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLLoginGate.h"; sourceTree = "<group>"; };
 		46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLLoginGate.m"; sourceTree = "<group>"; };
 		46AB4AA31B042F570056EC35 /* SLLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLoginVC.h; sourceTree = "<group>"; };
@@ -158,6 +158,7 @@
 		46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLNavigationController.m; sourceTree = "<group>"; };
 		6EFCC671B3C3AACECC69EBC0 /* Pods-shortListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.debug.xcconfig"; sourceTree = "<group>"; };
 		96318E4294F9670A88DFF932 /* libPods-shortListTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shortListTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C902DB471B3CDA47007822A1 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = "<group>"; };
 		CE0D5FB60B95EE1C6AAD8165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -207,6 +208,7 @@
 		461FC9F91AED9888001C3F46 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				468FB8B11B113AE20004DC14 /* Banner */,
 				46AB4A9F1B042E850056EC35 /* Login */,
 				461FC9FB1AED98B6001C3F46 /* Tab */,
 				461FC9FA1AED98A8001C3F46 /* Navigation */,
@@ -299,6 +301,14 @@
 				468925671B00026B00A7D98C /* SLAlbumTrackCell.m */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		468FB8B11B113AE20004DC14 /* Banner */ = {
+			isa = PBXGroup;
+			children = (
+				46AAEE551B27AB8800E10C42 /* SLBannerMessageView.swift */,
+			);
+			name = Banner;
 			sourceTree = "<group>";
 		};
 		468FB8B81B1260290004DC14 /* itunes */ = {
@@ -420,6 +430,7 @@
 				46CB6AE11AED715800BF1DF3 /* LaunchScreen.xib */,
 				46CB6AD01AED715800BF1DF3 /* Info.plist */,
 				46CB6AD11AED715800BF1DF3 /* main.m */,
+				C902DB471B3CDA47007822A1 /* appKeys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -438,7 +449,6 @@
 			isa = PBXGroup;
 			children = (
 				46CB6AED1AED715900BF1DF3 /* Info.plist */,
-				46AB4A9B1B0429FF0056EC35 /* appKeys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -633,11 +643,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46C8EBBF1B0437EA0082A2BB /* appKeys.plist in Resources */,
 				46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
 				46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
 				46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
 				46CB6AE31AED715800BF1DF3 /* LaunchScreen.xib in Resources */,
+				C902DB481B3CDA47007822A1 /* appKeys.plist in Resources */,
 				46CB6AE01AED715800BF1DF3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -646,7 +656,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46AB4A9C1B0429FF0056EC35 /* appKeys.plist in Resources */,
 				46A0941E1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
 				46A094201AF07C140091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
 				46A0941A1AF079120091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
@@ -683,7 +692,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -e ${SRCROOT}/shortList/appKeys.plist ];\nthen\nrm ${SRCROOT}/shortList/appKeys.plist\nfi\n\nif [ -e /opt/shortListKeys/appKeys.plist ];\nthen\necho \"Adding /opt/shortListKeys/appKeys.plist  to fp source\"\ncp /opt/shortListKeys/appKeys.plist  ${SRCROOT}/shortList/\nelse\necho \"You Must Add /opt/shortListKeys/appKeys.plis to your local File System!!!\"\nfi\n";
+			shellScript = "
+";
+			showEnvVarsInLog = 0;
 		};
 		A0861F878F72317DFCE57765 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -758,6 +769,7 @@
 				46A094171AF076C80091C7F7 /* ItunesSearchTracks.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
 				467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */,
+				46AAEE561B27AB8800E10C42 /* SLBannerMessageView.swift in Sources */,
 				461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */,
 				468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */,
 				467D559E1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m in Sources */,
