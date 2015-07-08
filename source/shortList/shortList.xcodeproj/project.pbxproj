@@ -17,6 +17,7 @@
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
 		4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5511B1E663F00F997F8 /* SLParseController.swift */; };
 		4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* ShortListAlbum.m */; };
+		4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4651CE251B4C9992003E9C0F /* SLListAbumCell.m */; };
 		467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */; };
 		467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55951AF55F3A005CD607 /* SLArtistSearchResultsVC.m */; };
 		467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55981AF577D0005CD607 /* SLAlbumSearchResultVC.m */; };
@@ -91,6 +92,8 @@
 		4648A5511B1E663F00F997F8 /* SLParseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLParseController.swift; sourceTree = "<group>"; };
 		4648A5541B234CC300F997F8 /* ShortListAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortListAlbum.h; sourceTree = "<group>"; };
 		4648A5551B234CC300F997F8 /* ShortListAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortListAlbum.m; sourceTree = "<group>"; };
+		4651CE241B4C9992003E9C0F /* SLListAbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListAbumCell.h; sourceTree = "<group>"; };
+		4651CE251B4C9992003E9C0F /* SLListAbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAbumCell.m; sourceTree = "<group>"; };
 		467D55901AF54FB4005CD607 /* SLListAlbumsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListAlbumsVC.h; sourceTree = "<group>"; };
 		467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAlbumsVC.m; sourceTree = "<group>"; };
 		467D55941AF55F3A005CD607 /* SLArtistSearchResultsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLArtistSearchResultsVC.h; sourceTree = "<group>"; };
@@ -244,6 +247,17 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		4651CE231B4C993B003E9C0F /* Albums */ = {
+			isa = PBXGroup;
+			children = (
+				467D55901AF54FB4005CD607 /* SLListAlbumsVC.h */,
+				467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */,
+				4651CE241B4C9992003E9C0F /* SLListAbumCell.h */,
+				4651CE251B4C9992003E9C0F /* SLListAbumCell.m */,
+			);
+			name = Albums;
+			sourceTree = "<group>";
+		};
 		467D55931AF55E71005CD607 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,11 +383,14 @@
 			name = "Itunes API Test Files";
 			sourceTree = "<group>";
 		};
-		46A16A991B1D3828007F21FA /* ShortList Albums */ = {
+		46A16A991B1D3828007F21FA /* ShortLists */ = {
 			isa = PBXGroup;
 			children = (
+				46CB6B031AED7ADC00BF1DF3 /* SLListsVC.h */,
+				46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */,
+				4651CE231B4C993B003E9C0F /* Albums */,
 			);
-			name = "ShortList Albums";
+			name = ShortLists;
 			sourceTree = "<group>";
 		};
 		46AB4A9F1B042E850056EC35 /* Login */ = {
@@ -489,11 +506,7 @@
 				461801131B08D590003C0A92 /* Create ShortList */,
 				467D55A01AF696FF005CD607 /* Album Details */,
 				467D55931AF55E71005CD607 /* Search */,
-				46A16A991B1D3828007F21FA /* ShortList Albums */,
-				46CB6B031AED7ADC00BF1DF3 /* SLListsVC.h */,
-				46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */,
-				467D55901AF54FB4005CD607 /* SLListAlbumsVC.h */,
-				467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */,
+				46A16A991B1D3828007F21FA /* ShortLists */,
 			);
 			name = Lists;
 			sourceTree = "<group>";
@@ -758,6 +771,7 @@
 				46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */,
 				4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */,
 				467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */,
+				4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */,
 				46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */,
 				461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */,
 				461801201B09361E003C0A92 /* SLCreateShortListEnterNameCell.m in Sources */,

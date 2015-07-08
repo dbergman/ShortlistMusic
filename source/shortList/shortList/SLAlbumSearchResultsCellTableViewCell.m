@@ -30,8 +30,6 @@ static CGFloat const kSLAlbumArtSize = 100.0;
     if (self) {
         self.contentView.backgroundColor = [UIColor blackColor];
         
-        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        
         self.albumArt = [UIImageView new];
         [self.albumArt setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.contentView addSubview:self.albumArt];
