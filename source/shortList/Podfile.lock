@@ -36,6 +36,7 @@ PODS:
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
   - Bolts/Tasks (1.2.0)
+  - FXBlurView (1.6.3)
   - Mantle (2.0.2):
     - Mantle/extobjc (= 2.0.2)
   - Mantle/extobjc (2.0.2)
@@ -51,6 +52,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking
   - BlocksKit (= 2.2.5)
+  - FXBlurView (~> 1.6)
   - Mantle
   - Parse
   - ParseUI
@@ -61,10 +63,11 @@ SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
+  FXBlurView: c6d23f3d35af2c6282296a2930f61c6e2c788d01
   Mantle: 967fd31ea0220890b2e76589198996b534bb3fb1
   Parse: 7c0f115eff3e0cea3fac08d50bda47154edb8832
   ParseUI: d1228541b02a36a7354c8f47747f5f7a89cf1ff0
   QBValidator: 6e019b6f22d750c668315807459f49a3c316a017
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
 
-COCOAPODS: 0.36.3
+COCOAPODS: 0.37.2

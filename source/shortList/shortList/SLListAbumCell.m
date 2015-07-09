@@ -8,12 +8,13 @@
 
 #import "SLListAbumCell.h"
 #import "ShortListAlbum.h"
+#import "FXBlurView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SLListAbumCell ()
 
 @property (nonatomic, strong) UIImageView *albumBackgroundImage;
-@property (nonatomic, strong) UIVisualEffectView *visualEffectView;
+@property (nonatomic, strong) FXBlurView *albumBlurView;
 
 @end
 
@@ -26,6 +27,7 @@
     if (self) {
         self.contentView.backgroundColor = [UIColor clearColor];
         self.backgroundColor = [UIColor clearColor];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         self.albumBackgroundImage = [UIImageView new];
         self.albumBackgroundImage.clipsToBounds = YES;
@@ -33,19 +35,23 @@
         [self.albumBackgroundImage setContentMode:UIViewContentModeScaleAspectFill];
         [self.contentView addSubview:self.albumBackgroundImage];
         
-        UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-        self.visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        self.visualEffectView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.albumBackgroundImage addSubview:self.visualEffectView];
+        self.albumBlurView = [[FXBlurView alloc] init];
+        self.albumBlurView.tintColor = [UIColor blackColor];
+        self.albumBlurView.blurEnabled = YES;
+        self.albumBlurView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.albumBlurView.clipsToBounds = YES;
+        self.albumBlurView.blurRadius = 8;
+        [self.albumBackgroundImage addSubview:self.albumBlurView];
         
-        NSDictionary *views = NSDictionaryOfVariableBindings(_albumBackgroundImage, _visualEffectView);
+        
+        NSDictionary *views = NSDictionaryOfVariableBindings(_albumBackgroundImage, _albumBlurView);
         NSDictionary *metrics = @{};
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_albumBackgroundImage]|" options:0 metrics:metrics views:views]];
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumBackgroundImage(120)]|" options:0 metrics:metrics views:views]];
         
-        [self.albumBackgroundImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_visualEffectView]|" options:0 metrics:metrics views:views]];
-        [self.albumBackgroundImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_visualEffectView]|" options:0 metrics:metrics views:views]];
+        [self.albumBackgroundImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_albumBlurView]|" options:0 metrics:metrics views:views]];
+        [self.albumBackgroundImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumBlurView(120)]|" options:0 metrics:metrics views:views]];
         
 //
 //        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -84,9 +90,19 @@
     return self;
 }
 
+- (void)layoutSubviews {
+    
+}
+
 - (void)configureCell:(ShortListAlbum *)album {
-    [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork]];
-  
+    [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+      
+        CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], self.contentView.frame);
+        self.albumBackgroundImage.image = [UIImage imageWithCGImage:imageRef];
+        CGImageRelease(imageRef);
+        
+    }];
+
 }
 
 @end

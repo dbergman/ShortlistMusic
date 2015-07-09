@@ -43,13 +43,14 @@
     
     self.view.backgroundColor = [UIColor blackColor];
     
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.tableFooterView = [UIView new];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 100.0;
+    self.tableView.estimatedRowHeight = 120.0;
     [self.view addSubview:self.tableView];
     
     self.definesPresentationContext = YES;
@@ -63,6 +64,12 @@
         weakSelf.albums = albums;
         [weakSelf.tableView reloadData];
     }];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    self.tableView.frame = self.view.bounds;
 }
 
 - (void)startSearchAlbumFlow {

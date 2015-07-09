@@ -19,6 +19,7 @@ pod 'SDWebImage'
 
 #UI
 pod 'ParseUI'
+pod 'FXBlurView', '~> 1.6'
 
 target :"shortListTests", :exclusive => true do
 pod 'Mantle'
