@@ -18,6 +18,7 @@
 @dynamic shortListId;
 @dynamic albumArtWork;
 @dynamic shortListUserId;
+@dynamic shortListRank;
 
 + (NSString *)parseClassName {
     return @"ShortListAlbum";

@@ -9,6 +9,7 @@
 #import "SLListAbumCell.h"
 #import "ShortListAlbum.h"
 #import "FXBlurView.h"
+#import "SLStyle.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static const CGFloat kSLALbumCellHeight = 120;
@@ -60,6 +61,8 @@ static const CGFloat kSLALbumCellHeight = 120;
         
         self.albumTitleLabel = [UILabel new];
         self.albumTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.albumTitleLabel.numberOfLines = 2;
+        self.albumTitleLabel.textAlignment = NSTextAlignmentCenter;
         self.albumTitleLabel.textColor = [UIColor whiteColor];
         [shortListDetailContainer addSubview:self.albumTitleLabel];
         
@@ -69,6 +72,8 @@ static const CGFloat kSLALbumCellHeight = 120;
         [shortListDetailContainer addSubview:self.albumRankLabel];
         
         self.artistNameLabel = [UILabel new];
+        self.artistNameLabel.numberOfLines = 2;
+        self.artistNameLabel.textAlignment = NSTextAlignmentCenter;
         self.artistNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.artistNameLabel.textColor = [UIColor whiteColor];
         [shortListDetailContainer addSubview:self.artistNameLabel];
@@ -88,19 +93,24 @@ static const CGFloat kSLALbumCellHeight = 120;
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:shortListDetailContainer attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
         
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:shortListDetailContainer attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-        
+
         [shortListDetailContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_albumRankLabel]-[_albumTitleLabel]|" options:0 metrics:metrics views:views]];
         
         [shortListDetailContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_artistNameLabel]|" options:0 metrics:metrics views:views]];
 
-        [shortListDetailContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumRankLabel][_artistNameLabel]|" options:0 metrics:metrics views:views]];
+        [shortListDetailContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumRankLabel]" options:0 metrics:metrics views:views]];
         
         [shortListDetailContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumTitleLabel][_artistNameLabel]|" options:0 metrics:metrics views:views]];
-        
-        
     }
     
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+
+    self.albumTitleLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - (1.0 * MarginSizes.large);
+    self.artistNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - (1.0 * MarginSizes.large);
 }
 
 - (void)configureCell:(ShortListAlbum *)album {

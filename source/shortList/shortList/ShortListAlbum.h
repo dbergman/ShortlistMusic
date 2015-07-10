@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSString *shortListId;
 @property (nonatomic, strong) NSString *shortListUserId;
 @property (nonatomic, strong) NSString *albumArtWork;
+@property (nonatomic, strong) NSString *shortListRank;
 
 + (instancetype)createShortListAlbum:(ItunesTrack *)albumDetails;
 
