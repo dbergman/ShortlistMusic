@@ -11,10 +11,15 @@
 #import "FXBlurView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
+static const CGFloat kSLALbumCellHeight = 120;
+
 @interface SLListAbumCell ()
 
 @property (nonatomic, strong) UIImageView *albumBackgroundImage;
 @property (nonatomic, strong) FXBlurView *albumBlurView;
+@property (nonatomic, strong) UILabel *albumTitleLabel;
+@property (nonatomic, strong) UILabel *artistNameLabel;
+@property (nonatomic, strong) UILabel *albumRankLabel;
 
 @end
 
@@ -43,66 +48,66 @@
         self.albumBlurView.blurRadius = 8;
         [self.albumBackgroundImage addSubview:self.albumBlurView];
         
+        UIView *overlay = [UIView new];
+        overlay.translatesAutoresizingMaskIntoConstraints = NO;
+        overlay.backgroundColor = [UIColor blackColor];
+        overlay.alpha = .4;
+        [self.albumBlurView addSubview:overlay];
         
-        NSDictionary *views = NSDictionaryOfVariableBindings(_albumBackgroundImage, _albumBlurView);
-        NSDictionary *metrics = @{};
+        UIView *shortListDetailContainer = [UIView new];
+        shortListDetailContainer.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addSubview:shortListDetailContainer];
+        
+        self.albumTitleLabel = [UILabel new];
+        self.albumTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.albumTitleLabel.textColor = [UIColor whiteColor];
+        [shortListDetailContainer addSubview:self.albumTitleLabel];
+        
+        self.albumRankLabel = [UILabel new];
+        self.albumRankLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.albumRankLabel.textColor = [UIColor whiteColor];
+        [shortListDetailContainer addSubview:self.albumRankLabel];
+        
+        self.artistNameLabel = [UILabel new];
+        self.artistNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.artistNameLabel.textColor = [UIColor whiteColor];
+        [shortListDetailContainer addSubview:self.artistNameLabel];
+
+        NSDictionary *views = NSDictionaryOfVariableBindings(_albumBackgroundImage, _albumBlurView, overlay, _albumTitleLabel, _albumRankLabel, _artistNameLabel, shortListDetailContainer);
+        NSDictionary *metrics = @{@"height":@(kSLALbumCellHeight)};
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_albumBackgroundImage]|" options:0 metrics:metrics views:views]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumBackgroundImage(120)]|" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumBackgroundImage(height)]|" options:0 metrics:metrics views:views]];
         
         [self.albumBackgroundImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_albumBlurView]|" options:0 metrics:metrics views:views]];
-        [self.albumBackgroundImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumBlurView(120)]|" options:0 metrics:metrics views:views]];
+        [self.albumBackgroundImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumBlurView]|" options:0 metrics:metrics views:views]];
         
-//
-//        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//        
-//        self.albumArt = [UIImageView new];
-//        [self.albumArt setTranslatesAutoresizingMaskIntoConstraints:NO];
-//        [self.contentView addSubview:self.albumArt];
-//        
-//        self.albumNameLabel = [UILabel new];
-//        [self.albumNameLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-//        self.albumNameLabel.numberOfLines = 3;
-//        self.albumNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//        self.albumNameLabel.textColor = [UIColor whiteColor];
-//        [self.contentView addSubview:self.albumNameLabel];
-//        
-//        self.albumReleaseYearLabel = [UILabel new];
-//        [self.albumReleaseYearLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-//        self.albumReleaseYearLabel.numberOfLines = 1;
-//        self.albumReleaseYearLabel.textColor = [UIColor whiteColor];
-//        [self.contentView addSubview:self.albumReleaseYearLabel];
-//        
-//        NSDictionary *views = NSDictionaryOfVariableBindings(_albumArt, _albumNameLabel, _albumReleaseYearLabel);
-//        NSDictionary *metrics = @{@"albumArtSize":@(kSLAlbumArtSize), @"smallMargin":@(MarginSizes.small)};
-//        
-//        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_albumArt(albumArtSize)]-smallMargin-[_albumNameLabel]|" options:0 metrics:metrics views:views]];
-//        
-//        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_albumArt(albumArtSize)]-smallMargin-[_albumReleaseYearLabel]|" options:0 metrics:metrics views:views]];
-//        
-//        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.albumArt attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:1.0]];
-//        
-//        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.albumNameLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.albumArt attribute:NSLayoutAttributeTop multiplier:1.0 constant:1.0]];
-//        
-//        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.albumReleaseYearLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.albumArt attribute:NSLayoutAttributeBottom multiplier:1.0 constant:1.0]];
+        [self.albumBlurView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[overlay]|" options:0 metrics:metrics views:views]];
+        [self.albumBlurView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[overlay]|" options:0 metrics:metrics views:views]];
+        
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:shortListDetailContainer attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+        
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:shortListDetailContainer attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+        
+        [shortListDetailContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_albumRankLabel]-[_albumTitleLabel]|" options:0 metrics:metrics views:views]];
+        
+        [shortListDetailContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_artistNameLabel]|" options:0 metrics:metrics views:views]];
+
+        [shortListDetailContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumRankLabel][_artistNameLabel]|" options:0 metrics:metrics views:views]];
+        
+        [shortListDetailContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumTitleLabel][_artistNameLabel]|" options:0 metrics:metrics views:views]];
+        
+        
     }
     
     return self;
 }
 
-- (void)layoutSubviews {
-    
-}
-
 - (void)configureCell:(ShortListAlbum *)album {
-    [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-      
-        CGImageRef imageRef = CGImageCreateWithImageInRect([image CGImage], self.contentView.frame);
-        self.albumBackgroundImage.image = [UIImage imageWithCGImage:imageRef];
-        CGImageRelease(imageRef);
-        
-    }];
-
+    [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:nil];
+    self.artistNameLabel.text = album.artistName;
+    self.albumRankLabel.text = @"1.";
+    self.albumTitleLabel.text = album.albumName;
 }
 
 @end

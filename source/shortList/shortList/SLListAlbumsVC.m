@@ -42,7 +42,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor blackColor];
-    
+
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
