@@ -172,12 +172,16 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 
 #pragma mark - Add Shortlist
 - (void)addAlbumToShortList {
-    ShortListAlbum *slAlbum = [ShortListAlbum createShortListAlbum:self.albumDetails];
-    slAlbum.shortListId = self.shortList.objectId;
-    
     __weak typeof(self) weakSelf = self;
-    [SLParseController addAlbumToShortList:slAlbum completion:^{
-        [weakSelf.navigationController popViewControllerAnimated:YES];
+    
+    [SLParseController getShortListAlbums:self.shortList completion:^(NSArray *allAlbums) {
+        ShortListAlbum *slAlbum = [ShortListAlbum createShortListAlbum:weakSelf.albumDetails];
+        slAlbum.shortListId = weakSelf.shortList.objectId;
+        slAlbum.shortListRank = allAlbums.count + 1;
+
+        [SLParseController addAlbumToShortList:slAlbum completion:^{
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }];
     }];
 }
 

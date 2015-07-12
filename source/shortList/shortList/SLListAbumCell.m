@@ -116,7 +116,7 @@ static const CGFloat kSLALbumCellHeight = 120;
 - (void)configureCell:(ShortListAlbum *)album {
     [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:nil];
     self.artistNameLabel.text = album.artistName;
-    self.albumRankLabel.text = @"1.";
+    self.albumRankLabel.text = [NSString stringWithFormat:@"%ld.", (long)album.shortListRank];
     self.albumTitleLabel.text = album.albumName;
 }
 
