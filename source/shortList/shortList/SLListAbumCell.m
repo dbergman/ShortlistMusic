@@ -34,6 +34,7 @@ static const CGFloat kSLALbumCellHeight = 120;
         self.contentView.backgroundColor = [UIColor clearColor];
         self.backgroundColor = [UIColor clearColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.shouldIndentWhileEditing = NO;
         
         self.albumBackgroundImage = [UIImageView new];
         self.albumBackgroundImage.clipsToBounds = YES;

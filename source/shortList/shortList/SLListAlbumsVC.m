@@ -15,6 +15,7 @@
 #import "ShortListAlbum.h"
 #import "SLListAbumCell.h"
 #import "shortList-Swift.h"
+#import <BlocksKit+UIKit.h>
 
 @interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate>
 
@@ -22,7 +23,8 @@
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) SLArtistSearchResultsVC *searchResultsVC;
 @property (nonatomic, strong) Shortlist *shortList;
-@property (nonatomic ,strong) NSArray *albums;
+@property (nonatomic, strong) NSArray *albums;
+@property (nonatomic, strong) UIBarButtonItem *editShortListBarButton;
 
 @end
 
@@ -42,6 +44,9 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor blackColor];
+ 
+    self.editShortListBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", nil) style:UIBarButtonItemStylePlain target:self action:@selector(shortListEditAction:)];
+    self.navigationItem.rightBarButtonItem = self.editShortListBarButton;
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -113,6 +118,22 @@
     }];
 }
 
+#pragma mark - barbuttonAdctions
+-(void)shortListEditAction:(id)sender {
+    UIBarButtonItem *editButton = (UIBarButtonItem *)sender;
+    
+    if (self.tableView.editing) {
+        editButton.title = NSLocalizedString(@"Edit", nil);
+        [self.tableView setEditing:NO animated:YES];
+    }
+    else {
+        editButton.title = NSLocalizedString(@"Done", nil);
+        [self.tableView setEditing:YES animated:YES];
+    }
+
+    self.navigationItem.rightBarButtonItem = editButton;
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
@@ -157,6 +178,21 @@
     if (indexPath.section == 1) {
         [self startSearchAlbumFlow];
     }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return (tableView.editing) ?  UITableViewCellEditingStyleNone : UITableViewCellEditingStyleDelete;
+}
+
+- (BOOL)tableView:(UITableView *)tableview shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+}
+
+- (BOOL)tableView:(UITableView *)tableview canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
