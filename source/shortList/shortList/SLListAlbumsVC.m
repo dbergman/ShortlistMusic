@@ -189,6 +189,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    NSMutableArray *mutableAlbums = [self.albums mutableCopy];
+    
+    ShortListAlbum *album = mutableAlbums[sourceIndexPath.row];
+    [mutableAlbums removeObjectAtIndex:sourceIndexPath.row];
+    [mutableAlbums insertObject:album atIndex:destinationIndexPath.row];
+    
+    self.albums = [NSArray arrayWithArray:mutableAlbums];
+    
+    [self reorderShortList];
+    
+    __weak typeof(self)weakSelf = self;
+    [SLParseController updateShortListAlbums:self.shortList albums:self.albums completion:^{
+        [weakSelf.tableView reloadData];
+    }];
 }
 
 - (BOOL)tableView:(UITableView *)tableview canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -206,13 +220,28 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+
     __weak typeof(self) weakSelf = self;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSMutableArray *mutableAlbums = [self.albums mutableCopy];
+        [mutableAlbums removeObjectAtIndex:indexPath.row];
+        
+        self.albums = [NSArray arrayWithArray:mutableAlbums];
+        [self reorderShortList];
+    
         [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:self.albums[indexPath.row] completion:^(NSArray *albums) {
-            weakSelf.albums = albums;
-            [weakSelf.tableView reloadData];
+            [SLParseController updateShortListAlbums:self.shortList albums:self.albums completion:^{
+                [weakSelf.tableView reloadData];
+            }];
          }];
     }
+}
+
+#pragma mark Utilities
+- (void)reorderShortList {
+    [self.albums enumerateObjectsUsingBlock:^(ShortListAlbum *album, NSUInteger idx, BOOL *stop) {
+        album.shortListRank = idx + 1;
+    }];
 }
 
 @end

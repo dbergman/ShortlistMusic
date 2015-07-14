@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Dustin Bergman. All rights reserved.
 //
 
-typealias SLGetUsersShortListBLock = (shortlists:NSArray) -> Void
-typealias SLShortListAlbumsBLock = (albums:NSArray) -> Void
+typealias SLGetUsersShortListBlock = (shortlists:NSArray) -> Void
+typealias SLShortListAlbumsBlock = (albums:NSArray) -> Void
 
 import Foundation
 
@@ -26,7 +26,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func getUsersShortLists(completion:SLGetUsersShortListBLock) {
+    class func getUsersShortLists(completion:SLGetUsersShortListBlock) {
         var query:PFQuery = PFQuery (className: ShortLists)
         query.whereKey("shortListUserId", equalTo: SLParseController.getCurrentUser().objectId!)
         
@@ -41,10 +41,11 @@ class SLParseController : NSObject {
         }
     }
     
-    class func getShortListAlbums(shortList:Shortlist, completion:SLShortListAlbumsBLock) {
+    class func getShortListAlbums(shortList:Shortlist, completion:SLShortListAlbumsBlock) {
         var query:PFQuery = PFQuery (className: ShortListAlbums)
         query.whereKey("shortListId", equalTo: shortList.objectId!)
-        
+        query.orderByAscending("shortListRank")
+
         query.findObjectsInBackgroundWithBlock {
             (albums: [AnyObject]?, error: NSError?) -> Void in
             if !(error != nil) {
@@ -56,7 +57,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func removeShortList(shortlist:Shortlist, completion:SLGetUsersShortListBLock) {
+    class func removeShortList(shortlist:Shortlist, completion:SLGetUsersShortListBlock) {
         shortlist.deleteInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             SLParseController.getUsersShortLists(completion)
@@ -74,12 +75,26 @@ class SLParseController : NSObject {
         }
     }
     
-    class func removeAlbumFromShortList(shortList:Shortlist, shortlistAlbum:ShortListAlbum, completion:SLShortListAlbumsBLock) {
+    class func removeAlbumFromShortList(shortList:Shortlist, shortlistAlbum:ShortListAlbum, completion:SLShortListAlbumsBlock) {
         shortlistAlbum.deleteInBackgroundWithBlock {(success: Bool, error: NSError?) -> Void in
             if success {
                 SLParseController.getShortListAlbums(shortList, completion: completion)
             }
         }
+    }
+    
+    class func updateShortListAlbums(shortlist:Shortlist, albums:NSArray, completion:dispatch_block_t) {
+        for album: ShortListAlbum in albums as! [ShortListAlbum]  {
+            album.saveInBackgroundWithBlock {
+                (success: Bool, error: NSError?) -> Void in
+                if !success {
+                    album.saveEventually(nil)
+                }
+                completion();
+            }
+        }
+        
+        
     }
     
     class func getCurrentUser() -> PFUser {
