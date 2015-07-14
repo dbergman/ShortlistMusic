@@ -220,16 +220,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-
     __weak typeof(self) weakSelf = self;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSMutableArray *mutableAlbums = [self.albums mutableCopy];
-        [mutableAlbums removeObjectAtIndex:indexPath.row];
-        
-        self.albums = [NSArray arrayWithArray:mutableAlbums];
-        [self reorderShortList];
-    
         [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:self.albums[indexPath.row] completion:^(NSArray *albums) {
+            NSMutableArray *mutableAlbums = [weakSelf.albums mutableCopy];
+            [mutableAlbums removeObjectAtIndex:indexPath.row];
+            
+            weakSelf.albums = [NSArray arrayWithArray:mutableAlbums];
+            [weakSelf reorderShortList];
+            
             [SLParseController updateShortListAlbums:self.shortList albums:self.albums completion:^{
                 [weakSelf.tableView reloadData];
             }];
