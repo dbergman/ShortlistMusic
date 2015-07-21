@@ -13,5 +13,6 @@
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;
 @property (nonatomic, strong) NSString *shortListUserId;
+@property (nonatomic, strong) NSArray *shortListAlbums;
 
 @end

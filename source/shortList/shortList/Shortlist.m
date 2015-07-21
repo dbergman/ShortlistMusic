@@ -13,6 +13,7 @@
 @dynamic shortListName;
 @dynamic shortListYear;
 @dynamic shortListUserId;
+@synthesize shortListAlbums;
 
 + (NSString *)parseClassName {
     return @"Shortlist";
