@@ -33,6 +33,19 @@ class SLParseController : NSObject {
         query.findObjectsInBackgroundWithBlock {
             (shortLists: [AnyObject]?, error: NSError?) -> Void in
             if !(error != nil) {
+                
+                
+//                for shortList:Shortlist in shortLists as! [Shortlist] {
+//                    shortList.sh
+//                }
+//                
+//                
+                
+                
+                
+                
+                
+                
                 completion(shortlists: shortLists!)
             }
             else {

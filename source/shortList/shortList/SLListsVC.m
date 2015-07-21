@@ -15,7 +15,9 @@
 #import "UIViewController+SLLoginGate.h"
 #import "Shortlist.h"
 #import <Parse/Parse.h>
+#import "SLAlbumsCollectionCell.h"
 #import "shortList-Swift.h"
+#import "SLAlbumsCollectionCell.h"
 
 @interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -46,7 +48,9 @@
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 100;
+    self.tableView.tableFooterView = [UIView new];
     [self.view addSubview:self.tableView];
 
     [self createNewShortListView];
@@ -72,14 +76,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"CellIdentifier";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    SLAlbumsCollectionCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[SLAlbumsCollectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     Shortlist *shortList = (Shortlist *)self.shortLists[indexPath.row];
-    cell.textLabel.text = shortList.shortListName;
-    
+    [cell configShortListCollection:shortList];
+//    Shortlist *shortList = (Shortlist *)self.shortLists[indexPath.row];
+//    cell.textLabel.text = shortList.shortListName;
+//    
     return cell;
 }
 
@@ -131,7 +137,7 @@
     [self.view addSubview:self.createShortListVC.view];
     
     NSDictionary *views = @{@"createShortListVC":self.createShortListVC.view};
-    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .8), @"viewHeight":@(kSLCreateShortListCellCount * kSLCreateShortListCellHeight), @"sideMargin":@((self.view.frame.size.width * .2)/2.0)};
+    NSDictionary *metrics = @{@"topMargin":@(self.view.frame.size.height), @"viewWidth":@(self.view.frame.size.width * .9), @"viewHeight":@(kSLCreateShortListCellCount * kSLCreateShortListCellHeight), @"sideMargin":@((self.view.frame.size.width * .1)/2.0)};
     
     self.createSLVerticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-topMargin-[createShortListVC(viewHeight)]" options:0 metrics:metrics views:views];
     
