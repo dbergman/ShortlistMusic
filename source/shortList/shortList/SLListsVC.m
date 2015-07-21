@@ -109,7 +109,7 @@
     self.createShortListVC = [[SLCreateShortListVC alloc] initWithCompletion:^{
         NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
         topMarginConstraint.constant = weakSelf.view.frame.size.height;
-        NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints.firstObject;
+        NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];
         createSLHeightConstraint.constant = kSLCreateShortListCellCount * kSLCreateShortListCellHeight;
         
         [SLParseController getUsersShortLists:^(NSArray *shortlists) {
@@ -125,6 +125,7 @@
             [weakSelf removeBlurBackground];
         }];
     }];
+    
     self.createShortListVC.delegate = self;
     [self.createShortListVC.view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:self.createShortListVC.view];

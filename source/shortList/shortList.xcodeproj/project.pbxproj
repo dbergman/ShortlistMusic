@@ -43,6 +43,8 @@
 		46AAEE561B27AB8800E10C42 /* SLBannerMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AAEE551B27AB8800E10C42 /* SLBannerMessageView.swift */; };
 		46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */; };
 		46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA41B042F570056EC35 /* SLLoginVC.m */; };
+		46B242351B57166100BA20D4 /* SLAlbumsCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B242341B57166100BA20D4 /* SLAlbumsCollectionCell.m */; };
+		46B2423B1B5DC14100BA20D4 /* SLAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2423A1B5DC14100BA20D4 /* SLAlbumCell.m */; };
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
 		46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD41AED715800BF1DF3 /* AppDelegate.m */; };
 		46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */; };
@@ -133,6 +135,10 @@
 		46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLLoginGate.m"; sourceTree = "<group>"; };
 		46AB4AA31B042F570056EC35 /* SLLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLoginVC.h; sourceTree = "<group>"; };
 		46AB4AA41B042F570056EC35 /* SLLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLLoginVC.m; sourceTree = "<group>"; };
+		46B242331B57166100BA20D4 /* SLAlbumsCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumsCollectionCell.h; sourceTree = "<group>"; };
+		46B242341B57166100BA20D4 /* SLAlbumsCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumsCollectionCell.m; sourceTree = "<group>"; };
+		46B242391B5DC14100BA20D4 /* SLAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumCell.h; sourceTree = "<group>"; };
+		46B2423A1B5DC14100BA20D4 /* SLAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumCell.m; sourceTree = "<group>"; };
 		46CB6ACC1AED715800BF1DF3 /* shortList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shortList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46CB6AD01AED715800BF1DF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46CB6AD11AED715800BF1DF3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -388,6 +394,10 @@
 			children = (
 				46CB6B031AED7ADC00BF1DF3 /* SLListsVC.h */,
 				46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */,
+				46B242391B5DC14100BA20D4 /* SLAlbumCell.h */,
+				46B2423A1B5DC14100BA20D4 /* SLAlbumCell.m */,
+				46B242331B57166100BA20D4 /* SLAlbumsCollectionCell.h */,
+				46B242341B57166100BA20D4 /* SLAlbumsCollectionCell.m */,
 				4651CE231B4C993B003E9C0F /* Albums */,
 			);
 			name = ShortLists;
@@ -781,6 +791,7 @@
 				46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */,
 				46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */,
 				46A094171AF076C80091C7F7 /* ItunesSearchTracks.m in Sources */,
+				46B242351B57166100BA20D4 /* SLAlbumsCollectionCell.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
 				467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */,
 				46AAEE561B27AB8800E10C42 /* SLBannerMessageView.swift in Sources */,
@@ -793,6 +804,7 @@
 				4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */,
 				46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */,
 				468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */,
+				46B2423B1B5DC14100BA20D4 /* SLAlbumCell.m in Sources */,
 				461801231B095206003C0A92 /* SLCreateShortListEnterYearCell.m in Sources */,
 				467D55A31AF69746005CD607 /* SLAlbumDetailsVC.m in Sources */,
 				46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */,
