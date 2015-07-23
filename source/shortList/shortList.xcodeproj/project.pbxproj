@@ -394,10 +394,10 @@
 			children = (
 				46CB6B031AED7ADC00BF1DF3 /* SLListsVC.h */,
 				46CB6B041AED7ADC00BF1DF3 /* SLListsVC.m */,
-				46B242391B5DC14100BA20D4 /* SLAlbumCell.h */,
-				46B2423A1B5DC14100BA20D4 /* SLAlbumCell.m */,
 				46B242331B57166100BA20D4 /* SLAlbumsCollectionCell.h */,
 				46B242341B57166100BA20D4 /* SLAlbumsCollectionCell.m */,
+				46B242391B5DC14100BA20D4 /* SLAlbumCell.h */,
+				46B2423A1B5DC14100BA20D4 /* SLAlbumCell.m */,
 				4651CE231B4C993B003E9C0F /* Albums */,
 			);
 			name = ShortLists;

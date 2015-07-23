@@ -8,6 +8,7 @@
 
 #import "SLAlbumsCollectionCell.h"
 #import "Shortlist.h"
+#import "SLAlbumCell.h"
 
 @interface SLAlbumsCollectionCell () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 
@@ -32,14 +33,15 @@
         [self.collectionView setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
-        [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+        //self.collectionView.userInteractionEnabled = NO;
+        [self.collectionView registerClass:[SLAlbumCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
         [self.contentView addSubview:self.collectionView];
         
         NSDictionary *views = NSDictionaryOfVariableBindings(_collectionView);
         NSDictionary *metrics = @{};
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|" options:0 metrics:metrics views:views]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView]|" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView(100)]|" options:0 metrics:metrics views:views]];
     }
     
     return self;
@@ -50,14 +52,18 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 35;
+    return self.shortlist.shortListAlbums.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor greenColor];
+    SLAlbumCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
+    [cell configWithShortListAlbum:self.shortlist.shortListAlbums[indexPath.row]];
     
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"");
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

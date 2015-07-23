@@ -35,6 +35,7 @@
     [super viewDidLoad];
 
     [self setTitle:NSLocalizedString(@"ShortLists", nil)];
+    self.view.backgroundColor = [UIColor blackColor];
     
     __weak typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
@@ -46,11 +47,14 @@
     }];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
+    self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 100;
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.allowsSelection = YES;
+    self.tableView.userInteractionEnabled = YES;
     [self.view addSubview:self.tableView];
 
     [self createNewShortListView];
@@ -83,17 +87,20 @@
     
     Shortlist *shortList = (Shortlist *)self.shortLists[indexPath.row];
     [cell configShortListCollection:shortList];
-//    Shortlist *shortList = (Shortlist *)self.shortLists[indexPath.row];
-//    cell.textLabel.text = shortList.shortListName;
-//    
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shortListCellSelected:)];
+    tapGestureRecognizer.numberOfTapsRequired = 1;
+    tapGestureRecognizer.numberOfTouchesRequired = 1;
+    cell.tag = indexPath.row;
+    [cell addGestureRecognizer:tapGestureRecognizer];
+
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    Shortlist *shortList = self.shortLists[indexPath.row];
-    [self.navigationController pushViewController:[[SLListAlbumsVC alloc] initWithShortList:shortList] animated:YES];
+
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,6 +115,12 @@
             [weakSelf.tableView reloadData];
         }];
     }
+}
+
+- (void)shortListCellSelected:(UIGestureRecognizer *)gestureRecognizer {
+    SLAlbumsCollectionCell *cell = (SLAlbumsCollectionCell *)[gestureRecognizer view];
+    Shortlist *shortList = self.shortLists[cell.tag];
+    [self.navigationController pushViewController:[[SLListAlbumsVC alloc] initWithShortList:shortList] animated:YES];
 }
 
 - (void)createNewShortListView {
