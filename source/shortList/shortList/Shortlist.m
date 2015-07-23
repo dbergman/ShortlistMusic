@@ -13,10 +13,14 @@
 @dynamic shortListName;
 @dynamic shortListYear;
 @dynamic shortListUserId;
-@synthesize shortListAlbums;
+@synthesize shortListAlbums = _shortListAlbums;
 
 + (NSString *)parseClassName {
     return @"Shortlist";
+}
+
+- (void)setShortListAlbums:(NSArray *)shortListAlbums {
+    _shortListAlbums = shortListAlbums;
 }
 
 @end
