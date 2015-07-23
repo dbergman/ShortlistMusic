@@ -33,20 +33,20 @@ class SLParseController : NSObject {
         query.findObjectsInBackgroundWithBlock {
             (shortLists: [AnyObject]?, error: NSError?) -> Void in
             if !(error != nil) {
-                
-                
-//                for shortList:Shortlist in shortLists as! [Shortlist] {
-//                    shortList.sh
-//                }
-//                
-//                
-                
-                
-                
-                
-                
-                
-                completion(shortlists: shortLists!)
+                //Fix this, this is bogus
+                var shortListCounter = 0
+    
+                for shortList:Shortlist in shortLists as! [Shortlist] {
+                    self.getShortListAlbums(shortList, completion: { (albums) -> Void in
+                        shortList.shortListAlbums = albums as [AnyObject]
+                        shortListCounter++
+                        
+                        if (shortListCounter == shortLists!.count) {
+                            completion(shortlists: shortLists!)
+                        }
+                        
+                    })
+                }
             }
             else {
                 //TODO HANDLE ERROR
