@@ -33,7 +33,6 @@
         [self.collectionView setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
-        //self.collectionView.userInteractionEnabled = NO;
         [self.collectionView registerClass:[SLAlbumCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
         [self.contentView addSubview:self.collectionView];
         
@@ -41,7 +40,7 @@
         NSDictionary *metrics = @{};
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|" options:0 metrics:metrics views:views]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView(100)]|" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView(120)]|" options:0 metrics:metrics views:views]];
     }
     
     return self;
@@ -67,7 +66,7 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(100, 100);
+    return CGSizeMake(120, 120);
 }
 
 @end

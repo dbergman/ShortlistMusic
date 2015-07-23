@@ -46,15 +46,13 @@
         }];
     }];
     
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 100;
+    self.tableView.estimatedRowHeight = 120;
     self.tableView.tableFooterView = [UIView new];
-    self.tableView.allowsSelection = YES;
-    self.tableView.userInteractionEnabled = YES;
     [self.view addSubview:self.tableView];
 
     [self createNewShortListView];
@@ -70,6 +68,12 @@
             [weakSelf.tableView reloadData];
         }];
     }
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    self.tableView.frame = self.view.bounds;
 }
 
 #pragma mark - Table view data source
@@ -95,12 +99,6 @@
     [cell addGestureRecognizer:tapGestureRecognizer];
 
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -130,6 +128,7 @@
         topMarginConstraint.constant = weakSelf.view.frame.size.height;
         NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];
         createSLHeightConstraint.constant = kSLCreateShortListCellCount * kSLCreateShortListCellHeight;
+        weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
         
         [SLParseController getUsersShortLists:^(NSArray *shortlists) {
             weakSelf.shortLists = shortlists;
@@ -165,6 +164,8 @@
     NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
     topMarginConstraint.constant = 100.0;
     [self.view addConstraints:self.createSLVerticalConstraints];
+    
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     
     [UIView animateWithDuration:.2 animations:^{
         [self.view layoutIfNeeded];
