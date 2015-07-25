@@ -24,7 +24,6 @@
     if (self) {        
         self.albumArtView = [UIImageView new];
         self.albumArtView.contentMode = UIViewContentModeScaleAspectFit;
-        self.albumArtView.backgroundColor = [UIColor purpleColor];
         self.albumArtView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:self.albumArtView];
         

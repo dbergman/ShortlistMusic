@@ -9,11 +9,17 @@
 #import "SLAlbumsCollectionCell.h"
 #import "Shortlist.h"
 #import "SLAlbumCell.h"
+#import "SLStyle.h"
+
+static const CGFloat kSLAlbumCellSize = 120;
 
 @interface SLAlbumsCollectionCell () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) Shortlist *shortlist;
+@property (nonatomic, strong) UIView *shortlistDetailsView;
+@property (nonatomic, strong) UILabel *shortlistNamelabel;
+@property (nonatomic, strong) UILabel *shortlistYearlabel;
 
 @end
 
@@ -36,11 +42,40 @@
         [self.collectionView registerClass:[SLAlbumCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
         [self.contentView addSubview:self.collectionView];
         
-        NSDictionary *views = NSDictionaryOfVariableBindings(_collectionView);
-        NSDictionary *metrics = @{};
+        self.shortlistDetailsView = [UIView new];
+        self.shortlistDetailsView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.shortlistDetailsView.backgroundColor = [UIColor blackColor];
+        self.shortlistDetailsView.alpha = .7;
+        [self.contentView addSubview:self.shortlistDetailsView];
+        
+        self.shortlistNamelabel = [UILabel new];
+        self.shortlistNamelabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.shortlistNamelabel.font = [UIFont fontWithName:self.shortlistNamelabel.font.fontName size:20.0];
+        self.shortlistNamelabel.textColor = [UIColor whiteColor];
+        self.shortlistNamelabel.preferredMaxLayoutWidth = self.contentView.frame.size.width/2.0;
+        [self.shortlistDetailsView addSubview:self.shortlistNamelabel];
+        
+        self.shortlistYearlabel = [UILabel new];
+        self.shortlistYearlabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.shortlistYearlabel.font = [UIFont fontWithName:self.shortlistNamelabel.font.fontName size:20.0];
+        self.shortlistYearlabel.textColor = [UIColor whiteColor];
+        self.shortlistYearlabel.preferredMaxLayoutWidth = self.contentView.frame.size.width/2.0;
+        [self.shortlistDetailsView addSubview:self.shortlistYearlabel];
+
+        NSDictionary *views = NSDictionaryOfVariableBindings(_collectionView, _shortlistDetailsView, _shortlistNamelabel, _shortlistYearlabel);
+        NSDictionary *metrics = @{@"collectionViewHeight":@(kSLAlbumCellSize), @"shortlistDetailsViewHeight":@(40)};
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|" options:0 metrics:metrics views:views]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView(120)]|" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView(collectionViewHeight)]|" options:0 metrics:metrics views:views]];
+        
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_shortlistDetailsView]|" options:0 metrics:metrics views:views]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_shortlistDetailsView(shortlistDetailsViewHeight)]|" options:0 metrics:metrics views:views]];
+        
+        [self.shortlistDetailsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_shortlistNamelabel]" options:0 metrics:metrics views:views]];
+        [self.shortlistDetailsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_shortlistNamelabel]-|" options:0 metrics:metrics views:views]];
+        
+        [self.shortlistDetailsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_shortlistYearlabel]-|" options:0 metrics:metrics views:views]];
+        [self.shortlistDetailsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_shortlistYearlabel]-|" options:0 metrics:metrics views:views]];
     }
     
     return self;
@@ -48,6 +83,8 @@
 
 - (void)configShortListCollection:(Shortlist *)shortList {
     self.shortlist = shortList;
+    self.shortlistNamelabel.text = shortList.shortListName;
+    self.shortlistYearlabel.text = shortList.shortListYear;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -61,12 +98,39 @@
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"");
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(kSLAlbumCellSize, kSLAlbumCellSize);
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(120, 120);
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGRect frame = self.shortlistDetailsView.frame;
+    frame.size.height = 0;
+    
+    [UIView animateWithDuration:.2 animations:^{
+        self.shortlistDetailsView.alpha = 0.0;
+        self.shortlistDetailsView.frame = frame;
+    }];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    CGRect frame = self.shortlistDetailsView.frame;
+    frame.size.height = 0;
+    
+    if (!decelerate) {
+        [UIView animateWithDuration:.2 animations:^{
+            self.shortlistDetailsView.alpha = 0.0;
+            self.shortlistDetailsView.frame = frame;
+        }];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGRect frame = self.shortlistDetailsView.frame;
+    frame.size.height = 40;
+    [UIView animateWithDuration:.2 animations:^{
+        self.shortlistDetailsView.alpha = 0.7;
+        self.shortlistDetailsView.frame = frame;
+    }];
 }
 
 @end
