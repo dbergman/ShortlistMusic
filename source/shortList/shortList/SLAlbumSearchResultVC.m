@@ -23,7 +23,6 @@
 
 @end
 
-
 @implementation SLAlbumSearchResultVC
 
 - (instancetype)initWithShortList:(Shortlist *)shortList ArtistName:(NSString *)artistName Albums:(NSArray *)albums {

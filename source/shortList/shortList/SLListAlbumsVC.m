@@ -15,6 +15,8 @@
 #import "ShortListAlbum.h"
 #import "SLListAbumCell.h"
 #import "shortList-Swift.h"
+#import "SLAlbumDetailsVC.h"
+#import "ItunesSearchTracks.h"
 #import <BlocksKit+UIKit.h>
 
 @interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate>
@@ -173,6 +175,16 @@
     
     if (indexPath.section == 1) {
         [self startSearchAlbumFlow];
+    }
+    else {
+         ShortListAlbum *album = self.albums[indexPath.row];
+        __weak typeof(self) weakSelf = self;
+        [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.albumId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
+            if (!error) {
+                SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:weakSelf.shortList albumDetails:[albumSearchResults getAlbumInfo] tracks:[albumSearchResults getAlbumTracks]];
+                [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
+            }
+        }];
     }
 }
 
