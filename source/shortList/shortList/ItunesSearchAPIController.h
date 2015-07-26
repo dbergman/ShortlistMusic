@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "AFHTTPRequestOperationManager.h"
 
+@class ItunesSearchAlbum;
+
 typedef void(^SLItunesFetchResultsBlock)(id responseObject, NSError *error);
 
 @interface ItunesSearchAPIController : AFHTTPRequestOperationManager
@@ -23,5 +25,7 @@ typedef void(^SLItunesFetchResultsBlock)(id responseObject, NSError *error);
 
 //Tracks
 - (void)getTracksForAlbumID:(NSString *)albumID completion:(SLItunesFetchResultsBlock)completion;
+
++ (ItunesSearchAlbum *)filterAlbums:(ItunesSearchAlbum *)albumResult ByYear:(NSString *)filterYear;
 
 @end

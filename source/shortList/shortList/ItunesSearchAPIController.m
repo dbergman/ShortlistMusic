@@ -10,6 +10,7 @@
 #import "ItunesSearchArtist.h"
 #import "ItunesSearchAlbum.h"
 #import "ItunesSearchTracks.h"
+#import "ItunesAlbum.h"
 #import <Mantle/Mantle.h>
 
 static NSString * const kBaseURL = @"https://itunes.apple.com/";
@@ -104,6 +105,23 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"FAILURE");
     }];
+}
+
++ (ItunesSearchAlbum *)filterAlbums:(ItunesSearchAlbum *)albumResult ByYear:(NSString *)filterYear {
+    if ([filterYear isEqualToString:@"All"]) {
+        return albumResult;
+    }
+    
+    NSMutableArray *albumsByYear = [NSMutableArray new];
+    for (ItunesAlbum *album in [albumResult getArtistAlbums]) {
+        if ([album.releaseYear isEqualToString:filterYear]) {
+             [albumsByYear addObject:album];
+        }
+    }
+    
+    albumResult.albumResults = albumsByYear;
+ 
+    return albumResult;
 }
 
 @end

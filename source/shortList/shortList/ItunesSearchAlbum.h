@@ -10,8 +10,8 @@
 
 @interface ItunesSearchAlbum : MTLModel <MTLJSONSerializing>
 
-@property (nonatomic, assign, readonly) NSInteger resultCount;
-@property (nonatomic, copy, readonly) NSArray *albumResults;
+@property (nonatomic, assign) NSInteger resultCount;
+@property (nonatomic, copy) NSArray *albumResults;
 
 -(NSArray *)getArtistAlbums;
 

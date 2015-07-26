@@ -11,6 +11,7 @@
 #import "ItunesSearchAPIController.h"
 #import "ItunesSearchAlbum.h"
 #import "ItunesArtist.h"
+#import "Shortlist.h"
 
 @implementation SLArtistSearchResultsVC
 
@@ -60,6 +61,8 @@
     __weak typeof(self) weakSelf = self;
     [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:[NSNumber numberWithInteger:itunesArtist.artistId] completion:^(ItunesSearchAlbum *albumResult, NSError *error) {
         if (!error) {
+            [ItunesSearchAPIController filterAlbums:albumResult ByYear:weakSelf.shortList.shortListYear];
+            
             SLAlbumSearchResultVC *albumResltsVC = [[SLAlbumSearchResultVC alloc] initWithShortList:weakSelf.shortList ArtistName:itunesArtist.artistName Albums:albumResult.getArtistAlbums];
             [weakSelf.navController pushViewController:albumResltsVC animated:YES];
         }
