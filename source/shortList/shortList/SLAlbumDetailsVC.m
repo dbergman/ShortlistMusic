@@ -31,6 +31,7 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) Shortlist *shortList;
 @property (nonatomic, strong) UIButton *spotifyButton;
+@property (nonatomic, strong) UIBarButtonItem *rightBarButton;
 
 @end
 
@@ -42,7 +43,6 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     if (self) {
         self.albumDetails = albumDetails;
         self.tracks = tracks;
-
     }
     
     return self;
@@ -60,12 +60,12 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     __weak typeof(self) weakSelf = self;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
-        [weakSelf addAlbumToShortList];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:([self getShortListAlbum])? NSLocalizedString(@"Remove", nil) : NSLocalizedString(@"Add", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
+        ([self getShortListAlbum]) ? [weakSelf removeAlbumFromShortList] : [weakSelf addAlbumToShortList];
     }];
-    
+     
     self.view.backgroundColor = [UIColor blackColor];
     [self setTitle:self.albumDetails.collectionName];
     self.automaticallyAdjustsScrollViewInsets = YES;
@@ -95,6 +95,8 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
@@ -171,7 +173,17 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     return albumTrackCell;
 }
 
-#pragma mark - Add Shortlist
+- (ShortListAlbum *)getShortListAlbum {
+    for (ShortListAlbum *slAlbum in self.shortList.shortListAlbums) {
+        if (slAlbum.albumId == self.albumDetails.collectionId) {
+            return slAlbum;
+        }
+    }
+    
+    return nil;
+}
+
+#pragma mark - Add to Shortlist
 - (void)addAlbumToShortList {
     __weak typeof(self) weakSelf = self;
     
@@ -183,6 +195,15 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
         [SLParseController addAlbumToShortList:slAlbum completion:^{
             [weakSelf.navigationController popViewControllerAnimated:YES];
         }];
+    }];
+}
+
+#pragma mark - Remove from Shortlist
+- (void)removeAlbumFromShortList {
+    __weak typeof(self) weakSelf = self;
+    [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:[self getShortListAlbum] completion:^(NSArray *albums) {
+        weakSelf.shortList.shortListAlbums = albums;
+        [weakSelf.navigationController popViewControllerAnimated:YES];
     }];
 }
 
