@@ -18,6 +18,7 @@
 #import "SLAlbumsCollectionCell.h"
 #import "shortList-Swift.h"
 #import "SLAlbumsCollectionCell.h"
+#import "FXBlurView.h"
 
 @interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -138,7 +139,6 @@
         [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
         [UIView animateWithDuration:.2 animations:^{
             [weakSelf.view layoutIfNeeded];
-            weakSelf.blurBackgroundView.alpha = 0.0;
         } completion:^(BOOL finished) {
             [weakSelf removeBlurBackground];
         }];
@@ -190,16 +190,15 @@
     self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getScreenShot]];
     self.blurBackgroundView.userInteractionEnabled = YES;
     [self.view insertSubview:self.blurBackgroundView atIndex:1];
-
-    UIVisualEffect *blurEffect;
-    blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    
-    UIVisualEffectView *visualEffectView;
-    visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    
-    visualEffectView.frame = self.blurBackgroundView.bounds;
-    [self.blurBackgroundView addSubview:visualEffectView];
     self.blurBackgroundView.alpha = 0;
+    
+    FXBlurView *shortListBlurView = [[FXBlurView alloc] init];
+    shortListBlurView.frame = self.blurBackgroundView.bounds;
+    shortListBlurView.tintColor = [UIColor blackColor];
+    shortListBlurView.blurEnabled = YES;
+    shortListBlurView.clipsToBounds = YES;
+    shortListBlurView.blurRadius = 9;
+    [self.blurBackgroundView addSubview:shortListBlurView];
 }
 
 - (void)removeBlurBackground {
