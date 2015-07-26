@@ -26,6 +26,6 @@ typedef void(^SLItunesFetchResultsBlock)(id responseObject, NSError *error);
 //Tracks
 - (void)getTracksForAlbumID:(NSString *)albumID completion:(SLItunesFetchResultsBlock)completion;
 
-+ (ItunesSearchAlbum *)filterAlbums:(ItunesSearchAlbum *)albumResult ByYear:(NSString *)filterYear;
++ (void)filterAlbums:(ItunesSearchAlbum *)albumResult ByYear:(NSString *)filterYear;
 
 @end

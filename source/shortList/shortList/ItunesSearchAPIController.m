@@ -107,9 +107,9 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
     }];
 }
 
-+ (ItunesSearchAlbum *)filterAlbums:(ItunesSearchAlbum *)albumResult ByYear:(NSString *)filterYear {
++ (void)filterAlbums:(ItunesSearchAlbum *)albumResult ByYear:(NSString *)filterYear {
     if ([filterYear isEqualToString:@"All"]) {
-        return albumResult;
+        return;
     }
     
     NSMutableArray *albumsByYear = [NSMutableArray new];
@@ -120,8 +120,6 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
     }
     
     albumResult.albumResults = albumsByYear;
- 
-    return albumResult;
 }
 
 @end
