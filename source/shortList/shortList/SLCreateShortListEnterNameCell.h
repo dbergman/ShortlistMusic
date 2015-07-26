@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^SLCreateNameAction)(NSString *shortListName);
+typedef void(^SLTCreatingShortListName)();
 
 @interface SLCreateShortListEnterNameCell : UITableViewCell
 
 @property (nonatomic, copy) SLCreateNameAction createNameAction;
+@property (nonatomic, copy) SLTCreatingShortListName creatingShortListNameAction;
 
 - (void)clearShortListName;
 

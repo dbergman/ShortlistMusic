@@ -14,6 +14,6 @@ typedef void(^SLCreateYearAction)(NSString *shortListYear);
 
 @property (nonatomic, copy) SLCreateYearAction createYearAction;
 
-- (void)hidePickerCell;
+- (void)hidePickerCell:(BOOL)clearResult;
 
 @end

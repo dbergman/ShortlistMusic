@@ -85,6 +85,8 @@ static const CGFloat kSLAlbumCellSize = 120;
     self.shortlist = shortList;
     self.shortlistNamelabel.text = [shortList.shortListName uppercaseString];
     self.shortlistYearlabel.text = shortList.shortListYear;
+    
+    [self.collectionView reloadData];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

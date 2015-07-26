@@ -41,7 +41,9 @@
         [self.shortListNameTextfield setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.shortListNameTextfield.layer.cornerRadius= 3.0f;
         self.shortListNameTextfield.layer.masksToBounds = YES;
+        self.shortListNameTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
         self.shortListNameTextfield.backgroundColor = [UIColor whiteColor];
+        self.shortListNameTextfield.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
         [self.shortListNameTextfield setTintColor:[UIColor sl_Red]];
         [self.contentView addSubview:self.shortListNameTextfield];
         
@@ -65,7 +67,7 @@
 #pragma mark UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *currentShortListName = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    
+
     if (self.createNameAction) {
         self.createNameAction(currentShortListName);
     }

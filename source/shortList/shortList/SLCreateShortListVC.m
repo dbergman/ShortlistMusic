@@ -107,6 +107,16 @@ NSInteger const kSLCreateShortListCellCount = 3;
         }
         [cell setCreateNameAction:^(NSString *shortListName){
             weakself.shortListName = shortListName;
+            
+            if (weakself.showingYearPicker) {
+                [weakself.yearPickerCell hidePickerCell:NO];
+                weakself.showingYearPicker = NO;
+                [weakself.tableView beginUpdates];
+                [weakself.tableView endUpdates];
+                if ([weakself.delegate respondsToSelector:@selector(createShortList:willDisplayPickerWithHeight:)]) {
+                    [weakself.delegate createShortList:weakself willDisplayPickerWithHeight:(kSLCreateShortListCellHeight * 2) - kSLCreateShortListPickerHeight];
+                }
+            }
         }];
         self.shortListNameCell = cell;
         return cell;
@@ -126,7 +136,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
 
 - (void)cleanupCreateShortListView {
     self.showingYearPicker = NO;
-    [self.yearPickerCell hidePickerCell];
+    [self.yearPickerCell hidePickerCell:YES];
     [self.shortListNameCell clearShortListName];
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
@@ -137,6 +147,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
     
     if (indexPath.row == 2 && !self.showingYearPicker) {
         self.showingYearPicker = YES;
+        [self.view endEditing:YES];
         [self.tableView beginUpdates];
         [self.tableView endUpdates];
         

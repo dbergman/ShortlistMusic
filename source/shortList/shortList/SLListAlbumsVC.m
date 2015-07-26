@@ -64,11 +64,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    __weak typeof(self) weakSelf = self;
-    [SLParseController getShortListAlbums:self.shortList completion:^(NSArray * albums) {
-        weakSelf.albums = albums;
-        [weakSelf.tableView reloadData];
-    }];
+    [self refreshShortLists];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -94,7 +90,6 @@
     txtSearchField.backgroundColor = [UIColor whiteColor];
     
     self.searchController.searchBar.keyboardAppearance = UIKeyboardAppearanceDark;
-
     [self presentViewController:self.searchController animated:YES completion:nil];
 }
 
@@ -237,6 +232,14 @@
 }
 
 #pragma mark Utilities
+- (void)refreshShortLists {
+    __weak typeof(self) weakSelf = self;
+    [SLParseController getShortListAlbums:self.shortList completion:^(NSArray * albums) {
+        weakSelf.albums = albums;
+        [weakSelf.tableView reloadData];
+    }];
+}
+
 - (void)reorderShortList {
     [self.albums enumerateObjectsUsingBlock:^(ShortListAlbum *album, NSUInteger idx, BOOL *stop) {
         album.shortListRank = idx + 1;

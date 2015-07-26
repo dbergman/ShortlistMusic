@@ -83,12 +83,19 @@
     }
 }
 
-- (void)hidePickerCell {
+- (void)hidePickerCell:(BOOL)clearResult {
     [UIView animateWithDuration:.2 delay:.2 options:UIViewAnimationOptionLayoutSubviews animations:^{
-        self.allYearLabel.alpha = 1.0;
-        self.yearPicker.alpha = 0.0;
+        if (clearResult) {
+            self.allYearLabel.alpha = 1.0;
+            self.allYearLabel.text = NSLocalizedString(@"All Years", nil);
+        }
+        else {
+            self.allYearLabel.text = self.yearFilterArray[[self.yearPicker selectedRowInComponent:0]];
+        }
     } completion:^(BOOL finished) {
-        [self.yearPicker selectRow:0 inComponent:0 animated:NO];
+        if (clearResult) {
+            [self.yearPicker selectRow:0 inComponent:0 animated:NO];
+        }
     }];
 }
 
