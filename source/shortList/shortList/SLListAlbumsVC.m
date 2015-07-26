@@ -44,6 +44,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor blackColor];
+    [self setTitle:self.shortList.shortListName];
  
     self.editShortListBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", nil) style:UIBarButtonItemStylePlain target:self action:@selector(shortListEditAction:)];
     self.navigationItem.rightBarButtonItem = self.editShortListBarButton;

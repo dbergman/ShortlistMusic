@@ -110,8 +110,8 @@ static const CGFloat kSLALbumCellHeight = 120;
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    self.albumTitleLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - (1.0 * MarginSizes.large);
-    self.artistNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - (1.0 * MarginSizes.large);
+    self.albumTitleLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - MarginSizes.large;
+    self.artistNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - MarginSizes.large;
 }
 
 - (void)configureCell:(ShortListAlbum *)album {
