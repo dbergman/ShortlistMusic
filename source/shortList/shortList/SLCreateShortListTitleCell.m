@@ -9,6 +9,14 @@
 #import "SLCreateShortListTitleCell.h"
 #import "SLStyle.h"
 #import <BlocksKit+UIKit.h>
+#import "Shortlist.h"
+
+@interface SLCreateShortListTitleCell ()
+
+@property (nonatomic, strong) UILabel *shortlistTitle;
+@property (nonatomic, strong) UIToolbar *titleToolBar;
+
+@end
 
 @implementation SLCreateShortListTitleCell
 
@@ -20,22 +28,20 @@
         self.backgroundColor = [UIColor blackColor];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        UIToolbar *titleToolBar = [UIToolbar new];
-        titleToolBar.translucent = NO;
-        titleToolBar.barTintColor = [UIColor blackColor];
-        [titleToolBar setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.contentView addSubview:titleToolBar];
+        self.titleToolBar = [UIToolbar new];
+        self.titleToolBar.translucent = NO;
+        self.titleToolBar.barTintColor = [UIColor blackColor];
+        [self.titleToolBar setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.contentView addSubview:self.titleToolBar];
 
-        UILabel *shortlistTitle = [UILabel new];
-        shortlistTitle.textAlignment = NSTextAlignmentCenter;
-        shortlistTitle.backgroundColor = [UIColor clearColor];
-        shortlistTitle.shadowColor = [UIColor sl_Red];
-        shortlistTitle.shadowOffset = CGSizeMake(0, 1);
-        shortlistTitle.textColor = [UIColor whiteColor];
-        shortlistTitle.text = NSLocalizedString(@"New ShortList", nil);
-        shortlistTitle.font = [UIFont boldSystemFontOfSize:20.0];
-        [shortlistTitle sizeToFit];
-        UIBarButtonItem *toolBarTitle = [[UIBarButtonItem alloc] initWithCustomView:shortlistTitle];
+        self.shortlistTitle = [UILabel new];
+        self.shortlistTitle.textAlignment = NSTextAlignmentCenter;
+        self.shortlistTitle.backgroundColor = [UIColor clearColor];
+        self.shortlistTitle.shadowColor = [UIColor sl_Red];
+        self.shortlistTitle.shadowOffset = CGSizeMake(0, 1);
+        self.shortlistTitle.textColor = [UIColor whiteColor];
+        self.shortlistTitle.font = [UIFont boldSystemFontOfSize:20.0];
+        UIBarButtonItem *toolBarTitle = [[UIBarButtonItem alloc] initWithCustomView:self.shortlistTitle];
         
         UIBarButtonItem *marginSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
         marginSpace.width = 15;
@@ -61,16 +67,41 @@
         
         NSArray *items = [[NSArray alloc] initWithObjects:marginSpace, cancelButton, flexibleSpace, toolBarTitle, flexibleSpace, createButton, marginSpace, nil];
         
-        [titleToolBar setItems:items];
+        [self.titleToolBar setItems:items];
 
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:titleToolBar attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:1.0]];
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleToolBar attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:1.0]];
         
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:titleToolBar attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:1.0]];
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleToolBar attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:1.0]];
 
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:titleToolBar attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:1.0]];
+        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.titleToolBar attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:1.0]];
     }
     
     return self;
+}
+
+- (void)configTitle:(Shortlist *)shortList {
+    self.shortlistTitle.text = (shortList) ? NSLocalizedString(@"Update ShortList", nil) : NSLocalizedString(@"New ShortList", nil);
+    [self.shortlistTitle sizeToFit];
+    
+    __weak typeof(self) weakSelf = self;
+    UIBarButtonItem *rightButton = [UIBarButtonItem new];
+    rightButton.tintColor = [UIColor whiteColor];
+    [rightButton bk_initWithBarButtonSystemItem:(shortList) ? UIBarButtonSystemItemSave : UIBarButtonSystemItemAdd handler:^(id sender) {
+        if (shortList) {
+            if (weakSelf.updateSLBlock) {
+                weakSelf.updateSLBlock();
+            }
+        }
+        else {
+            if (weakSelf.createSLBlock) {
+                weakSelf.createSLBlock();
+            }
+        }
+    }];
+    
+    NSMutableArray *barButtons = [self.titleToolBar.items mutableCopy];
+    [barButtons replaceObjectAtIndex:barButtons.count - 2 withObject:rightButton];
+     [self.titleToolBar setItems:[NSArray arrayWithArray:barButtons]];
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "SLCreateShortListEnterYearCell.h"
 #import "SLStyle.h"
+#import "Shortlist.h"
 
 @interface SLCreateShortListEnterYearCell () <UIPickerViewDelegate>
 
@@ -80,6 +81,17 @@
             self.allYearLabel.alpha = 0.0;
             self.yearPicker.alpha = 1.0;
         } completion:nil];
+    }
+}
+
+- (void)configYearCell:(Shortlist *)shortList {
+    if (shortList) {
+        [self.yearFilterArray enumerateObjectsUsingBlock:^(NSString *year, NSUInteger idx, BOOL *stop) {
+            if ([year isEqualToString:shortList.shortListYear]) {
+                [self.yearPicker selectRow:idx inComponent:0 animated:NO];
+                self.allYearLabel.text = shortList.shortListYear;
+            }
+        }];
     }
 }
 

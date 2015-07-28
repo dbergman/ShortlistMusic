@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Shortlist;
 
 extern CGFloat const kSLCreateShortListPickerHeight;
 extern CGFloat const kSLCreateShortListCellHeight;
@@ -23,7 +24,10 @@ extern NSInteger const kSLCreateShortListCellCount;
 @interface SLCreateShortListVC : UIViewController
 
 @property (nonatomic, weak) id <SLCreateShortListDelegate> delegate;
+@property (nonatomic, strong) UITableView *tableView;
 
 - (instancetype)initWithCompletion:(dispatch_block_t)completion;
+- (void)updateShortList:(Shortlist *)shortList;
+- (void)newShortList;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Shortlist;
 
 typedef void(^SLCreateYearAction)(NSString *shortListYear);
 
@@ -15,5 +16,6 @@ typedef void(^SLCreateYearAction)(NSString *shortListYear);
 @property (nonatomic, copy) SLCreateYearAction createYearAction;
 
 - (void)hidePickerCell:(BOOL)clearResult;
+- (void)configYearCell:(Shortlist *)shortList;
 
 @end

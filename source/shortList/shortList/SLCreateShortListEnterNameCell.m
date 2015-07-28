@@ -8,6 +8,7 @@
 
 #import "SLCreateShortListEnterNameCell.h"
 #import "SLStyle.h"
+#import "Shortlist.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface SLCreateShortListEnterNameCell () <UITextFieldDelegate>
@@ -62,6 +63,10 @@
 - (void)clearShortListName {
     self.shortListNameTextfield.text = [NSString new];
     [self.shortListNameTextfield resignFirstResponder];
+}
+
+- (void)configShortListNameCell:(Shortlist *)shortList {
+    (shortList) ?  self.shortListNameTextfield.text = shortList.shortListName : @"";
 }
 
 #pragma mark UITextFieldDelegate

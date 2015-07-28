@@ -22,11 +22,11 @@ NSInteger const kSLCreateShortListCellCount = 3;
 @interface SLCreateShortListVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, assign) BOOL showingYearPicker;
-@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SLCreateShortListEnterYearCell *yearPickerCell;
 @property (nonatomic, strong) SLCreateShortListEnterNameCell *shortListNameCell;
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;
+@property (nonatomic, strong) Shortlist *shortList;
 @property (nonatomic, copy) dispatch_block_t completion;
 
 @end
@@ -76,6 +76,9 @@ NSInteger const kSLCreateShortListCellCount = 3;
         if (cell == nil) {
             cell = [[SLCreateShortListTitleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TitleCellIdentifier];
         }
+        
+        [cell configTitle:self.shortList];
+        
         __weak typeof(self) weakSelf = self;
         [cell setCleanUpSLBlock:^ {
             [weakSelf cleanupCreateShortListView];
@@ -98,6 +101,20 @@ NSInteger const kSLCreateShortListCellCount = 3;
             }
         }];
         
+        [cell setUpdateSLBlock:^{
+            self.shortList.shortListName = weakSelf.shortListName;
+            self.shortList.shortListYear = (weakSelf.shortListYear) ? weakSelf.shortListYear: NSLocalizedString(@"All", nil);
+            
+            [SLParseController saveShortlist:self.shortList];
+            
+            [weakSelf cleanupCreateShortListView];
+            
+            if (weakSelf.completion) {
+                weakSelf.completion();
+            }
+        }];
+        
+        
         return cell;
     }
     else if (indexPath.row == 1) {
@@ -105,6 +122,8 @@ NSInteger const kSLCreateShortListCellCount = 3;
         if (cell == nil) {
             cell = [[SLCreateShortListEnterNameCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NameCellIdentifier];
         }
+        
+        [cell configShortListNameCell:self.shortList];
         [cell setCreateNameAction:^(NSString *shortListName){
             weakself.shortListName = shortListName;
             
@@ -127,6 +146,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
         cell = [[SLCreateShortListEnterYearCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:YearCellIdentifier];
     }
     self.yearPickerCell = cell;
+    [cell configYearCell:self.shortList];
     
     [cell setCreateYearAction:^(NSString *shortListYear){
         weakself.shortListYear = shortListYear;
@@ -171,6 +191,14 @@ NSInteger const kSLCreateShortListCellCount = 3;
     [tableView setSeparatorInset:UIEdgeInsetsZero];
     [tableView setLayoutMargins:UIEdgeInsetsZero];
     [cell setLayoutMargins:UIEdgeInsetsZero];
+}
+
+- (void)updateShortList:(ShortList *)shortList {
+    self.shortList = shortList;
+}
+
+- (void)newShortList {
+    self.shortList = nil;
 }
 
 @end

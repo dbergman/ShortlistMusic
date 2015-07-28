@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ShortList;
 
 @interface SLCreateShortListTitleCell : UITableViewCell
 
 @property (nonatomic, copy) dispatch_block_t cleanUpSLBlock;
 @property (nonatomic, copy) dispatch_block_t createSLBlock;
+@property (nonatomic, copy) dispatch_block_t updateSLBlock;
+
+- (void)configTitle:(ShortList *)shortList;
 
 @end

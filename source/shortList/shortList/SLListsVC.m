@@ -42,7 +42,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
         [weakSelf showLoginGateWithCompletion:^{
             if ([PFUser currentUser]) {
-                [weakSelf showCreateNewShortListView];
+                [weakSelf showCreateShortListView:nil];
             }
         }];
     }];
@@ -98,6 +98,10 @@
     tapGestureRecognizer.numberOfTouchesRequired = 1;
     cell.tag = indexPath.row;
     [cell addGestureRecognizer:tapGestureRecognizer];
+    
+    UILongPressGestureRecognizer *longGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortListCellUpdate:)];
+    longGestureRecognizer.minimumPressDuration = .5f;
+    [cell addGestureRecognizer:longGestureRecognizer];
 
     return cell;
 }
@@ -116,10 +120,19 @@
     }
 }
 
+#pragma mark GestureRecognizers
 - (void)shortListCellSelected:(UIGestureRecognizer *)gestureRecognizer {
     SLAlbumsCollectionCell *cell = (SLAlbumsCollectionCell *)[gestureRecognizer view];
     Shortlist *shortList = self.shortLists[cell.tag];
     [self.navigationController pushViewController:[[SLListAlbumsVC alloc] initWithShortList:shortList] animated:YES];
+}
+
+- (void)shortListCellUpdate:(UILongPressGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        SLAlbumsCollectionCell *cell = (SLAlbumsCollectionCell *)[gestureRecognizer view];
+        Shortlist *shortList = self.shortLists[cell.tag];
+        [self showCreateShortListView:shortList];
+    }
 }
 
 - (void)createNewShortListView {
@@ -159,8 +172,12 @@
     [self.view updateConstraints];
 }
 
-- (void)showCreateNewShortListView {
+- (void)showCreateShortListView:(Shortlist *)shortList {
     [self addBlurBackground];
+    
+    (shortList) ? [self.createShortListVC updateShortList:shortList] : [self.createShortListVC newShortList];
+    [self.createShortListVC.tableView reloadData];
+    
     NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
     topMarginConstraint.constant = 100.0;
     [self.view addConstraints:self.createSLVerticalConstraints];
