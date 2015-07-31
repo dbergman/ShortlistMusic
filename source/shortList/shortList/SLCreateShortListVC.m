@@ -27,13 +27,13 @@ NSInteger const kSLCreateShortListCellCount = 3;
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;
 @property (nonatomic, strong) Shortlist *shortList;
-@property (nonatomic, copy) dispatch_block_t completion;
+@property (nonatomic, copy) SLCreateUpdateShortListCompletion completion;
 
 @end
 
 @implementation SLCreateShortListVC
 
-- (instancetype)initWithCompletion:(dispatch_block_t)completion {
+- (instancetype)initWithCompletion:(SLCreateUpdateShortListCompletion)completion {
     self = [super init];
     
     if (self) {
@@ -83,7 +83,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
         [cell setCleanUpSLBlock:^ {
             [weakSelf cleanupCreateShortListView];
             if (weakSelf.completion) {
-                weakSelf.completion();
+                weakSelf.completion(weakSelf.shortList, NO);
             }
         }];
         
@@ -92,25 +92,25 @@ NSInteger const kSLCreateShortListCellCount = 3;
             shortList.shortListName = weakSelf.shortListName;
             shortList.shortListYear = (weakSelf.shortListYear) ? weakSelf.shortListYear: NSLocalizedString(@"All", nil);
             
-            [SLParseController saveShortlist:shortList];
+           weakSelf.shortList = [SLParseController saveShortlist:shortList];
             
             [weakSelf cleanupCreateShortListView];
             
             if (weakSelf.completion) {
-                weakSelf.completion();
+                weakSelf.completion(weakSelf.shortList, YES);
             }
         }];
         
         [cell setUpdateSLBlock:^{
-            self.shortList.shortListName = weakSelf.shortListName;
-            self.shortList.shortListYear = (weakSelf.shortListYear) ? weakSelf.shortListYear: NSLocalizedString(@"All", nil);
-            
-            [SLParseController saveShortlist:self.shortList];
+            weakSelf.shortList.shortListName = weakSelf.shortListName;
+            weakSelf.shortList.shortListYear = (weakSelf.shortListYear) ? weakSelf.shortListYear: NSLocalizedString(@"All", nil);
             
             [weakSelf cleanupCreateShortListView];
             
+            weakSelf.shortList = [SLParseController saveShortlist:weakSelf.shortList];
+            
             if (weakSelf.completion) {
-                weakSelf.completion();
+                weakSelf.completion(weakSelf.shortList, NO);
             }
         }];
         
