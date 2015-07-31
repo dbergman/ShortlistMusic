@@ -192,7 +192,7 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
         slAlbum.shortListId = weakSelf.shortList.objectId;
         slAlbum.shortListRank = allAlbums.count + 1;
 
-        [SLParseController addAlbumToShortList:slAlbum completion:^{
+        [SLParseController addAlbumToShortList:slAlbum shortlist:weakSelf.shortList completion:^{
             [weakSelf.navigationController popViewControllerAnimated:YES];
         }];
     }];

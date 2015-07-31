@@ -15,41 +15,35 @@ let ShortLists = "Shortlist"
 let ShortListAlbums = "ShortListAlbum"
 
 class SLParseController : NSObject {
-    class func saveShortlist (newShortList:Shortlist) {
+    class func saveShortlist (newShortList:Shortlist) -> Shortlist {
         newShortList.shortListUserId = SLParseController.getCurrentUser().objectId
-        
         newShortList.saveInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
             if !success {
                 newShortList.saveEventually(nil)
             }
         }
+        
+        return newShortList
     }
-    
+
     class func getUsersShortLists(completion:SLGetUsersShortListBlock) {
         var query:PFQuery = PFQuery (className: ShortLists)
         query.whereKey("shortListUserId", equalTo: SLParseController.getCurrentUser().objectId!)
         
-        query.findObjectsInBackgroundWithBlock {
-            (shortLists: [AnyObject]?, error: NSError?) -> Void in
-            if !(error != nil) {
-                //Fix this, this is bogus
+        query.findObjectsInBackgroundWithBlock { (shortLists: [AnyObject]?, error: NSError?) -> Void in
+            if (error == nil) {
                 var shortListCounter = 0
-    
                 for shortList:Shortlist in shortLists as! [Shortlist] {
                     self.getShortListAlbums(shortList, completion: { (albums) -> Void in
                         shortList.shortListAlbums = albums as [AnyObject]
-                        shortListCounter++
                         
+                        shortListCounter++
                         if (shortListCounter == shortLists!.count) {
                             completion(shortlists: shortLists!)
                         }
-                        
                     })
                 }
-            }
-            else {
-                //TODO HANDLE ERROR
             }
         }
     }
@@ -77,14 +71,18 @@ class SLParseController : NSObject {
         }
     }
     
-    class func addAlbumToShortList(shortlistAlbum:ShortListAlbum, completion:dispatch_block_t) {
+    class func addAlbumToShortList(shortlistAlbum:ShortListAlbum, shortlist:Shortlist, completion:dispatch_block_t) {
         shortlistAlbum.shortListUserId = SLParseController.getCurrentUser().objectId
-        shortlistAlbum.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
-            if !success {
-                shortlistAlbum.saveEventually(nil)
+        shortlistAlbum.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            var relation:PFRelation = shortlist.relationForKey("ShortListAlbum")
+            relation.addObject(shortlistAlbum)
+            shortlist.saveInBackgroundWithBlock {
+                (success: Bool, error: NSError?) -> Void in
+                if !success {
+                    shortlistAlbum.saveEventually(nil)
+                }
+                completion();
             }
-            completion();
         }
     }
     

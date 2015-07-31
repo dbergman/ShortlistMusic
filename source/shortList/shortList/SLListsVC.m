@@ -137,7 +137,7 @@
 
 - (void)createNewShortListView {
     __weak typeof(self) weakSelf = self;
-    self.createShortListVC = [[SLCreateShortListVC alloc] initWithCompletion:^{
+    self.createShortListVC = [[SLCreateShortListVC alloc] initWithCompletion:^(Shortlist *shortlist, BOOL newShortlist){
         NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
         topMarginConstraint.constant = weakSelf.view.frame.size.height;
         NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];
@@ -154,6 +154,10 @@
             [weakSelf.view layoutIfNeeded];
         } completion:^(BOOL finished) {
             [weakSelf removeBlurBackground];
+            if (newShortlist) {
+                SLListAlbumsVC *listAlbumsVC = [[SLListAlbumsVC alloc] initWithShortList:shortlist];
+                [weakSelf.navigationController showViewController:listAlbumsVC sender:weakSelf];
+            }
         }];
     }];
     
