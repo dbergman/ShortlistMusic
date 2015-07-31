@@ -41,5 +41,4 @@
     [self.albumArtView sd_setImageWithURL:[NSURL URLWithString:albums.albumArtWork]];
 }
 
-
 @end
