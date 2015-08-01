@@ -27,12 +27,15 @@
         self.backgroundColor = [UIColor clearColor];
         
         self.trackNumberLabel = [UILabel new];
+        self.trackNumberLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
         
         self.trackNameLabel = [UILabel new];
         self.trackNameLabel.numberOfLines = 2;
+        self.trackNameLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
         self.trackNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - self.trackNumberLabel.frame.size.width - (2 * MarginSizes.small) - self.trackDurationLabel.frame.size.width;
         
         self.trackDurationLabel = [UILabel new];
+        self.trackDurationLabel.font = [SLStyle polarisFontWithSize:FontSizes.small];
         
         for (UILabel *cellLabel in @[self.trackDurationLabel, self.trackNameLabel, self.trackNumberLabel]) {
             [cellLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
