@@ -96,6 +96,8 @@
 		4648A5551B234CC300F997F8 /* ShortListAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortListAlbum.m; sourceTree = "<group>"; };
 		4651CE241B4C9992003E9C0F /* SLListAbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListAbumCell.h; sourceTree = "<group>"; };
 		4651CE251B4C9992003E9C0F /* SLListAbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAbumCell.m; sourceTree = "<group>"; };
+		4665B7361B6D475A0088B0B3 /* NixieOne.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NixieOne.otf; sourceTree = "<group>"; };
+		4665B7371B6D47700088B0B3 /* Polaris.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Polaris.otf; sourceTree = "<group>"; };
 		467D55901AF54FB4005CD607 /* SLListAlbumsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListAlbumsVC.h; sourceTree = "<group>"; };
 		467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAlbumsVC.m; sourceTree = "<group>"; };
 		467D55941AF55F3A005CD607 /* SLArtistSearchResultsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLArtistSearchResultsVC.h; sourceTree = "<group>"; };
@@ -262,6 +264,15 @@
 				4651CE251B4C9992003E9C0F /* SLListAbumCell.m */,
 			);
 			name = Albums;
+			sourceTree = "<group>";
+		};
+		4665B7351B6D471A0088B0B3 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4665B7371B6D47700088B0B3 /* Polaris.otf */,
+				4665B7361B6D475A0088B0B3 /* NixieOne.otf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		467D55931AF55E71005CD607 /* Search */ = {
@@ -451,6 +462,7 @@
 		46CB6ACF1AED715800BF1DF3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4665B7351B6D471A0088B0B3 /* Fonts */,
 				4648A5501B1E663E00F997F8 /* shortList-Bridging-Header.h */,
 				46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */,
 				46CB6ADF1AED715800BF1DF3 /* Images.xcassets */,
