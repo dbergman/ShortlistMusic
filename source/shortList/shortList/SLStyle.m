@@ -28,4 +28,12 @@ const struct FontSizes FontSizes = {
 
 @implementation SLStyle
 
++ (UIFont *)polarisFontWithSize:(CGFloat)size {
+    return [UIFont fontWithName:@"Polaris" size:size];
+}
+
++ (UIFont *)nixonOneFontWithSize:(CGFloat)size {
+    return [UIFont fontWithName:@"NixieOne" size:size];
+}
+
 @end

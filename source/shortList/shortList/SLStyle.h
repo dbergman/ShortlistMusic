@@ -31,4 +31,7 @@ extern const struct FontSizes {
 
 @interface SLStyle : NSObject
 
++ (UIFont *)polarisFontWithSize:(CGFloat)size;
++ (UIFont *)nixonOneFontWithSize:(CGFloat)size;
+
 @end

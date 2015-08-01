@@ -27,6 +27,7 @@
     artistTitleLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     artistTitleLabel.text = vcTitle;
     artistTitleLabel.textColor = [UIColor whiteColor];
+    artistTitleLabel.font = [SLStyle polarisFontWithSize:FontSizes.xLarge];
     [artistTitleLabel sizeToFit];
     
     CGRect frame = artistTitleLabel.frame;

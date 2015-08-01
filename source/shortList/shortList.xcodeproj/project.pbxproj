@@ -18,6 +18,8 @@
 		4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5511B1E663F00F997F8 /* SLParseController.swift */; };
 		4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* ShortListAlbum.m */; };
 		4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4651CE251B4C9992003E9C0F /* SLListAbumCell.m */; };
+		4665B7381B6D4D4C0088B0B3 /* Polaris.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4665B7371B6D47700088B0B3 /* Polaris.otf */; };
+		4665B7391B6D4D4F0088B0B3 /* NixieOne.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4665B7361B6D475A0088B0B3 /* NixieOne.otf */; };
 		467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */; };
 		467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55951AF55F3A005CD607 /* SLArtistSearchResultsVC.m */; };
 		467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55981AF577D0005CD607 /* SLAlbumSearchResultVC.m */; };
@@ -679,7 +681,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4665B7381B6D4D4C0088B0B3 /* Polaris.otf in Resources */,
 				46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
+				4665B7391B6D4D4F0088B0B3 /* NixieOne.otf in Resources */,
 				46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
 				46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
 				46CB6AE31AED715800BF1DF3 /* LaunchScreen.xib in Resources */,
