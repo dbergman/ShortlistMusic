@@ -38,46 +38,46 @@ static const CGFloat kSLALbumCellHeight = 120;
         
         self.albumBackgroundImage = [UIImageView new];
         self.albumBackgroundImage.clipsToBounds = YES;
-        [self.albumBackgroundImage setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.albumBackgroundImage setContentMode:UIViewContentModeScaleAspectFill];
         [self.contentView addSubview:self.albumBackgroundImage];
         
         self.albumBlurView = [[FXBlurView alloc] init];
         self.albumBlurView.tintColor = [UIColor blackColor];
         self.albumBlurView.blurEnabled = YES;
-        self.albumBlurView.translatesAutoresizingMaskIntoConstraints = NO;
         self.albumBlurView.clipsToBounds = YES;
         self.albumBlurView.blurRadius = 8;
         [self.albumBackgroundImage addSubview:self.albumBlurView];
         
         UIView *overlay = [UIView new];
-        overlay.translatesAutoresizingMaskIntoConstraints = NO;
         overlay.backgroundColor = [UIColor blackColor];
         overlay.alpha = .4;
         [self.albumBlurView addSubview:overlay];
         
         UIView *shortListDetailContainer = [UIView new];
-        shortListDetailContainer.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:shortListDetailContainer];
         
         self.albumTitleLabel = [UILabel new];
-        self.albumTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.albumTitleLabel.numberOfLines = 2;
         self.albumTitleLabel.textAlignment = NSTextAlignmentCenter;
+        self.albumTitleLabel.font = [SLStyle polarisFontWithSize:FontSizes.xLarge];
         self.albumTitleLabel.textColor = [UIColor whiteColor];
         [shortListDetailContainer addSubview:self.albumTitleLabel];
         
         self.albumRankLabel = [UILabel new];
-        self.albumRankLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.albumRankLabel.textColor = [UIColor whiteColor];
+        self.albumRankLabel.font = [SLStyle polarisFontWithSize:FontSizes.large];
         [shortListDetailContainer addSubview:self.albumRankLabel];
         
         self.artistNameLabel = [UILabel new];
         self.artistNameLabel.numberOfLines = 2;
+        self.artistNameLabel.font = [SLStyle polarisFontWithSize:FontSizes.large];
         self.artistNameLabel.textAlignment = NSTextAlignmentCenter;
-        self.artistNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.artistNameLabel.textColor = [UIColor whiteColor];
         [shortListDetailContainer addSubview:self.artistNameLabel];
+        
+        for (UIView *view in @[self.artistNameLabel, self.albumRankLabel, self.albumTitleLabel, overlay, self.albumBlurView, self.albumBackgroundImage, shortListDetailContainer]) {
+            view.translatesAutoresizingMaskIntoConstraints = NO;
+        }
 
         NSDictionary *views = NSDictionaryOfVariableBindings(_albumBackgroundImage, _albumBlurView, overlay, _albumTitleLabel, _albumRankLabel, _artistNameLabel, shortListDetailContainer);
         NSDictionary *metrics = @{@"height":@(kSLALbumCellHeight)};
@@ -110,15 +110,15 @@ static const CGFloat kSLALbumCellHeight = 120;
 - (void)layoutSubviews {
     [super layoutSubviews];
 
-    self.albumTitleLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - MarginSizes.large;
-    self.artistNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - MarginSizes.large;
+    self.albumTitleLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - (2.0 * MarginSizes.xLarge);
+    self.artistNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - (2.0 * MarginSizes.xLarge);
 }
 
 - (void)configureCell:(ShortListAlbum *)album {
     [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:nil];
     self.artistNameLabel.text = album.artistName;
     self.albumRankLabel.text = [NSString stringWithFormat:@"%ld.", (long)album.shortListRank];
-    self.albumTitleLabel.text = album.albumName;
+    self.albumTitleLabel.text = [album.albumName uppercaseString];
 }
 
 @end

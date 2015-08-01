@@ -36,31 +36,31 @@ static const CGFloat kSLAlbumCellSize = 120;
         layout.minimumLineSpacing = 0;
         
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-        [self.collectionView setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
         [self.collectionView registerClass:[SLAlbumCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
         [self.contentView addSubview:self.collectionView];
         
         self.shortlistDetailsView = [UIView new];
-        self.shortlistDetailsView.translatesAutoresizingMaskIntoConstraints = NO;
         self.shortlistDetailsView.backgroundColor = [UIColor blackColor];
         self.shortlistDetailsView.alpha = .7;
         [self.contentView addSubview:self.shortlistDetailsView];
         
         self.shortlistNamelabel = [UILabel new];
-        self.shortlistNamelabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.shortlistNamelabel.font = [UIFont fontWithName:self.shortlistNamelabel.font.fontName size:FontSizes.large];
+        self.shortlistNamelabel.font = [SLStyle polarisFontWithSize:FontSizes.large];
         self.shortlistNamelabel.textColor = [UIColor whiteColor];
         self.shortlistNamelabel.preferredMaxLayoutWidth = self.contentView.frame.size.width/2.0;
         [self.shortlistDetailsView addSubview:self.shortlistNamelabel];
         
         self.shortlistYearlabel = [UILabel new];
-        self.shortlistYearlabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.shortlistYearlabel.font = [UIFont fontWithName:self.shortlistNamelabel.font.fontName size:FontSizes.large];
+        self.shortlistYearlabel.font = [SLStyle polarisFontWithSize:FontSizes.large];
         self.shortlistYearlabel.textColor = [UIColor whiteColor];
         self.shortlistYearlabel.preferredMaxLayoutWidth = self.contentView.frame.size.width/2.0;
         [self.shortlistDetailsView addSubview:self.shortlistYearlabel];
+        
+        for (UIView *view in @[self.collectionView, self.shortlistDetailsView, self.shortlistNamelabel, self.shortlistYearlabel]) {
+            view.translatesAutoresizingMaskIntoConstraints = NO;
+        }
 
         NSDictionary *views = NSDictionaryOfVariableBindings(_collectionView, _shortlistDetailsView, _shortlistNamelabel, _shortlistYearlabel);
         NSDictionary *metrics = @{@"collectionViewHeight":@(kSLAlbumCellSize), @"shortlistDetailsViewHeight":@(30)};
