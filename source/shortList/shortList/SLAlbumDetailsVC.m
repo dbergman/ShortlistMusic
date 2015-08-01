@@ -18,7 +18,7 @@
 #import "ShortListAlbum.h"
 #import "shortList-Swift.h"
 
-static CGFloat const kSLAlbumDetailsCellHeight = 60.0;
+static CGFloat const kSLAlbumDetailsCellHeight = 65.0;
 static CGFloat const kSLAlbumTrackCellHeight = 44.0;
 static CGFloat const kSLSpotifyButtonSize = 44.0;
 static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/search/album:%@";

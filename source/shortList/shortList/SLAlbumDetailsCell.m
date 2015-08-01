@@ -30,10 +30,17 @@
         self.contentView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.6];
         
         self.albumNameLabel = [UILabel new];
+        self.albumNameLabel.font = [SLStyle polarisFontWithSize:FontSizes.xLarge];
         self.albumNameLabel.numberOfLines = 1;
+        
         self.artistNameLabel = [UILabel new];
+        self.artistNameLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
+        
         self.releaseYearLabel = [UILabel new];
+        self.releaseYearLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
+        
         self.trackCountLabel = [UILabel new];
+        self.trackCountLabel.font = [SLStyle polarisFontWithSize:FontSizes.small];
 
         for (UILabel *cellLabel in @[self.albumNameLabel, self.artistNameLabel, self.releaseYearLabel, self.trackCountLabel ]) {
             [cellLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -49,23 +56,19 @@
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_artistNameLabel(labelWidth)]" options:0 metrics:metrics views:views]];
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_releaseYearLabel]" options:0 metrics:metrics views:views]];
-
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.albumNameLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:1.0]];
         
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.artistNameLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.albumNameLabel attribute:NSLayoutAttributeBaseline multiplier:1.0 constant:1.0]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-smallMargin-[_albumNameLabel]-2-[_artistNameLabel]-2-[_releaseYearLabel]-smallMargin-|" options:0 metrics:metrics views:views]];
         
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.releaseYearLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.artistNameLabel attribute:NSLayoutAttributeBaseline multiplier:1.0 constant:1.0]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_trackCountLabel]-smallMargin-|" options:0 metrics:metrics views:views]];
         
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.trackCountLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.artistNameLabel attribute:NSLayoutAttributeBaseline multiplier:1.0 constant:1.0]];
-        
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.trackCountLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-MarginSizes.small]];
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_trackCountLabel]-smallMargin-|" options:0 metrics:metrics views:views]];
     }
     
     return self;
 }
 
 -(void)configureAlbumDetailCell:(ItunesTrack *)itunesTrack {
-    self.albumNameLabel.text = itunesTrack.collectionName;
+    self.albumNameLabel.text = [itunesTrack.collectionName uppercaseString];
     self.artistNameLabel.text = itunesTrack.artistName;
     self.releaseYearLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Release Year", nil), itunesTrack.releaseYear];
     self.trackCountLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Total Tracks", nil), itunesTrack.trackCount];
