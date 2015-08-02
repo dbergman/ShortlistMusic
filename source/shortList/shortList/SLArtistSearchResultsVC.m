@@ -12,6 +12,7 @@
 #import "ItunesSearchAlbum.h"
 #import "ItunesArtist.h"
 #import "Shortlist.h"
+#import "SLStyle.h"
 
 @implementation SLArtistSearchResultsVC
 
@@ -39,6 +40,7 @@
     cell.backgroundColor = [UIColor blackColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.text = artist.artistName;
+    cell.textLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
     
     return cell;
 }

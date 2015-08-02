@@ -39,12 +39,14 @@ static CGFloat const kSLAlbumArtSize = 100.0;
         self.albumNameLabel.numberOfLines = 3;
         self.albumNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
         self.albumNameLabel.textColor = [UIColor whiteColor];
+        self.albumNameLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
         [self.contentView addSubview:self.albumNameLabel];
         
         self.albumReleaseYearLabel = [UILabel new];
         [self.albumReleaseYearLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         self.albumReleaseYearLabel.numberOfLines = 1;
         self.albumReleaseYearLabel.textColor = [UIColor whiteColor];
+        self.albumReleaseYearLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
         [self.contentView addSubview:self.albumReleaseYearLabel];
 
         NSDictionary *views = NSDictionaryOfVariableBindings(_albumArt, _albumNameLabel, _albumReleaseYearLabel);
