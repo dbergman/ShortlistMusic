@@ -12,12 +12,16 @@
 #import "ItunesSearchArtist.h"
 #import "SLAlbumSearchResultVC.h"
 #import "Shortlist.h"
+#import "SLStyle.h"
 #import "ShortListAlbum.h"
 #import "SLListAbumCell.h"
 #import "shortList-Swift.h"
 #import "SLAlbumDetailsVC.h"
 #import "ItunesSearchTracks.h"
+#import "UIViewController+Utilities.h"
 #import <BlocksKit+UIKit.h>
+
+const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 @interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate>
 
@@ -27,6 +31,10 @@
 @property (nonatomic, strong) Shortlist *shortList;
 @property (nonatomic, strong) NSArray *albums;
 @property (nonatomic, strong) UIBarButtonItem *editShortListBarButton;
+@property (nonatomic, strong) UIButton *moreOptionsButton;
+@property (nonatomic, strong) UIButton *addAlbumButton;
+@property (nonatomic, strong) UIButton *sharingButton;
+@property (nonatomic, assign) BOOL showingOptions;
 
 @end
 
@@ -67,6 +75,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self setupMoreOptions];
     [self refreshShortLists];
 }
 
@@ -74,6 +83,71 @@
     [super viewWillLayoutSubviews];
     
     self.tableView.frame = self.view.bounds;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.moreOptionsButton removeFromSuperview];
+    [self.addAlbumButton removeFromSuperview];
+    [self.sharingButton removeFromSuperview];
+}
+
+- (void)setupMoreOptions {
+    CGRect closedStateFrame = CGRectMake(MarginSizes.large, [self getNavigationBarStatusBarHeight] + MarginSizes.large, kShortlistAlbumsButtonSize, kShortlistAlbumsButtonSize);
+    
+    __weak typeof(self)weakSelf = self;
+    
+    self.addAlbumButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.addAlbumButton.backgroundColor = [UIColor sl_Red];
+    self.addAlbumButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
+    [self.addAlbumButton setImage:[UIImage imageNamed:@"addAlbum"] forState:UIControlStateNormal];
+    self.addAlbumButton.frame = closedStateFrame;
+    [self.navigationController.view addSubview:self.addAlbumButton];
+    
+    [self.addAlbumButton bk_addEventHandler:^(id sender) {
+        
+    } forControlEvents:UIControlEventTouchUpInside];
+
+    self.sharingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.sharingButton.backgroundColor = [UIColor sl_Red];
+    self.sharingButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
+    [self.sharingButton setImage:[UIImage imageNamed:@"sharing"] forState:UIControlStateNormal];
+    self.sharingButton.frame = closedStateFrame;
+    [self.navigationController.view addSubview:self.sharingButton];
+    
+    [self.sharingButton bk_addEventHandler:^(id sender) {
+        
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+    self.moreOptionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.moreOptionsButton.backgroundColor = [UIColor sl_Red];
+    self.moreOptionsButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
+    [self.moreOptionsButton setImage:[UIImage imageNamed:@"moreOptions"] forState:UIControlStateNormal];
+    self.moreOptionsButton.frame = closedStateFrame;
+    [self.navigationController.view addSubview:self.moreOptionsButton];
+    
+    [self.moreOptionsButton bk_addEventHandler:^(id sender) {
+        CGRect addButtonFrame = closedStateFrame;
+        CGRect shareButtonFrame = closedStateFrame;
+        if (!weakSelf.showingOptions) {
+            addButtonFrame.origin.y = addButtonFrame.origin.y + kShortlistAlbumsButtonSize + MarginSizes.xxLarge;
+            shareButtonFrame.origin.y = shareButtonFrame.origin.y + (2 * kShortlistAlbumsButtonSize) + (2 * MarginSizes.xxLarge);
+            weakSelf.showingOptions = YES;
+        }
+        else {
+           addButtonFrame = closedStateFrame;
+            shareButtonFrame = closedStateFrame;
+            weakSelf.showingOptions = NO;
+        }
+        
+        [UIView animateWithDuration:.2 animations:^{
+            weakSelf.sharingButton.frame = shareButtonFrame;
+            weakSelf.addAlbumButton.frame = addButtonFrame;
+        }];
+
+    } forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
 - (void)startSearchAlbumFlow {
@@ -165,6 +239,7 @@
     cell.backgroundColor = [UIColor blackColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    cell.textLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
     cell.textLabel.text = @"Add Albums to ShortList";
     
     return cell;
