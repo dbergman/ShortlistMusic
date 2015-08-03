@@ -15,4 +15,6 @@
 - (CGFloat)getNavigationBarStatusBarHeight;
 - (CGFloat)getTabBarHeight;
 
+- (UIImage *)getScreenShot;
+
 @end

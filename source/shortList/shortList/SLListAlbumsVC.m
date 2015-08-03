@@ -20,12 +20,14 @@
 #import "ItunesSearchTracks.h"
 #import "UIViewController+Utilities.h"
 #import <BlocksKit+UIKit.h>
+#import "FXBlurView.h"
 
-const CGFloat kShortlistAlbumsButtonSize = 50.0;
+const CGFloat kShortlistAlbumsButtonSize = 40.0;
 
 @interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIImageView *blurBackgroundView;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) SLArtistSearchResultsVC *searchResultsVC;
 @property (nonatomic, strong) Shortlist *shortList;
@@ -94,60 +96,68 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 }
 
 - (void)setupMoreOptions {
-    CGRect closedStateFrame = CGRectMake(MarginSizes.large, [self getNavigationBarStatusBarHeight] + MarginSizes.large, kShortlistAlbumsButtonSize, kShortlistAlbumsButtonSize);
-    
     __weak typeof(self)weakSelf = self;
     
     self.addAlbumButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.addAlbumButton.backgroundColor = [UIColor sl_Red];
-    self.addAlbumButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
     [self.addAlbumButton setImage:[UIImage imageNamed:@"addAlbum"] forState:UIControlStateNormal];
-    self.addAlbumButton.frame = closedStateFrame;
-    [self.navigationController.view addSubview:self.addAlbumButton];
-    
     [self.addAlbumButton bk_addEventHandler:^(id sender) {
-        
+        [weakSelf toggleOptionsButton];
+        [weakSelf startSearchAlbumFlow];
     } forControlEvents:UIControlEventTouchUpInside];
 
     self.sharingButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.sharingButton.backgroundColor = [UIColor sl_Red];
-    self.sharingButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
     [self.sharingButton setImage:[UIImage imageNamed:@"sharing"] forState:UIControlStateNormal];
-    self.sharingButton.frame = closedStateFrame;
-    [self.navigationController.view addSubview:self.sharingButton];
-    
-    [self.sharingButton bk_addEventHandler:^(id sender) {
-        
-    } forControlEvents:UIControlEventTouchUpInside];
+    [self.sharingButton addTarget:self action:@selector(showSharingOptions) forControlEvents:UIControlEventTouchUpInside];
     
     self.moreOptionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.moreOptionsButton.backgroundColor = [UIColor sl_Red];
-    self.moreOptionsButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
     [self.moreOptionsButton setImage:[UIImage imageNamed:@"moreOptions"] forState:UIControlStateNormal];
-    self.moreOptionsButton.frame = closedStateFrame;
-    [self.navigationController.view addSubview:self.moreOptionsButton];
+    [self.moreOptionsButton addTarget:self action:@selector(toggleOptionsButton) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.moreOptionsButton bk_addEventHandler:^(id sender) {
-        CGRect addButtonFrame = closedStateFrame;
-        CGRect shareButtonFrame = closedStateFrame;
-        if (!weakSelf.showingOptions) {
-            addButtonFrame.origin.y = addButtonFrame.origin.y + kShortlistAlbumsButtonSize + MarginSizes.xxLarge;
-            shareButtonFrame.origin.y = shareButtonFrame.origin.y + (2 * kShortlistAlbumsButtonSize) + (2 * MarginSizes.xxLarge);
-            weakSelf.showingOptions = YES;
-        }
-        else {
-           addButtonFrame = closedStateFrame;
-            shareButtonFrame = closedStateFrame;
-            weakSelf.showingOptions = NO;
-        }
-        
-        [UIView animateWithDuration:.2 animations:^{
-            weakSelf.sharingButton.frame = shareButtonFrame;
-            weakSelf.addAlbumButton.frame = addButtonFrame;
-        }];
+    for (UIButton *optionButton in @[self.addAlbumButton, self.sharingButton, self.moreOptionsButton]) {
+        optionButton.backgroundColor = [UIColor sl_Red];
+        optionButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
+        optionButton.frame = [self getOptionsCloseFrame];
+        [self.navigationController.view addSubview:optionButton];
+    }
+}
 
-    } forControlEvents:UIControlEventTouchUpInside];
+- (void)toggleOptionsButton {
+    CGRect addButtonFrame = [self getOptionsCloseFrame];
+    CGRect shareButtonFrame = [self getOptionsCloseFrame];
     
+    if (!self.showingOptions) {
+        addButtonFrame.origin.y = addButtonFrame.origin.y + kShortlistAlbumsButtonSize + MarginSizes.xxLarge;
+        shareButtonFrame.origin.y = shareButtonFrame.origin.y + (2 * kShortlistAlbumsButtonSize) + (2 * MarginSizes.xxLarge);
+        self.showingOptions = YES;
+        [self addBlurBackground];
+    }
+    else {
+        addButtonFrame = [self getOptionsCloseFrame];
+        shareButtonFrame = [self getOptionsCloseFrame];
+        self.showingOptions = NO;
+        [self.blurBackgroundView removeFromSuperview];
+    }
+    
+    [UIView animateWithDuration:.2 animations:^{
+        self.blurBackgroundView.alpha = 1.0;
+        self.sharingButton.frame = shareButtonFrame;
+        self.addAlbumButton.frame = addButtonFrame;
+    }];
+}
+
+- (void)showSharingOptions {
+    [self toggleOptionsButton];
+    
+    UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
+    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{ NSLog(@"Email!"); }];
+    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
+    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{ NSLog(@"Instagram"); }];
+    [slSharingSheet bk_setCancelButtonWithTitle:@"Cancel" handler:^{}];
+    [slSharingSheet showInView:self.view];
+}
+
+- (CGRect)getOptionsCloseFrame {
+    return CGRectMake(self.view.frame.size.width - kShortlistAlbumsButtonSize - MarginSizes.large, [self getNavigationBarStatusBarHeight] + MarginSizes.large, kShortlistAlbumsButtonSize, kShortlistAlbumsButtonSize);
 }
 
 - (void)startSearchAlbumFlow {
@@ -208,11 +218,11 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return  (section == 0) ? self.albums.count : 1;
+    return self.albums.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -236,31 +246,20 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AddAlbumCellIdentifier];
     }
     
-    cell.backgroundColor = [UIColor blackColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    cell.textLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
-    cell.textLabel.text = @"Add Albums to ShortList";
-    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1) {
-        [self startSearchAlbumFlow];
-    }
-    else {
-         ShortListAlbum *album = self.albums[indexPath.row];
-        __weak typeof(self) weakSelf = self;
-        [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.albumId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
-            if (!error) {
-                SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:weakSelf.shortList albumDetails:[albumSearchResults getAlbumInfo] tracks:[albumSearchResults getAlbumTracks]];
-                [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
-            }
-        }];
-    }
+     ShortListAlbum *album = self.albums[indexPath.row];
+    __weak typeof(self) weakSelf = self;
+    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.albumId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
+        if (!error) {
+            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:weakSelf.shortList albumDetails:[albumSearchResults getAlbumInfo] tracks:[albumSearchResults getAlbumTracks]];
+            [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
+        }
+    }];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -317,6 +316,25 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
             }];
          }];
     }
+}
+
+#pragma mark Blurring Methods
+- (void)addBlurBackground {
+    self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getScreenShot]];
+    self.blurBackgroundView.userInteractionEnabled = YES;
+    [self.view addSubview:self.blurBackgroundView];
+    self.blurBackgroundView.alpha = 0;
+    
+    FXBlurView *shortListBlurView = [[FXBlurView alloc] init];
+    shortListBlurView.frame = self.blurBackgroundView.bounds;
+    shortListBlurView.tintColor = [UIColor blackColor];
+    shortListBlurView.blurEnabled = YES;
+    shortListBlurView.clipsToBounds = YES;
+    shortListBlurView.blurRadius = 9;
+    [self.blurBackgroundView addSubview:shortListBlurView];
+
+    UITapGestureRecognizer *dismissGesture =  [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(toggleOptionsButton)];
+    [shortListBlurView addGestureRecognizer:dismissGesture];
 }
 
 #pragma mark Utilities
