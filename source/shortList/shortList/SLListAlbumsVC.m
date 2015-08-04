@@ -95,71 +95,6 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
     [self.sharingButton removeFromSuperview];
 }
 
-- (void)setupMoreOptions {
-    __weak typeof(self)weakSelf = self;
-    
-    self.addAlbumButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.addAlbumButton setImage:[UIImage imageNamed:@"addAlbum"] forState:UIControlStateNormal];
-    [self.addAlbumButton bk_addEventHandler:^(id sender) {
-        [weakSelf toggleOptionsButton];
-        [weakSelf startSearchAlbumFlow];
-    } forControlEvents:UIControlEventTouchUpInside];
-
-    self.sharingButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.sharingButton setImage:[UIImage imageNamed:@"sharing"] forState:UIControlStateNormal];
-    [self.sharingButton addTarget:self action:@selector(showSharingOptions) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.moreOptionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.moreOptionsButton setImage:[UIImage imageNamed:@"moreOptions"] forState:UIControlStateNormal];
-    [self.moreOptionsButton addTarget:self action:@selector(toggleOptionsButton) forControlEvents:UIControlEventTouchUpInside];
-    
-    for (UIButton *optionButton in @[self.addAlbumButton, self.sharingButton, self.moreOptionsButton]) {
-        optionButton.backgroundColor = [UIColor sl_Red];
-        optionButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
-        optionButton.frame = [self getOptionsCloseFrame];
-        [self.navigationController.view addSubview:optionButton];
-    }
-}
-
-- (void)toggleOptionsButton {
-    CGRect addButtonFrame = [self getOptionsCloseFrame];
-    CGRect shareButtonFrame = [self getOptionsCloseFrame];
-    
-    if (!self.showingOptions) {
-        addButtonFrame.origin.y = addButtonFrame.origin.y + kShortlistAlbumsButtonSize + MarginSizes.xxLarge;
-        shareButtonFrame.origin.y = shareButtonFrame.origin.y + (2 * kShortlistAlbumsButtonSize) + (2 * MarginSizes.xxLarge);
-        self.showingOptions = YES;
-        [self addBlurBackground];
-    }
-    else {
-        addButtonFrame = [self getOptionsCloseFrame];
-        shareButtonFrame = [self getOptionsCloseFrame];
-        self.showingOptions = NO;
-        [self.blurBackgroundView removeFromSuperview];
-    }
-    
-    [UIView animateWithDuration:.2 animations:^{
-        self.blurBackgroundView.alpha = 1.0;
-        self.sharingButton.frame = shareButtonFrame;
-        self.addAlbumButton.frame = addButtonFrame;
-    }];
-}
-
-- (void)showSharingOptions {
-    [self toggleOptionsButton];
-    
-    UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
-    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{ NSLog(@"Email!"); }];
-    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
-    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{ NSLog(@"Instagram"); }];
-    [slSharingSheet bk_setCancelButtonWithTitle:@"Cancel" handler:^{}];
-    [slSharingSheet showInView:self.view];
-}
-
-- (CGRect)getOptionsCloseFrame {
-    return CGRectMake(self.view.frame.size.width - kShortlistAlbumsButtonSize - MarginSizes.large, [self getNavigationBarStatusBarHeight] + MarginSizes.large, kShortlistAlbumsButtonSize, kShortlistAlbumsButtonSize);
-}
-
 - (void)startSearchAlbumFlow {
     self.searchResultsVC = [SLArtistSearchResultsVC new];
     self.searchResultsVC.navController = self.navigationController;
@@ -168,6 +103,7 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsVC];
     self.searchController.delegate = self;
     self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.placeholder = NSLocalizedString(@"Add an Album", nil);
     
     self.searchController.searchBar.barStyle = UIBarStyleBlack;
     self.searchController.searchBar.barTintColor = [UIColor blackColor];
@@ -207,11 +143,16 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
     if (self.tableView.editing) {
         editButton.title = NSLocalizedString(@"Edit", nil);
         [self.tableView setEditing:NO animated:YES];
+        [self showOptions:YES];
+        
     }
     else {
         editButton.title = NSLocalizedString(@"Done", nil);
         [self.tableView setEditing:YES animated:YES];
+        [self showOptions:NO];
     }
+    
+   
 
     self.navigationItem.rightBarButtonItem = editButton;
 }
@@ -335,6 +276,89 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
 
     UITapGestureRecognizer *dismissGesture =  [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(toggleOptionsButton)];
     [shortListBlurView addGestureRecognizer:dismissGesture];
+}
+
+#pragma mark Options Button
+- (void)setupMoreOptions {
+    __weak typeof(self)weakSelf = self;
+    self.addAlbumButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.addAlbumButton setImage:[UIImage imageNamed:@"addAlbum"] forState:UIControlStateNormal];
+    [self.addAlbumButton bk_addEventHandler:^(id sender) {
+        [weakSelf toggleOptionsButton];
+        [weakSelf startSearchAlbumFlow];
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+    self.sharingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.sharingButton setImage:[UIImage imageNamed:@"sharing"] forState:UIControlStateNormal];
+    [self.sharingButton addTarget:self action:@selector(showSharingOptions) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.moreOptionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.moreOptionsButton setImage:[UIImage imageNamed:@"moreOptions"] forState:UIControlStateNormal];
+    [self.moreOptionsButton addTarget:self action:@selector(toggleOptionsButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    for (UIButton *optionButton in @[self.addAlbumButton, self.sharingButton, self.moreOptionsButton]) {
+        optionButton.backgroundColor = [UIColor sl_Red];
+        optionButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
+        optionButton.frame = [self getOptionsCloseFrame];
+        [self.navigationController.view addSubview:optionButton];
+    }
+}
+
+- (void)showOptions:(BOOL)show {
+    [UIView animateWithDuration:.2 animations:^{
+        if (show) {
+            self.moreOptionsButton.alpha = 1.0;
+        }
+        else {
+            self.moreOptionsButton.alpha = 0.0;
+            self.sharingButton.hidden = YES;
+            self.addAlbumButton.hidden = YES;
+        }
+    }completion:^(BOOL finished) {
+        if (show) {
+            self.sharingButton.hidden = NO;
+            self.addAlbumButton.hidden = NO;
+        }
+    }];
+}
+
+- (void)toggleOptionsButton {
+    CGRect addButtonFrame = [self getOptionsCloseFrame];
+    CGRect shareButtonFrame = [self getOptionsCloseFrame];
+    
+    if (!self.showingOptions) {
+        addButtonFrame.origin.y = addButtonFrame.origin.y + kShortlistAlbumsButtonSize + MarginSizes.xxLarge;
+        shareButtonFrame.origin.y = shareButtonFrame.origin.y + (2 * kShortlistAlbumsButtonSize) + (2 * MarginSizes.xxLarge);
+        self.showingOptions = YES;
+        [self addBlurBackground];
+    }
+    else {
+        addButtonFrame = [self getOptionsCloseFrame];
+        shareButtonFrame = [self getOptionsCloseFrame];
+        self.showingOptions = NO;
+        [self.blurBackgroundView removeFromSuperview];
+    }
+    
+    [UIView animateWithDuration:.2 animations:^{
+        self.blurBackgroundView.alpha = 1.0;
+        self.sharingButton.frame = shareButtonFrame;
+        self.addAlbumButton.frame = addButtonFrame;
+    }];
+}
+
+- (void)showSharingOptions {
+    [self toggleOptionsButton];
+    
+    UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
+    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{ NSLog(@"Email!"); }];
+    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
+    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{ NSLog(@"Instagram"); }];
+    [slSharingSheet bk_setCancelButtonWithTitle:@"Cancel" handler:^{}];
+    [slSharingSheet showInView:self.view];
+}
+
+- (CGRect)getOptionsCloseFrame {
+    return CGRectMake(self.view.frame.size.width - kShortlistAlbumsButtonSize - MarginSizes.large, [self getNavigationBarStatusBarHeight] + MarginSizes.large, kShortlistAlbumsButtonSize, kShortlistAlbumsButtonSize);
 }
 
 #pragma mark Utilities

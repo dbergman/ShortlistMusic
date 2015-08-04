@@ -70,7 +70,7 @@ static const CGFloat kSLALbumCellHeight = 120;
         
         self.artistNameLabel = [UILabel new];
         self.artistNameLabel.numberOfLines = 2;
-        self.artistNameLabel.font = [SLStyle polarisFontWithSize:FontSizes.large];
+        self.artistNameLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
         self.artistNameLabel.textAlignment = NSTextAlignmentCenter;
         self.artistNameLabel.textColor = [UIColor whiteColor];
         [shortListDetailContainer addSubview:self.artistNameLabel];
