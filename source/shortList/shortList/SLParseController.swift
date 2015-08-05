@@ -33,16 +33,21 @@ class SLParseController : NSObject {
         
         query.findObjectsInBackgroundWithBlock { (shortLists: [AnyObject]?, error: NSError?) -> Void in
             if (error == nil) {
-                var shortListCounter = 0
-                for shortList:Shortlist in shortLists as! [Shortlist] {
-                    self.getShortListAlbums(shortList, completion: { (albums) -> Void in
-                        shortList.shortListAlbums = albums as [AnyObject]
-                        
-                        shortListCounter++
-                        if (shortListCounter == shortLists!.count) {
-                            completion(shortlists: shortLists!)
-                        }
-                    })
+                if (shortLists!.count == 0) {
+                    completion(shortlists: shortLists!)
+                }
+                else {
+                    var shortListCounter = 0
+                    for shortList:Shortlist in shortLists as! [Shortlist] {
+                        self.getShortListAlbums(shortList, completion: { (albums) -> Void in
+                            shortList.shortListAlbums = albums as [AnyObject]
+                            
+                            shortListCounter++
+                            if (shortListCounter == shortLists!.count) {
+                                completion(shortlists: shortLists!)
+                            }
+                        })
+                    }
                 }
             }
         }
@@ -67,7 +72,9 @@ class SLParseController : NSObject {
     class func removeShortList(shortlist:Shortlist, completion:SLGetUsersShortListBlock) {
         shortlist.deleteInBackgroundWithBlock {
             (success: Bool, error: NSError?) -> Void in
-            SLParseController.getUsersShortLists(completion)
+            if !(error != nil) {
+                SLParseController.getUsersShortLists(completion)
+            }
         }
     }
     
