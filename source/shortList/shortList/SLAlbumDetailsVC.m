@@ -91,6 +91,12 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
         weakSelf.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(weakSelf.coverImageView.frame) - kSLAlbumDetailsCellHeight, 0.0f, CGRectGetHeight(weakSelf.tabBarController.tabBar.frame), 0.0f);
     }];
 
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     [self setupSpotifyButton];
 }
 
@@ -116,7 +122,7 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     self.spotifyButton.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
     self.spotifyButton.layer.shadowOpacity = 0.5f;
     self.spotifyButton.layer.masksToBounds = NO;
-    self.spotifyButton.frame = CGRectMake(self.view.frame.size.width - kSLSpotifyButtonSize - MarginSizes.xLarge, self.view.frame.size.height - MarginSizes.large - kSLSpotifyButtonSize - self.tabBarController.tabBar.frame.size.height, kSLSpotifyButtonSize, kSLSpotifyButtonSize);
+    self.spotifyButton.frame = CGRectMake(self.view.frame.size.width - kSLSpotifyButtonSize - MarginSizes.medium, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height, kSLSpotifyButtonSize, kSLSpotifyButtonSize);
     [self.spotifyButton bk_addEventHandler:^(id sender) {
         NSString *urlString = [NSString stringWithFormat:kSLSpotifyURL,self.albumDetails.collectionName];
         NSString *escaped = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

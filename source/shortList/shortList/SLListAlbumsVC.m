@@ -152,8 +152,6 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
         [self showOptions:NO];
     }
     
-   
-
     self.navigationItem.rightBarButtonItem = editButton;
 }
 
@@ -239,7 +237,7 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (indexPath.section == 0) ? YES : NO;
+    return YES;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -282,14 +280,16 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
 - (void)setupMoreOptions {
     __weak typeof(self)weakSelf = self;
     self.addAlbumButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.addAlbumButton setImage:[UIImage imageNamed:@"addAlbum"] forState:UIControlStateNormal];
+    [self.addAlbumButton setImage:[UIImage imageNamed:@"searchAlbums"] forState:UIControlStateNormal];
     [self.addAlbumButton bk_addEventHandler:^(id sender) {
         [weakSelf toggleOptionsButton];
         [weakSelf startSearchAlbumFlow];
     } forControlEvents:UIControlEventTouchUpInside];
     
     self.sharingButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.sharingButton setImage:[UIImage imageNamed:@"sharing"] forState:UIControlStateNormal];
+    UIImage *shareImage = [[UIImage imageNamed:@"sharing"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.sharingButton setImage:shareImage forState:UIControlStateNormal];
+    [self.sharingButton setTintColor:[UIColor whiteColor]];
     [self.sharingButton addTarget:self action:@selector(showSharingOptions) forControlEvents:UIControlEventTouchUpInside];
     
     self.moreOptionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
