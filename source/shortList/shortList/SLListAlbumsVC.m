@@ -21,8 +21,9 @@
 #import "UIViewController+Utilities.h"
 #import <BlocksKit+UIKit.h>
 #import "FXBlurView.h"
+#import <QuartzCore/QuartzCore.h>
 
-const CGFloat kShortlistAlbumsButtonSize = 40.0;
+const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 @interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate>
 
@@ -113,7 +114,11 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
     txtSearchField.backgroundColor = [UIColor whiteColor];
     
     self.searchController.searchBar.keyboardAppearance = UIKeyboardAppearanceDark;
-    [self presentViewController:self.searchController animated:YES completion:nil];
+    
+    __weak typeof(self)weakSelf = self;
+    [self presentViewController:self.searchController animated:YES completion:^{
+        [weakSelf showOptions:NO];
+    }];
 }
 
 #pragma mark - UISearchBar Delegate
@@ -123,6 +128,10 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self searchItunesWithQuery:searchBar.text];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self showOptions:YES];
 }
 
 #pragma mark - Search Itunes
@@ -300,6 +309,13 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
         optionButton.backgroundColor = [UIColor sl_Red];
         optionButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
         optionButton.frame = [self getOptionsCloseFrame];
+        
+        optionButton.layer.shadowRadius = 3.0f;
+        optionButton.layer.shadowColor = [UIColor blackColor].CGColor;
+        optionButton.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+        optionButton.layer.shadowOpacity = 0.5f;
+        optionButton.layer.masksToBounds = NO;
+        
         [self.navigationController.view addSubview:optionButton];
     }
 }
@@ -353,7 +369,7 @@ const CGFloat kShortlistAlbumsButtonSize = 40.0;
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{ NSLog(@"Email!"); }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{ NSLog(@"Instagram"); }];
-    [slSharingSheet bk_setCancelButtonWithTitle:@"Cancel" handler:^{}];
+    [slSharingSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
     [slSharingSheet showInView:self.view];
 }
 
