@@ -90,8 +90,6 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
         
         weakSelf.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(weakSelf.coverImageView.frame) - kSLAlbumDetailsCellHeight, 0.0f, CGRectGetHeight(weakSelf.tabBarController.tabBar.frame), 0.0f);
     }];
-
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
