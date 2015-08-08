@@ -44,12 +44,12 @@
         }
         
         NSDictionary *views = NSDictionaryOfVariableBindings(_trackNumberLabel, _trackNameLabel, _trackDurationLabel);
-        NSDictionary *metrics = @{@"smallMargin":@(MarginSizes.small)};
+        NSDictionary *metrics = @{@"smallMargin":@(MarginSizes.small), @"largeMargin":@(MarginSizes.large)};
 
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-smallMargin-[_trackNumberLabel]-smallMargin-[_trackNameLabel]" options:0 metrics:metrics views:views]];
-
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.trackNumberLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:1.0]];
         
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-largeMargin-[_trackNumberLabel]-largeMargin-|" options:0 metrics:metrics views:views]];
+
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_trackNameLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:1.0]];
         
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.trackDurationLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:1.0]];
