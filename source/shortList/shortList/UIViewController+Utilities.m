@@ -26,6 +26,14 @@
    return self.tabBarController.tabBar.frame.size.height;
 }
 
+- (CGFloat)getScreenWidth {
+    return [UIScreen mainScreen].bounds.size.width;
+}
+
+- (CGFloat)getScreenHeight {
+    return [UIScreen mainScreen].bounds.size.height;
+}
+
 - (UIImage *)getScreenShot {
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
         UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
