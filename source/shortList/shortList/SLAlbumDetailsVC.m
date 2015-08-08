@@ -17,10 +17,11 @@
 #import "Shortlist.h"
 #import "ShortListAlbum.h"
 #import "shortList-Swift.h"
+#import "UIViewController+Utilities.h"
+#import "UIViewController+SLPlayNow.h"
 
 static CGFloat const kSLAlbumDetailsCellHeight = 65.0;
-static CGFloat const kSLAlbumTrackCellHeight = 44.0;
-static CGFloat const kSLSpotifyButtonSize = 44.0;
+static CGFloat const kSLPlayButtonSize = 50.0;
 static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/search/album:%@";
 
 @interface SLAlbumDetailsVC () <UITableViewDelegate, UITableViewDataSource>
@@ -31,6 +32,9 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) Shortlist *shortList;
 @property (nonatomic, strong) UIButton *spotifyButton;
+@property (nonatomic, strong) UIButton *playNowButton;
+@property (nonatomic, assign) BOOL isPlayingOptionsShown;
+
 @property (nonatomic, strong) UIBarButtonItem *rightBarButton;
 
 @end
@@ -81,6 +85,8 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     self.tableView.tableFooterView = [UITableView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.allowsSelection = NO;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 50;
 
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
      
@@ -95,7 +101,10 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self setupSpotifyButton];
+    [self setupPlayNowButton];
+ //   [self setupSpotifyButton];
+    
+    [self buildPlayerViewControllerForAlbum:self.albumDetails];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -108,6 +117,7 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     [super viewWillDisappear:animated];
     
     [self.spotifyButton removeFromSuperview];
+    [self.playNowButton removeFromSuperview];
 }
 
 - (void)setupSpotifyButton {
@@ -120,13 +130,34 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     self.spotifyButton.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
     self.spotifyButton.layer.shadowOpacity = 0.5f;
     self.spotifyButton.layer.masksToBounds = NO;
-    self.spotifyButton.frame = CGRectMake(self.view.frame.size.width - kSLSpotifyButtonSize - MarginSizes.medium, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height, kSLSpotifyButtonSize, kSLSpotifyButtonSize);
+    self.spotifyButton.frame = CGRectMake(self.view.frame.size.width - kSLPlayButtonSize - MarginSizes.medium, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height, kSLPlayButtonSize, kSLPlayButtonSize);
     [self.spotifyButton bk_addEventHandler:^(id sender) {
         NSString *urlString = [NSString stringWithFormat:kSLSpotifyURL,self.albumDetails.collectionName];
         NSString *escaped = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:escaped]];
     } forControlEvents:UIControlEventTouchUpInside];
     [self.navigationController.view addSubview:self.spotifyButton];
+}
+
+- (void)setupPlayNowButton {
+    self.playNowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.playNowButton setImage:[UIImage imageNamed:@"playOptions"] forState:UIControlStateNormal];
+    self.playNowButton.alpha = .8;
+    self.playNowButton.backgroundColor = [self getGradientColorWith:0];
+    self.playNowButton.layer.cornerRadius = kSLPlayButtonSize/2.0;
+    self.playNowButton.layer.shadowRadius = 3.0f;
+    self.playNowButton.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.playNowButton.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    self.playNowButton.layer.shadowOpacity = 0.5f;
+    self.playNowButton.layer.masksToBounds = NO;
+    self.playNowButton.frame = CGRectMake([self getScreenWidth]/2 - kSLPlayButtonSize/2, [self getScreenHeight] - [self getTabBarHeight] - MarginSizes.large - kSLPlayButtonSize, kSLPlayButtonSize, kSLPlayButtonSize);
+        [self.navigationController.view addSubview:self.playNowButton];
+    
+    __weak typeof(self)weakSelf = self;
+    [self.playNowButton bk_addEventHandler:^(id sender) {
+        weakSelf.isPlayingOptionsShown ? [weakSelf hidePlayerView] : [weakSelf showPlayerView];
+        weakSelf.isPlayingOptionsShown = !weakSelf.isPlayingOptionsShown;
+    } forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Table view data source
@@ -136,10 +167,6 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (section == 0) ? 1 : self.tracks.count;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return (indexPath.section == 0) ? kSLAlbumDetailsCellHeight : kSLAlbumTrackCellHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
