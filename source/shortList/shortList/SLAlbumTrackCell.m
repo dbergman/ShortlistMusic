@@ -32,7 +32,6 @@
         self.trackNameLabel = [UILabel new];
         self.trackNameLabel.numberOfLines = 2;
         self.trackNameLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
-        self.trackNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - self.trackNumberLabel.frame.size.width - (2 * MarginSizes.small) - self.trackDurationLabel.frame.size.width;
         
         self.trackDurationLabel = [UILabel new];
         self.trackDurationLabel.font = [SLStyle polarisFontWithSize:FontSizes.small];
@@ -58,6 +57,12 @@
     }
     
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    self.trackNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - self.trackNumberLabel.frame.size.width - (2 * MarginSizes.small) - self.trackDurationLabel.frame.size.width;
 }
 
 - (void)configureAlbumTrackCell:(ItunesTrack *)itunesTrack {

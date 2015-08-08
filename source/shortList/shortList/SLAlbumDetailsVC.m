@@ -195,6 +195,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
             self.blurBackgroundView.alpha = 0.0;
         } completion:^(BOOL finished) {
             [self removeBlurBackground];
+            [self.playNowButton setImage:[UIImage imageNamed:@"playOptions"] forState:UIControlStateNormal];
         }];
     }
     else {
@@ -203,6 +204,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
             self.blurBackgroundView.alpha = 1.0;
         } completion:^(BOOL finished) {
             [self showPlayerView];
+            [self.playNowButton setImage:[UIImage imageNamed:@"closeOptions"] forState:UIControlStateNormal];
         }];
     }
     self.isPlayingOptionsShown = !self.isPlayingOptionsShown;
