@@ -23,7 +23,7 @@
 @property (nonatomic, copy, readonly) NSString *collectionName;
 @property (nonatomic, copy, readonly) NSString *collectionPrice;
 @property (nonatomic, copy, readonly) NSString *collectionType;
-@property (nonatomic, assign, readonly) NSString *collectionViewUrl;
+@property (nonatomic, copy, readonly) NSString *collectionViewUrl;
 @property (nonatomic, copy, readonly) NSString *country;
 @property (nonatomic, copy, readonly) NSString *currency;
 @property (nonatomic, assign, readonly) NSInteger discCount;
