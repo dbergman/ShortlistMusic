@@ -19,10 +19,10 @@
 #import "shortList-Swift.h"
 #import "UIViewController+Utilities.h"
 #import "UIViewController+SLPlayNow.h"
+#import "FXBlurView.h"
 
 static CGFloat const kSLAlbumDetailsCellHeight = 65.0;
 static CGFloat const kSLPlayButtonSize = 50.0;
-static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/search/album:%@";
 
 @interface SLAlbumDetailsVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -31,10 +31,9 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *coverImageView;
 @property (nonatomic, strong) Shortlist *shortList;
-@property (nonatomic, strong) UIButton *spotifyButton;
 @property (nonatomic, strong) UIButton *playNowButton;
 @property (nonatomic, assign) BOOL isPlayingOptionsShown;
-
+@property (nonatomic, strong) UIImageView *blurBackgroundView;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButton;
 
 @end
@@ -67,7 +66,7 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
 
     __weak typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:([self getShortListAlbum])? NSLocalizedString(@"Remove", nil) : NSLocalizedString(@"Add", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
-        ([self getShortListAlbum]) ? [weakSelf removeAlbumFromShortList] : [weakSelf addAlbumToShortList];
+        ([weakSelf getShortListAlbum]) ? [weakSelf removeAlbumFromShortList] : [weakSelf addAlbumToShortList];
     }];
      
     self.view.backgroundColor = [UIColor blackColor];
@@ -87,56 +86,35 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     self.tableView.allowsSelection = NO;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 50;
-
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-     
-        [weakSelf.view addSubview:weakSelf.tableView];
-        
-        weakSelf.coverImageView.frame = CGRectMake(0.0, weakSelf.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height, weakSelf.view.frame.size.width, weakSelf.view.frame.size.width);
-        
-        weakSelf.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(weakSelf.coverImageView.frame) - kSLAlbumDetailsCellHeight, 0.0f, CGRectGetHeight(weakSelf.tabBarController.tabBar.frame), 0.0f);
-    }];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
     
-    [self setupPlayNowButton];
- //   [self setupSpotifyButton];
+    self.coverImageView.frame = CGRectMake(0.0, [self getNavigationBarStatusBarHeight], [self getScreenWidth], [self getScreenWidth]);
     
-    [self buildPlayerViewControllerForAlbum:self.albumDetails];
+    self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.coverImageView.frame) - kSLAlbumDetailsCellHeight, 0.0f, [self getTabBarHeight], 0.0f);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        [weakSelf.view addSubview:weakSelf.tableView];
+
+        [weakSelf buildPlayerViewControllerForAlbum:weakSelf.albumDetails];
+        [weakSelf setupPlayNowButton];
+        
+        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [self.spotifyButton removeFromSuperview];
     [self.playNowButton removeFromSuperview];
-}
-
-- (void)setupSpotifyButton {
-    self.spotifyButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.spotifyButton setImage:[UIImage imageNamed:@"spotifyIcon"] forState:UIControlStateNormal];
-    self.spotifyButton.alpha = .7;
-    self.spotifyButton.imageView.layer.cornerRadius = 7.0f;
-    self.spotifyButton.layer.shadowRadius = 3.0f;
-    self.spotifyButton.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.spotifyButton.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    self.spotifyButton.layer.shadowOpacity = 0.5f;
-    self.spotifyButton.layer.masksToBounds = NO;
-    self.spotifyButton.frame = CGRectMake(self.view.frame.size.width - kSLPlayButtonSize - MarginSizes.medium, self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height, kSLPlayButtonSize, kSLPlayButtonSize);
-    [self.spotifyButton bk_addEventHandler:^(id sender) {
-        NSString *urlString = [NSString stringWithFormat:kSLSpotifyURL,self.albumDetails.collectionName];
-        NSString *escaped = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:escaped]];
-    } forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationController.view addSubview:self.spotifyButton];
 }
 
 - (void)setupPlayNowButton {
@@ -152,12 +130,7 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     self.playNowButton.layer.masksToBounds = NO;
     self.playNowButton.frame = CGRectMake([self getScreenWidth]/2 - kSLPlayButtonSize/2, [self getScreenHeight] - [self getTabBarHeight] - MarginSizes.large - kSLPlayButtonSize, kSLPlayButtonSize, kSLPlayButtonSize);
         [self.navigationController.view addSubview:self.playNowButton];
-    
-    __weak typeof(self)weakSelf = self;
-    [self.playNowButton bk_addEventHandler:^(id sender) {
-        weakSelf.isPlayingOptionsShown ? [weakSelf hidePlayerView] : [weakSelf showPlayerView];
-        weakSelf.isPlayingOptionsShown = !weakSelf.isPlayingOptionsShown;
-    } forControlEvents:UIControlEventTouchUpInside];
+    [self.playNowButton addTarget:self action:@selector(togglePlayerController) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Table view data source
@@ -214,6 +187,27 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     return nil;
 }
 
+#pragma mark - PlayerOptionController
+- (void)togglePlayerController {
+    if (self.isPlayingOptionsShown) {
+        [self hidePlayerView];
+        [UIView animateWithDuration:.2 animations:^{
+            self.blurBackgroundView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [self removeBlurBackground];
+        }];
+    }
+    else {
+        [self addBlurBackground];
+        [UIView animateWithDuration:.2 animations:^{
+            self.blurBackgroundView.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            [self showPlayerView];
+        }];
+    }
+    self.isPlayingOptionsShown = !self.isPlayingOptionsShown;
+}
+
 #pragma mark - Add to Shortlist
 - (void)addAlbumToShortList {
     __weak typeof(self) weakSelf = self;
@@ -245,6 +239,26 @@ static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/sear
     [color getHue:&hue saturation:nil brightness:nil alpha:nil];
     
     return [[UIColor alloc] initWithHue:hue saturation:([self.tracks count] - row)/25.0 brightness:1.0 alpha:.9];
+}
+
+#pragma mark Blurring Methods
+- (void)addBlurBackground {
+    self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getScreenShot]];
+    self.blurBackgroundView.userInteractionEnabled = YES;
+    [self.view insertSubview:self.blurBackgroundView atIndex:2];
+    self.blurBackgroundView.alpha = 0;
+    
+    FXBlurView *shortListBlurView = [[FXBlurView alloc] init];
+    shortListBlurView.frame = self.blurBackgroundView.bounds;
+    shortListBlurView.tintColor = [UIColor blackColor];
+    shortListBlurView.blurEnabled = YES;
+    shortListBlurView.clipsToBounds = YES;
+    shortListBlurView.blurRadius = 40;
+    [self.blurBackgroundView addSubview:shortListBlurView];
+}
+
+- (void)removeBlurBackground {
+    [self.blurBackgroundView removeFromSuperview];
 }
 
 @end

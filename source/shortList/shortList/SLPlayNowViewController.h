@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ItunesTrack;
 
 @interface SLPlayNowViewController : UIViewController
 
+- (instancetype)initWithAlbum:(ItunesTrack *)albumDetails;
 
 @end
