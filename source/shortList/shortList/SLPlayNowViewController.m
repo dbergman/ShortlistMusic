@@ -13,7 +13,6 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImage+AverageColor.h"
 
-static NSString * const kSLSpotifyURL = @"spotify://http://open.spotify.com/search/album:%@";
 const CGFloat kSLPlayAlbumArtSize = 100.0;
 const CGFloat kSLPlayButtonSize = 50.0;
 
@@ -107,9 +106,7 @@ const CGFloat kSLPlayButtonSize = 50.0;
 }
 
 - (void)spotifyAction {
-    NSString *urlString = [NSString stringWithFormat:kSLSpotifyURL,self.albumDetails.collectionName];
-    NSString *escaped = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:escaped]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.albumDetails.spotifyDeepLink]];
 }
 
 - (void)appleMusicAction {
