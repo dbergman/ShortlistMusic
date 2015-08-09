@@ -25,7 +25,7 @@
 
 - (NSArray *)getAlbumTracks {
     NSMutableArray *tracks = [NSMutableArray new];
-    for (ItunesTrack *track in self.tracks ) {
+    for (ItunesTrack *track in self.tracks) {
         if ([track.wrapperType isEqualToString:@"track"]) {
             [tracks addObject:track];
         }
@@ -35,7 +35,7 @@
 }
 
 - (ItunesTrack *)getAlbumInfo {
-    for (ItunesTrack *track in self.tracks ) {
+    for (ItunesTrack *track in self.tracks) {
         if ([track.wrapperType isEqualToString:@"collection"]) {
             return track;
         }

@@ -47,5 +47,6 @@
 //Custom
 @property (nonatomic, copy, readonly) NSString *releaseYear;
 @property (nonatomic, copy, readonly) NSString *trackDuration;
+@property (nonatomic, copy) NSString *spotifyDeepLink;
 
 @end
