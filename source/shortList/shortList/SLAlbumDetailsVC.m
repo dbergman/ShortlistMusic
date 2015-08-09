@@ -20,6 +20,9 @@
 #import "UIViewController+Utilities.h"
 #import "UIViewController+SLPlayNow.h"
 #import "FXBlurView.h"
+#import "SpotifySearchApiController.h"
+#import "SpotifyAlbums.h"
+#import "SpotifyAlbum.h"
 
 static CGFloat const kSLAlbumDetailsCellHeight = 65.0;
 static CGFloat const kSLPlayButtonSize = 50.0;
@@ -63,8 +66,12 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     __weak typeof(self) weakSelf = self;
+    [[SpotifySearchApiController sharedManager] spotifySearchByArist:self.albumDetails.artistName album:self.albumDetails.collectionName completion:^(SpotifyAlbums *albums, NSError *error) {
+        weakSelf.albumDetails.spotifyDeepLink = [(SpotifyAlbum *)albums.albumResults.firstObject spotifyAlbumUrl];
+    }];
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:([self getShortListAlbum])? NSLocalizedString(@"Remove", nil) : NSLocalizedString(@"Add", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
         ([weakSelf getShortListAlbum]) ? [weakSelf removeAlbumFromShortList] : [weakSelf addAlbumToShortList];
     }];
