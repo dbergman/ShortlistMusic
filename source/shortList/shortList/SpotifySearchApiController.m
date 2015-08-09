@@ -7,6 +7,8 @@
 //
 
 #import "SpotifySearchApiController.h"
+#import <Mantle/Mantle.h>
+#import "SpotifyAlbums.h"
 
 static NSString * const kBaseURL = @"https://api.spotify.com/v1/";
 
@@ -28,7 +30,6 @@ static NSString * const kBaseURL = @"https://api.spotify.com/v1/";
     if (self) {
         self.responseSerializer = [AFJSONResponseSerializer new];
         self.requestSerializer = [AFJSONRequestSerializer new];
-        //[self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     }
     
     return self;
@@ -36,32 +37,24 @@ static NSString * const kBaseURL = @"https://api.spotify.com/v1/";
 
 // https://api.spotify.com/v1/search?query=album:Halcyon+Digest+artist:Deerhunter&offset=0&limit=1&type=album&market=US
 -(void)spotifySearchByArist:(NSString *)artist album:(NSString *)album completion:(SLSpotifyFetchResultsBlock)completion {
-    
-  //https://api.spotify.com/v1/search?q=album:moms+artist:menomena&type=album&market=US&limit=1
-   
-    
     NSDictionary *params = @{@"q":[NSString stringWithFormat:@"album:%@ artist:%@",album, artist], @"type": @"album", @"market": @"us", @"limit": @(1)};
     
     [self GET:@"search" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"");
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"");
-    }];
-////        NSError *error;
-////        ItunesSearchAlbum *itunesSearchAlbum = [MTLJSONAdapter modelOfClass:[ItunesSearchAlbum class] fromJSONDictionary:responseObject error:&error];
-////        if (error) {
-////            if (completion) {
-////                completion(nil, error);
-////            }
-////        }
-////        else {
-////            if (completion) {
-////                completion(itunesSearchAlbum, nil);
-////            }
-//        }
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"FAILURE");
-//    }];
+        NSError *error;
+        SpotifyAlbums *spotifyAlbums = [MTLJSONAdapter modelOfClass:[SpotifyAlbums class]  fromJSONDictionary:responseObject error:&error];
+        if (error) {
+            if (completion) {
+                completion(nil, error);
+            }
+        }
+        else {
+            if (completion) {
+                completion(spotifyAlbums, nil);
+            }
+        }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"FAILURE");
+        }];
 }
 
 @end

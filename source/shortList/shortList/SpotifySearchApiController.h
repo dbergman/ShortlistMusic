@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "AFHTTPRequestOperationManager.h"
 
-typedef void(^SLSpotifyFetchResultsBlock)(id responseObject, NSError *error);
+@class SpotifyAlbums;
+
+typedef void(^SLSpotifyFetchResultsBlock)(SpotifyAlbums *spotifyAlbums, NSError *error);
 
 @interface SpotifySearchApiController : AFHTTPRequestOperationManager
 
 + (SpotifySearchApiController *)sharedManager;
 
-//search
 -(void)spotifySearchByArist:(NSString *)artist album:(NSString *)album completion:(SLSpotifyFetchResultsBlock)completion;
 
 @end
