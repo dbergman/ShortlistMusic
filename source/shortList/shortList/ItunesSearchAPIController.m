@@ -39,8 +39,6 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
 }
 
 -(void)getSearchResultsWithBlock:(NSString *)artist completion:(SLItunesFetchResultsBlock)completion {
-    [[self operationQueue] cancelAllOperations];
-    
     NSDictionary *params = @{@"term": artist, @"media": @"music", @"entity": @"musicArtist", @"attribute": @"artistTerm", @"limit": @"200"};
     
     [self GET:@"search" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -62,8 +60,6 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
 }
 
 - (void)getAlbumsForArtist:(NSNumber *) artistId completion:(SLItunesFetchResultsBlock)completion {
-    [[self operationQueue] cancelAllOperations];
-    
     NSDictionary *params = @{@"id": artistId, @"media": @"music", @"entity": @"album", @"limit": @"200"};
     
     [self GET:@"lookup" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -85,8 +81,6 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
 }
 
 - (void)getTracksForAlbumID:(NSString *)albumID completion:(SLItunesFetchResultsBlock)completion{
-    [[self operationQueue] cancelAllOperations];
-    
     NSDictionary *params = @{@"id": albumID, @"entity": @"song"};
     
     [self GET:@"lookup" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
