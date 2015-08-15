@@ -227,7 +227,10 @@ static CGFloat const kSLPlayButtonSize = 50.0;
         slAlbum.shortListRank = allAlbums.count + 1;
 
         [SLParseController addAlbumToShortList:slAlbum shortlist:weakSelf.shortList completion:^{
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+            [SLParseController getShortListAlbums:self.shortList completion:^(NSArray *allAlbums) {
+                weakSelf.shortList.shortListAlbums = allAlbums;
+                 [weakSelf.navigationController popViewControllerAnimated:YES];
+            }];
         }];
     }];
 }
