@@ -47,7 +47,7 @@
         
         self.allYearLabel = [UILabel new];
         [self.allYearLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        self.allYearLabel.text = NSLocalizedString(@"All Years", nil);
+        self.allYearLabel.text = NSLocalizedString(@"All", nil);
         self.allYearLabel.textColor = [UIColor sl_Red];
         [self.allYearLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
         [self.contentView addSubview:self.allYearLabel];
@@ -99,7 +99,7 @@
     [UIView animateWithDuration:.2 delay:.2 options:UIViewAnimationOptionLayoutSubviews animations:^{
         if (clearResult) {
             self.allYearLabel.alpha = 1.0;
-            self.allYearLabel.text = NSLocalizedString(@"All Years", nil);
+            self.allYearLabel.text = NSLocalizedString(@"All", nil);
         }
         else {
             self.allYearLabel.text = self.yearFilterArray[[self.yearPicker selectedRowInComponent:0]];
@@ -150,7 +150,7 @@
     NSString *theYear = [formatter stringFromDate:[NSDate date]];
     
     NSMutableArray *years = [[NSMutableArray alloc]init];
-    [years addObject:@"All Years"];
+    [years addObject:@"All"];
     
     NSString *earlyYear = @"1959";
     
