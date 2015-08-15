@@ -123,6 +123,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
             cell = [[SLCreateShortListEnterNameCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NameCellIdentifier];
         }
         
+        self.shortListName = self.shortList.shortListName;
         [cell configShortListNameCell:self.shortList];
         [cell setCreateNameAction:^(NSString *shortListName){
             weakself.shortListName = shortListName;
@@ -193,7 +194,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
     [cell setLayoutMargins:UIEdgeInsetsZero];
 }
 
-- (void)updateShortList:(ShortList *)shortList {
+- (void)updateShortList:(Shortlist *)shortList {
     self.shortList = shortList;
 }
 
