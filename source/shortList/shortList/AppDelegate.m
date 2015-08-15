@@ -33,9 +33,10 @@
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
+    [self turnOnNSURLCache];
     [self setUpParse];
     [self setupAppearance];
-
+    
     self.window.rootViewController = [self shortListTabController];
     
     return YES;
@@ -96,6 +97,11 @@
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor sl_Red]];
     NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [SLStyle polarisFontWithSize:FontSizes.medium] , NSForegroundColorAttributeName: [UIColor whiteColor]};
     [[UIBarButtonItem appearance] setTitleTextAttributes:barButtonAppearanceDict forState:UIControlStateNormal];
+}
+
+- (void)turnOnNSURLCache {
+    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024  diskCapacity:100 * 1024 * 1024 diskPath:nil];
+    [NSURLCache setSharedURLCache:sharedCache];
 }
 
 #pragma mark - Core Data stack
