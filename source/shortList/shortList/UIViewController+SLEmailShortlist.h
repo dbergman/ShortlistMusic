@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Shortlist;
 
 @interface UIViewController (SLEmailShortlist)
+
+- (void)shareShortlistByEmail:(Shortlist *)shortlist;
 
 @end
