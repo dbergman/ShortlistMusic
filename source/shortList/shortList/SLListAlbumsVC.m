@@ -24,6 +24,7 @@
 #import "UIViewController+SLEmailShortlist.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIViewController+SLAlbumArtImaging.h"
+#import "SLInstagramController.h"
 
 const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
@@ -384,7 +385,14 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
     }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
-    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{ NSLog(@"Instagram"); }];
+    
+    NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
+    if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
+        [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{
+            [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
+        }];
+    }
+
     [slSharingSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
     [slSharingSheet showInView:self.view];
 }

@@ -8,17 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		3A67B00A491460F0C0119307 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0D5FB60B95EE1C6AAD8165 /* libPods.a */; };
-		461801121B077E6C003C0A92 /* SLUserSignUpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801111B077E6C003C0A92 /* SLUserSignUpVC.m */; };
 		461801161B08D7A4003C0A92 /* SLCreateShortListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */; };
 		4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */; };
 		461801201B09361E003C0A92 /* SLCreateShortListEnterNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4618011F1B09361E003C0A92 /* SLCreateShortListEnterNameCell.m */; };
 		461801231B095206003C0A92 /* SLCreateShortListEnterYearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801221B095206003C0A92 /* SLCreateShortListEnterYearCell.m */; };
-		461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */; };
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
 		4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5511B1E663F00F997F8 /* SLParseController.swift */; };
 		4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* ShortListAlbum.m */; };
 		4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4651CE251B4C9992003E9C0F /* SLListAbumCell.m */; };
 		465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */; };
+		466064001B81251F006AB766 /* SLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063F31B81251F006AB766 /* SLLoginVC.m */; };
+		466064011B81251F006AB766 /* SLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063F51B81251F006AB766 /* SLNavigationController.m */; };
+		466064021B81251F006AB766 /* SLPlayNowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063F71B81251F006AB766 /* SLPlayNowViewController.m */; };
+		466064031B81251F006AB766 /* SLTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063F91B81251F006AB766 /* SLTabBarController.m */; };
+		466064041B81251F006AB766 /* SLUserSignUpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063FB1B81251F006AB766 /* SLUserSignUpVC.m */; };
+		466064051B81251F006AB766 /* UIViewController+SLLoginGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063FD1B81251F006AB766 /* UIViewController+SLLoginGate.m */; };
+		466064061B81251F006AB766 /* UIViewController+SLPlayNow.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063FF1B81251F006AB766 /* UIViewController+SLPlayNow.m */; };
+		466064091B81260C006AB766 /* SLInstagramController.m in Sources */ = {isa = PBXBuildFile; fileRef = 466064081B81260C006AB766 /* SLInstagramController.m */; };
 		4665B7381B6D4D4C0088B0B3 /* Polaris.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4665B7371B6D47700088B0B3 /* Polaris.otf */; };
 		4665B7391B6D4D4F0088B0B3 /* NixieOne.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4665B7361B6D475A0088B0B3 /* NixieOne.otf */; };
 		466DF3641B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 466DF3631B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m */; };
@@ -45,8 +51,6 @@
 		46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A094191AF079120091C7F7 /* ItunesArtistSearchResults.JSON */; };
 		46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */; };
 		46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */; };
-		46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */; };
-		46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46AB4AA41B042F570056EC35 /* SLLoginVC.m */; };
 		46B242351B57166100BA20D4 /* SLAlbumsCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B242341B57166100BA20D4 /* SLAlbumsCollectionCell.m */; };
 		46B2423B1B5DC14100BA20D4 /* SLAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B2423A1B5DC14100BA20D4 /* SLAlbumCell.m */; };
 		46CB6AD21AED715800BF1DF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6AD11AED715800BF1DF3 /* main.m */; };
@@ -61,9 +65,6 @@
 		46CB6B101AED80FD00BF1DF3 /* SLBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B0F1AED80FD00BF1DF3 /* SLBaseVC.m */; };
 		46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B141AED842200BF1DF3 /* SLStyle.m */; };
 		46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */; };
-		46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */; };
-		46D422FD1B7656C400D79263 /* SLPlayNowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D422FC1B7656C400D79263 /* SLPlayNowViewController.m */; };
-		46D423001B7657F000D79263 /* UIViewController+SLPlayNow.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D422FF1B7657F000D79263 /* UIViewController+SLPlayNow.m */; };
 		46D423031B77AF2A00D79263 /* SpotifySearchApiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D423021B77AF2A00D79263 /* SpotifySearchApiController.m */; };
 		46D423071B77D3A900D79263 /* SpotifyAlbums.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D423061B77D3A900D79263 /* SpotifyAlbums.m */; };
 		46D4230A1B77D47900D79263 /* SpotifyAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D423091B77D47900D79263 /* SpotifyAlbum.m */; };
@@ -88,8 +89,6 @@
 		1415B849DC8FE7440FF77432 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		387B84E873048CE78F83CF11 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4541FC2A6E9CC99BEBFB5502 /* Pods-shortListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.release.xcconfig"; sourceTree = "<group>"; };
-		461801101B077E6C003C0A92 /* SLUserSignUpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLUserSignUpVC.h; sourceTree = "<group>"; };
-		461801111B077E6C003C0A92 /* SLUserSignUpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLUserSignUpVC.m; sourceTree = "<group>"; };
 		461801141B08D7A4003C0A92 /* SLCreateShortListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListVC.h; sourceTree = "<group>"; };
 		461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListVC.m; sourceTree = "<group>"; };
 		461801181B08E6A0003C0A92 /* SLCreateShortListTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListTitleCell.h; sourceTree = "<group>"; };
@@ -98,8 +97,6 @@
 		4618011F1B09361E003C0A92 /* SLCreateShortListEnterNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListEnterNameCell.m; sourceTree = "<group>"; };
 		461801211B095206003C0A92 /* SLCreateShortListEnterYearCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListEnterYearCell.h; sourceTree = "<group>"; };
 		461801221B095206003C0A92 /* SLCreateShortListEnterYearCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListEnterYearCell.m; sourceTree = "<group>"; };
-		461FC9FC1AED98F9001C3F46 /* SLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLTabBarController.h; sourceTree = "<group>"; };
-		461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLTabBarController.m; sourceTree = "<group>"; };
 		461FCA001AED9C8E001C3F46 /* ItunesSearchAPIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesSearchAPIController.h; sourceTree = "<group>"; };
 		461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchAPIController.m; sourceTree = "<group>"; };
 		4648A5501B1E663E00F997F8 /* shortList-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shortList-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -110,6 +107,22 @@
 		4651CE251B4C9992003E9C0F /* SLListAbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAbumCell.m; sourceTree = "<group>"; };
 		465415B21B6E7EE500E51893 /* UIViewController+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Utilities.h"; sourceTree = "<group>"; };
 		465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Utilities.m"; sourceTree = "<group>"; };
+		466063F21B81251F006AB766 /* SLLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLoginVC.h; sourceTree = "<group>"; };
+		466063F31B81251F006AB766 /* SLLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLLoginVC.m; sourceTree = "<group>"; };
+		466063F41B81251F006AB766 /* SLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLNavigationController.h; sourceTree = "<group>"; };
+		466063F51B81251F006AB766 /* SLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLNavigationController.m; sourceTree = "<group>"; };
+		466063F61B81251F006AB766 /* SLPlayNowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPlayNowViewController.h; sourceTree = "<group>"; };
+		466063F71B81251F006AB766 /* SLPlayNowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPlayNowViewController.m; sourceTree = "<group>"; };
+		466063F81B81251F006AB766 /* SLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLTabBarController.h; sourceTree = "<group>"; };
+		466063F91B81251F006AB766 /* SLTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLTabBarController.m; sourceTree = "<group>"; };
+		466063FA1B81251F006AB766 /* SLUserSignUpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLUserSignUpVC.h; sourceTree = "<group>"; };
+		466063FB1B81251F006AB766 /* SLUserSignUpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLUserSignUpVC.m; sourceTree = "<group>"; };
+		466063FC1B81251F006AB766 /* UIViewController+SLLoginGate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLLoginGate.h"; sourceTree = "<group>"; };
+		466063FD1B81251F006AB766 /* UIViewController+SLLoginGate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLLoginGate.m"; sourceTree = "<group>"; };
+		466063FE1B81251F006AB766 /* UIViewController+SLPlayNow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLPlayNow.h"; sourceTree = "<group>"; };
+		466063FF1B81251F006AB766 /* UIViewController+SLPlayNow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLPlayNow.m"; sourceTree = "<group>"; };
+		466064071B81260C006AB766 /* SLInstagramController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLInstagramController.h; sourceTree = "<group>"; };
+		466064081B81260C006AB766 /* SLInstagramController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLInstagramController.m; sourceTree = "<group>"; };
 		4665B7361B6D475A0088B0B3 /* NixieOne.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NixieOne.otf; sourceTree = "<group>"; };
 		4665B7371B6D47700088B0B3 /* Polaris.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Polaris.otf; sourceTree = "<group>"; };
 		466DF3621B7FEE6D00563095 /* UIViewController+SLEmailShortlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLEmailShortlist.h"; sourceTree = "<group>"; };
@@ -150,10 +163,6 @@
 		46A0941D1AF07BB40091C7F7 /* ItunesAlbumSearchResults.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesAlbumSearchResults.JSON; sourceTree = "<group>"; };
 		46A0941F1AF07C140091C7F7 /* ItunesTracksSearchResult.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ItunesTracksSearchResult.JSON; sourceTree = "<group>"; };
 		46A094271AF1B3E70091C7F7 /* ItunesSearchTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchTesting.m; sourceTree = "<group>"; };
-		46AB4AA01B042EC50056EC35 /* UIViewController+SLLoginGate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLLoginGate.h"; sourceTree = "<group>"; };
-		46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLLoginGate.m"; sourceTree = "<group>"; };
-		46AB4AA31B042F570056EC35 /* SLLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLoginVC.h; sourceTree = "<group>"; };
-		46AB4AA41B042F570056EC35 /* SLLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLLoginVC.m; sourceTree = "<group>"; };
 		46B242331B57166100BA20D4 /* SLAlbumsCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumsCollectionCell.h; sourceTree = "<group>"; };
 		46B242341B57166100BA20D4 /* SLAlbumsCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumsCollectionCell.m; sourceTree = "<group>"; };
 		46B242391B5DC14100BA20D4 /* SLAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumCell.h; sourceTree = "<group>"; };
@@ -182,12 +191,6 @@
 		46CB6B141AED842200BF1DF3 /* SLStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLStyle.m; sourceTree = "<group>"; };
 		46CB6B161AED850200BF1DF3 /* UIColor+SLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SLStyle.h"; sourceTree = "<group>"; };
 		46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SLStyle.m"; sourceTree = "<group>"; };
-		46CB6B191AED94D600BF1DF3 /* SLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLNavigationController.h; sourceTree = "<group>"; };
-		46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLNavigationController.m; sourceTree = "<group>"; };
-		46D422FB1B7656C400D79263 /* SLPlayNowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPlayNowViewController.h; sourceTree = "<group>"; };
-		46D422FC1B7656C400D79263 /* SLPlayNowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPlayNowViewController.m; sourceTree = "<group>"; };
-		46D422FE1B7657F000D79263 /* UIViewController+SLPlayNow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLPlayNow.h"; sourceTree = "<group>"; };
-		46D422FF1B7657F000D79263 /* UIViewController+SLPlayNow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLPlayNow.m"; sourceTree = "<group>"; };
 		46D423011B77AF2A00D79263 /* SpotifySearchApiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifySearchApiController.h; sourceTree = "<group>"; };
 		46D423021B77AF2A00D79263 /* SpotifySearchApiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifySearchApiController.m; sourceTree = "<group>"; };
 		46D423051B77D3A900D79263 /* SpotifyAlbums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyAlbums.h; sourceTree = "<group>"; };
@@ -245,35 +248,6 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
-		461FC9F91AED9888001C3F46 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				46D422FA1B76569300D79263 /* PlayNow Options */,
-				46AB4A9F1B042E850056EC35 /* Login */,
-				461FC9FB1AED98B6001C3F46 /* Tab */,
-				461FC9FA1AED98A8001C3F46 /* Navigation */,
-			);
-			name = Components;
-			sourceTree = "<group>";
-		};
-		461FC9FA1AED98A8001C3F46 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				46CB6B191AED94D600BF1DF3 /* SLNavigationController.h */,
-				46CB6B1A1AED94D600BF1DF3 /* SLNavigationController.m */,
-			);
-			name = Navigation;
-			sourceTree = "<group>";
-		};
-		461FC9FB1AED98B6001C3F46 /* Tab */ = {
-			isa = PBXGroup;
-			children = (
-				461FC9FC1AED98F9001C3F46 /* SLTabBarController.h */,
-				461FC9FD1AED98F9001C3F46 /* SLTabBarController.m */,
-			);
-			name = Tab;
-			sourceTree = "<group>";
-		};
 		461FC9FF1AED9A68001C3F46 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +269,25 @@
 				4651CE251B4C9992003E9C0F /* SLListAbumCell.m */,
 			);
 			name = Albums;
+			sourceTree = "<group>";
+		};
+		466063F11B8124FB006AB766 /* Componenets */ = {
+			isa = PBXGroup;
+			children = (
+				466063F21B81251F006AB766 /* SLLoginVC.h */,
+				466063F31B81251F006AB766 /* SLLoginVC.m */,
+				466063F41B81251F006AB766 /* SLNavigationController.h */,
+				466063F51B81251F006AB766 /* SLNavigationController.m */,
+				466063F61B81251F006AB766 /* SLPlayNowViewController.h */,
+				466063F71B81251F006AB766 /* SLPlayNowViewController.m */,
+				466063F81B81251F006AB766 /* SLTabBarController.h */,
+				466063F91B81251F006AB766 /* SLTabBarController.m */,
+				466063FA1B81251F006AB766 /* SLUserSignUpVC.h */,
+				466063FB1B81251F006AB766 /* SLUserSignUpVC.m */,
+				466064071B81260C006AB766 /* SLInstagramController.h */,
+				466064081B81260C006AB766 /* SLInstagramController.m */,
+			);
+			name = Componenets;
 			sourceTree = "<group>";
 		};
 		4665B7351B6D471A0088B0B3 /* Fonts */ = {
@@ -348,6 +341,10 @@
 		467D55A41AF6D914005CD607 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				466063FC1B81251F006AB766 /* UIViewController+SLLoginGate.h */,
+				466063FD1B81251F006AB766 /* UIViewController+SLLoginGate.m */,
+				466063FE1B81251F006AB766 /* UIViewController+SLPlayNow.h */,
+				466063FF1B81251F006AB766 /* UIViewController+SLPlayNow.m */,
 				467D55A51AF6D98F005CD607 /* UIImage+AverageColor.h */,
 				467D55A61AF6D98F005CD607 /* UIImage+AverageColor.m */,
 				465415B21B6E7EE500E51893 /* UIViewController+Utilities.h */,
@@ -445,19 +442,6 @@
 			name = ShortLists;
 			sourceTree = "<group>";
 		};
-		46AB4A9F1B042E850056EC35 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				46AB4AA01B042EC50056EC35 /* UIViewController+SLLoginGate.h */,
-				46AB4AA11B042EC50056EC35 /* UIViewController+SLLoginGate.m */,
-				46AB4AA31B042F570056EC35 /* SLLoginVC.h */,
-				46AB4AA41B042F570056EC35 /* SLLoginVC.m */,
-				461801101B077E6C003C0A92 /* SLUserSignUpVC.h */,
-				461801111B077E6C003C0A92 /* SLUserSignUpVC.m */,
-			);
-			name = Login;
-			sourceTree = "<group>";
-		};
 		46CB6AC31AED715800BF1DF3 = {
 			isa = PBXGroup;
 			children = (
@@ -535,8 +519,8 @@
 		46CB6AFA1AED76F400BF1DF3 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				466063F11B8124FB006AB766 /* Componenets */,
 				467D55A41AF6D914005CD607 /* Categories */,
-				461FC9F91AED9888001C3F46 /* Components */,
 				46CB6B121AED83F000BF1DF3 /* SL Style */,
 				46CB6B111AED83D700BF1DF3 /* SL Sections */,
 				46CB6B0E1AED80FD00BF1DF3 /* SLBaseVC.h */,
@@ -603,17 +587,6 @@
 				46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */,
 			);
 			name = "SL Style";
-			sourceTree = "<group>";
-		};
-		46D422FA1B76569300D79263 /* PlayNow Options */ = {
-			isa = PBXGroup;
-			children = (
-				46D422FB1B7656C400D79263 /* SLPlayNowViewController.h */,
-				46D422FC1B7656C400D79263 /* SLPlayNowViewController.m */,
-				46D422FE1B7657F000D79263 /* UIViewController+SLPlayNow.h */,
-				46D422FF1B7657F000D79263 /* UIViewController+SLPlayNow.m */,
-			);
-			name = "PlayNow Options";
 			sourceTree = "<group>";
 		};
 		46D423041B77D29C00D79263 /* Spotify */ = {
@@ -846,21 +819,22 @@
 				466DF3641B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m in Sources */,
 				46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */,
 				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
+				466064041B81251F006AB766 /* SLUserSignUpVC.m in Sources */,
 				4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */,
 				46A094141AF072730091C7F7 /* ItunesTrack.m in Sources */,
 				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
 				46D423071B77D3A900D79263 /* SpotifyAlbums.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
-				46CB6B1B1AED94D600BF1DF3 /* SLNavigationController.m in Sources */,
+				466064051B81251F006AB766 /* UIViewController+SLLoginGate.m in Sources */,
 				4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */,
 				467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */,
 				4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */,
+				466064061B81251F006AB766 /* UIViewController+SLPlayNow.m in Sources */,
 				46CB6B011AED797A00BF1DF3 /* SLFeedVC.m in Sources */,
 				461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */,
 				461801201B09361E003C0A92 /* SLCreateShortListEnterNameCell.m in Sources */,
 				467D55A71AF6D98F005CD607 /* UIImage+AverageColor.m in Sources */,
 				46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */,
-				461801121B077E6C003C0A92 /* SLUserSignUpVC.m in Sources */,
 				46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */,
 				46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */,
 				46D4230A1B77D47900D79263 /* SpotifyAlbum.m in Sources */,
@@ -868,26 +842,26 @@
 				46B242351B57166100BA20D4 /* SLAlbumsCollectionCell.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
 				467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */,
-				461FC9FE1AED98F9001C3F46 /* SLTabBarController.m in Sources */,
 				468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */,
 				467D559E1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m in Sources */,
+				466064031B81251F006AB766 /* SLTabBarController.m in Sources */,
+				466064011B81251F006AB766 /* SLNavigationController.m in Sources */,
 				461801161B08D7A4003C0A92 /* SLCreateShortListVC.m in Sources */,
 				46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */,
 				46D423031B77AF2A00D79263 /* SpotifySearchApiController.m in Sources */,
 				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
 				4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */,
-				46AB4AA21B042EC50056EC35 /* UIViewController+SLLoginGate.m in Sources */,
 				468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */,
 				46B2423B1B5DC14100BA20D4 /* SLAlbumCell.m in Sources */,
+				466064021B81251F006AB766 /* SLPlayNowViewController.m in Sources */,
 				461801231B095206003C0A92 /* SLCreateShortListEnterYearCell.m in Sources */,
 				467D55A31AF69746005CD607 /* SLAlbumDetailsVC.m in Sources */,
-				46D423001B7657F000D79263 /* UIViewController+SLPlayNow.m in Sources */,
-				46D422FD1B7656C400D79263 /* SLPlayNowViewController.m in Sources */,
-				46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */,
 				465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */,
 				466DF3671B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m in Sources */,
+				466064001B81251F006AB766 /* SLLoginVC.m in Sources */,
 				46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */,
 				46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */,
+				466064091B81260C006AB766 /* SLInstagramController.m in Sources */,
 				468FB8BC1B1260DE0004DC14 /* Shortlist.m in Sources */,
 				467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */,
 			);
