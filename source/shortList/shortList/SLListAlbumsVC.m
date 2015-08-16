@@ -23,6 +23,7 @@
 #import "FXBlurView.h"
 #import "UIViewController+SLEmailShortlist.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIViewController+SLAlbumArtImaging.h"
 
 const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
@@ -75,6 +76,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self.view addSubview:self.tableView];
     
     self.definesPresentationContext = YES;
+    [self buildShortlistAlbumArtImage:self.shortList];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -377,7 +379,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
     
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{
-        [weakSelf shareShortlistByEmail:self.shortList];
+        [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
     }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{ NSLog(@"Instagram"); }];

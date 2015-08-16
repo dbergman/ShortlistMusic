@@ -11,6 +11,6 @@
 
 @interface UIViewController (SLEmailShortlist)
 
-- (void)shareShortlistByEmail:(Shortlist *)shortlist;
+- (void)shareShortlistByEmail:(Shortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage;
 
 @end

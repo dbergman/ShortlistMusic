@@ -21,6 +21,8 @@
 		465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */; };
 		4665B7381B6D4D4C0088B0B3 /* Polaris.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4665B7371B6D47700088B0B3 /* Polaris.otf */; };
 		4665B7391B6D4D4F0088B0B3 /* NixieOne.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4665B7361B6D475A0088B0B3 /* NixieOne.otf */; };
+		466DF3641B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 466DF3631B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m */; };
+		466DF3671B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 466DF3661B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m */; };
 		467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */; };
 		467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55951AF55F3A005CD607 /* SLArtistSearchResultsVC.m */; };
 		467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55981AF577D0005CD607 /* SLAlbumSearchResultVC.m */; };
@@ -110,6 +112,10 @@
 		465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Utilities.m"; sourceTree = "<group>"; };
 		4665B7361B6D475A0088B0B3 /* NixieOne.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NixieOne.otf; sourceTree = "<group>"; };
 		4665B7371B6D47700088B0B3 /* Polaris.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Polaris.otf; sourceTree = "<group>"; };
+		466DF3621B7FEE6D00563095 /* UIViewController+SLEmailShortlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLEmailShortlist.h"; sourceTree = "<group>"; };
+		466DF3631B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLEmailShortlist.m"; sourceTree = "<group>"; };
+		466DF3651B80D3B600563095 /* UIViewController+SLAlbumArtImaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLAlbumArtImaging.h"; sourceTree = "<group>"; };
+		466DF3661B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLAlbumArtImaging.m"; sourceTree = "<group>"; };
 		467D55901AF54FB4005CD607 /* SLListAlbumsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListAlbumsVC.h; sourceTree = "<group>"; };
 		467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAlbumsVC.m; sourceTree = "<group>"; };
 		467D55941AF55F3A005CD607 /* SLArtistSearchResultsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLArtistSearchResultsVC.h; sourceTree = "<group>"; };
@@ -346,6 +352,10 @@
 				467D55A61AF6D98F005CD607 /* UIImage+AverageColor.m */,
 				465415B21B6E7EE500E51893 /* UIViewController+Utilities.h */,
 				465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */,
+				466DF3621B7FEE6D00563095 /* UIViewController+SLEmailShortlist.h */,
+				466DF3631B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m */,
+				466DF3651B80D3B600563095 /* UIViewController+SLAlbumArtImaging.h */,
+				466DF3661B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -833,6 +843,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46CB6B101AED80FD00BF1DF3 /* SLBaseVC.m in Sources */,
+				466DF3641B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m in Sources */,
 				46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */,
 				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
 				4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */,
@@ -874,6 +885,7 @@
 				46D422FD1B7656C400D79263 /* SLPlayNowViewController.m in Sources */,
 				46AB4AA51B042F570056EC35 /* SLLoginVC.m in Sources */,
 				465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */,
+				466DF3671B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m in Sources */,
 				46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */,
 				46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */,
 				468FB8BC1B1260DE0004DC14 /* Shortlist.m in Sources */,
