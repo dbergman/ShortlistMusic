@@ -21,6 +21,7 @@
 #import "UIViewController+Utilities.h"
 #import <BlocksKit+UIKit.h>
 #import "FXBlurView.h"
+#import "UIViewController+SLEmailShortlist.h"
 #import <QuartzCore/QuartzCore.h>
 
 const CGFloat kShortlistAlbumsButtonSize = 50.0;
@@ -372,8 +373,12 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)showSharingOptions {
     [self toggleOptionsButton];
     
+    __weak typeof(self)weakSelf = self;
     UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
-    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{ NSLog(@"Email!"); }];
+    
+    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{
+        [weakSelf shareShortlistByEmail:self.shortList];
+    }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{ NSLog(@"Instagram"); }];
     [slSharingSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
