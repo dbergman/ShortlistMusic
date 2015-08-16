@@ -33,6 +33,9 @@
     [self saveCollectionView:collectionView];
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self shortlist].shortListAlbums.count;
 }
@@ -43,6 +46,8 @@
     
     return cell;
 }
+
+#pragma clang diagnostic pop
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -72,7 +77,7 @@
 }
 
 - (UIImage *)getAlbumArtCollectionImage {
-    UIGraphicsBeginImageContext(CGSizeMake(375, 375));
+    UIGraphicsBeginImageContext(CGSizeMake([self getScreenWidth], [self getScreenWidth]));
     [[[self collectionView] layer] renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
