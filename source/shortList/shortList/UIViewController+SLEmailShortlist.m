@@ -18,7 +18,7 @@
 
 @implementation UIViewController (SLEmailShortlist)
 
-- (void)shareShortlistByEmail:(Shortlist *)shortlist {
+- (void)shareShortlistByEmail:(Shortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage {
     if ([MFMailComposeViewController canSendMail]) {
         MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
         mailComposeVC.mailComposeDelegate = self;
@@ -30,6 +30,13 @@
         
         [mailComposeVC setSubject:[NSString stringWithFormat:@"ShortListMusic: %@", shortlist.shortListName]];
         [mailComposeVC setMessageBody:[self createShortListEmailBody:shortlist] isHTML:YES];
+        
+        NSData *albumArtCollectionImageData = UIImageJPEGRepresentation(albumArtCollectionImage, 1);
+        
+        NSString *fileName = @"albumArtCollectionImage";
+        fileName = [fileName stringByAppendingPathExtension:@"jpeg"];
+        [mailComposeVC addAttachmentData:albumArtCollectionImageData mimeType:@"image/jpeg" fileName:fileName];
+        
 
         [self presentViewController:mailComposeVC animated:YES completion:^{
             [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
