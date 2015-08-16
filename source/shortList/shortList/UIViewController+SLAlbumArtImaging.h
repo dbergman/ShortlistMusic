@@ -11,7 +11,8 @@
 
 @interface UIViewController (SLAlbumArtImaging)
 
-- (void)buildShortlistAlbumArtImage:(Shortlist *)shortlist;
+- (void)buildShortlistAlbumArtImage;
 - (UIImage *)getAlbumArtCollectionImage;
+- (void)loadCollectionViewImage:(Shortlist *)shortlist;
 
 @end

@@ -76,7 +76,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self.view addSubview:self.tableView];
     
     self.definesPresentationContext = YES;
-    [self buildShortlistAlbumArtImage:self.shortList];
+    [self buildShortlistAlbumArtImage];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -242,6 +242,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     __weak typeof(self)weakSelf = self;
     [SLParseController updateShortListAlbums:self.shortList albums:self.albums completion:^{
         [weakSelf.tableView reloadData];
+        [weakSelf loadCollectionViewImage:weakSelf.shortList];
     }];
 }
 
@@ -269,8 +270,9 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
             weakSelf.albums = [NSArray arrayWithArray:mutableAlbums];
             [weakSelf reorderShortList];
             
-            [SLParseController updateShortListAlbums:self.shortList albums:self.albums completion:^{
+            [SLParseController updateShortListAlbums:self.shortList albums:weakSelf.albums completion:^{
                 [weakSelf.tableView reloadData];
+                [weakSelf loadCollectionViewImage:weakSelf.shortList];
             }];
          }];
     }
@@ -397,6 +399,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [SLParseController getShortListAlbums:self.shortList completion:^(NSArray * albums) {
         weakSelf.albums = albums;
         [weakSelf.tableView reloadData];
+        [weakSelf loadCollectionViewImage:self.shortList];
     }];
 }
 

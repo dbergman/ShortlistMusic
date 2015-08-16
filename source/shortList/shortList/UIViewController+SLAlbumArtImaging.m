@@ -18,9 +18,7 @@
 
 @implementation UIViewController (SLAlbumArtImaging)
 
-- (void)buildShortlistAlbumArtImage:(Shortlist *)shortlist {
-    [self saveShortList:shortlist];
-    
+- (void)buildShortlistAlbumArtImage {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumInteritemSpacing = 0;
     layout.minimumLineSpacing = 0;
@@ -46,10 +44,15 @@
     return cell;
 }
 
-#pragma mark collection view cell paddings
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     return CGSizeMake([self getScreenWidth]/4, [self getScreenWidth]/4);
+}
+
+- (void)loadCollectionViewImage:(Shortlist *)shortlist {
+    [self saveShortList:shortlist];
+    
+    [[self collectionView] reloadData];
 }
 
 - (void)saveShortList:(Shortlist *)shortlist {
