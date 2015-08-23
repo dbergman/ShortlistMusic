@@ -36,11 +36,10 @@
     NSURL *imageURL=[NSURL fileURLWithPath:saveImagePath];
     
     self.documentController = [[UIDocumentInteractionController alloc] init];
-
     self.documentController.delegate=self;
-    self.documentController.UTI=@"com.instagram.photo";
+    self.documentController.UTI = @"com.instagram.photo";
     [self.documentController setURL:imageURL];
-    self.documentController.annotation=[NSDictionary dictionaryWithObjectsAndKeys:@"#yourHashTagGoesHere",@"InstagramCaption", nil];
+    self.documentController.annotation = [NSDictionary dictionaryWithObjectsAndKeys:@"#ShortListMusic",@"InstagramCaption", nil];
     [self.documentController presentOpenInMenuFromRect:CGRectZero inView:attachView animated:YES];
 }
 

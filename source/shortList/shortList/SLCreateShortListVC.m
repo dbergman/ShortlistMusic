@@ -70,7 +70,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
     static NSString *NameCellIdentifier = @"NameCell";
     static NSString *YearCellIdentifier = @"YearCell";
     
-    __weak typeof(self) weakself = self;
+    __weak typeof(self) weakSelf = self;
     if (indexPath.row == 0) {
         SLCreateShortListTitleCell *cell = [tableView dequeueReusableCellWithIdentifier:TitleCellIdentifier];
         if (cell == nil) {
@@ -79,7 +79,6 @@ NSInteger const kSLCreateShortListCellCount = 3;
         
         [cell configTitle:self.shortList];
         
-        __weak typeof(self) weakSelf = self;
         [cell setCleanUpSLBlock:^ {
             [weakSelf cleanupCreateShortListView];
             if (weakSelf.completion) {
@@ -87,12 +86,13 @@ NSInteger const kSLCreateShortListCellCount = 3;
             }
         }];
         
+        
         [cell setCreateSLBlock:^{
-            Shortlist *shortList = [Shortlist new];
-            shortList.shortListName = weakSelf.shortListName;
-            shortList.shortListYear = (weakSelf.shortListYear) ? weakSelf.shortListYear: NSLocalizedString(@"All", nil);
+            weakSelf.shortList = [Shortlist new];
+            weakSelf.shortList.shortListName = weakSelf.shortListName;
+            weakSelf.shortList.shortListYear = (weakSelf.shortListYear) ? weakSelf.shortListYear: NSLocalizedString(@"All", nil);
             
-           weakSelf.shortList = [SLParseController saveShortlist:shortList];
+           [SLParseController saveShortlist:weakSelf.shortList];
             
             [weakSelf cleanupCreateShortListView];
             
@@ -107,7 +107,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
             
             [weakSelf cleanupCreateShortListView];
             
-            weakSelf.shortList = [SLParseController saveShortlist:weakSelf.shortList];
+            [SLParseController saveShortlist:weakSelf.shortList];
             
             if (weakSelf.completion) {
                 weakSelf.completion(weakSelf.shortList, NO);
@@ -126,15 +126,15 @@ NSInteger const kSLCreateShortListCellCount = 3;
         self.shortListName = self.shortList.shortListName;
         [cell configShortListNameCell:self.shortList];
         [cell setCreateNameAction:^(NSString *shortListName){
-            weakself.shortListName = shortListName;
+            weakSelf.shortListName = shortListName;
             
-            if (weakself.showingYearPicker) {
-                [weakself.yearPickerCell hidePickerCell:NO];
-                weakself.showingYearPicker = NO;
-                [weakself.tableView beginUpdates];
-                [weakself.tableView endUpdates];
-                if ([weakself.delegate respondsToSelector:@selector(createShortList:willDisplayPickerWithHeight:)]) {
-                    [weakself.delegate createShortList:weakself willDisplayPickerWithHeight:(kSLCreateShortListCellHeight * 2) - kSLCreateShortListPickerHeight];
+            if (weakSelf.showingYearPicker) {
+                [weakSelf.yearPickerCell hidePickerCell:NO];
+                weakSelf.showingYearPicker = NO;
+                [weakSelf.tableView beginUpdates];
+                [weakSelf.tableView endUpdates];
+                if ([weakSelf.delegate respondsToSelector:@selector(createShortList:willDisplayPickerWithHeight:)]) {
+                    [weakSelf.delegate createShortList:weakSelf willDisplayPickerWithHeight:(kSLCreateShortListCellHeight * 2) - kSLCreateShortListPickerHeight];
                 }
             }
         }];
@@ -150,7 +150,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
     [cell configYearCell:self.shortList];
     
     [cell setCreateYearAction:^(NSString *shortListYear){
-        weakself.shortListYear = shortListYear;
+        weakSelf.shortListYear = shortListYear;
     }];
     return cell;
 }

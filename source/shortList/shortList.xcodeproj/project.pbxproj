@@ -17,6 +17,7 @@
 		4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* ShortListAlbum.m */; };
 		4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4651CE251B4C9992003E9C0F /* SLListAbumCell.m */; };
 		465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */; };
+		465740C31B83F681004DECFF /* SLAlbumArtImaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 465740C21B83F681004DECFF /* SLAlbumArtImaging.m */; };
 		466064001B81251F006AB766 /* SLLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063F31B81251F006AB766 /* SLLoginVC.m */; };
 		466064011B81251F006AB766 /* SLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063F51B81251F006AB766 /* SLNavigationController.m */; };
 		466064021B81251F006AB766 /* SLPlayNowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 466063F71B81251F006AB766 /* SLPlayNowViewController.m */; };
@@ -107,6 +108,8 @@
 		4651CE251B4C9992003E9C0F /* SLListAbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAbumCell.m; sourceTree = "<group>"; };
 		465415B21B6E7EE500E51893 /* UIViewController+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Utilities.h"; sourceTree = "<group>"; };
 		465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Utilities.m"; sourceTree = "<group>"; };
+		465740C11B83F681004DECFF /* SLAlbumArtImaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumArtImaging.h; sourceTree = "<group>"; };
+		465740C21B83F681004DECFF /* SLAlbumArtImaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumArtImaging.m; sourceTree = "<group>"; };
 		466063F21B81251F006AB766 /* SLLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLoginVC.h; sourceTree = "<group>"; };
 		466063F31B81251F006AB766 /* SLLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLLoginVC.m; sourceTree = "<group>"; };
 		466063F41B81251F006AB766 /* SLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLNavigationController.h; sourceTree = "<group>"; };
@@ -286,6 +289,8 @@
 				466063FB1B81251F006AB766 /* SLUserSignUpVC.m */,
 				466064071B81260C006AB766 /* SLInstagramController.h */,
 				466064081B81260C006AB766 /* SLInstagramController.m */,
+				465740C11B83F681004DECFF /* SLAlbumArtImaging.h */,
+				465740C21B83F681004DECFF /* SLAlbumArtImaging.m */,
 			);
 			name = Componenets;
 			sourceTree = "<group>";
@@ -836,6 +841,7 @@
 				467D55A71AF6D98F005CD607 /* UIImage+AverageColor.m in Sources */,
 				46CB6AD81AED715800BF1DF3 /* shortList.xcdatamodeld in Sources */,
 				46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */,
+				465740C31B83F681004DECFF /* SLAlbumArtImaging.m in Sources */,
 				46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */,
 				46D4230A1B77D47900D79263 /* SpotifyAlbum.m in Sources */,
 				46A094171AF076C80091C7F7 /* ItunesSearchTracks.m in Sources */,
