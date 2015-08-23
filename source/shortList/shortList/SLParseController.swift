@@ -15,16 +15,16 @@ let ShortLists = "Shortlist"
 let ShortListAlbums = "ShortListAlbum"
 
 class SLParseController : NSObject {
-    class func saveShortlist (newShortList:Shortlist) -> Shortlist {
-        newShortList.shortListUserId = SLParseController.getCurrentUser().objectId
+    class func saveShortlist (newShortList:Shortlist) {
+        newShortList.shortListUserId = SLParseController.getCurrentUser().objectId!
         newShortList.saveInBackgroundWithBlock {
-            (success: Bool, error: NSError?) -> Void in
+            (success, error) -> Void in
             if !success {
                 newShortList.saveEventually(nil)
             }
         }
         
-        return newShortList
+      //  return newShortList
     }
 
     class func getUsersShortLists(completion:SLGetUsersShortListBlock) {
@@ -53,7 +53,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func getShortListAlbums(shortList:Shortlist, completion:SLShortListAlbumsBlock) {
+    class func getShortListAlbums(shortList:Shortlist!, completion:SLShortListAlbumsBlock) {
         var query:PFQuery = PFQuery (className: ShortListAlbums)
         query.whereKey("shortListId", equalTo: shortList.objectId!)
         query.orderByAscending("shortListRank")
@@ -105,14 +105,19 @@ class SLParseController : NSObject {
         }
     }
     
-    class func updateShortListAlbums(shortlist:Shortlist, albums:NSArray, completion:dispatch_block_t) {
-        for album: ShortListAlbum in albums as! [ShortListAlbum]  {
+    class func updateShortListAlbums(shortlist:Shortlist, completion:dispatch_block_t) {
+        if (shortlist.shortListAlbums.count == 0) {
+            completion()
+            return
+        }
+        
+        for album: ShortListAlbum in shortlist.shortListAlbums as! [ShortListAlbum]  {
             album.saveInBackgroundWithBlock {
                 (success: Bool, error: NSError?) -> Void in
                 if !success {
                     album.saveEventually(nil)
                 }
-                completion();
+                completion()
             }
         }
         

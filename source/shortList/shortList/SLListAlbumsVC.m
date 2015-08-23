@@ -23,8 +23,9 @@
 #import "FXBlurView.h"
 #import "UIViewController+SLEmailShortlist.h"
 #import <QuartzCore/QuartzCore.h>
-#import "UIViewController+SLAlbumArtImaging.h"
 #import "SLInstagramController.h"
+#import "SLAlbumArtImaging.h"
+#import "UIViewController+SLAlbumArtImaging.h"
 
 const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
@@ -35,7 +36,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) SLArtistSearchResultsVC *searchResultsVC;
 @property (nonatomic, strong) Shortlist *shortList;
-@property (nonatomic, strong) NSArray *albums;
+//@property (nonatomic, strong) NSArray *albums;
 @property (nonatomic, strong) UIBarButtonItem *editShortListBarButton;
 @property (nonatomic, strong) UIButton *moreOptionsButton;
 @property (nonatomic, strong) UIButton *addAlbumButton;
@@ -77,14 +78,16 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self.view addSubview:self.tableView];
     
     self.definesPresentationContext = YES;
-    [self buildShortlistAlbumArtImage];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self setupMoreOptions];
-    [self refreshShortLists];
+    
+    if (self.shortList.objectId) {
+        [self refreshShortLists];
+    }
 }
 
 - (void)viewWillLayoutSubviews {
@@ -181,7 +184,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.albums.count;
+    return self.shortList.shortListAlbums.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -194,7 +197,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
             cell = [[SLListAbumCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AlbumCellIdentifier];
         }
 
-        ShortListAlbum *album = self.albums[indexPath.row];
+        ShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
         [cell configureCell:album];
         
         return cell;
@@ -211,7 +214,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-     ShortListAlbum *album = self.albums[indexPath.row];
+     ShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
     __weak typeof(self) weakSelf = self;
     [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.albumId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
         if (!error) {
@@ -230,20 +233,19 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    NSMutableArray *mutableAlbums = [self.albums mutableCopy];
+    NSMutableArray *mutableAlbums = [self.shortList.shortListAlbums mutableCopy];
     
     ShortListAlbum *album = mutableAlbums[sourceIndexPath.row];
     [mutableAlbums removeObjectAtIndex:sourceIndexPath.row];
     [mutableAlbums insertObject:album atIndex:destinationIndexPath.row];
     
-    self.albums = [NSArray arrayWithArray:mutableAlbums];
+    self.shortList.shortListAlbums = [NSArray arrayWithArray:mutableAlbums];
     
     [self reorderShortList];
     
     __weak typeof(self)weakSelf = self;
-    [SLParseController updateShortListAlbums:self.shortList albums:self.albums completion:^{
+    [SLParseController updateShortListAlbums:self.shortList completion:^{
         [weakSelf.tableView reloadData];
-        [weakSelf loadCollectionViewImage:weakSelf.shortList];
     }];
 }
 
@@ -264,16 +266,15 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     __weak typeof(self) weakSelf = self;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:self.albums[indexPath.row] completion:^(NSArray *albums) {
-            NSMutableArray *mutableAlbums = [weakSelf.albums mutableCopy];
+        [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:self.shortList.shortListAlbums[indexPath.row] completion:^(NSArray *albums) {
+            NSMutableArray *mutableAlbums = [weakSelf.shortList.shortListAlbums mutableCopy];
             [mutableAlbums removeObjectAtIndex:indexPath.row];
             
-            weakSelf.albums = [NSArray arrayWithArray:mutableAlbums];
+            weakSelf.shortList.shortListAlbums = [NSArray arrayWithArray:mutableAlbums];
             [weakSelf reorderShortList];
             
-            [SLParseController updateShortListAlbums:self.shortList albums:weakSelf.albums completion:^{
+            [SLParseController updateShortListAlbums:self.shortList completion:^{
                 [weakSelf.tableView reloadData];
-                [weakSelf loadCollectionViewImage:weakSelf.shortList];
             }];
          }];
     }
@@ -382,14 +383,21 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
     
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{
-        [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
+        
+        SLAlbumArtImaging *albumArtImaging = [SLAlbumArtImaging new];
+
+        
+        [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[albumArtImaging buildShortListAlbumArt:weakSelf.shortList]];
     }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
     
     NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
     if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
         [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{
-            [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
+            
+            //SLAlbumArtImaging *albumArtImaging = [SLAlbumArtImaging new];
+            
+            //[[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[albumArtImaging buildShortListAlbumArt:weakSelf.shortList] attachToView:weakSelf.view];
         }];
     }
 
@@ -405,14 +413,13 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)refreshShortLists {
     __weak typeof(self) weakSelf = self;
     [SLParseController getShortListAlbums:self.shortList completion:^(NSArray * albums) {
-        weakSelf.albums = albums;
+        weakSelf.shortList.shortListAlbums = albums;
         [weakSelf.tableView reloadData];
-        [weakSelf loadCollectionViewImage:self.shortList];
     }];
 }
 
 - (void)reorderShortList {
-    [self.albums enumerateObjectsUsingBlock:^(ShortListAlbum *album, NSUInteger idx, BOOL *stop) {
+    [self.shortList.shortListAlbums enumerateObjectsUsingBlock:^(ShortListAlbum *album, NSUInteger idx, BOOL *stop) {
         album.shortListRank = idx + 1;
     }];
 }
