@@ -9,14 +9,22 @@
 #import "SLAlbumArtImaging.h"
 #import "Shortlist.h"
 #import "ShortListAlbum.h"
+#import "SLStyle.h"
 
 static NSString * const kShortListAlbumArtKey = @"slAlbumImage";
 static NSString * const kShortListAlbumRankKey = @"slAlbumRank";
 static const CGFloat kShortListAlbumArtWorkSize = 320.0;
 
+@interface SLAlbumArtImaging ()
+
+@property (nonatomic, strong) Shortlist *shortList;
+
+@end
+
 @implementation SLAlbumArtImaging
 
 - (UIImage *)buildShortListAlbumArt:(Shortlist *)shortlist {
+    self.shortList = shortlist;
     NSOperationQueue *queue = [NSOperationQueue new];
     NSMutableArray *operationArray = [NSMutableArray new];
     
@@ -78,10 +86,32 @@ static const CGFloat kShortListAlbumArtWorkSize = 320.0;
     }];
     
     UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
-    
     UIGraphicsEndImageContext();
     
+    finalImage = [self drawWatermark:[NSString stringWithFormat:@"%@ \n %@", self.shortList.shortListName, @"#shortListMusic"] inImage:finalImage];
+    
     return finalImage;
+}
+
+- (UIImage*)drawWatermark:(NSString*)watermarkText inImage:(UIImage*)image {
+    NSDictionary *attributeDictionary = @{NSFontAttributeName: [SLStyle polarisFontWithSize:FontSizes.medium], NSForegroundColorAttributeName: [UIColor whiteColor]};
+    
+    UIGraphicsBeginImageContext(image.size);
+    [image drawInRect:CGRectMake(0, 0, image.size.width, image.size.height)];
+    
+    [[[UIColor blackColor] colorWithAlphaComponent:.5] set];
+    
+    CGSize watermarkSize = [watermarkText sizeWithAttributes:attributeDictionary];
+    CGRect watermarkRect = CGRectMake(image.size.width - watermarkSize.width - MarginSizes.medium, (image.size.height - watermarkSize.height), image.size.width - watermarkSize.width - MarginSizes.medium, image.size.height);
+
+    CGContextFillRect(UIGraphicsGetCurrentContext(), watermarkRect);
+    
+    [watermarkText drawInRect:watermarkRect withAttributes:attributeDictionary];
+
+    UIImage *watermarkedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return watermarkedImage;
 }
 
 - (NSUInteger)calculateNumberOfRows:(NSInteger)albumCount {
