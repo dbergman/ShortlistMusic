@@ -23,8 +23,8 @@
 #import "FXBlurView.h"
 #import "UIViewController+SLEmailShortlist.h"
 #import <QuartzCore/QuartzCore.h>
-#import "SLInstagramController.h"
 #import "SLAlbumArtImaging.h"
+#import "SLInstagramController.h"
 #import "UIViewController+SLAlbumArtImaging.h"
 
 const CGFloat kShortlistAlbumsButtonSize = 50.0;
@@ -36,7 +36,6 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) SLArtistSearchResultsVC *searchResultsVC;
 @property (nonatomic, strong) Shortlist *shortList;
-//@property (nonatomic, strong) NSArray *albums;
 @property (nonatomic, strong) UIBarButtonItem *editShortListBarButton;
 @property (nonatomic, strong) UIButton *moreOptionsButton;
 @property (nonatomic, strong) UIButton *addAlbumButton;
@@ -383,21 +382,14 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
     
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{
-        
-        SLAlbumArtImaging *albumArtImaging = [SLAlbumArtImaging new];
-
-        
-        [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[albumArtImaging buildShortListAlbumArt:weakSelf.shortList]];
+        [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
     }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
     
     NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
     if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
         [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{
-            
-            //SLAlbumArtImaging *albumArtImaging = [SLAlbumArtImaging new];
-            
-            //[[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[albumArtImaging buildShortListAlbumArt:weakSelf.shortList] attachToView:weakSelf.view];
+            [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
         }];
     }
 
@@ -407,6 +399,12 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 - (CGRect)getOptionsCloseFrame {
     return CGRectMake(self.view.frame.size.width - kShortlistAlbumsButtonSize - MarginSizes.large, [self getNavigationBarStatusBarHeight] + MarginSizes.large, kShortlistAlbumsButtonSize, kShortlistAlbumsButtonSize);
+}
+
+- (UIImage *)getAlbumArtCollectionImage {
+    SLAlbumArtImaging *albumArtImaging = [SLAlbumArtImaging new];
+    
+    return [albumArtImaging buildShortListAlbumArt:self.shortList];
 }
 
 #pragma mark Utilities

@@ -9,105 +9,87 @@
 #import "SLAlbumArtImaging.h"
 #import "Shortlist.h"
 #import "ShortListAlbum.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 
+static NSString * const kShortListAlbumArtKey = @"slAlbumImage";
+static NSString * const kShortListAlbumRankKey = @"slAlbumRank";
 static const CGFloat kShortListAlbumArtWorkSize = 320.0;
 
 @implementation SLAlbumArtImaging
 
 - (UIImage *)buildShortListAlbumArt:(Shortlist *)shortlist {
-//    - (UIImage *)mergeImagesFromArray: (NSArray *)imageArray {
-//        
-//        if ([imageArray count] == 0) return nil;
-//        
-//        UIImage *exampleImage = [imageArray firstObject];
-//        CGSize imageSize = exampleImage.size;
-//        CGSize finalSize = CGSizeMake(imageSize.width, imageSize.height * [imageArray count]);
-//        
-//        UIGraphicsBeginImageContext(finalSize);
-//        
-//        for (UIImage *image in imageArray) {
-//            [image drawInRect: CGRectMake(0, imageSize.height * [imageArray indexOfObject: image],
-//                                          imageSize.width, imageSize.height)];
-//        }
-//        
-//        UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
-//        
-//        UIGraphicsEndImageContext();
-//        
-//        return finalImage;
-//    }
-//
+    NSOperationQueue *queue = [NSOperationQueue new];
+    NSMutableArray *operationArray = [NSMutableArray new];
     
-
-            UIImage *shortListAlbumArtWork = [UIImage new];
-            
-            CGSize shortListAlbumArtWorkSize = CGSizeMake(kShortListAlbumArtWorkSize, kShortListAlbumArtWorkSize);
-
-    
-   // ShortListAlbum *slAlbum = shortlist.shortListAlbums.firstObject;
-    
-
-    UIGraphicsBeginImageContext(shortListAlbumArtWorkSize);
-    
-//    CGFloat albumSize = [self calculateAlbumSize:shortlist.shortListAlbums.count];
-//   __block UIImageView *albumArtImageView;
-//    
-//    [shortlist.shortListAlbums enumerateObjectsUsingBlock:^(ShortListAlbum *slAlbum, NSUInteger idx, BOOL *stop) {
-//        albumArtImageView = [UIImageView new];
-//        
-//        [albumArtImageView sd_setImageWithURL:[NSURL URLWithString:slAlbum.albumArtWork]];
-//        
-//        
-//            [shortListAlbumArtWork drawInRect: CGRectMake(0, albumSize.height * [imageArray indexOfObject: image],
-//                                                  imageSize.width, imageSize.height)];
-//    }];
-    
-//    for (ShortListAlbum *slAlbum in shortlist.shortListAlbums) {
-//        
-//    }
-    
-    
-    
-//    //slAlbum.albumArtWork
-//    
-//    UIImageView *albumArtImageView = [UIImageView new];
-//   // NSString *artURL = [slAlbum.albumArtWork stringByReplacingOccurrencesOfString:@"400x400-75.jpg" withString:@"1200x1200-75.jpg"];
-//    
-//    
-//    [albumArtImageView sd_setImageWithURL:[NSURL URLWithString:slAlbum.albumArtWork]];
-//    
-    return shortListAlbumArtWork;
-}
-
-- (NSArray *)buildAlbumArtImageArray:(NSArray *)shortListAlbums {
-    
-
     NSMutableArray *albumArtArray = [NSMutableArray new];
     
-        for (ShortListAlbum *slAlbum in shortListAlbums) {
-            UIImageView *albumArtImageView = [UIImageView new];
-            [albumArtImageView sd_setImageWithURL:[NSURL URLWithString:slAlbum.albumArtWork] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                [albumArtArray addObject:image];
-            }];
-        }
-    
-
-    
-    return [NSArray arrayWithArray:albumArtArray];
-}
-
-- (UIImage *)getImage:(NSArray *)imageArray {
-    
-    return imageArray.firstObject;
-}
-
-- (CGFloat)calculateAlbumSize:(NSInteger)albumCount {
-    if (albumCount >= 16) {
-        return 20;
+    __weak typeof(self)weakSelf = self;
+    for (ShortListAlbum *slAlbum in shortlist.shortListAlbums) {
+        NSOperation *op = [NSBlockOperation blockOperationWithBlock:^{
+           [albumArtArray addObject:[weakSelf downloadAlbumImage:slAlbum]];
+        }];
+        [operationArray addObject:op];
     }
     
-    return kShortListAlbumArtWorkSize/albumCount;
+    queue.maxConcurrentOperationCount = 3;
+    [queue addOperations:operationArray waitUntilFinished:YES];
+    
+    UIImage *collectionImage = [self buildTheImage:albumArtArray];
+ 
+    return collectionImage;
+}
+
+- (NSDictionary *)downloadAlbumImage:(ShortListAlbum *)slAlbum {
+    NSData * imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:slAlbum.albumArtWork]];
+
+    return @{kShortListAlbumArtKey:[UIImage imageWithData: imageData], kShortListAlbumRankKey:@(slAlbum.shortListRank)};
+}
+
+- (UIImage *)buildTheImage:(NSArray *)coverArtArray {
+    __block NSUInteger rowCount = [self calculateNumberOfRows:coverArtArray.count];
+    CGSize imageSize = CGSizeMake(kShortListAlbumArtWorkSize/rowCount, kShortListAlbumArtWorkSize/rowCount);
+    CGSize finalSize = CGSizeMake(kShortListAlbumArtWorkSize, kShortListAlbumArtWorkSize);
+    
+    UIGraphicsBeginImageContext(finalSize);
+    [[UIColor blackColor] set];
+    UIRectFill(CGRectMake(0.0, 0.0, kShortListAlbumArtWorkSize, kShortListAlbumArtWorkSize));
+    
+   __block NSUInteger currentRow = 0;
+   __block NSUInteger currentColumn = 0;
+    [coverArtArray enumerateObjectsUsingBlock:^(NSDictionary *albumDictionary, NSUInteger idx, BOOL *stop) {
+
+        NSPredicate *filter = [NSPredicate predicateWithFormat:@"(%K == %d)", kShortListAlbumRankKey, idx+1];
+        NSDictionary *albumArtDictionary = [coverArtArray filteredArrayUsingPredicate:filter].firstObject;
+        
+        UIImage *anImage = albumArtDictionary[kShortListAlbumArtKey];
+        
+        if (rowCount > currentRow) {
+            [anImage drawInRect:CGRectMake(imageSize.width * currentRow, imageSize.height * currentColumn, imageSize.width, imageSize.height)];
+        }
+        else {
+            currentRow = 0;
+            currentColumn++;
+            [anImage drawInRect:CGRectMake(imageSize.width * currentRow, imageSize.height * currentColumn, imageSize.width, imageSize.height)];
+        }
+        currentRow++;
+        if (idx+1 > 16) {
+            *stop = YES;
+        }
+        
+    }];
+    
+    UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return finalImage;
+}
+
+- (NSUInteger)calculateNumberOfRows:(NSInteger)albumCount {
+    if (albumCount <= 9) {
+        return 3;
+    }
+    
+    return 4;
 }
 
 @end
