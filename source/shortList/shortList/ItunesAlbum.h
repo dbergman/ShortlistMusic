@@ -21,14 +21,14 @@
 @property (nonatomic, copy, readonly) NSString *collectionExplicitness;
 @property (nonatomic, assign, readonly) NSInteger collectionId;
 @property (nonatomic, copy, readonly) NSString *collectionName;
-@property (nonatomic, copy, readonly) NSString *collectionPrice;
+@property (nonatomic, copy, readonly) NSNumber *collectionPrice;
 @property (nonatomic, copy, readonly) NSString *collectionType;
 @property (nonatomic, assign, readonly) NSString *collectionViewUrl;
 @property (nonatomic, copy, readonly) NSString *copyright;
 @property (nonatomic, copy, readonly) NSString *country;
 @property (nonatomic, assign, readonly) NSString *primaryGenreName;
 @property (nonatomic, copy, readonly) NSString *releaseDate;
-@property (nonatomic, copy, readonly) NSString *trackCount;
+@property (nonatomic, copy, readonly) NSNumber *trackCount;
 @property (nonatomic, copy, readonly) NSString *wrapperType;
 
 //Custom

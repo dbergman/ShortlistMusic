@@ -21,7 +21,7 @@
 @property (nonatomic, copy, readonly) NSString *collectionExplicitness;
 @property (nonatomic, assign, readonly) NSInteger collectionId;
 @property (nonatomic, copy, readonly) NSString *collectionName;
-@property (nonatomic, copy, readonly) NSString *collectionPrice;
+@property (nonatomic, copy, readonly) NSNumber *collectionPrice;
 @property (nonatomic, copy, readonly) NSString *collectionType;
 @property (nonatomic, copy, readonly) NSString *collectionViewUrl;
 @property (nonatomic, copy, readonly) NSString *country;
@@ -34,7 +34,7 @@
 @property (nonatomic, copy, readonly) NSString *radioStationUrl;
 @property (nonatomic, copy, readonly) NSString *releaseDate;
 @property (nonatomic, copy, readonly) NSString *trackCensoredName;
-@property (nonatomic, copy, readonly) NSString *trackCount;
+@property (nonatomic, copy, readonly) NSNumber *trackCount;
 @property (nonatomic, copy, readonly) NSString *trackExplicitness;
 @property (nonatomic, assign, readonly) NSInteger trackId;
 @property (nonatomic, copy, readonly) NSString *trackName;
