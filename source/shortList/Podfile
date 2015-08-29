@@ -2,7 +2,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
 #We'll add this back in later
-#inhibit_all_warnings!
+inhibit_all_warnings!
 
 
 #Foundation Helpers
@@ -19,6 +19,7 @@ pod 'SDWebImage'
 
 #UI
 pod 'ParseUI'
+pod 'MBProgressHUD', '~> 0.9'
 
 target :"shortListTests", :exclusive => true do
 pod 'Mantle'

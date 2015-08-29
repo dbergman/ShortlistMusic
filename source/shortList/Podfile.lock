@@ -39,6 +39,7 @@ PODS:
   - Mantle (2.0.4):
     - Mantle/extobjc (= 2.0.4)
   - Mantle/extobjc (2.0.4)
+  - MBProgressHUD (0.9.1)
   - Parse (1.8.2):
     - Bolts/Tasks (>= 1.2.1)
   - ParseUI (1.1.5):
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - AFNetworking
   - BlocksKit (= 2.2.5)
   - Mantle
+  - MBProgressHUD (~> 0.9)
   - Parse
   - ParseUI
   - QBValidator
@@ -63,6 +65,7 @@ SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
   Mantle: 6bee68168423948be0c0c5924832bf3af188e099
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   Parse: 188601c6cd91fae55906badd283b513104a3a8c9
   ParseUI: 2c53621ed028ee793f5ab92a551b099689265525
   QBValidator: 6e019b6f22d750c668315807459f49a3c316a017
