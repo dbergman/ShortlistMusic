@@ -266,14 +266,18 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     __weak typeof(self) weakSelf = self;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:self.shortList.shortListAlbums[indexPath.row] completion:^(NSArray *albums) {
-            NSMutableArray *mutableAlbums = [weakSelf.shortList.shortListAlbums mutableCopy];
-            [mutableAlbums removeObjectAtIndex:indexPath.row];
             
-            weakSelf.shortList.shortListAlbums = [NSArray arrayWithArray:mutableAlbums];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            });
+            
+            weakSelf.shortList.shortListAlbums = albums;
             [weakSelf reorderShortList];
             
             [SLParseController updateShortListAlbums:self.shortList completion:^{
-                [weakSelf.tableView reloadData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.tableView reloadData];
+                });
             }];
          }];
     }
@@ -412,7 +416,9 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     __weak typeof(self) weakSelf = self;
     [SLParseController getShortListAlbums:self.shortList completion:^(NSArray * albums) {
         weakSelf.shortList.shortListAlbums = albums;
-        [weakSelf.tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.tableView reloadData];
+        });
     }];
 }
 

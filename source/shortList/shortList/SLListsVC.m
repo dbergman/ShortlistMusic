@@ -116,7 +116,9 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [SLParseController removeShortList:self.shortLists[indexPath.row] completion:^(NSArray * shortlists) {
             weakSelf.shortLists = shortlists;
-            [weakSelf.tableView reloadData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            });
         }];
     }
 }
