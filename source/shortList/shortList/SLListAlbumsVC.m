@@ -41,7 +41,6 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 @property (nonatomic, strong) UIButton *addAlbumButton;
 @property (nonatomic, strong) UIButton *sharingButton;
 @property (nonatomic, assign) BOOL showingOptions;
-@property (nonatomic, strong) NSTimer *keyStrokeTimer;
 
 @end
 
@@ -130,13 +129,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 #pragma mark - UISearchBar Delegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (!self.keyStrokeTimer) {
-        self.keyStrokeTimer = [NSTimer timerWithTimeInterval:0.5f target:self selector:@selector(timerFinished) userInfo:nil repeats:NO];
-        
-        [[NSRunLoop currentRunLoop] addTimer:self.keyStrokeTimer forMode:NSRunLoopCommonModes];
-    
-        [self searchItunesWithQuery:searchText];
-    }
+    [self searchItunesWithQuery:searchText];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
@@ -418,14 +411,6 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self.shortList.shortListAlbums enumerateObjectsUsingBlock:^(ShortListAlbum *album, NSUInteger idx, BOOL *stop) {
         album.shortListRank = idx + 1;
     }];
-}
-
-#pragma mark KeyStroke timer
-- (void)timerFinished {
-    if (self.keyStrokeTimer) {
-        [self.keyStrokeTimer invalidate];
-        self.keyStrokeTimer = nil;
-    }
 }
 
 @end
