@@ -32,7 +32,7 @@
         shortList.albumId = albumDetails.collectionId;
         shortList.artistName = albumDetails.artistName;
         shortList.releaseYear = albumDetails.releaseYear;
-        shortList.albumArtWork = albumDetails.artworkUrl400;
+        shortList.albumArtWork = albumDetails.artworkUrl600;
     }
     
     return shortList;

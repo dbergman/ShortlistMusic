@@ -107,7 +107,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     [super viewDidAppear:animated];
     
     __weak typeof(self) weakSelf = self;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl400] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl600] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         
         [weakSelf.view addSubview:weakSelf.tableView];
 

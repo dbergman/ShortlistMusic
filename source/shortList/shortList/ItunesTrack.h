@@ -14,7 +14,7 @@
 @property (nonatomic, copy, readonly) NSString *artistName;
 @property (nonatomic, copy, readonly) NSString *artistViewUrl;
 @property (nonatomic, copy, readonly) NSString *artworkUrl100;
-@property (nonatomic, copy, readonly) NSString *artworkUrl400;
+@property (nonatomic, copy, readonly) NSString *artworkUrl600;
 @property (nonatomic, copy, readonly) NSString *artworkUrl30;
 @property (nonatomic, copy, readonly) NSString *artworkUrl60;
 @property (nonatomic, copy, readonly) NSString *collectionCensoredName;
