@@ -66,6 +66,7 @@
 		46CB6B101AED80FD00BF1DF3 /* SLBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B0F1AED80FD00BF1DF3 /* SLBaseVC.m */; };
 		46CB6B151AED842200BF1DF3 /* SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B141AED842200BF1DF3 /* SLStyle.m */; };
 		46CB6B181AED850200BF1DF3 /* UIColor+SLStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */; };
+		46CDDCA81B920A05004A5D20 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CDDCA71B920A05004A5D20 /* UIImage+ImageEffects.m */; };
 		46D423031B77AF2A00D79263 /* SpotifySearchApiController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D423021B77AF2A00D79263 /* SpotifySearchApiController.m */; };
 		46D423071B77D3A900D79263 /* SpotifyAlbums.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D423061B77D3A900D79263 /* SpotifyAlbums.m */; };
 		46D4230A1B77D47900D79263 /* SpotifyAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D423091B77D47900D79263 /* SpotifyAlbum.m */; };
@@ -194,6 +195,8 @@
 		46CB6B141AED842200BF1DF3 /* SLStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLStyle.m; sourceTree = "<group>"; };
 		46CB6B161AED850200BF1DF3 /* UIColor+SLStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SLStyle.h"; sourceTree = "<group>"; };
 		46CB6B171AED850200BF1DF3 /* UIColor+SLStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SLStyle.m"; sourceTree = "<group>"; };
+		46CDDCA61B920A05004A5D20 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		46CDDCA71B920A05004A5D20 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		46D423011B77AF2A00D79263 /* SpotifySearchApiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifySearchApiController.h; sourceTree = "<group>"; };
 		46D423021B77AF2A00D79263 /* SpotifySearchApiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifySearchApiController.m; sourceTree = "<group>"; };
 		46D423051B77D3A900D79263 /* SpotifyAlbums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotifyAlbums.h; sourceTree = "<group>"; };
@@ -346,6 +349,8 @@
 		467D55A41AF6D914005CD607 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				46CDDCA61B920A05004A5D20 /* UIImage+ImageEffects.h */,
+				46CDDCA71B920A05004A5D20 /* UIImage+ImageEffects.m */,
 				466063FC1B81251F006AB766 /* UIViewController+SLLoginGate.h */,
 				466063FD1B81251F006AB766 /* UIViewController+SLLoginGate.m */,
 				466063FE1B81251F006AB766 /* UIViewController+SLPlayNow.h */,
@@ -870,6 +875,7 @@
 				466064091B81260C006AB766 /* SLInstagramController.m in Sources */,
 				468FB8BC1B1260DE0004DC14 /* Shortlist.m in Sources */,
 				467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */,
+				46CDDCA81B920A05004A5D20 /* UIImage+ImageEffects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

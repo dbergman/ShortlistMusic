@@ -19,7 +19,6 @@
 #import "shortList-Swift.h"
 #import "UIViewController+Utilities.h"
 #import "UIViewController+SLPlayNow.h"
-#import "FXBlurView.h"
 #import "SpotifySearchApiController.h"
 #import "SpotifyAlbums.h"
 #import "SpotifyAlbum.h"
@@ -255,18 +254,10 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 #pragma mark Blurring Methods
 - (void)addBlurBackground {
-    self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getScreenShot]];
+    self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getBlurredScreenShot]];
     self.blurBackgroundView.userInteractionEnabled = YES;
     [self.view insertSubview:self.blurBackgroundView atIndex:2];
     self.blurBackgroundView.alpha = 0;
-    
-    FXBlurView *shortListBlurView = [[FXBlurView alloc] init];
-    shortListBlurView.frame = self.blurBackgroundView.bounds;
-    shortListBlurView.tintColor = [UIColor blackColor];
-    shortListBlurView.blurEnabled = YES;
-    shortListBlurView.clipsToBounds = YES;
-    shortListBlurView.blurRadius = 40;
-    [self.blurBackgroundView addSubview:shortListBlurView];
 }
 
 - (void)removeBlurBackground {

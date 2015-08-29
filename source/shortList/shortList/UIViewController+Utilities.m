@@ -7,6 +7,7 @@
 //
 
 #import "UIViewController+Utilities.h"
+#import "UIImage+ImageEffects.h"
 
 @implementation UIViewController (Utilities)
 
@@ -46,6 +47,12 @@
     UIGraphicsEndImageContext();
     
     return screenShot;
+}
+
+- (UIImage *)getBlurredScreenShot {
+   UIImage *screenShotBlurImage = [[self getScreenShot] applyBlurWithRadius:10 tintColor:[[UIColor blackColor]colorWithAlphaComponent:.3] saturationDeltaFactor:1.8 maskImage:nil];
+
+    return screenShotBlurImage;
 }
 
 @end

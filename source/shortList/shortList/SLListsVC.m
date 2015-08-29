@@ -18,8 +18,8 @@
 #import "SLAlbumsCollectionCell.h"
 #import "shortList-Swift.h"
 #import "SLAlbumsCollectionCell.h"
-#import "FXBlurView.h"
 #import "UIViewController+Utilities.h"
+#import "UIImage+ImageEffects.h"
 
 @interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -211,18 +211,12 @@
 
 #pragma mark Blurring Methods
 - (void)addBlurBackground {
-    self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getScreenShot]];
+    UIImage *screenShotImage = [self getBlurredScreenShot];
+    
+    self.blurBackgroundView = [[UIImageView alloc] initWithImage:screenShotImage];
     self.blurBackgroundView.userInteractionEnabled = YES;
     [self.view insertSubview:self.blurBackgroundView atIndex:1];
     self.blurBackgroundView.alpha = 0;
-    
-    FXBlurView *shortListBlurView = [[FXBlurView alloc] init];
-    shortListBlurView.frame = self.blurBackgroundView.bounds;
-    shortListBlurView.tintColor = [UIColor blackColor];
-    shortListBlurView.blurEnabled = YES;
-    shortListBlurView.clipsToBounds = YES;
-    shortListBlurView.blurRadius = 9;
-    [self.blurBackgroundView addSubview:shortListBlurView];
 }
 
 - (void)removeBlurBackground {

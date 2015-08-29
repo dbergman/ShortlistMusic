@@ -20,7 +20,7 @@
 #import "ItunesSearchTracks.h"
 #import "UIViewController+Utilities.h"
 #import <BlocksKit+UIKit.h>
-#import "FXBlurView.h"
+//#import "FXBlurView.h"
 #import "UIViewController+SLEmailShortlist.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SLAlbumArtImaging.h"
@@ -285,21 +285,13 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 #pragma mark Blurring Methods
 - (void)addBlurBackground {
-    self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getScreenShot]];
+    self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getBlurredScreenShot]];
     self.blurBackgroundView.userInteractionEnabled = YES;
     [self.view addSubview:self.blurBackgroundView];
     self.blurBackgroundView.alpha = 0;
-    
-    FXBlurView *shortListBlurView = [[FXBlurView alloc] init];
-    shortListBlurView.frame = self.blurBackgroundView.bounds;
-    shortListBlurView.tintColor = [UIColor blackColor];
-    shortListBlurView.blurEnabled = YES;
-    shortListBlurView.clipsToBounds = YES;
-    shortListBlurView.blurRadius = 9;
-    [self.blurBackgroundView addSubview:shortListBlurView];
 
     UITapGestureRecognizer *dismissGesture =  [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(toggleOptionsButton)];
-    [shortListBlurView addGestureRecognizer:dismissGesture];
+    [self.blurBackgroundView addGestureRecognizer:dismissGesture];
 }
 
 #pragma mark Options Button

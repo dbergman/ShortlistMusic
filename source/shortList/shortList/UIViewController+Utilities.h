@@ -19,5 +19,6 @@
 - (CGFloat)getScreenHeight;
 
 - (UIImage *)getScreenShot;
+- (UIImage *)getBlurredScreenShot;
 
 @end
