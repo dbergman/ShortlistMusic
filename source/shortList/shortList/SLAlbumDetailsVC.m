@@ -16,10 +16,12 @@
 #import "SLAlbumTrackCell.h"
 #import "Shortlist.h"
 #import "ShortListAlbum.h"
+#import "ItunesSearchTracks.h"
 #import "shortList-Swift.h"
 #import "UIViewController+Utilities.h"
 #import "UIViewController+SLPlayNow.h"
 #import "SpotifySearchApiController.h"
+#import "ItunesSearchAPIController.h"
 #import "SpotifyAlbums.h"
 #import "SpotifyAlbum.h"
 
@@ -28,6 +30,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 @interface SLAlbumDetailsVC () <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, copy) NSString *albumCollectionId;
 @property (nonatomic, strong) NSArray *tracks;
 @property (nonatomic, strong) ItunesTrack *albumDetails;
 @property (nonatomic, strong) UITableView *tableView;
@@ -42,22 +45,12 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 @implementation SLAlbumDetailsVC
 
-- (instancetype)initWithAlbumDetails:(ItunesTrack *)albumDetails Tracks:(NSArray *)tracks {
+- (instancetype)initWithShortList:(Shortlist *)shortList albumId:(NSString*)albumCollectionId {
     self = [super init];
     
     if (self) {
-        self.albumDetails = albumDetails;
-        self.tracks = tracks;
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithShortList:(Shortlist *)shortList albumDetails:(ItunesTrack *)albumDetails tracks:(NSArray *)tracks {
-    self = [self initWithAlbumDetails:albumDetails Tracks:tracks];
-    
-    if (self) {
         self.shortList = shortList;
+        self.albumCollectionId = albumCollectionId;
     }
     
     return self;
@@ -66,17 +59,9 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    __weak typeof(self) weakSelf = self;
-    [[SpotifySearchApiController sharedManager] spotifySearchByArist:self.albumDetails.artistName album:self.albumDetails.collectionName completion:^(SpotifyAlbums *albums, NSError *error) {
-        weakSelf.albumDetails.spotifyDeepLink = [(SpotifyAlbum *)albums.albumResults.firstObject spotifyAlbumUrl];
-    }];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:([self getShortListAlbum])? NSLocalizedString(@"Remove", nil) : NSLocalizedString(@"Add", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
-        ([weakSelf getShortListAlbum]) ? [weakSelf removeAlbumFromShortList] : [weakSelf addAlbumToShortList];
-    }];
-     
+    [self getAlbumDetails];
+
     self.view.backgroundColor = [UIColor blackColor];
-    [self setTitle:self.albumDetails.collectionName];
     self.automaticallyAdjustsScrollViewInsets = YES;
 
     self.coverImageView = [UIImageView new];
@@ -105,16 +90,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    __weak typeof(self) weakSelf = self;
-    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl600] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
-        [weakSelf.view addSubview:weakSelf.tableView];
 
-        [weakSelf buildPlayerViewControllerForAlbum:weakSelf.albumDetails];
-        [weakSelf setupPlayNowButton];
-        
-        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -191,6 +167,43 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     }
     
     return nil;
+}
+
+#pragma mark UI setup
+- (void)setupNavigationController {
+    __weak typeof(self) weakSelf = self;
+    [[SpotifySearchApiController sharedManager] spotifySearchByArist:self.albumDetails.artistName album:self.albumDetails.collectionName completion:^(SpotifyAlbums *albums, NSError *error) {
+        weakSelf.albumDetails.spotifyDeepLink = [(SpotifyAlbum *)albums.albumResults.firstObject spotifyAlbumUrl];
+    }];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:([self getShortListAlbum])? NSLocalizedString(@"Remove", nil) : NSLocalizedString(@"Add", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
+        ([weakSelf getShortListAlbum]) ? [weakSelf removeAlbumFromShortList] : [weakSelf addAlbumToShortList];
+    }];
+}
+
+- (void)addAlbumArtWorkHeader {
+    __weak typeof(self) weakSelf = self;
+    [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl600] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        [weakSelf.view addSubview:weakSelf.tableView];
+        
+        [weakSelf buildPlayerViewControllerForAlbum:weakSelf.albumDetails];
+        [weakSelf setupPlayNowButton];
+    }];
+}
+
+#pragma mark networking
+- (void)getAlbumDetails {
+    __weak typeof(self)weakSelf = self;
+    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:self.albumCollectionId completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
+        if (!error) {
+            weakSelf.albumDetails = [albumSearchResults getAlbumInfo];
+            weakSelf.tracks = [albumSearchResults getAlbumTracks];
+            [weakSelf setTitle:weakSelf.albumDetails.collectionName];
+            [weakSelf setupNavigationController];
+            [weakSelf addAlbumArtWorkHeader];
+        }
+    }];
 }
 
 #pragma mark - PlayerOptionController

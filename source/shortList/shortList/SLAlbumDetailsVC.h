@@ -12,7 +12,6 @@
 
 @interface SLAlbumDetailsVC : SLBaseVC
 
-- (instancetype)initWithAlbumDetails:(ItunesTrack *)albumDetails Tracks:(NSArray *)tracks;
-- (instancetype)initWithShortList:(Shortlist *)shortList albumDetails:(ItunesTrack *)albumDetails tracks:(NSArray *)tracks;
+- (instancetype)initWithShortList:(Shortlist *)shortList albumId:(NSString *)albumCollectionId;
 
 @end

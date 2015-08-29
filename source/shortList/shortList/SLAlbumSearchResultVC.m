@@ -83,7 +83,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ItunesAlbum *album = [self.albums objectAtIndex:indexPath.row];
-    [self getAlbumTracks:album];
+
+    SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:self.shortList albumId:[NSString stringWithFormat:@"%ld", album.collectionId]];
+    [self.navigationController pushViewController:albumDetailsVC animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -94,17 +96,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 120.0;
-}
-
-#pragma mark - Itunes Networking
-- (void)getAlbumTracks:(ItunesAlbum *)album {
-    __weak typeof(self) weakSelf = self;
-    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.collectionId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
-        if (!error) {
-            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:weakSelf.shortList albumDetails:[albumSearchResults getAlbumInfo] tracks:[albumSearchResults getAlbumTracks]];
-            [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
-        }
-    }];
 }
 
 @end

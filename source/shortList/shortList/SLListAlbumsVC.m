@@ -20,7 +20,6 @@
 #import "ItunesSearchTracks.h"
 #import "UIViewController+Utilities.h"
 #import <BlocksKit+UIKit.h>
-//#import "FXBlurView.h"
 #import "UIViewController+SLEmailShortlist.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SLAlbumArtImaging.h"
@@ -206,14 +205,16 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-     ShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
-    __weak typeof(self) weakSelf = self;
-    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.albumId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
-        if (!error) {
-            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:weakSelf.shortList albumDetails:[albumSearchResults getAlbumInfo] tracks:[albumSearchResults getAlbumTracks]];
-            [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
-        }
-    }];
+    ShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
+    SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:self.shortList albumId:[NSString stringWithFormat:@"%ld",(long)album.albumId]];
+    [self.navigationController pushViewController:albumDetailsVC animated:YES];
+//    __weak typeof(self) weakSelf = self;
+//    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.albumId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
+//        if (!error) {
+//            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:weakSelf.shortList albumDetails:[albumSearchResults getAlbumInfo] tracks:[albumSearchResults getAlbumTracks]];
+//            [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
+//        }
+//    }];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
