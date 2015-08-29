@@ -8,8 +8,8 @@
 
 #import "SLListAbumCell.h"
 #import "ShortListAlbum.h"
-#import "FXBlurView.h"
 #import "SLStyle.h"
+#import "UIImage+ImageEffects.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static const CGFloat kSLALbumCellHeight = 120;
@@ -17,7 +17,6 @@ static const CGFloat kSLALbumCellHeight = 120;
 @interface SLListAbumCell ()
 
 @property (nonatomic, strong) UIImageView *albumBackgroundImage;
-@property (nonatomic, strong) FXBlurView *albumBlurView;
 @property (nonatomic, strong) UILabel *albumTitleLabel;
 @property (nonatomic, strong) UILabel *artistNameLabel;
 @property (nonatomic, strong) UILabel *albumRankLabel;
@@ -40,19 +39,7 @@ static const CGFloat kSLALbumCellHeight = 120;
         self.albumBackgroundImage.clipsToBounds = YES;
         [self.albumBackgroundImage setContentMode:UIViewContentModeScaleAspectFill];
         [self.contentView addSubview:self.albumBackgroundImage];
-        
-        self.albumBlurView = [[FXBlurView alloc] init];
-        self.albumBlurView.tintColor = [UIColor blackColor];
-        self.albumBlurView.blurEnabled = YES;
-        self.albumBlurView.clipsToBounds = YES;
-        self.albumBlurView.blurRadius = 8;
-        [self.albumBackgroundImage addSubview:self.albumBlurView];
-        
-        UIView *overlay = [UIView new];
-        overlay.backgroundColor = [UIColor blackColor];
-        overlay.alpha = .4;
-        [self.albumBlurView addSubview:overlay];
-        
+
         UIView *shortListDetailContainer = [UIView new];
         [self.contentView addSubview:shortListDetailContainer];
         
@@ -75,22 +62,16 @@ static const CGFloat kSLALbumCellHeight = 120;
         self.artistNameLabel.textColor = [UIColor whiteColor];
         [shortListDetailContainer addSubview:self.artistNameLabel];
         
-        for (UIView *view in @[self.artistNameLabel, self.albumRankLabel, self.albumTitleLabel, overlay, self.albumBlurView, self.albumBackgroundImage, shortListDetailContainer]) {
+        for (UIView *view in @[self.artistNameLabel, self.albumRankLabel, self.albumTitleLabel, self.albumBackgroundImage, shortListDetailContainer]) {
             view.translatesAutoresizingMaskIntoConstraints = NO;
         }
 
-        NSDictionary *views = NSDictionaryOfVariableBindings(_albumBackgroundImage, _albumBlurView, overlay, _albumTitleLabel, _albumRankLabel, _artistNameLabel, shortListDetailContainer);
+        NSDictionary *views = NSDictionaryOfVariableBindings(_albumBackgroundImage, _albumTitleLabel, _albumRankLabel, _artistNameLabel, shortListDetailContainer);
         NSDictionary *metrics = @{@"height":@(kSLALbumCellHeight)};
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_albumBackgroundImage]|" options:0 metrics:metrics views:views]];
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumBackgroundImage(height)]|" options:0 metrics:metrics views:views]];
-        
-        [self.albumBackgroundImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_albumBlurView]|" options:0 metrics:metrics views:views]];
-        [self.albumBackgroundImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_albumBlurView]|" options:0 metrics:metrics views:views]];
-        
-        [self.albumBlurView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[overlay]|" options:0 metrics:metrics views:views]];
-        [self.albumBlurView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[overlay]|" options:0 metrics:metrics views:views]];
-        
+
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:shortListDetailContainer attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
         
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:shortListDetailContainer attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
@@ -115,7 +96,12 @@ static const CGFloat kSLALbumCellHeight = 120;
 }
 
 - (void)configureCell:(ShortListAlbum *)album {
-    [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:nil];
+    __weak typeof(self)weakSelf = self;
+    [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        UIImage *blurArtwork = [image applyBlurWithRadius:20 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.2] saturationDeltaFactor:1.0 maskImage:nil];
+        weakSelf.albumBackgroundImage.image = blurArtwork;
+    }];
+    
     self.artistNameLabel.text = album.artistName;
     self.albumRankLabel.text = [NSString stringWithFormat:@"%ld.", (long)album.shortListRank];
     self.albumTitleLabel.text = [album.albumName uppercaseString];
