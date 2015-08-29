@@ -69,7 +69,6 @@ class SLParseController : NSObject {
     
     class func removeShortList(shortlist:Shortlist, completion:SLGetUsersShortListBlock) {
         for album:ShortListAlbum in shortlist.shortListAlbums as! [ShortListAlbum] {
-            //album.deleteInBackgroundWithBlock{(success: Bool, error: NSError?)  -> Void in}
             album.deleteInBackgroundWithBlock({ (success, error) -> Void in})
         }
         
@@ -119,8 +118,6 @@ class SLParseController : NSObject {
                 completion()
             }
         }
-        
-        
     }
     
     class func getCurrentUser() -> PFUser {

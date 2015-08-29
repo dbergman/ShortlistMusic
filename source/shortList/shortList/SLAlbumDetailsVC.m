@@ -24,6 +24,7 @@
 #import "ItunesSearchAPIController.h"
 #import "SpotifyAlbums.h"
 #import "SpotifyAlbum.h"
+#import "MBProgressHUD.h"
 
 static CGFloat const kSLAlbumDetailsCellHeight = 65.0;
 static CGFloat const kSLPlayButtonSize = 50.0;
@@ -40,6 +41,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 @property (nonatomic, assign) BOOL isPlayingOptionsShown;
 @property (nonatomic, strong) UIImageView *blurBackgroundView;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButton;
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 @end
 
@@ -59,7 +61,14 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self getAlbumDetails];
+    self.hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:self.hud];
+    __weak typeof(self)weakSelf = self;
+    [self.hud showAnimated:YES whileExecutingBlock:^{
+        [weakSelf getAlbumDetails];
+    } completionBlock:^{
+        [weakSelf.hud removeFromSuperview];
+    }];
 
     self.view.backgroundColor = [UIColor blackColor];
     self.automaticallyAdjustsScrollViewInsets = YES;
@@ -85,12 +94,6 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     self.coverImageView.frame = CGRectMake(0.0, [self getNavigationBarStatusBarHeight], [self getScreenWidth], [self getScreenWidth]);
     
     self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.coverImageView.frame) - kSLAlbumDetailsCellHeight, 0.0f, [self getTabBarHeight], 0.0f);
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -252,7 +255,16 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     __weak typeof(self) weakSelf = self;
     [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:[self getShortListAlbum] completion:^(NSArray *albums) {
         weakSelf.shortList.shortListAlbums = albums;
-        [weakSelf.navigationController popViewControllerAnimated:YES];
+        [weakSelf reorderShortList];
+        [SLParseController updateShortListAlbums:weakSelf.shortList completion:^{
+             [weakSelf.navigationController popViewControllerAnimated:YES];
+        }];
+    }];
+}
+
+- (void)reorderShortList {
+    [self.shortList.shortListAlbums enumerateObjectsUsingBlock:^(ShortListAlbum *album, NSUInteger idx, BOOL *stop) {
+        album.shortListRank = idx + 1;
     }];
 }
 

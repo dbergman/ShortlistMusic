@@ -82,9 +82,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     
     [self setupMoreOptions];
     
-    if (self.shortList.objectId) {
-        [self refreshShortLists];
-    }
+    [self.tableView reloadData];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -208,13 +206,6 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     ShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
     SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:self.shortList albumId:[NSString stringWithFormat:@"%ld",(long)album.albumId]];
     [self.navigationController pushViewController:albumDetailsVC animated:YES];
-//    __weak typeof(self) weakSelf = self;
-//    [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:[@(album.albumId) stringValue] completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
-//        if (!error) {
-//            SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:weakSelf.shortList albumDetails:[albumSearchResults getAlbumInfo] tracks:[albumSearchResults getAlbumTracks]];
-//            [weakSelf.navigationController pushViewController:albumDetailsVC animated:YES];
-//        }
-//    }];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
