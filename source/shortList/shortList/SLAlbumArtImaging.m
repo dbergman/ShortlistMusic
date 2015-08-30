@@ -107,7 +107,7 @@ static const CGFloat kShortListAlbumArtWorkSize = 320.0;
     [[[UIColor blackColor] colorWithAlphaComponent:.5] set];
     
     CGSize watermarkSize = [watermarkText sizeWithAttributes:attributeDictionary];
-    CGRect watermarkRect = CGRectMake(image.size.width - watermarkSize.width - MarginSizes.medium, (image.size.height - watermarkSize.height), image.size.width - watermarkSize.width - MarginSizes.medium, image.size.height);
+    CGRect watermarkRect = CGRectMake(MarginSizes.medium, (image.size.height - watermarkSize.height), image.size.width - MarginSizes.medium, image.size.height);
 
     CGContextFillRect(UIGraphicsGetCurrentContext(), watermarkRect);
     
