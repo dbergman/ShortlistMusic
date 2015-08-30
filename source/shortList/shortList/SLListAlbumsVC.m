@@ -25,6 +25,7 @@
 #import "SLAlbumArtImaging.h"
 #import "SLInstagramController.h"
 #import "UIViewController+SLAlbumArtImaging.h"
+#import "MBProgressHUD.h"
 
 const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
@@ -363,7 +364,13 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
     
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{
-        [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [weakSelf.navigationController.view addSubview:hud];
+        hud.labelText = NSLocalizedString(@"Building Image", nil);
+        
+        [hud showAnimated:YES whileExecutingBlock:^{
+            [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
+        }];
     }];
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
     
