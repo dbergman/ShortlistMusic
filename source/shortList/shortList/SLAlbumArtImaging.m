@@ -48,7 +48,11 @@ static const CGFloat kShortListAlbumArtWorkSize = 320.0;
 
 - (NSDictionary *)downloadAlbumImage:(ShortListAlbum *)slAlbum {
    NSURL *albumArtUrl = [NSURL URLWithString:[slAlbum.albumArtWork stringByReplacingOccurrencesOfString:@"400" withString:@"1200"]];
-   NSData * imageData = [[NSData alloc] initWithContentsOfURL:albumArtUrl];
+   NSData *imageData = [[NSData alloc] initWithContentsOfURL:albumArtUrl];
+    
+    if (!imageData) {
+        imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:slAlbum.albumArtWork]];
+    }
 
     return @{kShortListAlbumArtKey:[UIImage imageWithData: imageData], kShortListAlbumRankKey:@(slAlbum.shortListRank)};
 }
