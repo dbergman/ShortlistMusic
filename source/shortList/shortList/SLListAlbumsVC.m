@@ -364,7 +364,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
     
     [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{
-        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
         [weakSelf.navigationController.view addSubview:hud];
         hud.labelText = NSLocalizedString(@"Building Image", nil);
         
@@ -377,10 +377,16 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
     if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
         [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{
-            [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
+                MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
+                [weakSelf.navigationController.view addSubview:hud];
+                hud.labelText = NSLocalizedString(@"Building Image", nil);
+                
+                [hud showAnimated:YES whileExecutingBlock:^{
+                    [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
+                }];
         }];
     }
-
+    
     [slSharingSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
     [slSharingSheet showInView:self.view];
 }
