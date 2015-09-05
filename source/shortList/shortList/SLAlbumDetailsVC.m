@@ -60,6 +60,9 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.view.backgroundColor = [UIColor blackColor];
+    self.automaticallyAdjustsScrollViewInsets = YES;
     
     self.hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.hud];
@@ -69,9 +72,6 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     } completionBlock:^{
         [weakSelf.hud removeFromSuperview];
     }];
-
-    self.view.backgroundColor = [UIColor blackColor];
-    self.automaticallyAdjustsScrollViewInsets = YES;
 
     self.coverImageView = [UIImageView new];
     self.coverImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -187,7 +187,6 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 - (void)addAlbumArtWorkHeader {
     __weak typeof(self) weakSelf = self;
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl600] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        
         [weakSelf.view addSubview:weakSelf.tableView];
         
         [weakSelf buildPlayerViewControllerForAlbum:weakSelf.albumDetails];
@@ -235,7 +234,6 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 #pragma mark - Add to Shortlist
 - (void)addAlbumToShortList {
     __weak typeof(self) weakSelf = self;
-    
     [SLParseController getShortListAlbums:self.shortList completion:^(NSArray *allAlbums) {
         ShortListAlbum *slAlbum = [ShortListAlbum createShortListAlbum:weakSelf.albumDetails];
         slAlbum.shortListId = weakSelf.shortList.objectId;
