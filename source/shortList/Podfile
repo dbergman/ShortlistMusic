@@ -20,6 +20,7 @@ pod 'SDWebImage'
 #UI
 pod 'ParseUI'
 pod 'MBProgressHUD', '~> 0.9'
+pod 'CRToast', '~> 0.0.8'
 
 target :"shortListTests", :exclusive => true do
 pod 'Mantle'

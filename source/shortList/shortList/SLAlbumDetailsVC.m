@@ -25,6 +25,7 @@
 #import "SpotifyAlbums.h"
 #import "SpotifyAlbum.h"
 #import "MBProgressHUD.h"
+#import "UIViewController+SLToastBanner.h"
 
 static CGFloat const kSLAlbumDetailsCellHeight = 65.0;
 static CGFloat const kSLPlayButtonSize = 50.0;
@@ -255,7 +256,8 @@ static CGFloat const kSLPlayButtonSize = 50.0;
         weakSelf.shortList.shortListAlbums = albums;
         [weakSelf reorderShortList];
         [SLParseController updateShortListAlbums:weakSelf.shortList completion:^{
-             [weakSelf.navigationController popViewControllerAnimated:YES];
+            [weakSelf sl_showToast:@"Removed kdsfj kl;adsjf kl;adjsf kl;ajdsfkl jasdlkfj ljkasdhf lkjashdf jklasdhf jklahsd fjklhads kjlfh askljdhf ljkasdf jklashdf jlkhasdkl fhasdfl " toastType:SLToastMessageSuccess];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
         }];
     }];
 }

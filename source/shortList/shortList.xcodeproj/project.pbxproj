@@ -15,6 +15,7 @@
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
 		4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5511B1E663F00F997F8 /* SLParseController.swift */; };
 		4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* ShortListAlbum.m */; };
+		464CF7101B9B6A76008356F6 /* UIViewController+SLToastBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */; settings = {ASSET_TAGS = (); }; };
 		4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4651CE251B4C9992003E9C0F /* SLListAbumCell.m */; };
 		465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */; };
 		465740C31B83F681004DECFF /* SLAlbumArtImaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 465740C21B83F681004DECFF /* SLAlbumArtImaging.m */; };
@@ -105,6 +106,8 @@
 		4648A5511B1E663F00F997F8 /* SLParseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLParseController.swift; sourceTree = "<group>"; };
 		4648A5541B234CC300F997F8 /* ShortListAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortListAlbum.h; sourceTree = "<group>"; };
 		4648A5551B234CC300F997F8 /* ShortListAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortListAlbum.m; sourceTree = "<group>"; };
+		464CF70E1B9B6A76008356F6 /* UIViewController+SLToastBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLToastBanner.h"; sourceTree = "<group>"; };
+		464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLToastBanner.m"; sourceTree = "<group>"; };
 		4651CE241B4C9992003E9C0F /* SLListAbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListAbumCell.h; sourceTree = "<group>"; };
 		4651CE251B4C9992003E9C0F /* SLListAbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAbumCell.m; sourceTree = "<group>"; };
 		465415B21B6E7EE500E51893 /* UIViewController+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Utilities.h"; sourceTree = "<group>"; };
@@ -363,6 +366,8 @@
 				466DF3631B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m */,
 				466DF3651B80D3B600563095 /* UIViewController+SLAlbumArtImaging.h */,
 				466DF3661B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m */,
+				464CF70E1B9B6A76008356F6 /* UIViewController+SLToastBanner.h */,
+				464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -835,6 +840,7 @@
 				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
 				46D423071B77D3A900D79263 /* SpotifyAlbums.m in Sources */,
 				46CB6AD51AED715800BF1DF3 /* AppDelegate.m in Sources */,
+				464CF7101B9B6A76008356F6 /* UIViewController+SLToastBanner.m in Sources */,
 				466064051B81251F006AB766 /* UIViewController+SLLoginGate.m in Sources */,
 				4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */,
 				467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */,
