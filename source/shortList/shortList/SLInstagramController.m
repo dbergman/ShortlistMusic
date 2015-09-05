@@ -40,7 +40,11 @@
     self.documentController.UTI = @"com.instagram.photo";
     [self.documentController setURL:imageURL];
     self.documentController.annotation = [NSDictionary dictionaryWithObjectsAndKeys:@"#ShortListMusic",@"InstagramCaption", nil];
-    [self.documentController presentOpenInMenuFromRect:CGRectZero inView:attachView animated:YES];
+    
+    __weak typeof(self)weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf.documentController presentOpenInMenuFromRect:CGRectZero inView:attachView animated:YES];
+    });
 }
 
 @end
