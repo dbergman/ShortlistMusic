@@ -90,8 +90,15 @@ const CGFloat kSLPlayButtonSize = 50.0;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-marginSmall-[_albumTitleLabel]-[_artistTitleLabel]" options:0 metrics:metrics views:views]];
     
     [buttonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_appleMusicButton(buttonSize)]|" options:0 metrics:metrics views:views]];
-    [buttonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_spotifyButton(buttonSize)]|" options:0 metrics:metrics views:views]];
-    [buttonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_appleMusicButton(buttonSize)]-[_spotifyButton(buttonSize)]|" options:0 metrics:metrics views:views]];
+    
+    if (self.albumDetails.spotifyDeepLink) {
+        [buttonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_spotifyButton(buttonSize)]|" options:0 metrics:metrics views:views]];
+        [buttonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_appleMusicButton(buttonSize)]-[_spotifyButton(buttonSize)]|" options:0 metrics:metrics views:views]];
+    }
+    else {
+        self.spotifyButton.hidden = YES;
+        [buttonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_appleMusicButton(buttonSize)]|" options:0 metrics:metrics views:views]];
+    }
 }
 
 - (void)viewWillLayoutSubviews {
@@ -99,10 +106,6 @@ const CGFloat kSLPlayButtonSize = 50.0;
     
     self.albumTitleLabel.preferredMaxLayoutWidth = self.view.frame.size.width - self.albumArtView.frame.size.width - (MarginSizes.small * 2.0);
     self.artistTitleLabel.preferredMaxLayoutWidth = self.albumTitleLabel.preferredMaxLayoutWidth;
-}
-
-- (void)addMusicButtons {
-    //TODO
 }
 
 - (void)spotifyAction {
