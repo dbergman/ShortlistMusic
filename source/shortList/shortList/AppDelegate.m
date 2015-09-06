@@ -18,6 +18,8 @@
 #import "Shortlist.h"
 #import "ShortListAlbum.h"
 #import "SLStyle.h"
+#import <ParseFacebookUtils/PFFacebookUtils.h>
+#import <ParseTwitterUtils/ParseTwitterUtils.h>
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -64,7 +66,8 @@
     shortListMoreNav.tabBarItem.title = NSLocalizedString(@"More", nil);
     
     SLTabBarController *tabBarController = [SLTabBarController new];
-    [tabBarController setViewControllers:@[shortListFeedNav, shortListsNav, shortListProfileNav, shortListMoreNav]];
+    //[tabBarController setViewControllers:@[shortListFeedNav, shortListsNav, shortListProfileNav, shortListMoreNav]];
+    [tabBarController setViewControllers:@[shortListsNav, shortListProfileNav, shortListMoreNav]];
     tabBarController.tabBar.backgroundColor = [UIColor blackColor];
     tabBarController.tabBar.translucent = NO;
 
@@ -78,6 +81,10 @@
     NSAssert(appKeys, @"You Must Add /opt/shortList/appKeys to your local File System!!!");
 
     [Parse setApplicationId:appKeys[@"ParseAppId"] clientKey:appKeys[@"ParseClientKey"]];
+//    [PFFacebookUtils initializeFacebook];
+////    //1636037233334583
+////   // [PFTwitterUtils initialize];
+//    
     
     [Shortlist registerSubclass];
     [ShortListAlbum registerSubclass];
@@ -98,6 +105,14 @@
     NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [SLStyle polarisFontWithSize:FontSizes.medium] , NSForegroundColorAttributeName: [UIColor whiteColor]};
     [[UIBarButtonItem appearance] setTitleTextAttributes:barButtonAppearanceDict forState:UIControlStateNormal];
 }
+
+//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+//    return 
+//}
+//
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+//    return [PFFacebookUtils handleOpenURL:url];
+//}
 
 - (void)turnOnNSURLCache {
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024  diskCapacity:100 * 1024 * 1024 diskPath:nil];
