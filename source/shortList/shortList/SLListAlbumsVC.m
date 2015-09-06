@@ -21,6 +21,7 @@
 #import "UIViewController+Utilities.h"
 #import <BlocksKit+UIKit.h>
 #import "UIViewController+SLEmailShortlist.h"
+#import "UIViewController+SLToastBanner.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SLAlbumArtImaging.h"
 #import "SLInstagramController.h"
@@ -251,7 +252,8 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     __weak typeof(self) weakSelf = self;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:self.shortList.shortListAlbums[indexPath.row] completion:^(NSArray *albums) {
+        __block ShortListAlbum *slAbum = self.shortList.shortListAlbums[indexPath.row];
+        [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:slAbum completion:^(NSArray *albums) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -262,7 +264,9 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
             
             [SLParseController updateShortListAlbums:self.shortList completion:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakSelf.tableView reloadData];
+                    [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:slAbum.albumName toastType:SLToastMessageSuccess completion:^{
+                        [weakSelf.tableView reloadData];
+                    }];
                 });
             }];
          }];
@@ -380,7 +384,6 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
                 MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
                 [weakSelf.navigationController.view addSubview:hud];
                 hud.labelText = NSLocalizedString(@"Building Image", nil);
-                
                 [hud showAnimated:YES whileExecutingBlock:^{
                     [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
                 }];

@@ -20,6 +20,7 @@
 #import "SLAlbumsCollectionCell.h"
 #import "UIViewController+Utilities.h"
 #import "UIImage+ImageEffects.h"
+#import "UIViewController+SLToastBanner.h"
 
 @interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -113,11 +114,14 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     __weak typeof(self) weakSelf = self;
+    __block Shortlist *sl = self.shortLists[indexPath.row];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [SLParseController removeShortList:self.shortLists[indexPath.row] completion:^(NSArray * shortlists) {
+        [SLParseController removeShortList:sl completion:^(NSArray * shortlists) {
             weakSelf.shortLists = shortlists;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:sl.shortListName toastType:SLToastMessageSuccess completion:^{
+                    [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                }];
             });
         }];
     }
@@ -140,7 +144,7 @@
 
 - (void)createNewShortListView {
     __weak typeof(self) weakSelf = self;
-    self.createShortListVC = [[SLCreateShortListVC alloc] initWithCompletion:^(Shortlist *shortlist, BOOL newShortlist){
+    self.createShortListVC = [[SLCreateShortListVC alloc] initWithCompletion:^(Shortlist *shortlist, BOOL newShortlist) {
         NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
         topMarginConstraint.constant = weakSelf.view.frame.size.height;
         NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];

@@ -10,6 +10,7 @@
 #import "Shortlist.h"
 #import "ShortListAlbum.h"
 #import "SLStyle.h"
+#import "UIViewController+SLToastBanner.h"
 #import <MessageUI/MessageUI.h>
 
 @interface UIViewController () <MFMailComposeViewControllerDelegate>
@@ -75,6 +76,32 @@
     theEmail = [NSString stringWithFormat:@" %@%@<br>%@%@%@%@%@ <br><font size=\"1\">%@</font><br><font size=\"1\">%@</font>", htmlStart, header, beginTable, shortListTitleRow,tableRows, endTable, footer,shortListTag, shortListTagFilter];
     
     return theEmail;
+}
+
+#pragma maek MFMailComposeViewControllerDelegate
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(nullable NSError *)error {
+    dispatch_block_t toastAction = ^{};
+    if (error) {
+        toastAction = ^{
+            [self sl_showToastForAction:NSLocalizedString(@"Error Sending Email", nil) message:error.description toastType:SLToastMessageFailure completion:nil];
+        };
+    }
+    else if (result == MFMailComposeResultSent) {
+        toastAction = ^{
+            [self sl_showToastForAction:NSLocalizedString(@"Sent ShortList Email", nil) message:nil toastType:SLToastMessageSuccess completion:nil];
+        };
+    }
+    else if (result == MFMailComposeResultFailed) {
+        toastAction = ^{
+            [self sl_showToastForAction:NSLocalizedString(@"Failed Sending Email", nil) message:nil toastType:SLToastMessageFailure completion:nil];
+        };
+    }
+    
+    [controller dismissViewControllerAnimated:YES completion:^{
+        if (toastAction) {
+            toastAction();
+        }
+    }];
 }
 
 @end

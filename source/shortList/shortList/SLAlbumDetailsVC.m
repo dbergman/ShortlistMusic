@@ -243,7 +243,9 @@ static CGFloat const kSLPlayButtonSize = 50.0;
         [SLParseController addAlbumToShortList:slAlbum shortlist:weakSelf.shortList completion:^{
             [SLParseController getShortListAlbums:self.shortList completion:^(NSArray *allAlbums) {
                 weakSelf.shortList.shortListAlbums = allAlbums;
-                 [weakSelf.navigationController popViewControllerAnimated:YES];
+                [weakSelf sl_showToastForAction:NSLocalizedString(@"Added", nil) message:weakSelf.albumDetails.collectionName toastType:SLToastMessageSuccess completion:^{
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                }];
             }];
         }];
     }];
@@ -256,8 +258,9 @@ static CGFloat const kSLPlayButtonSize = 50.0;
         weakSelf.shortList.shortListAlbums = albums;
         [weakSelf reorderShortList];
         [SLParseController updateShortListAlbums:weakSelf.shortList completion:^{
-            [weakSelf sl_showToast:@"Removed kdsfj kl;adsjf kl;adjsf kl;ajdsfkl jasdlkfj ljkasdhf lkjashdf jklasdhf jklahsd fjklhads kjlfh askljdhf ljkasdf jklashdf jlkhasdkl fhasdfl " toastType:SLToastMessageSuccess];
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+            [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:weakSelf.albumDetails.collectionName toastType:SLToastMessageSuccess completion:^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }];
         }];
     }];
 }
