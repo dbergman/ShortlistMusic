@@ -16,6 +16,6 @@ typedef NS_ENUM(NSUInteger, SLToastMessageType) {
 
 @interface UIViewController (SLToastBanner)
 
-- (void)sl_showToast:(NSString *)toastMessage toastType:(SLToastMessageType)toastMessageType;
+- (void)sl_showToastForAction:(NSString *)toastAction message:(NSString *)toastMessage toastType:(SLToastMessageType)toastMessageType completion:(dispatch_block_t)completion;
 
 @end

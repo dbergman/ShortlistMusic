@@ -7,31 +7,46 @@
 //
 
 #import "UIViewController+SLToastBanner.h"
+#import "SLStyle.h"
 #import <CRToast/CRToast.h>
 
 @implementation UIViewController (SLToastBanner)
 
-- (void)sl_showToast:(NSString *)toastMessage toastType:(SLToastMessageType)toastMessageType {
-    [CRToastManager showNotificationWithOptions:[self getOptions:toastMessage] completionBlock:^{
-        NSLog(@"Completed");
+- (void)sl_showToastForAction:(NSString *)toastAction message:(NSString *)toastMessage toastType:(SLToastMessageType)toastMessageType completion:(dispatch_block_t)completion {
+    [CRToastManager showNotificationWithOptions:[self getOptionsForAction:toastAction message:toastMessage type:toastMessageType] completionBlock:^{
+        if (completion) {
+            completion();
+        }
     }];
 }
 
-- (NSDictionary *)getOptions:(NSString *)message {
+- (NSDictionary *)getOptionsForAction:(NSString *)actionText message:(NSString *)message type:(SLToastMessageType)toastMessageType  {
+    UIColor *backGroundColor;
+    if (toastMessageType == SLToastMessageSuccess) {
+        backGroundColor = [UIColor greenColor];
+    }
+    else if (toastMessageType == SLToastMessageWarning) {
+        backGroundColor = [UIColor yellowColor];
+    }
+    else {
+        backGroundColor = [UIColor redColor];
+    }
+    
     NSDictionary *options = @{
-                              kCRToastTextKey : message,
+                              kCRToastTextKey : (actionText) ?: @"",
+                              kCRToastTextColorKey : [UIColor blackColor],
+                              kCRToastFontKey : [SLStyle polarisFontWithSize:FontSizes.large],
+                              kCRToastSubtitleTextKey :(message) ?: @"",
+                              kCRToastSubtitleTextColorKey : [UIColor blackColor],
+                              kCRToastSubtitleFontKey : [SLStyle polarisFontWithSize:FontSizes.small],
                               kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
-                              kCRToastBackgroundColorKey : [UIColor greenColor],
+                              kCRToastBackgroundColorKey : backGroundColor,
                               kCRToastAnimationInDirectionKey : @(CRToastAnimationTypeLinear),
                               kCRToastAnimationOutDirectionKey : @(CRToastAnimationTypeLinear),
                               kCRToastNotificationPresentationTypeKey : @(CRToastPresentationTypePush),
                               kCRToastNotificationTypeKey :@(CRToastTypeNavigationBar),
-                              kCRToastTextColorKey : [UIColor blackColor]
+                              kCRToastTimeIntervalKey : @(1.5)
                               };
-
-    
-    
-    
     return options;
 }
 
