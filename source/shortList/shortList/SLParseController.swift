@@ -115,9 +115,9 @@ class SLParseController : NSObject {
                 if !success {
                     album.saveEventually(nil)
                 }
-                completion()
             }
         }
+        completion()
     }
     
     class func getCurrentUser() -> PFUser {
