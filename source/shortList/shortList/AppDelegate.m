@@ -56,7 +56,9 @@
     SLListsVC *slListsVC = [SLListsVC new];
     SLNavigationController *shortListsNav = [[SLNavigationController alloc] initWithRootViewController:slListsVC];
     shortListsNav.tabBarItem.title = NSLocalizedString(@"ShortLists", nil);
-    
+    shortListsNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"myShortLists"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    shortListsNav.tabBarItem.image = [[UIImage imageNamed:@"myShortLists"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+
     SLProfileVC *slProfileVC = [SLProfileVC new];
     SLNavigationController *shortListProfileNav = [[SLNavigationController alloc] initWithRootViewController:slProfileVC];
     shortListProfileNav.tabBarItem.title = NSLocalizedString(@"Profile", nil);
@@ -64,6 +66,8 @@
     SLMoreVC *slMoreVC = [SLMoreVC new];
     SLNavigationController *shortListMoreNav = [[SLNavigationController alloc] initWithRootViewController:slMoreVC];
     shortListMoreNav.tabBarItem.title = NSLocalizedString(@"More", nil);
+    shortListMoreNav.tabBarItem.selectedImage = [[UIImage imageNamed:@"moreTab"]imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    shortListMoreNav.tabBarItem.image = [[UIImage imageNamed:@"moreTab"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     SLTabBarController *tabBarController = [SLTabBarController new];
     //[tabBarController setViewControllers:@[shortListFeedNav, shortListsNav, shortListProfileNav, shortListMoreNav]];
@@ -96,6 +100,8 @@
     [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTranslucent:YES];
+
+    [[UITabBar appearance] setTintColor:[UIColor sl_Red]];
     
     [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName : [SLStyle polarisFontWithSize:FontSizes.xSmall]} forState:UIControlStateNormal];
