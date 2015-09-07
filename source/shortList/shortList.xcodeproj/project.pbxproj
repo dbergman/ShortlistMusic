@@ -16,6 +16,11 @@
 		4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5511B1E663F00F997F8 /* SLParseController.swift */; };
 		4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* ShortListAlbum.m */; };
 		464CF7101B9B6A76008356F6 /* UIViewController+SLToastBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */; settings = {ASSET_TAGS = (); }; };
+		464CF7131B9C9DE6008356F6 /* libParseFacebookUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7111B9C9DE6008356F6 /* libParseFacebookUtils.a */; };
+		464CF7141B9C9DE6008356F6 /* libParseTwitterUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7121B9C9DE6008356F6 /* libParseTwitterUtils.a */; };
+		464CF7161B9C9EA1008356F6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7151B9C9EA1008356F6 /* Social.framework */; };
+		464CF7181B9C9EAC008356F6 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7171B9C9EAC008356F6 /* Twitter.framework */; };
+		464CF71C1B9CD205008356F6 /* SLLoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF71B1B9CD205008356F6 /* SLLoginCell.m */; settings = {ASSET_TAGS = (); }; };
 		4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4651CE251B4C9992003E9C0F /* SLListAbumCell.m */; };
 		465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */; };
 		465740C31B83F681004DECFF /* SLAlbumArtImaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 465740C21B83F681004DECFF /* SLAlbumArtImaging.m */; };
@@ -108,6 +113,12 @@
 		4648A5551B234CC300F997F8 /* ShortListAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortListAlbum.m; sourceTree = "<group>"; };
 		464CF70E1B9B6A76008356F6 /* UIViewController+SLToastBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLToastBanner.h"; sourceTree = "<group>"; };
 		464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLToastBanner.m"; sourceTree = "<group>"; };
+		464CF7111B9C9DE6008356F6 /* libParseFacebookUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libParseFacebookUtils.a; path = "Pods/../build/Debug-iphoneos/libParseFacebookUtils.a"; sourceTree = "<group>"; };
+		464CF7121B9C9DE6008356F6 /* libParseTwitterUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libParseTwitterUtils.a; path = "Pods/../build/Debug-iphoneos/libParseTwitterUtils.a"; sourceTree = "<group>"; };
+		464CF7151B9C9EA1008356F6 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		464CF7171B9C9EAC008356F6 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		464CF71A1B9CD205008356F6 /* SLLoginCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLLoginCell.h; sourceTree = "<group>"; };
+		464CF71B1B9CD205008356F6 /* SLLoginCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLLoginCell.m; sourceTree = "<group>"; };
 		4651CE241B4C9992003E9C0F /* SLListAbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListAbumCell.h; sourceTree = "<group>"; };
 		4651CE251B4C9992003E9C0F /* SLListAbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAbumCell.m; sourceTree = "<group>"; };
 		465415B21B6E7EE500E51893 /* UIViewController+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Utilities.h"; sourceTree = "<group>"; };
@@ -219,6 +230,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CF7181B9C9EAC008356F6 /* Twitter.framework in Frameworks */,
+				464CF7161B9C9EA1008356F6 /* Social.framework in Frameworks */,
+				464CF7131B9C9DE6008356F6 /* libParseFacebookUtils.a in Frameworks */,
+				464CF7141B9C9DE6008356F6 /* libParseTwitterUtils.a in Frameworks */,
 				3A67B00A491460F0C0119307 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,6 +284,26 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		464CF7191B9CD1D3008356F6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				464CF71A1B9CD205008356F6 /* SLLoginCell.h */,
+				464CF71B1B9CD205008356F6 /* SLLoginCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		464CF71D1B9D2DFF008356F6 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				466063F21B81251F006AB766 /* SLLoginVC.h */,
+				466063F31B81251F006AB766 /* SLLoginVC.m */,
+				466063FA1B81251F006AB766 /* SLUserSignUpVC.h */,
+				466063FB1B81251F006AB766 /* SLUserSignUpVC.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		4651CE231B4C993B003E9C0F /* Albums */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,16 +318,13 @@
 		466063F11B8124FB006AB766 /* Componenets */ = {
 			isa = PBXGroup;
 			children = (
-				466063F21B81251F006AB766 /* SLLoginVC.h */,
-				466063F31B81251F006AB766 /* SLLoginVC.m */,
+				464CF71D1B9D2DFF008356F6 /* Login */,
 				466063F41B81251F006AB766 /* SLNavigationController.h */,
 				466063F51B81251F006AB766 /* SLNavigationController.m */,
 				466063F61B81251F006AB766 /* SLPlayNowViewController.h */,
 				466063F71B81251F006AB766 /* SLPlayNowViewController.m */,
 				466063F81B81251F006AB766 /* SLTabBarController.h */,
 				466063F91B81251F006AB766 /* SLTabBarController.m */,
-				466063FA1B81251F006AB766 /* SLUserSignUpVC.h */,
-				466063FB1B81251F006AB766 /* SLUserSignUpVC.m */,
 				466064071B81260C006AB766 /* SLInstagramController.h */,
 				466064081B81260C006AB766 /* SLInstagramController.m */,
 				465740C11B83F681004DECFF /* SLAlbumArtImaging.h */,
@@ -576,6 +608,7 @@
 		46CB6B0A1AED7C8300BF1DF3 /* More */ = {
 			isa = PBXGroup;
 			children = (
+				464CF7191B9CD1D3008356F6 /* Cells */,
 				46CB6B0B1AED7C9900BF1DF3 /* SLMoreVC.h */,
 				46CB6B0C1AED7C9900BF1DF3 /* SLMoreVC.m */,
 			);
@@ -618,6 +651,10 @@
 		E1761E54DFFFFE8F0167477C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				464CF7171B9C9EAC008356F6 /* Twitter.framework */,
+				464CF7151B9C9EA1008356F6 /* Social.framework */,
+				464CF7111B9C9DE6008356F6 /* libParseFacebookUtils.a */,
+				464CF7121B9C9DE6008356F6 /* libParseTwitterUtils.a */,
 				CE0D5FB60B95EE1C6AAD8165 /* libPods.a */,
 				96318E4294F9670A88DFF932 /* libPods-shortListTests.a */,
 			);
@@ -832,6 +869,7 @@
 			files = (
 				46CB6B101AED80FD00BF1DF3 /* SLBaseVC.m in Sources */,
 				466DF3641B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m in Sources */,
+				464CF71C1B9CD205008356F6 /* SLLoginCell.m in Sources */,
 				46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */,
 				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
 				466064041B81251F006AB766 /* SLUserSignUpVC.m in Sources */,
@@ -1010,8 +1048,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = shortList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1026,8 +1069,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = shortList/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 			};

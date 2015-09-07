@@ -8,6 +8,8 @@ inhibit_all_warnings!
 #Foundation Helpers
 pod 'BlocksKit', '2.2.5'
 pod 'Parse'
+pod 'ParseFacebookUtils'
+pod 'ParseTwitterUtils'
 
 #Model
 pod 'Mantle'
