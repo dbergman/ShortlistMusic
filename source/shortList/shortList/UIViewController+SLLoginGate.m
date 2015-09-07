@@ -17,7 +17,7 @@
 - (void)showLoginGate {
     if (![PFUser currentUser]) {
         SLLoginVC *loginVC = [[SLLoginVC alloc] init];
-        loginVC.facebookPermissions = @[@"friends_about_me"];
+        loginVC.facebookPermissions = @[@"user_about_me"];
         loginVC.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsTwitter | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsDismissButton;
 
         SLUserSignUpVC *userSignUpVC = [[SLUserSignUpVC alloc] init];
