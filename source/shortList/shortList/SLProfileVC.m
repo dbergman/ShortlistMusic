@@ -27,6 +27,10 @@
     [super viewWillAppear:animated];
     
     [self setupRightBarButton];
+    
+    if ([PFUser currentUser]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)setupRightBarButton {
@@ -36,11 +40,7 @@
 - (void)showLoginRightBarButton {
     __weak typeof(self) weakSelf = self;
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Login", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
-        [weakSelf showLoginGateWithCompletion:^{
-            if ([PFUser currentUser]) {
-                [weakSelf showLogoutRightBarButton];
-            }
-        }];
+        [weakSelf showLoginGate];
     }];
     
     weakSelf.navigationItem.rightBarButtonItem = rightBarButton;

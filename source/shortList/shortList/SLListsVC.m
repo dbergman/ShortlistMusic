@@ -42,12 +42,8 @@
     
     __weak typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemAdd handler:^(id sender) {
-        [weakSelf showLoginGateWithCompletion:^{
-            if ([PFUser currentUser]) {
-                [weakSelf showCreateShortListView:nil];
-            }
+            ([PFUser currentUser]) ? [weakSelf showCreateShortListView:nil]:[weakSelf showLoginGate];
         }];
-    }];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor blackColor];
@@ -70,6 +66,10 @@
             weakSelf.shortLists = shortlists;
             [weakSelf.tableView reloadData];
         }];
+    }
+    else {
+        self.shortLists = nil;
+        [weakSelf.tableView reloadData];
     }
 }
 

@@ -10,6 +10,6 @@
 
 @interface UIViewController (SLLoginGate)
 
-- (void)showLoginGateWithCompletion:(dispatch_block_t)completion;
+- (void)showLoginGate;
 
 @end

@@ -7,6 +7,9 @@
 //
 
 #import "PFLogInViewController.h"
+@class PFUser;
+
+typedef void(^SLLoginCompletionBlock)(PFUser *user, BOOL isLoggedIn);
 
 @interface SLLoginVC : PFLogInViewController
 

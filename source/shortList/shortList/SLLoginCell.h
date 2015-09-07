@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^SLLoginButtonCellAction)();
+
 @interface SLLoginCell : UITableViewCell
+
+- (void)configLoginButton:(BOOL)isloggedIn loginButtonAction:(SLLoginButtonCellAction)loginAction;
+- (void)updateButtonWithLoginStatus:(BOOL)isloggedIn;
 
 @end

@@ -71,11 +71,11 @@
     
     SLTabBarController *tabBarController = [SLTabBarController new];
     //[tabBarController setViewControllers:@[shortListFeedNav, shortListsNav, shortListProfileNav, shortListMoreNav]];
-    [tabBarController setViewControllers:@[shortListsNav, shortListProfileNav, shortListMoreNav]];
+    [tabBarController setViewControllers:@[shortListsNav, shortListMoreNav]];
     tabBarController.tabBar.backgroundColor = [UIColor blackColor];
     tabBarController.tabBar.translucent = NO;
 
-    tabBarController.selectedViewController=[tabBarController.viewControllers objectAtIndex:1];
+    tabBarController.selectedViewController=[tabBarController.viewControllers objectAtIndex:0];
 
     return tabBarController;
 }
