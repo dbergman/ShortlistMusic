@@ -22,6 +22,8 @@
 #import "UIImage+ImageEffects.h"
 #import "UIViewController+SLToastBanner.h"
 
+static const CGFloat SLTableViewHeaderMessageheight = 50.0;
+
 @interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -63,11 +65,18 @@
     __weak typeof(self) weakSelf = self;
     if ([PFUser currentUser]) {
         [SLParseController getUsersShortLists:^(NSArray *shortlists) {
-            weakSelf.shortLists = shortlists;
-            [weakSelf.tableView reloadData];
+            if (shortlists.count == 0) {
+                [weakSelf addTableViewHeaderMessage:YES];
+            }
+            else {
+                weakSelf.tableView.tableHeaderView = nil;
+                weakSelf.shortLists = shortlists;
+                [weakSelf.tableView reloadData];
+            }
         }];
     }
     else {
+        [self addTableViewHeaderMessage:NO];
         self.shortLists = nil;
         [weakSelf.tableView reloadData];
     }
@@ -140,6 +149,23 @@
         Shortlist *shortList = self.shortLists[cell.tag];
         [self showCreateShortListView:shortList];
     }
+}
+
+- (void)addTableViewHeaderMessage:(BOOL)loggedIn {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, SLTableViewHeaderMessageheight)];
+    
+    UILabel *messageLabel = [UILabel new];
+    messageLabel.numberOfLines = 0;
+    messageLabel.font = [SLStyle polarisFontWithSize:FontSizes.large];
+    messageLabel.textColor = [UIColor whiteColor];
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.text = (loggedIn) ? NSLocalizedString(@"You do not have any ShortLists at the moment", nil) :  NSLocalizedString(@"Log in to add Shortlists", nil);
+    [messageLabel sizeToFit];
+    messageLabel.center = headerView.center;
+
+    [headerView addSubview:messageLabel];
+    
+    self.tableView.tableHeaderView = headerView;
 }
 
 - (void)createNewShortListView {

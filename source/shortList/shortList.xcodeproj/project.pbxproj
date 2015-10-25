@@ -731,6 +731,7 @@
 				TargetAttributes = {
 					46CB6ACB1AED715800BF1DF3 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 6438N9QD27;
 					};
 					46CB6AE71AED715800BF1DF3 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -1051,6 +1052,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -1062,6 +1065,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dust.shortList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1073,6 +1077,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dustin Bergman (2P7L2MD5X7)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -1084,6 +1090,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dust.shortList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 			};
 			name = Release;
