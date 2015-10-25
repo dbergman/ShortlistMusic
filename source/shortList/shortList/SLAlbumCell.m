@@ -38,7 +38,8 @@
 }
 
 - (void)configWithShortListAlbum:(ShortListAlbum *)albums {
-    [self.albumArtView sd_setImageWithURL:[NSURL URLWithString:albums.albumArtWork]];
+    [self.albumArtView sd_setImageWithURL:[NSURL URLWithString:albums.albumArtWork] placeholderImage:[[UIImage imageNamed:@"albumPlaceHolder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [self.albumArtView setTintColor:[UIColor whiteColor]];
 }
 
 @end
