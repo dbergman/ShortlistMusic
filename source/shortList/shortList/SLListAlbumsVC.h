@@ -13,5 +13,5 @@
 
 @interface SLListAlbumsVC : SLBaseVC
 
-- (nonnull instancetype)initWithShortList:(nonnull Shortlist *)shortList NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithShortList:(nonnull Shortlist *)shortList;
 @end

@@ -15,12 +15,12 @@
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
 		4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5511B1E663F00F997F8 /* SLParseController.swift */; };
 		4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* ShortListAlbum.m */; };
-		464CF7101B9B6A76008356F6 /* UIViewController+SLToastBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */; settings = {ASSET_TAGS = (); }; };
+		464CF7101B9B6A76008356F6 /* UIViewController+SLToastBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */; };
 		464CF7131B9C9DE6008356F6 /* libParseFacebookUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7111B9C9DE6008356F6 /* libParseFacebookUtils.a */; };
 		464CF7141B9C9DE6008356F6 /* libParseTwitterUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7121B9C9DE6008356F6 /* libParseTwitterUtils.a */; };
 		464CF7161B9C9EA1008356F6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7151B9C9EA1008356F6 /* Social.framework */; };
 		464CF7181B9C9EAC008356F6 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7171B9C9EAC008356F6 /* Twitter.framework */; };
-		464CF71C1B9CD205008356F6 /* SLLoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF71B1B9CD205008356F6 /* SLLoginCell.m */; settings = {ASSET_TAGS = (); }; };
+		464CF71C1B9CD205008356F6 /* SLLoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF71B1B9CD205008356F6 /* SLLoginCell.m */; };
 		464CF7211B9E38E5008356F6 /* libFacebook-iOS-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7201B9E38E5008356F6 /* libFacebook-iOS-SDK.a */; };
 		4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4651CE251B4C9992003E9C0F /* SLListAbumCell.m */; };
 		465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */; };
@@ -726,7 +726,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Dustin Bergman";
 				TargetAttributes = {
 					46CB6ACB1AED715800BF1DF3 = {
@@ -980,6 +980,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1059,6 +1060,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dust.shortList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1080,6 +1082,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dust.shortList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 			};
@@ -1100,6 +1103,7 @@
 				);
 				INFOPLIST_FILE = shortListTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/shortList.app/shortList";
 			};
@@ -1116,6 +1120,7 @@
 				);
 				INFOPLIST_FILE = shortListTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.dus.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/shortList.app/shortList";
 			};

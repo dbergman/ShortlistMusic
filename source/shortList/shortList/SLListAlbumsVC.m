@@ -365,33 +365,40 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self toggleOptionsButton];
     
     __weak typeof(self)weakSelf = self;
-    UIActionSheet *slSharingSheet = [UIActionSheet bk_actionSheetWithTitle:NSLocalizedString(@"Share Shortlist", nil)];
+    UIAlertController * alert=   [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share Shortlist", nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Email", nil) handler:^{
-        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
-        [weakSelf.navigationController.view addSubview:hud];
-        hud.labelText = NSLocalizedString(@"Building Image", nil);
-        
-        [hud showAnimated:YES whileExecutingBlock:^{
-            [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
-        }];
-    }];
-    [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Facebook", nil) handler:^{ NSLog(@"Facebook!"); }];
+    UIAlertAction *email = [UIAlertAction actionWithTitle:NSLocalizedString(@"Email", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
+                            [weakSelf.navigationController.view addSubview:hud];
+                            hud.labelText = NSLocalizedString(@"Building Image", nil);
+                            
+                            [hud showAnimated:YES whileExecutingBlock:^{
+                                [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
+                            }];
+                        }];
+    [alert addAction:email];
     
     NSURL *instagramURL = [NSURL URLWithString:@"instagram://app"];
     if ([[UIApplication sharedApplication] canOpenURL:instagramURL]) {
-        [slSharingSheet bk_addButtonWithTitle:NSLocalizedString(@"Instagram", nil) handler:^{
-                MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
-                [weakSelf.navigationController.view addSubview:hud];
-                hud.labelText = NSLocalizedString(@"Building Image", nil);
-                [hud showAnimated:YES whileExecutingBlock:^{
-                    [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
-                }];
+       UIAlertAction *instagram =  [UIAlertAction actionWithTitle:NSLocalizedString(@"Instagram", nil)  style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
+            [weakSelf.navigationController.view addSubview:hud];
+            hud.labelText = NSLocalizedString(@"Building Image", nil);
+            [hud showAnimated:YES whileExecutingBlock:^{
+                [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
+            }];
         }];
+        
+        [alert addAction:instagram];
     }
     
-    [slSharingSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
-    [slSharingSheet showInView:self.view];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)   style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    
+
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (CGRect)getOptionsCloseFrame {
