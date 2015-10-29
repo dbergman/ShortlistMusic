@@ -8,6 +8,7 @@
 
 typealias SLGetUsersShortListBlock = (shortlists:NSArray) -> Void
 typealias SLShortListAlbumsBlock = (albums:NSArray) -> Void
+typealias SLUsernameCheckAction = (isTaken:Bool) -> Void
 
 import Foundation
 
@@ -118,6 +119,26 @@ class SLParseController : NSObject {
             }
         }
         completion()
+    }
+    
+    class func doesUserNameExist(username:String, checkAction:SLUsernameCheckAction) {
+        let query = PFQuery(className: "PFUser")
+        query.whereKey("username", equalTo: username)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) in
+            if error == nil {
+                if (objects!.count > 0){
+                    checkAction(isTaken: true)
+                } else {
+                    checkAction(isTaken: false)
+                }
+            } else {
+                checkAction(isTaken: true)
+            }
+        }
+        
+        checkAction(isTaken: true)
+        
     }
     
     class func getCurrentUser() -> PFUser {
