@@ -42,8 +42,8 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.2.1)
   - CRToast (0.0.8)
-  - Facebook-iOS-SDK (3.23.2):
-    - Bolts (~> 1.0)
+  - Facebook-iOS-SDK (3.24.1):
+    - Bolts (~> 1.2)
   - Mantle (2.0.4):
     - Mantle/extobjc (= 2.0.4)
   - Mantle/extobjc (2.0.4)
@@ -69,7 +69,6 @@ DEPENDENCIES:
   - AFNetworking
   - BlocksKit (= 2.2.5)
   - CRToast (~> 0.0.8)
-  - Facebook-iOS-SDK
   - Mantle
   - MBProgressHUD (~> 0.9)
   - Parse
@@ -84,7 +83,7 @@ SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
   CRToast: b087127369b4c603726ef6249d74d0d737629ab8
-  Facebook-iOS-SDK: cd87f0b2f0c1d9574b44e8fa2baacc275524bac3
+  Facebook-iOS-SDK: 08689c2690dc4e087b9c8e171e48667608b72a2a
   Mantle: 6bee68168423948be0c0c5924832bf3af188e099
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   Parse: 188601c6cd91fae55906badd283b513104a3a8c9
@@ -94,4 +93,4 @@ SPEC CHECKSUMS:
   QBValidator: 6e019b6f22d750c668315807459f49a3c316a017
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
