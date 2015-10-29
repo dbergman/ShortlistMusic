@@ -9,7 +9,9 @@
 #import "SLLoginVC.h"
 #import "SLStyle.h"
 #import "UIViewController+SLToastBanner.h"
+#import <Facebook-iOS-SDK/FacebookSDK/FBRequest.h>
 #import <Parse/Parse.h>
+#import "shortList-Swift.h"
 
 @interface SLLoginVC () <PFLogInViewControllerDelegate>
 
@@ -43,6 +45,12 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    SLEnterUserNameVC *vc = [SLEnterUserNameVC new];
+    
+    [self showViewController:vc sender:self];
+}
+
 #pragma mark PFLogInViewControllerDelegate
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
     __weak typeof(self)weakSelf = self;
@@ -60,6 +68,31 @@
 }
 
 - (void)callBackWithUser:(PFUser *)user isLoggedIn:(BOOL)isLoggedIn {
+
+    [SLParseController doesUserNameExist:user.username checkAction:^(BOOL isTaken) {
+        NSLog(@"asdfasdf");
+    }];
+
+    
+//    FBRequest *request = [FBRequest requestForMe];
+//    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result,  NSError *error) {
+//        if (!error) {
+//            NSString *facebookUsername = [result objectForKey:@"username"];
+//            
+//            if (facebookUsername) {
+//                [PFUser currentUser].username = facebookUsername;
+//            }
+//            else {
+//                [PFUser currentUser].username = facebookUsername;
+//            }
+//            
+//            
+//            [[PFUser currentUser] saveEventually];
+//        }
+//    }];
+//    
+    
+    
     if (self.completion) {
         self.completion(user, isLoggedIn);
     }
