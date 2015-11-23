@@ -7,3 +7,4 @@
 #import "SLBaseVC.h"
 #import "SLLoginVC.h"
 #import "SLStyle.h"
+#import "UIViewController+SLToastBanner.h"
