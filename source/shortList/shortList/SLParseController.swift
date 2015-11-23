@@ -8,7 +8,7 @@
 
 typealias SLGetUsersShortListBlock = (shortlists:NSArray) -> Void
 typealias SLShortListAlbumsBlock = (albums:NSArray) -> Void
-typealias SLUsernameCheckAction = (isTaken:Bool) -> Void
+typealias SLIdCheckAction = (exists:Bool) -> Void
 
 import Foundation
 
@@ -121,24 +121,38 @@ class SLParseController : NSObject {
         completion()
     }
     
-    class func doesUserNameExist(username:String, checkAction:SLUsernameCheckAction) {
+    class func doesUserNameExist(username:String, checkAction:SLIdCheckAction) {
         let query = PFQuery(className: "PFUser")
         query.whereKey("username", equalTo: username)
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) in
             if error == nil {
                 if (objects!.count > 0){
-                    checkAction(isTaken: true)
+                    checkAction(exists: true)
                 } else {
-                    checkAction(isTaken: false)
+                    checkAction(exists: false)
                 }
             } else {
-                checkAction(isTaken: true)
+                checkAction(exists: true)
             }
         }
-        
-        checkAction(isTaken: true)
-        
+    }
+    
+    class func doesSocialIdExist(socialId:String, tryfacebook:Bool, checkAction:SLIdCheckAction) {
+        let query = PFQuery(className: "PFUser")
+        query.whereKey((tryfacebook) ? "facebookId" : "twitterId", equalTo: socialId)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) in
+            if error == nil {
+                if (objects!.count > 0){
+                    checkAction(exists: true)
+                } else {
+                    checkAction(exists: false)
+                }
+            } else {
+                checkAction(exists: true)
+            }
+        }
     }
     
     class func getCurrentUser() -> PFUser {
