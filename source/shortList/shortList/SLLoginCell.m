@@ -31,7 +31,7 @@
         [self.loginButton setTitle:NSLocalizedString(@"Login", nil) forState:UIControlStateNormal];
         [self.loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.loginButton.titleLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
-        self.loginButton.backgroundColor = [UIColor greenColor];
+        self.loginButton.backgroundColor = [UIColor sl_Green];
         [self.loginButton addTarget:self action:@selector(loginButtonAction:)forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.loginButton];
 
@@ -61,7 +61,7 @@
     else {
         [self.loginButton setTitle:NSLocalizedString(@"Login", nil) forState:UIControlStateNormal];
         [self.loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        self.loginButton.backgroundColor = [UIColor greenColor];
+        self.loginButton.backgroundColor = [UIColor sl_Green];
     }
 }
 

@@ -23,7 +23,7 @@
 - (NSDictionary *)getOptionsForAction:(NSString *)actionText message:(NSString *)message type:(SLToastMessageType)toastMessageType  {
     UIColor *backGroundColor;
     if (toastMessageType == SLToastMessageSuccess) {
-        backGroundColor = [UIColor greenColor];
+        backGroundColor = [UIColor sl_Green];
     }
     else if (toastMessageType == SLToastMessageWarning) {
         backGroundColor = [UIColor yellowColor];

@@ -9,11 +9,17 @@
 #import "UIColor+SLStyle.h"
 
 static NSString * const kSLStyleColorRed = @"#bb1717";
+static NSString * const kSLStyleColorGreen = @"#009900";
+
 
 @implementation UIColor (SLStyle)
 
 + (UIColor *)sl_Red {
     return [UIColor colorFromHexString:kSLStyleColorRed];
+}
+
++ (UIColor *)sl_Green {
+    return [UIColor colorFromHexString:kSLStyleColorGreen];
 }
 
 #pragma mark - Methods

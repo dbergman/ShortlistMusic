@@ -11,5 +11,6 @@
 @interface UIColor (SLStyle)
 
 + (UIColor *)sl_Red;
++ (UIColor *)sl_Green;
 
 @end
