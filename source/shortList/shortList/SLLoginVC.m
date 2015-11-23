@@ -12,6 +12,9 @@
 #import <Facebook-iOS-SDK/FacebookSDK/FBRequest.h>
 #import <Parse/Parse.h>
 #import "shortList-Swift.h"
+#import <ParseTwitterUtils.h>
+#import <ParseFacebookUtils/PFFacebookUtils.h>
+
 
 @interface SLLoginVC () <PFLogInViewControllerDelegate>
 
@@ -45,18 +48,14 @@
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    SLEnterUserNameVC *vc = [SLEnterUserNameVC new];
-    
-    [self showViewController:vc sender:self];
-}
-
 #pragma mark PFLogInViewControllerDelegate
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    __weak typeof(self)weakSelf = self;
-    [self dismissViewControllerAnimated:YES completion:^{
-        [weakSelf callBackWithUser:user isLoggedIn:YES];
-    }];
+    BOOL linkedWithFacebook = [PFFacebookUtils isLinkedWithUser:user];
+    BOOL linkedWithTwitter = [PFTwitterUtils isLinkedWithUser:user];
+
+    if (linkedWithFacebook) {
+        [self facebookUserCheck:user isLoggedIn:YES];
+    }
 }
 
 - (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(PFUI_NULLABLE NSError *)error {
@@ -67,35 +66,41 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)callBackWithUser:(PFUser *)user isLoggedIn:(BOOL)isLoggedIn {
-
-    [SLParseController doesUserNameExist:user.username checkAction:^(BOOL isTaken) {
-        NSLog(@"asdfasdf");
+- (void)facebookUserCheck:(PFUser *)pfuser isLoggedIn:(BOOL)isLoggedIn {
+    FBRequest *request = [FBRequest requestForMe];
+    __weak typeof(self)weakSelf = self;
+    __weak typeof(PFUser *)weakUser = pfuser;
+    [request startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user,  NSError *error) {
+        if (!error) {
+            __block NSString *fbId = [user objectForKey:@"id"];
+            [SLParseController doesSocialIdExist:fbId tryfacebook:YES checkAction:^(BOOL exists) {
+                if (exists) {
+                    if (weakSelf.completion) {
+                        weakSelf.completion(weakUser, isLoggedIn);
+                    }
+                }
+                else {
+                    [weakSelf createUsernameforUser:weakUser forFacebook:YES socialId:fbId];
+                }
+            }];
+        }
     }];
+}
 
+- (void)createUsernameforUser:(PFUser *)user forFacebook:(BOOL)forFace socialId:(NSString *)socialId {
+    __weak typeof(self)weakSelf = self;
+    SLEnterUserNameVC *vc = [[SLEnterUserNameVC alloc] initWithUser:user onSuccess:^{
+        [weakSelf dismissViewControllerAnimated:YES completion:nil];
+////THIS NEEDS WORK/////// not saving ID
+        user[(forFace) ? @"facebookId" : @"twitterId"] = socialId;
+
+    } onCancel:^{
+        [weakSelf dismissViewControllerAnimated:YES completion:^{
+            [PFUser logOut];
+        }];
+    }];
     
-//    FBRequest *request = [FBRequest requestForMe];
-//    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result,  NSError *error) {
-//        if (!error) {
-//            NSString *facebookUsername = [result objectForKey:@"username"];
-//            
-//            if (facebookUsername) {
-//                [PFUser currentUser].username = facebookUsername;
-//            }
-//            else {
-//                [PFUser currentUser].username = facebookUsername;
-//            }
-//            
-//            
-//            [[PFUser currentUser] saveEventually];
-//        }
-//    }];
-//    
-    
-    
-    if (self.completion) {
-        self.completion(user, isLoggedIn);
-    }
+    [self showViewController:vc sender:self];
 }
 
 + (UILabel *)getTempLogo:(CGRect)parseLogoFrame {
