@@ -54,7 +54,7 @@
     BOOL linkedWithTwitter = [PFTwitterUtils isLinkedWithUser:user];
 
     if (linkedWithFacebook) {
-        [self facebookUserCheck:user isLoggedIn:YES];
+        [self userCheck:user isLoggedIn:YES];
     }
 }
 
@@ -66,34 +66,34 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)facebookUserCheck:(PFUser *)pfuser isLoggedIn:(BOOL)isLoggedIn {
+- (void)userCheck:(PFUser *)pfuser isLoggedIn:(BOOL)isLoggedIn {
     FBRequest *request = [FBRequest requestForMe];
     __weak typeof(self)weakSelf = self;
     __weak typeof(PFUser *)weakUser = pfuser;
     [request startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user,  NSError *error) {
         if (!error) {
             __block NSString *fbId = [user objectForKey:@"id"];
-            [SLParseController doesSocialIdExist:fbId tryfacebook:YES checkAction:^(BOOL exists) {
+            [SLParseController doesSocialIdExist:fbId checkAction:^(BOOL exists) {
                 if (exists) {
                     if (weakSelf.completion) {
                         weakSelf.completion(weakUser, isLoggedIn);
                     }
                 }
                 else {
-                    [weakSelf createUsernameforUser:weakUser forFacebook:YES socialId:fbId];
+                    [weakSelf createUsernameforUser:weakUser socialId:fbId];
                 }
             }];
         }
     }];
 }
 
-- (void)createUsernameforUser:(PFUser *)user forFacebook:(BOOL)forFace socialId:(NSString *)socialId {
+- (void)createUsernameforUser:(PFUser *)user socialId:(NSString *)socialId {
     __weak typeof(self)weakSelf = self;
     SLEnterUserNameVC *vc = [[SLEnterUserNameVC alloc] initWithUser:user onSuccess:^{
-        [weakSelf dismissViewControllerAnimated:YES completion:nil];
-////THIS NEEDS WORK/////// not saving ID
-        user[(forFace) ? @"facebookId" : @"twitterId"] = socialId;
-
+        user[@"socialId"] = socialId;
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *_Nullable error) {
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+        }];
     } onCancel:^{
         [weakSelf dismissViewControllerAnimated:YES completion:^{
             [PFUser logOut];

@@ -122,9 +122,9 @@ class SLParseController : NSObject {
     }
     
     class func doesUserNameExist(username:String, checkAction:SLIdCheckAction) {
-        let query = PFQuery(className: "PFUser")
-        query.whereKey("username", equalTo: username)
-        query.findObjectsInBackgroundWithBlock {
+        let query = PFUser.query()
+        query!.whereKey("username", equalTo: username)
+        query!.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) in
             if error == nil {
                 if (objects!.count > 0){
@@ -138,10 +138,10 @@ class SLParseController : NSObject {
         }
     }
     
-    class func doesSocialIdExist(socialId:String, tryfacebook:Bool, checkAction:SLIdCheckAction) {
-        let query = PFQuery(className: "PFUser")
-        query.whereKey((tryfacebook) ? "facebookId" : "twitterId", equalTo: socialId)
-        query.findObjectsInBackgroundWithBlock {
+    class func doesSocialIdExist(socialId:String, checkAction:SLIdCheckAction) {
+        let query = PFUser.query()
+        query!.whereKey("socialId", equalTo: socialId)
+        query!.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) in
             if error == nil {
                 if (objects!.count > 0){
