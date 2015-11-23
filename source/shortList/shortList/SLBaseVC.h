@@ -10,6 +10,7 @@
 
 @interface SLBaseVC : UIViewController
 
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (void)setTitle:(NSString *)vcTitle;
 
 @end
