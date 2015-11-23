@@ -53,17 +53,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    static NSString *LoginCellIdentifier = @"LoginCell";
-    
-//    if (indexPath.section == 0) {
-//        SLAlbumDetailsCell *cell = [tableView dequeueReusableCellWithIdentifier:AlbumDetailCellIdentifier];
-//        if (cell == nil) {
-//            cell = [[SLAlbumDetailsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AlbumDetailCellIdentifier];
-//        }
-//        
-//        return [self configureAlbumDetails:cell];
-//    }
-    
     static NSString *LoginCellIdentifier = @"LoginCell";
     
     SLLoginCell *cell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
