@@ -154,15 +154,20 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
 }
 
 - (void)addTableViewHeaderMessage:(BOOL)loggedIn {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - MarginSizes.xxLarge, SLTableViewHeaderMessageheight)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, SLTableViewHeaderMessageheight)];
     
-    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(MarginSizes.xxLarge, MarginSizes.medium, self.view.frame.size.width - MarginSizes.xxLarge, SLTableViewHeaderMessageheight)];
+    UILabel *messageLabel = [UILabel new];
     messageLabel.numberOfLines = 0;
     messageLabel.font = [SLStyle polarisFontWithSize:FontSizes.large];
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.text = (loggedIn) ? NSLocalizedString(@"You do not have any ShortLists at the moment", nil) :  NSLocalizedString(@"Log in to add Shortlists", nil);
     [messageLabel sizeToFit];
+
+    CGRect frame = messageLabel.frame;
+    frame.origin.y = MarginSizes.medium;
+    frame.origin.x = (self.view.frame.size.width/2.0) - frame.size.width/2.0;
+    messageLabel.frame = frame;
 
     [headerView addSubview:messageLabel];
     
