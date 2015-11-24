@@ -15,8 +15,14 @@
 @implementation UIViewController (SLLoginGate)
 
 - (void)showLoginGate {
+    __weak typeof(self)weakSelf = self;
+    
     if (![PFUser currentUser]) {
-        SLLoginVC *loginVC = [[SLLoginVC alloc] init];
+        SLLoginVC *loginVC = [[SLLoginVC alloc] initWithCompletion:^(PFUser *user, BOOL isLoggedIn) {
+            if (isLoggedIn) {
+                [weakSelf dismissViewControllerAnimated:YES completion:nil];
+            }
+        }];
         loginVC.facebookPermissions = @[@"user_about_me"];
         loginVC.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsTwitter | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsDismissButton;
 
