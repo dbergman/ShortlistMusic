@@ -13,6 +13,7 @@ typedef void(^SLLoginCompletionBlock)(PFUser *user, BOOL isLoggedIn);
 
 @interface SLLoginVC : PFLogInViewController
 
+- (instancetype)initWithCompletion:(SLLoginCompletionBlock)completion;
 + (UILabel *)getTempLogo:(CGRect)parseLogoFrame;
 
 @end

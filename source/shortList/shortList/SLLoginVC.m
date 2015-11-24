@@ -29,6 +29,7 @@
     if (self) {
         self.completion = completion;
     }
+    
     return self;
 }
 
@@ -53,8 +54,13 @@
     BOOL linkedWithFacebook = [PFFacebookUtils isLinkedWithUser:user];
     BOOL linkedWithTwitter = [PFTwitterUtils isLinkedWithUser:user];
 
-    if (linkedWithFacebook) {
+    if (linkedWithFacebook || linkedWithTwitter) {
         [self userCheck:user isLoggedIn:YES];
+    }
+    else {
+        if (self.completion) {
+            self.completion(user, YES);
+        }
     }
 }
 
