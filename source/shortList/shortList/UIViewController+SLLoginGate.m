@@ -24,7 +24,7 @@
             }
         }];
         loginVC.facebookPermissions = @[@"user_about_me"];
-        loginVC.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsTwitter | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsDismissButton;
+        loginVC.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsDismissButton;
 
         SLUserSignUpVC *userSignUpVC = [[SLUserSignUpVC alloc] init];
         userSignUpVC.fields = PFSignUpFieldsDefault;
