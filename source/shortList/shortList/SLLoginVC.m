@@ -15,7 +15,6 @@
 #import <ParseTwitterUtils.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 
-
 @interface SLLoginVC () <PFLogInViewControllerDelegate>
 
 @property (nonatomic, copy) SLLoginCompletionBlock completion;
