@@ -10,6 +10,11 @@
 #import "SLLoginCell.h"
 #import <Parse/Parse.h>
 #import "UIViewController+SLLoginGate.h"
+#import "SLContactMeCell.h"
+#import <Twitter/Twitter.h> 
+#import <Social/Social.h>
+#import <MessageUI/MessageUI.h>
+#import "SLStyle.h"
 
 @interface SLMoreVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -40,32 +45,86 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *LoginCellIdentifier = @"LoginCell";
+    static NSString *ContactCellIdentifier = @"ContactCell";
     
-    SLLoginCell *cell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
-    if (cell == nil) {
-        cell = [[SLLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LoginCellIdentifier];
+    if (indexPath.row == 0) {
+        SLLoginCell *loginCell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
+        if (loginCell == nil) {
+            loginCell = [[SLLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LoginCellIdentifier];
+        }
+        __weak typeof(self)weakSelf = self;
+        [loginCell configLoginButton:([PFUser currentUser]) ?: NO loginButtonAction:^{
+            (![PFUser currentUser]) ? [weakSelf showLoginGate] : [PFUser logOutInBackground];
+            [loginCell updateButtonWithLoginStatus:([PFUser currentUser])];
+        }];
+
+        return loginCell;
     }
+    
+    SLContactMeCell *contactMeCell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
+    if (contactMeCell == nil) {
+        contactMeCell = [[SLContactMeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContactCellIdentifier];
+    }
+    
     __weak typeof(self)weakSelf = self;
-    [cell configLoginButton:([PFUser currentUser]) ?: NO loginButtonAction:^{
-        (![PFUser currentUser]) ? [weakSelf showLoginGate] : [PFUser logOutInBackground];
-        [cell updateButtonWithLoginStatus:([PFUser currentUser])];
+    [contactMeCell setContactMeBlockAction:^{
+        [weakSelf contactMeAction];
+    }];
+    
+    return contactMeCell;
+}
+
+- (void)contactMeAction {
+    __weak typeof(self)weakSelf = self;
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Contact Me", nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    if ([MFMailComposeViewController canSendMail]) {
+        UIAlertAction *email = [UIAlertAction actionWithTitle:NSLocalizedString(@"Email", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
+                
+                NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [SLStyle polarisFontWithSize:FontSizes.large], NSForegroundColorAttributeName: [UIColor whiteColor]};
+                [[mailComposeVC navigationBar] setTitleTextAttributes:barButtonAppearanceDict];
+                [[mailComposeVC navigationBar] setBarTintColor:[UIColor blackColor]];
+                [[mailComposeVC navigationBar] setTintColor:[UIColor whiteColor]];
+            
+                [mailComposeVC setToRecipients:@[@"shortlistapp01@gmail.com"]];
+                [mailComposeVC setSubject:[NSString stringWithFormat:@"Hey Mr.ShortListMusic: "]];
+
+                [self presentViewController:mailComposeVC animated:YES completion:^{
+                    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+                }];
+        }];
+        
+        [alert addAction:email];
+    }
+    
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        UIAlertAction *twitter = [UIAlertAction actionWithTitle:NSLocalizedString(@"Twitter", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+            [tweetSheet setInitialText:@"Hey @shortlistmusic:"];
+            [weakSelf presentViewController:tweetSheet animated:YES completion:nil];
+        }];
+        
+        [alert addAction:twitter];
+    }
+    
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
     }];
 
-    return cell;
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end
