@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Dustin Bergman. All rights reserved.
 //
 
-#import "ShortListAlbum.h"
+#import "SLShortListAlbum.h"
 #import "ItunesTrack.h"
 
-@implementation ShortListAlbum
+@implementation SLShortListAlbum
 
 @dynamic albumName;
 @dynamic albumId;
@@ -21,11 +21,11 @@
 @dynamic shortListRank;
 
 + (NSString *)parseClassName {
-    return @"ShortListAlbum";
+    return @"SLShortListAlbum";
 }
 
 + (instancetype)createShortListAlbum:(ItunesTrack *)albumDetails {
-    ShortListAlbum *shortList = [[ShortListAlbum alloc] init];
+    SLShortListAlbum *shortList = [[SLShortListAlbum alloc] init];
     
     if (shortList) {
         shortList.albumName = albumDetails.collectionName;

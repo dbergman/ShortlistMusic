@@ -8,7 +8,7 @@
 
 #import <Parse/Parse.h>
 
-@interface Shortlist : PFObject <PFSubclassing>
+@interface SLShortlist : PFObject <PFSubclassing>
 
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Dustin Bergman. All rights reserved.
 //
 
-#import "Shortlist.h"
+#import "SLShortlist.h"
 
-@implementation Shortlist
+@implementation SLShortlist
 
 @dynamic shortListName;
 @dynamic shortListYear;
@@ -16,7 +16,7 @@
 @synthesize shortListAlbums = _shortListAlbums;
 
 + (NSString *)parseClassName {
-    return @"Shortlist";
+    return @"SLShortlist";
 }
 
 - (void)setShortListAlbums:(NSArray *)shortListAlbums {
