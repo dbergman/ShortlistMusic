@@ -10,4 +10,6 @@
 
 @interface SLShortlistCoreDataMigrtationController : NSObject
 
+- (void)addExistingShortListsToParse:(NSArray *)existingShortlists;
+
 @end
