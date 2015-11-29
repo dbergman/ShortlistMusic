@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13C64" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="AlbumShortList" representedClassName="AlbumShortList" syncable="YES">
+        <attribute name="albumCopyRight" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="albumCoverURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="albumID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="albumName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="albumRank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="albumYear" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artistID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artistName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="shortList" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="ShortList" inverseName="album" inverseEntity="ShortList" syncable="YES"/>
+    </entity>
+    <entity name="ShortList" representedClassName="ShortList" syncable="YES">
+        <attribute name="shortListCreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="shortListID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortListName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shortListYear" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="album" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AlbumShortList" inverseName="shortList" inverseEntity="AlbumShortList" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AlbumShortList" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ShortList" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>
