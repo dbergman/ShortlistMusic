@@ -7,8 +7,8 @@
 //
 
 #import "SLAlbumArtImaging.h"
-#import "Shortlist.h"
-#import "ShortListAlbum.h"
+#import "SLShortlist.h"
+#import "SLShortListAlbum.h"
 #import "SLStyle.h"
 
 static NSString * const kShortListAlbumArtKey = @"slAlbumImage";
@@ -17,13 +17,13 @@ static const CGFloat kShortListAlbumArtWorkSize = 320.0;
 
 @interface SLAlbumArtImaging ()
 
-@property (nonatomic, strong) Shortlist *shortList;
+@property (nonatomic, strong) SLShortlist *shortList;
 
 @end
 
 @implementation SLAlbumArtImaging
 
-- (UIImage *)buildShortListAlbumArt:(Shortlist *)shortlist {
+- (UIImage *)buildShortListAlbumArt:(SLShortlist *)shortlist {
     self.shortList = shortlist;
     NSOperationQueue *queue = [NSOperationQueue new];
     NSMutableArray *operationArray = [NSMutableArray new];
@@ -31,7 +31,7 @@ static const CGFloat kShortListAlbumArtWorkSize = 320.0;
     NSMutableArray *albumArtArray = [NSMutableArray new];
     
     __weak typeof(self)weakSelf = self;
-    for (ShortListAlbum *slAlbum in shortlist.shortListAlbums) {
+    for (SLShortListAlbum *slAlbum in shortlist.shortListAlbums) {
         NSOperation *op = [NSBlockOperation blockOperationWithBlock:^{
            [albumArtArray addObject:[weakSelf downloadAlbumImage:slAlbum]];
         }];
@@ -46,7 +46,7 @@ static const CGFloat kShortListAlbumArtWorkSize = 320.0;
     return collectionImage;
 }
 
-- (NSDictionary *)downloadAlbumImage:(ShortListAlbum *)slAlbum {
+- (NSDictionary *)downloadAlbumImage:(SLShortListAlbum *)slAlbum {
    NSURL *albumArtUrl = [NSURL URLWithString:[slAlbum.albumArtWork stringByReplacingOccurrencesOfString:@"400" withString:@"1200"]];
    NSData *imageData = [[NSData alloc] initWithContentsOfURL:albumArtUrl];
     

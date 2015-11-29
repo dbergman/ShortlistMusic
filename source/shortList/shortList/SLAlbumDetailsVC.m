@@ -14,8 +14,8 @@
 #import <BlocksKit+UIKit.h>
 #import "SLAlbumDetailsCell.h"
 #import "SLAlbumTrackCell.h"
-#import "Shortlist.h"
-#import "ShortListAlbum.h"
+#import "SLShortlist.h"
+#import "SLShortListAlbum.h"
 #import "ItunesSearchTracks.h"
 #import "shortList-Swift.h"
 #import "UIViewController+Utilities.h"
@@ -37,7 +37,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 @property (nonatomic, strong) ItunesTrack *albumDetails;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *coverImageView;
-@property (nonatomic, strong) Shortlist *shortList;
+@property (nonatomic, strong) SLShortlist *shortList;
 @property (nonatomic, strong) UIButton *playNowButton;
 @property (nonatomic, assign) BOOL isPlayingOptionsShown;
 @property (nonatomic, strong) UIImageView *blurBackgroundView;
@@ -48,7 +48,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 @implementation SLAlbumDetailsVC
 
-- (instancetype)initWithShortList:(Shortlist *)shortList albumId:(NSString*)albumCollectionId {
+- (instancetype)initWithShortList:(SLShortlist *)shortList albumId:(NSString*)albumCollectionId {
     self = [super init];
     
     if (self) {
@@ -163,8 +163,8 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     return albumTrackCell;
 }
 
-- (ShortListAlbum *)getShortListAlbum {
-    for (ShortListAlbum *slAlbum in self.shortList.shortListAlbums) {
+- (SLShortListAlbum *)getShortListAlbum {
+    for (SLShortListAlbum *slAlbum in self.shortList.shortListAlbums) {
         if (slAlbum.albumId == self.albumDetails.collectionId) {
             return slAlbum;
         }
@@ -236,7 +236,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 - (void)addAlbumToShortList {
     __weak typeof(self) weakSelf = self;
     [SLParseController getShortListAlbums:self.shortList completion:^(NSArray *allAlbums) {
-        ShortListAlbum *slAlbum = [ShortListAlbum createShortListAlbum:weakSelf.albumDetails];
+        SLShortListAlbum *slAlbum = [SLShortListAlbum createShortListAlbum:weakSelf.albumDetails];
         slAlbum.shortListId = weakSelf.shortList.objectId;
         slAlbum.shortListRank = allAlbums.count + 1;
 
@@ -266,7 +266,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 }
 
 - (void)reorderShortList {
-    [self.shortList.shortListAlbums enumerateObjectsUsingBlock:^(ShortListAlbum *album, NSUInteger idx, BOOL *stop) {
+    [self.shortList.shortListAlbums enumerateObjectsUsingBlock:^(SLShortListAlbum *album, NSUInteger idx, BOOL *stop) {
         album.shortListRank = idx + 1;
     }];
 }

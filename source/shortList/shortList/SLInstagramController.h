@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@class Shortlist;
+@class SLShortlist;
 
 @interface SLInstagramController : NSObject
 
 + (id)sharedInstance;
-- (void)shareShortlistToInstagram:(Shortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage attachToView:(UIView *)attachView;
+- (void)shareShortlistToInstagram:(SLShortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage attachToView:(UIView *)attachView;
 
 @end

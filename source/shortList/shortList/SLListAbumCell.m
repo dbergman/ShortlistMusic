@@ -7,7 +7,7 @@
 //
 
 #import "SLListAbumCell.h"
-#import "ShortListAlbum.h"
+#import "SLShortListAlbum.h"
 #import "SLStyle.h"
 #import "UIImage+ImageEffects.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -95,7 +95,7 @@ static const CGFloat kSLALbumCellHeight = 120;
     self.artistNameLabel.preferredMaxLayoutWidth = self.contentView.frame.size.width - (2.0 * MarginSizes.xLarge);
 }
 
-- (void)configureCell:(ShortListAlbum *)album {
+- (void)configureCell:(SLShortListAlbum *)album {
     __weak typeof(self)weakSelf = self;
     [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         UIImage *blurArtwork = [image applyBlurWithRadius:20 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.2] saturationDeltaFactor:1.0 maskImage:nil];

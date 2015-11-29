@@ -14,7 +14,7 @@
 		461801231B095206003C0A92 /* SLCreateShortListEnterYearCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801221B095206003C0A92 /* SLCreateShortListEnterYearCell.m */; };
 		461FCA021AED9C8E001C3F46 /* ItunesSearchAPIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */; };
 		4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5511B1E663F00F997F8 /* SLParseController.swift */; };
-		4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* ShortListAlbum.m */; };
+		4648A5561B234CC300F997F8 /* SLShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* SLShortListAlbum.m */; };
 		464CF7101B9B6A76008356F6 /* UIViewController+SLToastBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */; };
 		464CF7131B9C9DE6008356F6 /* libParseFacebookUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7111B9C9DE6008356F6 /* libParseFacebookUtils.a */; };
 		464CF7141B9C9DE6008356F6 /* libParseTwitterUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7121B9C9DE6008356F6 /* libParseTwitterUtils.a */; };
@@ -47,7 +47,7 @@
 		467D55A71AF6D98F005CD607 /* UIImage+AverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55A61AF6D98F005CD607 /* UIImage+AverageColor.m */; };
 		468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */; };
 		468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468925671B00026B00A7D98C /* SLAlbumTrackCell.m */; };
-		468FB8BC1B1260DE0004DC14 /* Shortlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 468FB8BB1B1260DE0004DC14 /* Shortlist.m */; };
+		468FB8BC1B1260DE0004DC14 /* SLShortlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 468FB8BB1B1260DE0004DC14 /* SLShortlist.m */; };
 		46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094051AF061C00091C7F7 /* ItunesArtist.m */; };
 		46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */; };
 		46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */; };
@@ -112,8 +112,8 @@
 		461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesSearchAPIController.m; sourceTree = "<group>"; };
 		4648A5501B1E663E00F997F8 /* shortList-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shortList-Bridging-Header.h"; sourceTree = "<group>"; };
 		4648A5511B1E663F00F997F8 /* SLParseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLParseController.swift; sourceTree = "<group>"; };
-		4648A5541B234CC300F997F8 /* ShortListAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShortListAlbum.h; sourceTree = "<group>"; };
-		4648A5551B234CC300F997F8 /* ShortListAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShortListAlbum.m; sourceTree = "<group>"; };
+		4648A5541B234CC300F997F8 /* SLShortListAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLShortListAlbum.h; sourceTree = "<group>"; };
+		4648A5551B234CC300F997F8 /* SLShortListAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLShortListAlbum.m; sourceTree = "<group>"; };
 		464CF70E1B9B6A76008356F6 /* UIViewController+SLToastBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLToastBanner.h"; sourceTree = "<group>"; };
 		464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLToastBanner.m"; sourceTree = "<group>"; };
 		464CF7111B9C9DE6008356F6 /* libParseFacebookUtils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libParseFacebookUtils.a; path = "Pods/../build/Debug-iphoneos/libParseFacebookUtils.a"; sourceTree = "<group>"; };
@@ -170,8 +170,8 @@
 		468925641AFFE10500A7D98C /* SLAlbumDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumDetailsCell.m; sourceTree = "<group>"; };
 		468925661B00026B00A7D98C /* SLAlbumTrackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLAlbumTrackCell.h; sourceTree = "<group>"; };
 		468925671B00026B00A7D98C /* SLAlbumTrackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLAlbumTrackCell.m; sourceTree = "<group>"; };
-		468FB8BA1B1260DE0004DC14 /* Shortlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shortlist.h; sourceTree = "<group>"; };
-		468FB8BB1B1260DE0004DC14 /* Shortlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shortlist.m; sourceTree = "<group>"; };
+		468FB8BA1B1260DE0004DC14 /* SLShortlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLShortlist.h; sourceTree = "<group>"; };
+		468FB8BB1B1260DE0004DC14 /* SLShortlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLShortlist.m; sourceTree = "<group>"; };
 		46A094041AF061C00091C7F7 /* ItunesArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesArtist.h; sourceTree = "<group>"; };
 		46A094051AF061C00091C7F7 /* ItunesArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesArtist.m; sourceTree = "<group>"; };
 		46A094091AF06A3F0091C7F7 /* ItunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesAlbum.h; sourceTree = "<group>"; };
@@ -448,10 +448,10 @@
 		468FB8B91B1260B40004DC14 /* ShortList */ = {
 			isa = PBXGroup;
 			children = (
-				468FB8BA1B1260DE0004DC14 /* Shortlist.h */,
-				468FB8BB1B1260DE0004DC14 /* Shortlist.m */,
-				4648A5541B234CC300F997F8 /* ShortListAlbum.h */,
-				4648A5551B234CC300F997F8 /* ShortListAlbum.m */,
+				468FB8BA1B1260DE0004DC14 /* SLShortlist.h */,
+				468FB8BB1B1260DE0004DC14 /* SLShortlist.m */,
+				4648A5541B234CC300F997F8 /* SLShortListAlbum.h */,
+				4648A5551B234CC300F997F8 /* SLShortListAlbum.m */,
 			);
 			name = ShortList;
 			sourceTree = "<group>";
@@ -918,7 +918,7 @@
 				46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */,
 				46CB6B0D1AED7C9900BF1DF3 /* SLMoreVC.m in Sources */,
 				466064041B81251F006AB766 /* SLUserSignUpVC.m in Sources */,
-				4648A5561B234CC300F997F8 /* ShortListAlbum.m in Sources */,
+				4648A5561B234CC300F997F8 /* SLShortListAlbum.m in Sources */,
 				46A094141AF072730091C7F7 /* ItunesTrack.m in Sources */,
 				46CB6B091AED7BB100BF1DF3 /* SLProfileVC.m in Sources */,
 				46D423071B77D3A900D79263 /* SpotifyAlbums.m in Sources */,
@@ -963,7 +963,7 @@
 				46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */,
 				46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */,
 				466064091B81260C006AB766 /* SLInstagramController.m in Sources */,
-				468FB8BC1B1260DE0004DC14 /* Shortlist.m in Sources */,
+				468FB8BC1B1260DE0004DC14 /* SLShortlist.m in Sources */,
 				467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */,
 				4664276A1BE1935100ECFCAE /* SLEnterUserNameVC.swift in Sources */,
 				46CDDCA81B920A05004A5D20 /* UIImage+ImageEffects.m in Sources */,
@@ -1105,7 +1105,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dust.shortList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dus.shortList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
@@ -1130,7 +1130,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dust.shortList;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dus.shortList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";

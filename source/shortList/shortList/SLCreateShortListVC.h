@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Shortlist;
+@class SLShortlist;
 
-typedef void(^SLCreateUpdateShortListCompletion)(Shortlist *shortlist, BOOL isNew);
+typedef void(^SLCreateUpdateShortListCompletion)(SLShortlist *shortlist, BOOL isNew);
 
 extern CGFloat const kSLCreateShortListPickerHeight;
 extern CGFloat const kSLCreateShortListCellHeight;
@@ -29,7 +29,7 @@ extern NSInteger const kSLCreateShortListCellCount;
 @property (nonatomic, strong) UITableView *tableView;
 
 - (instancetype)initWithCompletion:(SLCreateUpdateShortListCompletion)completion;
-- (void)updateShortList:(Shortlist *)shortList;
+- (void)updateShortList:(SLShortlist *)shortList;
 - (void)newShortList;
 
 @end

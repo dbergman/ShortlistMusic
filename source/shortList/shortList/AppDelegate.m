@@ -15,8 +15,8 @@
 #import "SLMoreVC.h"
 #import "SLStyle.h"
 #import "AFNetworkActivityIndicatorManager.h"
-#import "Shortlist.h"
-#import "ShortListAlbum.h"
+#import "SLShortlist.h"
+#import "SLShortListAlbum.h"
 #import "SLStyle.h"
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import <ParseTwitterUtils/ParseTwitterUtils.h>
@@ -88,8 +88,8 @@
     [Parse setApplicationId:appKeys[@"ParseAppId"] clientKey:appKeys[@"ParseClientKey"]];
     [PFFacebookUtils initializeFacebook];
 
-    [Shortlist registerSubclass];
-    [ShortListAlbum registerSubclass];
+    [SLShortlist registerSubclass];
+    [SLShortListAlbum registerSubclass];
 }
 
 - (void)setupAppearance {

@@ -7,7 +7,7 @@
 //
 
 #import "SLAlbumCell.h"
-#import "ShortListAlbum.h"
+#import "SLShortListAlbum.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SLAlbumCell ()
@@ -37,7 +37,7 @@
     return self;
 }
 
-- (void)configWithShortListAlbum:(ShortListAlbum *)albums {
+- (void)configWithShortListAlbum:(SLShortListAlbum *)albums {
     [self.albumArtView sd_setImageWithURL:[NSURL URLWithString:albums.albumArtWork] placeholderImage:[[UIImage imageNamed:@"albumPlaceHolder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     [self.albumArtView setTintColor:[UIColor whiteColor]];
 }

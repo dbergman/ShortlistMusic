@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@class Shortlist;
+@class SLShortlist;
 
 @interface SLAlbumArtImaging : NSObject
 
-- (UIImage *)buildShortListAlbumArt:(Shortlist *)shortlist;
+- (UIImage *)buildShortListAlbumArt:(SLShortlist *)shortlist;
 
 @end

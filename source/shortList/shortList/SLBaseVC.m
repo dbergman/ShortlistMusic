@@ -10,10 +10,25 @@
 #import "SLStyle.h"
 
 @interface SLBaseVC ()
-
 @end
 
 @implementation SLBaseVC
+
+- (instancetype)init {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    return [self init];
+}
+
+- (instancetype)initWithNibName:(NSString *)nibName bundle:(NSBundle *)bundle {
+    return [self init];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

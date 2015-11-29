@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SLBaseVC.h"
 
-@class Shortlist;
+@class SLShortlist;
 
 @interface SLListAlbumsVC : SLBaseVC
 
-- (nonnull instancetype)initWithShortList:(nonnull Shortlist *)shortList;
+- (nonnull instancetype)initWithShortList:(nonnull SLShortlist *)shortList;
 @end

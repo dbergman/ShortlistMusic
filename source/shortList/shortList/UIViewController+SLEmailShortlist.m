@@ -7,8 +7,8 @@
 //
 
 #import "UIViewController+SLEmailShortlist.h"
-#import "Shortlist.h"
-#import "ShortListAlbum.h"
+#import "SLShortlist.h"
+#import "SLShortListAlbum.h"
 #import "SLStyle.h"
 #import "UIViewController+SLToastBanner.h"
 #import <MessageUI/MessageUI.h>
@@ -19,7 +19,7 @@
 
 @implementation UIViewController (SLEmailShortlist)
 
-- (void)shareShortlistByEmail:(Shortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage {
+- (void)shareShortlistByEmail:(SLShortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage {
     if ([MFMailComposeViewController canSendMail]) {
         MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
         mailComposeVC.mailComposeDelegate = self;
@@ -45,7 +45,7 @@
     }
 }
 
-- (NSString *)createShortListEmailBody:(Shortlist *)shortlist {
+- (NSString *)createShortListEmailBody:(SLShortlist *)shortlist {
     NSString *theEmail = @"";
     NSString *htmlStart = @"<html>";
     NSString *header = @"<head> <style> td, th {  border: 1px solid #E0E0E0 ; } table {  border-collapse: collapse; }  </style> </head><body>";
@@ -56,7 +56,7 @@
     NSString *tableRow = @"";
     NSString *tableRows = @"";
     
-    for (ShortListAlbum *shortListAlbum in shortlist.shortListAlbums) {
+    for (SLShortListAlbum *shortListAlbum in shortlist.shortListAlbums) {
         
         tableRow = [NSString stringWithFormat:@"<tr>\n"
                     "<td rowspan = 2><font size=\"1\">%ld.</font></td> \n" //rank

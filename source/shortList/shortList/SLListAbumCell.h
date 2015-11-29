@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ShortListAlbum;
+@class SLShortListAlbum;
 
 @interface SLListAbumCell : UITableViewCell
 
-- (void)configureCell:(ShortListAlbum *)album;
+- (void)configureCell:(SLShortListAlbum *)album;
 
 @end

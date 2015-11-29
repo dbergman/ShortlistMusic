@@ -12,20 +12,20 @@
 #import "ItunesSearchTracks.h"
 #import "SLAlbumSearchResultsCellTableViewCell.h"
 #import "SLAlbumDetailsVC.h"
-#import "Shortlist.h"
+#import "SLShortlist.h"
 
 @interface SLAlbumSearchResultVC () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *albums;
 @property (nonatomic, strong) NSString *artistName;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) Shortlist *shortList;
+@property (nonatomic, strong) SLShortlist *shortList;
 
 @end
 
 @implementation SLAlbumSearchResultVC
 
-- (instancetype)initWithShortList:(Shortlist *)shortList ArtistName:(NSString *)artistName Albums:(NSArray *)albums {
+- (instancetype)initWithShortList:(SLShortlist *)shortList ArtistName:(NSString *)artistName Albums:(NSArray *)albums {
     self = [self initWithArtistName:artistName Albums:albums];
     
     if (self) {

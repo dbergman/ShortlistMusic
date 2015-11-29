@@ -9,7 +9,7 @@
 #import "UIViewController+SLAlbumArtImaging.h"
 #import "UIViewController+Utilities.h"
 #import "NSObject+BKAssociatedObjects.h"
-#import "Shortlist.h"
+#import "SLShortlist.h"
 #import "SLAlbumCell.h"
 
 @interface UIViewController () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
@@ -54,17 +54,17 @@
     return CGSizeMake([self getScreenWidth]/4, [self getScreenWidth]/4);
 }
 
-- (void)loadCollectionViewImage:(Shortlist *)shortlist {
+- (void)loadCollectionViewImage:(SLShortlist *)shortlist {
     [self saveShortList:shortlist];
     
     [[self collectionView] reloadData];
 }
 
-- (void)saveShortList:(Shortlist *)shortlist {
+- (void)saveShortList:(SLShortlist *)shortlist {
     [self bk_associateValue:shortlist withKey:@"shortlist"];
 }
 
-- (Shortlist *)shortlist {
+- (SLShortlist *)shortlist {
     return [self bk_associatedValueForKey:@"shortlist"];
 }
 

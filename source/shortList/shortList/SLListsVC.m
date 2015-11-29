@@ -13,7 +13,7 @@
 #import "SLCreateShortListVC.h"
 #import <BlocksKit+UIKit.h>
 #import "UIViewController+SLLoginGate.h"
-#import "Shortlist.h"
+#import "SLShortlist.h"
 #import <Parse/Parse.h>
 #import "SLAlbumsCollectionCell.h"
 #import "shortList-Swift.h"
@@ -103,7 +103,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
         cell = [[SLAlbumsCollectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    Shortlist *shortList = (Shortlist *)self.shortLists[indexPath.row];
+    SLShortlist *shortList = (SLShortlist *)self.shortLists[indexPath.row];
     [cell configShortListCollection:shortList];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(shortListCellSelected:)];
@@ -125,7 +125,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     __weak typeof(self) weakSelf = self;
-    __block Shortlist *sl = self.shortLists[indexPath.row];
+    __block SLShortlist *sl = self.shortLists[indexPath.row];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [SLParseController removeShortList:sl completion:^(NSArray * shortlists) {
             weakSelf.shortLists = shortlists;
@@ -141,14 +141,14 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
 #pragma mark GestureRecognizers
 - (void)shortListCellSelected:(UIGestureRecognizer *)gestureRecognizer {
     SLAlbumsCollectionCell *cell = (SLAlbumsCollectionCell *)[gestureRecognizer view];
-    Shortlist *shortList = self.shortLists[cell.tag];
+    SLShortlist *shortList = self.shortLists[cell.tag];
     [self.navigationController pushViewController:[[SLListAlbumsVC alloc] initWithShortList:shortList] animated:YES];
 }
 
 - (void)shortListCellUpdate:(UILongPressGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         SLAlbumsCollectionCell *cell = (SLAlbumsCollectionCell *)[gestureRecognizer view];
-        Shortlist *shortList = self.shortLists[cell.tag];
+        SLShortlist *shortList = self.shortLists[cell.tag];
         [self showCreateShortListView:shortList];
     }
 }
@@ -176,7 +176,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
 
 - (void)createNewShortListView {
     __weak typeof(self) weakSelf = self;
-    self.createShortListVC = [[SLCreateShortListVC alloc] initWithCompletion:^(Shortlist *shortlist, BOOL newShortlist) {
+    self.createShortListVC = [[SLCreateShortListVC alloc] initWithCompletion:^(SLShortlist *shortlist, BOOL newShortlist) {
         NSLayoutConstraint *topMarginConstraint = [self.createSLVerticalConstraints firstObject];
         topMarginConstraint.constant = weakSelf.view.frame.size.height;
         NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];
@@ -215,7 +215,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     [self.view updateConstraints];
 }
 
-- (void)showCreateShortListView:(Shortlist *)shortList {
+- (void)showCreateShortListView:(SLShortlist *)shortList {
     [self addBlurBackground];
     
     (shortList) ? [self.createShortListVC updateShortList:shortList] : [self.createShortListVC newShortList];

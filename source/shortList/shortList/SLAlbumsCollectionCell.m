@@ -7,7 +7,7 @@
 //
 
 #import "SLAlbumsCollectionCell.h"
-#import "Shortlist.h"
+#import "SLShortlist.h"
 #import "SLAlbumCell.h"
 #import "SLStyle.h"
 
@@ -16,7 +16,7 @@ static const CGFloat kSLAlbumCellSize = 120;
 @interface SLAlbumsCollectionCell () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) Shortlist *shortlist;
+@property (nonatomic, strong) SLShortlist *shortlist;
 @property (nonatomic, strong) UIView *shortlistDetailsView;
 @property (nonatomic, strong) UILabel *shortlistNamelabel;
 @property (nonatomic, strong) UILabel *shortlistYearlabel;
@@ -81,7 +81,7 @@ static const CGFloat kSLAlbumCellSize = 120;
     return self;
 }
 
-- (void)configShortListCollection:(Shortlist *)shortList {
+- (void)configShortListCollection:(SLShortlist *)shortList {
     self.shortlist = shortList;
     self.shortlistNamelabel.text = [shortList.shortListName uppercaseString];
     self.shortlistYearlabel.text = shortList.shortListYear;

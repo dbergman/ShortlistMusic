@@ -11,7 +11,7 @@
 #import "ItunesSearchAPIController.h"
 #import "ItunesSearchAlbum.h"
 #import "ItunesArtist.h"
-#import "Shortlist.h"
+#import "SLShortlist.h"
 #import "SLStyle.h"
 
 @implementation SLArtistSearchResultsVC

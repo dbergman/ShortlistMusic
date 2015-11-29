@@ -11,7 +11,7 @@
 #import "SLCreateShortListTitleCell.h"
 #import "SLCreateShortListEnterNameCell.h"
 #import "SLCreateShortListEnterYearCell.h"
-#import "Shortlist.h"
+#import "SLShortlist.h"
 #import <QuartzCore/QuartzCore.h>
 #import "shortList-Swift.h"
 
@@ -26,7 +26,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
 @property (nonatomic, strong) SLCreateShortListEnterNameCell *shortListNameCell;
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;
-@property (nonatomic, strong) Shortlist *shortList;
+@property (nonatomic, strong) SLShortlist *shortList;
 @property (nonatomic, copy) SLCreateUpdateShortListCompletion completion;
 
 @end
@@ -88,7 +88,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
         
         
         [cell setCreateSLBlock:^{
-            weakSelf.shortList = [Shortlist new];
+            weakSelf.shortList = [SLShortlist new];
             weakSelf.shortList.shortListName = weakSelf.shortListName;
             weakSelf.shortList.shortListYear = (weakSelf.shortListYear) ? weakSelf.shortListYear: NSLocalizedString(@"All", nil);
             
@@ -194,7 +194,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
     [cell setLayoutMargins:UIEdgeInsetsZero];
 }
 
-- (void)updateShortList:(Shortlist *)shortList {
+- (void)updateShortList:(SLShortlist *)shortList {
     self.shortList = shortList;
 }
 

@@ -8,7 +8,7 @@
 
 #import "SLCreateShortListEnterYearCell.h"
 #import "SLStyle.h"
-#import "Shortlist.h"
+#import "SLShortlist.h"
 
 @interface SLCreateShortListEnterYearCell () <UIPickerViewDelegate>
 
@@ -84,7 +84,7 @@
     }
 }
 
-- (void)configYearCell:(Shortlist *)shortList {
+- (void)configYearCell:(SLShortlist *)shortList {
     if (shortList) {
         [self.yearFilterArray enumerateObjectsUsingBlock:^(NSString *year, NSUInteger idx, BOOL *stop) {
             if ([year isEqualToString:shortList.shortListYear]) {

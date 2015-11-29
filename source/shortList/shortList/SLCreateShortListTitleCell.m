@@ -9,7 +9,7 @@
 #import "SLCreateShortListTitleCell.h"
 #import "SLStyle.h"
 #import <BlocksKit+UIKit.h>
-#import "Shortlist.h"
+#import "SLShortlist.h"
 
 @interface SLCreateShortListTitleCell ()
 
@@ -79,7 +79,7 @@
     return self;
 }
 
-- (void)configTitle:(Shortlist *)shortList {
+- (void)configTitle:(SLShortlist *)shortList {
     self.shortlistTitle.text = (shortList) ? NSLocalizedString(@"Update ShortList", nil) : NSLocalizedString(@"New ShortList", nil);
     [self.shortlistTitle sizeToFit];
     

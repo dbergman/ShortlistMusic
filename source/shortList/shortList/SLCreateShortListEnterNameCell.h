@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Shortlist;
+@class SLShortlist;
 
 typedef void(^SLCreateNameAction)(NSString *shortListName);
 typedef void(^SLTCreatingShortListName)();
@@ -18,6 +18,6 @@ typedef void(^SLTCreatingShortListName)();
 @property (nonatomic, copy) SLTCreatingShortListName creatingShortListNameAction;
 
 - (void)clearShortListName;
-- (void)configShortListNameCell:(Shortlist *)shortList;
+- (void)configShortListNameCell:(SLShortlist *)shortList;
 
 @end

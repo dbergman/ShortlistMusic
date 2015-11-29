@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Shortlist;
+@class SLShortlist;
 
 @interface UIViewController (SLAlbumArtImaging)
 
 - (void)buildShortlistAlbumArtImage;
 - (UIImage *)getAlbumArtCollectionImage;
-- (void)loadCollectionViewImage:(Shortlist *)shortlist;
+- (void)loadCollectionViewImage:(SLShortlist *)shortlist;
 
 @end

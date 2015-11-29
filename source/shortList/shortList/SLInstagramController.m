@@ -7,7 +7,7 @@
 //
 
 #import "SLInstagramController.h"
-#import "Shortlist.h"
+#import "SLShortlist.h"
 
 @interface SLInstagramController () <UIDocumentInteractionControllerDelegate>
 
@@ -27,7 +27,7 @@
     return sharedInstance;
 }
 
-- (void)shareShortlistToInstagram:(Shortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage attachToView:(UIView *)attachView {
+- (void)shareShortlistToInstagram:(SLShortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage attachToView:(UIView *)attachView {
     NSString *documentDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
     NSString *saveImagePath = [documentDirectory stringByAppendingPathComponent:@"Image.igo"];
     NSData *imageData = UIImagePNGRepresentation(albumArtCollectionImage);

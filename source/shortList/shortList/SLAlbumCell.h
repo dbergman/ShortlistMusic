@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class ShortListAlbum;
+@class SLShortListAlbum;
 
 @interface SLAlbumCell : UICollectionViewCell
 
-- (void)configWithShortListAlbum:(ShortListAlbum *)albums;
+- (void)configWithShortListAlbum:(SLShortListAlbum *)albums;
 
 @end

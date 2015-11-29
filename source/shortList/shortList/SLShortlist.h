@@ -15,5 +15,4 @@
 @property (nonatomic, strong) NSString *shortListUserId;
 @property (nonatomic, strong) NSArray *shortListAlbums;
 
-
 @end

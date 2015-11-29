@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Shortlist;
+@class SLShortlist;
 
 @interface UIViewController (SLEmailShortlist)
 
-- (void)shareShortlistByEmail:(Shortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage;
+- (void)shareShortlistByEmail:(SLShortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage;
 
 @end

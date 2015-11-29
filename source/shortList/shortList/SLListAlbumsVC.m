@@ -11,9 +11,9 @@
 #import "ItunesSearchAPIController.h"
 #import "ItunesSearchArtist.h"
 #import "SLAlbumSearchResultVC.h"
-#import "Shortlist.h"
+#import "SLShortlist.h"
 #import "SLStyle.h"
-#import "ShortListAlbum.h"
+#import "SLShortListAlbum.h"
 #import "SLListAbumCell.h"
 #import "shortList-Swift.h"
 #import "SLAlbumDetailsVC.h"
@@ -36,7 +36,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 @property (nonatomic, strong) UIImageView *blurBackgroundView;
 @property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) SLArtistSearchResultsVC *searchResultsVC;
-@property (nonatomic, strong) Shortlist *shortList;
+@property (nonatomic, strong) SLShortlist *shortList;
 @property (nonatomic, strong) UIBarButtonItem *editShortListBarButton;
 @property (nonatomic, strong) UIButton *moreOptionsButton;
 @property (nonatomic, strong) UIButton *addAlbumButton;
@@ -47,7 +47,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 @implementation SLListAlbumsVC
 
-- (instancetype)initWithShortList:(Shortlist *)shortList {
+- (instancetype)initWithShortList:(SLShortlist *)shortList {
     self = [super init];
     
     if (self) {
@@ -188,7 +188,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
             cell = [[SLListAbumCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AlbumCellIdentifier];
         }
 
-        ShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
+        SLShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
         [cell configureCell:album];
         
         return cell;
@@ -205,7 +205,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    ShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
+    SLShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
     SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:self.shortList albumId:[NSString stringWithFormat:@"%ld",(long)album.albumId]];
     [self.navigationController pushViewController:albumDetailsVC animated:YES];
 }
@@ -221,7 +221,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     NSMutableArray *mutableAlbums = [self.shortList.shortListAlbums mutableCopy];
     
-    ShortListAlbum *album = mutableAlbums[sourceIndexPath.row];
+    SLShortListAlbum *album = mutableAlbums[sourceIndexPath.row];
     [mutableAlbums removeObjectAtIndex:sourceIndexPath.row];
     [mutableAlbums insertObject:album atIndex:destinationIndexPath.row];
     
@@ -252,7 +252,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     __weak typeof(self) weakSelf = self;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        __block ShortListAlbum *slAbum = self.shortList.shortListAlbums[indexPath.row];
+        __block SLShortListAlbum *slAbum = self.shortList.shortListAlbums[indexPath.row];
         [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:slAbum completion:^(NSArray *albums) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -423,7 +423,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 }
 
 - (void)reorderShortList {
-    [self.shortList.shortListAlbums enumerateObjectsUsingBlock:^(ShortListAlbum *album, NSUInteger idx, BOOL *stop) {
+    [self.shortList.shortListAlbums enumerateObjectsUsingBlock:^(SLShortListAlbum *album, NSUInteger idx, BOOL *stop) {
         album.shortListRank = idx + 1;
     }];
 }
