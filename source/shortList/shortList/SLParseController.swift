@@ -16,12 +16,15 @@ let ShortLists = "SLShortlist"
 let ShortListAlbums = "SLShortListAlbum"
 
 class SLParseController : NSObject {
-    class func saveShortlist (newShortList:SLShortlist) {
+    class func saveShortlist (newShortList:SLShortlist, completion:dispatch_block_t) {
         newShortList.shortListUserId = SLParseController.getCurrentUser().objectId!
         newShortList.saveInBackgroundWithBlock {
             (success, error) -> Void in
             if !success {
                 newShortList.saveEventually(nil)
+            }
+            else {
+                completion()
             }
         }
     }
