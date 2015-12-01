@@ -21,8 +21,12 @@
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import <ParseTwitterUtils/ParseTwitterUtils.h>
 #import <Parse/Parse.h>
+#import "ShortListCoreDataManager.h"
+#import "SLShortlistCoreDataMigrtationController.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong)SLShortlistCoreDataMigrtationController *slDataMigrtationController;
 
 @end
 
@@ -40,6 +44,11 @@
     [self setupAppearance];
     
     self.window.rootViewController = [self shortListTabController];
+    
+    self.slDataMigrtationController = [SLShortlistCoreDataMigrtationController new];
+    [self.slDataMigrtationController addExistingShortListsToParse:[[ShortListCoreDataManager sharedManager] getAllShortLists]];
+
+    
     
     return YES;
 }

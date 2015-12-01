@@ -38,7 +38,7 @@
 		4665B7391B6D4D4F0088B0B3 /* NixieOne.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4665B7361B6D475A0088B0B3 /* NixieOne.otf */; };
 		466DF3641B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 466DF3631B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m */; };
 		466DF3671B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 466DF3661B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m */; };
-		467491FE1C054037003A8825 /* SLContactMeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 467491FD1C054037003A8825 /* SLContactMeCell.m */; };
+		467491FE1C054037003A8825 /* SLGenericOneButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 467491FD1C054037003A8825 /* SLGenericOneButtonCell.m */; };
 		467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */; };
 		467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55951AF55F3A005CD607 /* SLArtistSearchResultsVC.m */; };
 		467D55991AF577D0005CD607 /* SLAlbumSearchResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 467D55981AF577D0005CD607 /* SLAlbumSearchResultVC.m */; };
@@ -158,8 +158,8 @@
 		466DF3631B7FEE6D00563095 /* UIViewController+SLEmailShortlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLEmailShortlist.m"; sourceTree = "<group>"; };
 		466DF3651B80D3B600563095 /* UIViewController+SLAlbumArtImaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SLAlbumArtImaging.h"; sourceTree = "<group>"; };
 		466DF3661B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SLAlbumArtImaging.m"; sourceTree = "<group>"; };
-		467491FC1C054037003A8825 /* SLContactMeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLContactMeCell.h; sourceTree = "<group>"; };
-		467491FD1C054037003A8825 /* SLContactMeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLContactMeCell.m; sourceTree = "<group>"; };
+		467491FC1C054037003A8825 /* SLGenericOneButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLGenericOneButtonCell.h; sourceTree = "<group>"; };
+		467491FD1C054037003A8825 /* SLGenericOneButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLGenericOneButtonCell.m; sourceTree = "<group>"; };
 		467D55901AF54FB4005CD607 /* SLListAlbumsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLListAlbumsVC.h; sourceTree = "<group>"; };
 		467D55911AF54FB4005CD607 /* SLListAlbumsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLListAlbumsVC.m; sourceTree = "<group>"; };
 		467D55941AF55F3A005CD607 /* SLArtistSearchResultsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLArtistSearchResultsVC.h; sourceTree = "<group>"; };
@@ -314,8 +314,8 @@
 			children = (
 				464CF71A1B9CD205008356F6 /* SLLoginCell.h */,
 				464CF71B1B9CD205008356F6 /* SLLoginCell.m */,
-				467491FC1C054037003A8825 /* SLContactMeCell.h */,
-				467491FD1C054037003A8825 /* SLContactMeCell.m */,
+				467491FC1C054037003A8825 /* SLGenericOneButtonCell.h */,
+				467491FD1C054037003A8825 /* SLGenericOneButtonCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -989,7 +989,7 @@
 				46D423031B77AF2A00D79263 /* SpotifySearchApiController.m in Sources */,
 				4694DD2C1C0B7790002A1D78 /* ShortListCoreDataTrial.xcdatamodeld in Sources */,
 				46CB6B051AED7ADC00BF1DF3 /* SLListsVC.m in Sources */,
-				467491FE1C054037003A8825 /* SLContactMeCell.m in Sources */,
+				467491FE1C054037003A8825 /* SLGenericOneButtonCell.m in Sources */,
 				4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */,
 				468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */,
 				46B2423B1B5DC14100BA20D4 /* SLAlbumCell.m in Sources */,

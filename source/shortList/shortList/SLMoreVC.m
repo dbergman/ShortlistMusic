@@ -10,7 +10,7 @@
 #import "SLLoginCell.h"
 #import <Parse/Parse.h>
 #import "UIViewController+SLLoginGate.h"
-#import "SLContactMeCell.h"
+#import "SLGenericOneButtonCell.h"
 #import <Twitter/Twitter.h> 
 #import <Social/Social.h>
 #import <MessageUI/MessageUI.h>
@@ -72,13 +72,13 @@
         return loginCell;
     }
     
-    SLContactMeCell *contactMeCell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
+    SLGenericOneButtonCell *contactMeCell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
     if (contactMeCell == nil) {
-        contactMeCell = [[SLContactMeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContactCellIdentifier];
+        contactMeCell = [[SLGenericOneButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContactCellIdentifier];
     }
     
     __weak typeof(self)weakSelf = self;
-    [contactMeCell setContactMeBlockAction:^{
+    [contactMeCell setButtonAction:^{
         [weakSelf contactMeAction];
     }];
     
@@ -119,7 +119,7 @@
         [alert addAction:twitter];
     }
     
-    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
         [alert dismissViewControllerAnimated:YES completion:nil];
     }];
 

@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SLContactMeBlock)();
+typedef void(^SLButtonActionBlock)();
 
-@interface SLContactMeCell : UITableViewCell
-@property (nonatomic, copy) SLContactMeBlock contactMeBlockAction;
+@interface SLGenericOneButtonCell : UITableViewCell
+@property (nonatomic, copy) SLButtonActionBlock buttonAction;
 @end
