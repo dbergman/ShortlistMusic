@@ -391,7 +391,6 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         
         [alert addAction:instagram];
     }
-    
 
     UIAlertAction *saveImage =  [UIAlertAction actionWithTitle:NSLocalizedString(@"Save Image", nil)  style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
