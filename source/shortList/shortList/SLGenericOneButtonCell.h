@@ -11,5 +11,8 @@
 typedef void(^SLButtonActionBlock)();
 
 @interface SLGenericOneButtonCell : UITableViewCell
+
 @property (nonatomic, copy) SLButtonActionBlock buttonAction;
+@property (nonatomic, strong) UIButton *oneButton;
+
 @end

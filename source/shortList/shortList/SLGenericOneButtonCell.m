@@ -9,12 +9,6 @@
 #import "SLGenericOneButtonCell.h"
 #import "SLStyle.h"
 
-@interface SLGenericOneButtonCell ()
-
-@property (nonatomic, strong) UIButton *oneButton;
-
-@end
-
 @implementation SLGenericOneButtonCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

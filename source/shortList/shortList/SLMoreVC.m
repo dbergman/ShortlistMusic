@@ -51,7 +51,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -72,10 +72,34 @@
         return loginCell;
     }
     
+    else if (indexPath.row == 1) {
+        SLGenericOneButtonCell *forgetPasswordCell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
+        if (forgetPasswordCell == nil) {
+            forgetPasswordCell = [[SLGenericOneButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContactCellIdentifier];
+        }
+        
+        [forgetPasswordCell.oneButton setTitle:NSLocalizedString(@"Reset Password", nil) forState:UIControlStateNormal];
+        [forgetPasswordCell.oneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        forgetPasswordCell.oneButton.titleLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
+        forgetPasswordCell.oneButton.backgroundColor = [UIColor sl_yellow];
+        
+        __weak typeof(self)weakSelf = self;
+        [forgetPasswordCell setButtonAction:^{
+            [weakSelf contactMeAction];
+        }];
+        
+        return forgetPasswordCell;
+    }
+    
     SLGenericOneButtonCell *contactMeCell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
     if (contactMeCell == nil) {
         contactMeCell = [[SLGenericOneButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContactCellIdentifier];
     }
+    
+    [contactMeCell.oneButton setTitle:NSLocalizedString(@"Contact Me", nil) forState:UIControlStateNormal];
+    [contactMeCell.oneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    contactMeCell.oneButton.titleLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
+    contactMeCell.oneButton.backgroundColor = [UIColor grayColor];
     
     __weak typeof(self)weakSelf = self;
     [contactMeCell setButtonAction:^{
