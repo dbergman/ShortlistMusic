@@ -12,5 +12,6 @@
 
 + (UIColor *)sl_Red;
 + (UIColor *)sl_Green;
++ (UIColor *)sl_yellow;
 
 @end

@@ -10,7 +10,7 @@
 
 static NSString * const kSLStyleColorRed = @"#bb1717";
 static NSString * const kSLStyleColorGreen = @"#009900";
-
+static NSString * const kSLStyleColorYellow = @"#f0ac34";
 
 @implementation UIColor (SLStyle)
 
@@ -20,6 +20,10 @@ static NSString * const kSLStyleColorGreen = @"#009900";
 
 + (UIColor *)sl_Green {
     return [UIColor colorFromHexString:kSLStyleColorGreen];
+}
+
++ (UIColor *)sl_yellow {
+    return [UIColor colorFromHexString:kSLStyleColorYellow];
 }
 
 #pragma mark - Methods
