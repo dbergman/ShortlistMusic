@@ -129,11 +129,17 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [SLParseController removeShortList:sl completion:^(NSArray * shortlists) {
             weakSelf.shortLists = shortlists;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:sl.shortListName toastType:SLToastMessageSuccess completion:^{
-                    [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+                [CATransaction begin];
+                [CATransaction setCompletionBlock:^{
+                    [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:sl.shortListName toastType:SLToastMessageSuccess completion:nil];
                 }];
-            });
+                
+                [tableView beginUpdates];
+                 [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [tableView endUpdates];
+                
+                [CATransaction commit];
         }];
     }
 }
