@@ -392,7 +392,19 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         [alert addAction:instagram];
     }
     
-    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)   style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+
+    UIAlertAction *saveImage =  [UIAlertAction actionWithTitle:NSLocalizedString(@"Save Image", nil)  style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
+        [weakSelf.navigationController.view addSubview:hud];
+        hud.labelText = NSLocalizedString(@"Building Image", nil);
+        [hud showAnimated:YES whileExecutingBlock:^{
+            UIImageWriteToSavedPhotosAlbum([weakSelf getAlbumArtCollectionImage], nil, nil, nil);
+        }];
+    }];
+    
+    [alert addAction:saveImage];
+    
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)   style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
                                  [alert dismissViewControllerAnimated:YES completion:nil];
                              }];
     
