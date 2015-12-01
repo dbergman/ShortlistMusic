@@ -43,7 +43,7 @@
                               kCRToastBackgroundColorKey : backGroundColor,
                               kCRToastAnimationInDirectionKey : @(CRToastAnimationTypeLinear),
                               kCRToastAnimationOutDirectionKey : @(CRToastAnimationTypeLinear),
-                              kCRToastNotificationPresentationTypeKey : @(CRToastPresentationTypePush),
+                              kCRToastNotificationPresentationTypeKey : @(CRToastPresentationTypeCover),
                               kCRToastNotificationTypeKey :@(CRToastTypeNavigationBar),
                               kCRToastTimeIntervalKey : @(1.5)
                               };
