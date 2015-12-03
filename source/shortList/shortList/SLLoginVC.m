@@ -14,10 +14,13 @@
 #import "shortList-Swift.h"
 #import <ParseTwitterUtils.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
+#import "ShortListCoreDataManager.h"
+#import "SLShortlistCoreDataMigrtationController.h"
 
 @interface SLLoginVC () <PFLogInViewControllerDelegate>
 
 @property (nonatomic, copy) SLLoginCompletionBlock completion;
+@property (nonatomic, strong) SLShortlistCoreDataMigrtationController *dataMigrtationController;
 
 @end
 
@@ -52,6 +55,14 @@
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
     BOOL linkedWithFacebook = [PFFacebookUtils isLinkedWithUser:user];
     BOOL linkedWithTwitter = [PFTwitterUtils isLinkedWithUser:user];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL migrated = [userDefaults boolForKey:@"migratedToParse"];
+    
+    if (user.isNew && !migrated) {
+        self.dataMigrtationController = [SLShortlistCoreDataMigrtationController new];
+        [self.dataMigrtationController addExistingShortListsToParse:[[ShortListCoreDataManager sharedManager] getAllShortLists]];
+    }
 
     if (linkedWithFacebook || linkedWithTwitter) {
         [self userCheck:user isLoggedIn:YES];

@@ -10,8 +10,13 @@
 #import "SLLoginVC.h"
 #import "UIViewController+SLToastBanner.h"
 #import <Parse/Parse.h>
+#import "ShortListCoreDataManager.h"
+#import "SLShortlistCoreDataMigrtationController.h"
 
 @interface SLUserSignUpVC () <PFSignUpViewControllerDelegate>
+
+@property (nonatomic, strong) SLShortlistCoreDataMigrtationController *dataMigrtationController;
+
 @end
 
 @implementation SLUserSignUpVC
@@ -26,6 +31,15 @@
 #pragma mark PFSignUpViewControllerDelegate
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     __weak typeof(self)weakSelf = self;
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL migrated = [userDefaults boolForKey:@"migratedToParse"];
+    
+    if (user.isNew && !migrated) {
+        self.dataMigrtationController = [SLShortlistCoreDataMigrtationController new];
+        [self.dataMigrtationController addExistingShortListsToParse:[[ShortListCoreDataManager sharedManager] getAllShortLists]];
+    }
+    
     [self sl_showToastForAction:NSLocalizedString(@"Welcome to Shortlist", nil) message:user.username toastType:SLToastMessageSuccess completion:^{
         [weakSelf dismissViewControllerAnimated:YES completion:nil];
     }];
