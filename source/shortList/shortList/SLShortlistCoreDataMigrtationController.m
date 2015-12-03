@@ -21,6 +21,10 @@
     for (ShortList *shortlist in existingShortlists) {
         [self createSLShortListWithExistingShortList:shortlist];
     }
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:YES forKey:@"migratedToParse"];
+    [userDefaults synchronize];
 }
 
 - (void)createSLShortListWithExistingShortList:(ShortList *)existingSL {
