@@ -141,6 +141,23 @@ class SLParseController : NSObject {
         }
     }
     
+    class func doesUserEmailExist(email:String, checkAction:SLIdCheckAction) {
+        let query = PFUser.query()
+        query!.whereKey("email", equalTo: email)
+        query!.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) in
+            if error == nil {
+                if (objects!.count > 0){
+                    checkAction(exists: true)
+                } else {
+                    checkAction(exists: false)
+                }
+            } else {
+                checkAction(exists: true)
+            }
+        }
+    }
+    
     class func doesSocialIdExist(socialId:String, checkAction:SLIdCheckAction) {
         let query = PFUser.query()
         query!.whereKey("socialId", equalTo: socialId)
@@ -154,6 +171,20 @@ class SLParseController : NSObject {
                 }
             } else {
                 checkAction(exists: true)
+            }
+        }
+    }
+    
+    class func resetPassword(email : String){
+        let emailClean = email.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        
+        PFUser.requestPasswordResetForEmailInBackground(emailClean) { (success, error) -> Void in
+            if (error == nil) {
+                //Sucess
+            }
+            else {
+                //Error
+
             }
         }
     }

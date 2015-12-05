@@ -15,6 +15,7 @@
 #import <Social/Social.h>
 #import <MessageUI/MessageUI.h>
 #import "SLStyle.h"
+#import "shortlist-Swift.h"
 
 @interface SLMoreVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -85,7 +86,7 @@
         
         __weak typeof(self)weakSelf = self;
         [forgetPasswordCell setButtonAction:^{
-            [weakSelf contactMeAction];
+            [weakSelf resetUserPasswordAlert];
         }];
         
         return forgetPasswordCell;
@@ -148,7 +149,35 @@
     }];
 
     [alert addAction:cancel];
+    
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)resetUserPasswordAlert {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Reset password",nil)  message:NSLocalizedString(@"Enter Email Address:",nil) preferredStyle:UIAlertControllerStyleAlert];
+    
+    __weak typeof(self) weakSelf = self;
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                            [weakSelf emailValidation:alert.textFields.firstObject.text];
+                        }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                            }];
+    
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"Email Address", nil);
+    }];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)emailValidation:(NSString *)email {
+    [SLParseController doesUserEmailExist:email.lowercaseString checkAction:^(BOOL exists) {
+        [SLParseController resetPassword:email];
+    }];
 }
 
 @end
