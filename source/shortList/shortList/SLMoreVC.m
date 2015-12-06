@@ -15,9 +15,10 @@
 #import <Social/Social.h>
 #import <MessageUI/MessageUI.h>
 #import "SLStyle.h"
+#import "UIViewController+SLToastBanner.h"
 #import "shortlist-Swift.h"
 
-@interface SLMoreVC () <UITableViewDelegate, UITableViewDataSource>
+@interface SLMoreVC () <UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -79,7 +80,7 @@
             forgetPasswordCell = [[SLGenericOneButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContactCellIdentifier];
         }
         
-        [forgetPasswordCell.oneButton setTitle:NSLocalizedString(@"Reset Password", nil) forState:UIControlStateNormal];
+        [forgetPasswordCell.oneButton setTitle:NSLocalizedString(@"Forgot or Reset Password", nil) forState:UIControlStateNormal];
         [forgetPasswordCell.oneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         forgetPasswordCell.oneButton.titleLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
         forgetPasswordCell.oneButton.backgroundColor = [UIColor sl_yellow];
