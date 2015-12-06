@@ -45,6 +45,24 @@
     }
 }
 
+- (void)contactMeEmail {
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
+        mailComposeVC.mailComposeDelegate = self;
+        
+        NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [SLStyle polarisFontWithSize:FontSizes.large], NSForegroundColorAttributeName: [UIColor whiteColor]};
+        [[mailComposeVC navigationBar] setTitleTextAttributes:barButtonAppearanceDict];
+        [[mailComposeVC navigationBar] setBarTintColor:[UIColor blackColor]];
+        [[mailComposeVC navigationBar] setTintColor:[UIColor whiteColor]];
+        
+        [mailComposeVC setToRecipients:@[@"shortlistapp01@gmail.com"]];
+        [mailComposeVC setSubject:[NSString stringWithFormat:@"Hey Mr.ShortListMusic: "]];
+
+        [self presentViewController:mailComposeVC animated:YES completion:^{
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        }];
+    }
+}
 - (NSString *)createShortListEmailBody:(SLShortlist *)shortlist {
     NSString *theEmail = @"";
     NSString *htmlStart = @"<html>";
