@@ -9,6 +9,8 @@
 typealias SLGetUsersShortListBlock = (shortlists:NSArray) -> Void
 typealias SLShortListAlbumsBlock = (albums:NSArray) -> Void
 typealias SLIdCheckAction = (exists:Bool) -> Void
+typealias SLResetEmailSuccess = () -> Void
+typealias SLResetEmailFailure = () -> Void
 
 import Foundation
 
@@ -175,17 +177,11 @@ class SLParseController : NSObject {
         }
     }
     
-    class func resetPassword(email : String){
+    class func resetPassword(email: String, successAction:SLResetEmailSuccess, failureAction:SLResetEmailFailure) {
         let emailClean = email.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
         PFUser.requestPasswordResetForEmailInBackground(emailClean) { (success, error) -> Void in
-            if (error == nil) {
-                //Sucess
-            }
-            else {
-                //Error
-
-            }
+            (error == nil) ? successAction() : failureAction()
         }
     }
     
