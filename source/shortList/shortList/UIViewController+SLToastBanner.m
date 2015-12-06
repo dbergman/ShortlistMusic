@@ -50,4 +50,8 @@
     return options;
 }
 
+- (void)sl_standardToastUnableToCompleteRequest {
+    [self sl_showToastForAction:NSLocalizedString(@"Failure", nil) message:NSLocalizedString(@"Unable to complete request.", nil) toastType:SLToastMessageFailure completion:nil];
+}
+
 @end

@@ -18,4 +18,6 @@ typedef NS_ENUM(NSUInteger, SLToastMessageType) {
 
 - (void)sl_showToastForAction:(NSString *)toastAction message:(NSString *)toastMessage toastType:(SLToastMessageType)toastMessageType completion:(dispatch_block_t)completion;
 
+- (void)sl_standardToastUnableToCompleteRequest;
+
 @end
