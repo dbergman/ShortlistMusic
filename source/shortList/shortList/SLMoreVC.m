@@ -117,6 +117,7 @@
     if ([MFMailComposeViewController canSendMail]) {
         UIAlertAction *email = [UIAlertAction actionWithTitle:NSLocalizedString(@"Email", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                 MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
+                mailComposeVC.mailComposeDelegate = self;
                 
                 NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [SLStyle polarisFontWithSize:FontSizes.large], NSForegroundColorAttributeName: [UIColor whiteColor]};
                 [[mailComposeVC navigationBar] setTitleTextAttributes:barButtonAppearanceDict];
@@ -175,9 +176,58 @@
 }
 
 - (void)emailValidation:(NSString *)email {
-    [SLParseController doesUserEmailExist:email.lowercaseString checkAction:^(BOOL exists) {
-        [SLParseController resetPassword:email];
+    __weak typeof(self)weakself = self;
+    
+    if ([weakself isValidEmailAddress:email]) {
+        [SLParseController doesUserEmailExist:email.lowercaseString checkAction:^(BOOL exists) {
+            if (exists) {
+                [SLParseController resetPassword:email successAction:^{
+                    [weakself sl_showToastForAction:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Please check your email for reset password link", nil) toastType:SLToastMessageSuccess completion:nil];
+                } failureAction:^{
+                    [weakself sl_standardToastUnableToCompleteRequest];
+                }];
+            }
+            else {
+                [weakself sl_showToastForAction:NSLocalizedString(@"Failure", nil) message:NSLocalizedString(@"Email not found.", nil) toastType:SLToastMessageFailure completion:nil];
+            }
+        }];
+    }
+    else {
+        [weakself sl_showToastForAction:NSLocalizedString(@"Invalid", nil) message:NSLocalizedString(@"Invalid Email.", nil) toastType:SLToastMessageFailure completion:nil];
+    }
+}
+
+#pragma maek MFMailComposeViewControllerDelegate
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(nullable NSError *)error {
+    dispatch_block_t toastAction = ^{};
+    if (error) {
+        toastAction = ^{
+            [self sl_showToastForAction:NSLocalizedString(@"Error Sending Email", nil) message:error.description toastType:SLToastMessageFailure completion:nil];
+        };
+    }
+    else if (result == MFMailComposeResultSent) {
+        toastAction = ^{
+            [self sl_showToastForAction:NSLocalizedString(@"Sent ShortList Email", nil) message:nil toastType:SLToastMessageSuccess completion:nil];
+        };
+    }
+    else if (result == MFMailComposeResultFailed) {
+        toastAction = ^{
+            [self sl_showToastForAction:NSLocalizedString(@"Failed Sending Email", nil) message:nil toastType:SLToastMessageFailure completion:nil];
+        };
+    }
+    
+    [controller dismissViewControllerAnimated:YES completion:^{
+        if (toastAction) {
+            toastAction();
+        }
     }];
+}
+
+- (BOOL)isValidEmailAddress:(NSString *)emailAddress {
+    NSString *stricterFilterString = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}" ;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", stricterFilterString];
+
+    return [emailTest evaluateWithObject:emailAddress];
 }
 
 @end
