@@ -195,6 +195,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
         }];
         
         [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
+        
         [UIView animateWithDuration:.2 animations:^{
             [weakSelf.view layoutIfNeeded];
         } completion:^(BOOL finished) {
@@ -233,9 +234,11 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
-    [UIView animateWithDuration:.2 animations:^{
+    [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self.view layoutIfNeeded];
         self.blurBackgroundView.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        
     }];
 }
 
