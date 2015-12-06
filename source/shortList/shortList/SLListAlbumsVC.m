@@ -41,6 +41,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 @property (nonatomic, strong) UIButton *moreOptionsButton;
 @property (nonatomic, strong) UIButton *addAlbumButton;
 @property (nonatomic, strong) UIButton *sharingButton;
+@property (nonatomic, strong) UIButton *editNameButton;
 @property (nonatomic, assign) BOOL showingOptions;
 
 @end
@@ -300,11 +301,16 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self.sharingButton setTintColor:[UIColor whiteColor]];
     [self.sharingButton addTarget:self action:@selector(showSharingOptions) forControlEvents:UIControlEventTouchUpInside];
     
+    self.editNameButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.editNameButton setImage:[UIImage imageNamed:@"editName"] forState:UIControlStateNormal];
+    [self.editNameButton setTintColor:[UIColor whiteColor]];
+    [self.editNameButton addTarget:self action:@selector(showSharingOptions) forControlEvents:UIControlEventTouchUpInside];
+    
     self.moreOptionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.moreOptionsButton setImage:[UIImage imageNamed:@"moreOptions"] forState:UIControlStateNormal];
     [self.moreOptionsButton addTarget:self action:@selector(toggleOptionsButton) forControlEvents:UIControlEventTouchUpInside];
     
-    for (UIButton *optionButton in @[self.addAlbumButton, self.sharingButton, self.moreOptionsButton]) {
+    for (UIButton *optionButton in @[self.editNameButton, self.addAlbumButton, self.sharingButton, self.moreOptionsButton]) {
         optionButton.backgroundColor = [UIColor sl_Red];
         optionButton.layer.cornerRadius = kShortlistAlbumsButtonSize/2.0;
         optionButton.frame = [self getOptionsCloseFrame];
@@ -328,11 +334,13 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
             self.moreOptionsButton.alpha = 0.0;
             self.sharingButton.hidden = YES;
             self.addAlbumButton.hidden = YES;
+            self.editNameButton.hidden = YES;
         }
     }completion:^(BOOL finished) {
         if (show) {
             self.sharingButton.hidden = NO;
             self.addAlbumButton.hidden = NO;
+            self.editNameButton.hidden = NO;
         }
     }];
 }
@@ -340,16 +348,21 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)toggleOptionsButton {
     CGRect addButtonFrame = [self getOptionsCloseFrame];
     CGRect shareButtonFrame = [self getOptionsCloseFrame];
+    CGRect editNameButtonFrame = [self getOptionsCloseFrame];
     
     if (!self.showingOptions) {
-        addButtonFrame.origin.y = addButtonFrame.origin.y + kShortlistAlbumsButtonSize + MarginSizes.xxLarge;
-        shareButtonFrame.origin.y = shareButtonFrame.origin.y + (2 * kShortlistAlbumsButtonSize) + (2 * MarginSizes.xxLarge);
+        addButtonFrame.origin.x = addButtonFrame.origin.x - (kShortlistAlbumsButtonSize * 3.0);
+        shareButtonFrame.origin.y = shareButtonFrame.origin.y + (kShortlistAlbumsButtonSize * 3.0);
+        editNameButtonFrame.origin.x = addButtonFrame.origin.x;
+        editNameButtonFrame.origin.y = shareButtonFrame.origin.y;
+        
         self.showingOptions = YES;
         [self addBlurBackground];
     }
     else {
         addButtonFrame = [self getOptionsCloseFrame];
         shareButtonFrame = [self getOptionsCloseFrame];
+        editNameButtonFrame = [self getOptionsCloseFrame];
         self.showingOptions = NO;
         [self.blurBackgroundView removeFromSuperview];
     }
@@ -358,6 +371,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         self.blurBackgroundView.alpha = 1.0;
         self.sharingButton.frame = shareButtonFrame;
         self.addAlbumButton.frame = addButtonFrame;
+        self.editNameButton.frame = editNameButtonFrame;
     }];
 }
 
