@@ -35,7 +35,7 @@
     NSDictionary *options = @{
                               kCRToastTextKey : (actionText) ?: @"",
                               kCRToastTextColorKey : [UIColor blackColor],
-                              kCRToastFontKey : [SLStyle polarisFontWithSize:FontSizes.large],
+                              kCRToastFontKey : [SLStyle polarisFontWithSize:FontSizes.xLarge],
                               kCRToastSubtitleTextKey :(message) ?: @"",
                               kCRToastSubtitleTextColorKey : [UIColor blackColor],
                               kCRToastSubtitleFontKey : [SLStyle polarisFontWithSize:FontSizes.small],
@@ -45,7 +45,8 @@
                               kCRToastAnimationOutDirectionKey : @(CRToastAnimationTypeLinear),
                               kCRToastNotificationPresentationTypeKey : @(CRToastPresentationTypeCover),
                               kCRToastNotificationTypeKey :@(CRToastTypeNavigationBar),
-                              kCRToastTimeIntervalKey : @(1.5)
+                              kCRToastTimeIntervalKey : @(1.5),
+                              kCRToastInteractionRespondersKey:@[[CRToastInteractionResponder interactionResponderWithInteractionType:CRToastInteractionTypeTap automaticallyDismiss:YES block:nil]],
                               };
     return options;
 }
