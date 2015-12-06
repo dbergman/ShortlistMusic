@@ -83,7 +83,9 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self setupMoreOptions];
+    if (!self.searchResultsVC) {
+        [self setupMoreOptions];
+    }
     
     [self.tableView reloadData];
 }
@@ -100,6 +102,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self.moreOptionsButton removeFromSuperview];
     [self.addAlbumButton removeFromSuperview];
     [self.sharingButton removeFromSuperview];
+    [self.editNameButton removeFromSuperview];
 }
 
 - (void)startSearchAlbumFlow {
@@ -137,6 +140,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self setupMoreOptions];
     [self showOptions:YES];
 }
 
