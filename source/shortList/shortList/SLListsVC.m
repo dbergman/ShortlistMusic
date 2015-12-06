@@ -207,6 +207,11 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
         }];
     }];
     
+    self.createShortListVC.view.layer.borderColor = [UIColor sl_Red].CGColor;
+    self.createShortListVC.view.layer.borderWidth = 2.0;
+    self.createShortListVC.view.layer.cornerRadius = 8.0;
+    self.createShortListVC.view.clipsToBounds = YES;
+    
     self.createShortListVC.delegate = self;
     [self.createShortListVC.view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addSubview:self.createShortListVC.view];
@@ -234,7 +239,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
-    [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self.view layoutIfNeeded];
         self.blurBackgroundView.alpha = 1.0;
     } completion:^(BOOL finished) {
