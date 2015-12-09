@@ -242,9 +242,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self.view layoutIfNeeded];
         self.blurBackgroundView.alpha = 1.0;
-    } completion:^(BOOL finished) {
-        
-    }];
+    } completion:nil];
 }
 
 #pragma mark SLCreateShortListDelegate
