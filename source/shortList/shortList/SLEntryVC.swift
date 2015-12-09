@@ -63,21 +63,13 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = .blackColor()
         
         let titleLabel:UILabel = SLLoginVC.getTempLogo(CGRectZero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = NSTextAlignment.Center
+        titleLabel.adjustsFontSizeToFitWidth = true
         self.view.addSubview(titleLabel)
-        
-        
-        if let shortlist = existingShortList {
-            entryTextField.text = shortlist.shortListName
-            entryTextField.placeholder = NSLocalizedString("Enter a Username", comment: "")
-        }
-        else {
-            entryTextField.placeholder = NSLocalizedString("Enter new Shortlist name", comment: "")
-        }
         
         self.view.addSubview(entryTextField)
         
@@ -85,9 +77,19 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         submitButton.translatesAutoresizingMaskIntoConstraints = false;
         submitButton.backgroundColor = UIColor.sl_Green()
         submitButton.layer.cornerRadius = 4.0
-        submitButton.setTitle(NSLocalizedString("Submit", comment: ""), forState:.Normal)
-        submitButton.addTarget(self, action: "addUserToShortList", forControlEvents: .TouchUpInside)
         self.view.addSubview(submitButton)
+        
+        if let shortlist = existingShortList {
+            entryTextField.text = shortlist.shortListName
+            entryTextField.placeholder = NSLocalizedString("Enter new Shortlist name", comment: "")
+            submitButton.setTitle(NSLocalizedString("Save", comment: ""), forState:.Normal)
+            submitButton.addTarget(self, action: "updateShortlistName", forControlEvents: .TouchUpInside)
+        }
+        else {
+            entryTextField.placeholder = NSLocalizedString("Enter a Username", comment: "")
+            submitButton.setTitle(NSLocalizedString("Submit", comment: ""), forState:.Normal)
+            submitButton.addTarget(self, action: "addUserToShortList", forControlEvents: .TouchUpInside)
+        }
         
         let cancelButton:UIButton = UIButton()
         cancelButton.translatesAutoresizingMaskIntoConstraints = false;
@@ -103,12 +105,13 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[entryTextField]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[submitButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cancelButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-(130)-[titleLabel]-(30)-[entryTextField(30)]-20-[submitButton]-10-[cancelButton]-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[titleLabel]-(30)-[entryTextField(30)]-20-[submitButton]-10-[cancelButton]-20-|", options:[], metrics:nil, views:views))
 
     }
     
     func cancelLogin() {
-        self.cancelCompletion!()
+        entryTextField.resignFirstResponder()
+        self.cancelCompletion?()
     }
     
     func addUserToShortList () {
