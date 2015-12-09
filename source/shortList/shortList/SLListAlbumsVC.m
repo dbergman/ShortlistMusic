@@ -42,6 +42,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 @property (nonatomic, strong) UIButton *addAlbumButton;
 @property (nonatomic, strong) UIButton *sharingButton;
 @property (nonatomic, strong) UIButton *editNameButton;
+@property (nonatomic, strong) SLEntryVC *editShortlistVC;
 @property (nonatomic, assign) BOOL showingOptions;
 
 @end
@@ -308,7 +309,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     self.editNameButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.editNameButton setImage:[UIImage imageNamed:@"editName"] forState:UIControlStateNormal];
     [self.editNameButton setTintColor:[UIColor whiteColor]];
-    [self.editNameButton addTarget:self action:@selector(showSharingOptions) forControlEvents:UIControlEventTouchUpInside];
+    [self.editNameButton addTarget:self action:@selector(showEditShortListNameFlow) forControlEvents:UIControlEventTouchUpInside];
     
     self.moreOptionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.moreOptionsButton setImage:[UIImage imageNamed:@"moreOptions"] forState:UIControlStateNormal];
@@ -377,6 +378,23 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         self.addAlbumButton.frame = addButtonFrame;
         self.editNameButton.frame = editNameButtonFrame;
     }];
+}
+
+- (void)showEditShortListNameFlow {
+    self.editShortlistVC = [[SLEntryVC alloc] initWithExistingShortList:self.shortList onSuccess:^{
+        NSLog(@"Success");
+    } onCancel:^{
+        NSLog(@"Failure");
+    }];
+    
+    CGSize editShortlistSize = [self.editShortlistVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    CGRect frame = CGRectMake(CGRectGetWidth(self.view.frame)/2.0 - editShortlistSize.width/2.0, CGRectGetHeight([UIScreen mainScreen].bounds), editShortlistSize.width, editShortlistSize.height);
+    self.editShortlistVC.view.frame = frame;
+    [self.view addSubview:self.editShortlistVC.view];
+
+    [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.editShortlistVC.view.center = self.view.center;
+    } completion:nil];
 }
 
 - (void)showSharingOptions {
