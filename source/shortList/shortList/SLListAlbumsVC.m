@@ -285,8 +285,8 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     self.blurBackgroundView.userInteractionEnabled = YES;
     [self.view addSubview:self.blurBackgroundView];
     self.blurBackgroundView.alpha = 0;
-
-    UITapGestureRecognizer *dismissGesture =  [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(toggleOptionsButton)];
+    
+    UITapGestureRecognizer *dismissGesture =  [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(toggleOptionsButton:)];
     [self.blurBackgroundView addGestureRecognizer:dismissGesture];
 }
 
@@ -296,7 +296,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     self.addAlbumButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.addAlbumButton setImage:[UIImage imageNamed:@"searchAlbums"] forState:UIControlStateNormal];
     [self.addAlbumButton bk_addEventHandler:^(id sender) {
-        [weakSelf toggleOptionsButton];
+        [weakSelf toggleOptionsButton:NO];
         [weakSelf startSearchAlbumFlow];
     } forControlEvents:UIControlEventTouchUpInside];
     
@@ -313,7 +313,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     
     self.moreOptionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.moreOptionsButton setImage:[UIImage imageNamed:@"moreOptions"] forState:UIControlStateNormal];
-    [self.moreOptionsButton addTarget:self action:@selector(toggleOptionsButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.moreOptionsButton addTarget:self action:@selector(toggleOptionsButton:) forControlEvents:UIControlEventTouchUpInside];
     
     for (UIButton *optionButton in @[self.editNameButton, self.addAlbumButton, self.sharingButton, self.moreOptionsButton]) {
         optionButton.backgroundColor = [UIColor sl_Red];
@@ -350,11 +350,11 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     }];
 }
 
-- (void)toggleOptionsButton {
+- (void)toggleOptionsButton:(BOOL)keepBlur {
     CGRect addButtonFrame = [self getOptionsCloseFrame];
     CGRect shareButtonFrame = [self getOptionsCloseFrame];
     CGRect editNameButtonFrame = [self getOptionsCloseFrame];
-    
+
     if (!self.showingOptions) {
         addButtonFrame.origin.x = addButtonFrame.origin.x - (kShortlistAlbumsButtonSize * 3.0);
         shareButtonFrame.origin.y = shareButtonFrame.origin.y + (kShortlistAlbumsButtonSize * 3.0);
@@ -365,11 +365,12 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         [self addBlurBackground];
     }
     else {
-        addButtonFrame = [self getOptionsCloseFrame];
-        shareButtonFrame = [self getOptionsCloseFrame];
-        editNameButtonFrame = [self getOptionsCloseFrame];
-        self.showingOptions = NO;
-        [self.blurBackgroundView removeFromSuperview];
+        if (!keepBlur) {
+            [self.blurBackgroundView removeFromSuperview];
+            self.blurBackgroundView = nil;
+            self.showingOptions = NO;
+            [self dismissEditShortListName];
+        }
     }
     
     [UIView animateWithDuration:.2 animations:^{
@@ -381,10 +382,13 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 }
 
 - (void)showEditShortListNameFlow {
+    [self toggleOptionsButton:YES];
+    
+    __weak typeof(self)weakSelf = self;
     self.editShortlistVC = [[SLEntryVC alloc] initWithExistingShortList:self.shortList onSuccess:^{
-        NSLog(@"Success");
+        [weakSelf dismissEditShortListName];
     } onCancel:^{
-        NSLog(@"Failure");
+        [weakSelf dismissEditShortListName];
     }];
     
     CGSize editShortlistSize = [self.editShortlistVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
@@ -393,12 +397,25 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self.view addSubview:self.editShortlistVC.view];
 
     [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.editShortlistVC.view.center = self.view.center;
-    } completion:nil];
+        self.editShortlistVC.view.center = CGPointMake(self.view.center.x, CGRectGetHeight([UIScreen mainScreen].bounds)/2.0 - editShortlistSize.height/2.0);
+    } completion:^(BOOL finished) {
+        [self showOptions:NO];
+    }];
+}
+
+- (void)dismissEditShortListName {
+    [UIView animateWithDuration:.3 animations:^{
+        CGRect frame = CGRectMake(CGRectGetWidth(self.view.frame)/2.0 - CGRectGetWidth(self.editShortlistVC.view.frame)/2.0, CGRectGetHeight([UIScreen mainScreen].bounds), self.editShortlistVC.view.frame.size.width, self.editShortlistVC.view.frame.size.height);
+        self.editShortlistVC.view.frame = frame;
+    } completion:^(BOOL finished) {
+        [self.blurBackgroundView removeFromSuperview];
+        self.editShortlistVC = nil;
+        [self showOptions:YES];
+    }];
 }
 
 - (void)showSharingOptions {
-    [self toggleOptionsButton];
+    [self toggleOptionsButton:NO];
     
     __weak typeof(self)weakSelf = self;
     UIAlertController * alert=   [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share Shortlist", nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
