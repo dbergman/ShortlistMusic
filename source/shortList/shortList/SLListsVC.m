@@ -111,10 +111,6 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     tapGestureRecognizer.numberOfTouchesRequired = 1;
     cell.tag = indexPath.row;
     [cell addGestureRecognizer:tapGestureRecognizer];
-    
-    UILongPressGestureRecognizer *longGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(shortListCellUpdate:)];
-    longGestureRecognizer.minimumPressDuration = .5f;
-    [cell addGestureRecognizer:longGestureRecognizer];
 
     return cell;
 }
@@ -149,14 +145,6 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     SLAlbumsCollectionCell *cell = (SLAlbumsCollectionCell *)[gestureRecognizer view];
     SLShortlist *shortList = self.shortLists[cell.tag];
     [self.navigationController pushViewController:[[SLListAlbumsVC alloc] initWithShortList:shortList] animated:YES];
-}
-
-- (void)shortListCellUpdate:(UILongPressGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        SLAlbumsCollectionCell *cell = (SLAlbumsCollectionCell *)[gestureRecognizer view];
-        SLShortlist *shortList = self.shortLists[cell.tag];
-        [self showCreateShortListView:shortList];
-    }
 }
 
 - (void)addTableViewHeaderMessage:(BOOL)loggedIn {
