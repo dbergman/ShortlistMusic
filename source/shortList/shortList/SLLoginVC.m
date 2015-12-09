@@ -105,7 +105,7 @@
 
 - (void)createUsernameforUser:(PFUser *)user socialId:(NSString *)socialId {
     __weak typeof(self)weakSelf = self;
-    SLEnterUserNameVC *vc = [[SLEnterUserNameVC alloc] initWithUser:user onSuccess:^{
+    SLEntryVC *vc = [[SLEntryVC alloc] initWithUser:user onSuccess:^{
         user[@"socialId"] = socialId;
         [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *_Nullable error) {
             [weakSelf dismissViewControllerAnimated:YES completion:nil];

@@ -11,28 +11,36 @@ import UIKit
 typealias SLCreateUserNameCancel = () -> Void
 typealias SLCreateUserNameSuccess = () -> Void
 
-class SLEnterUserNameVC: SLBaseVC, UITextFieldDelegate {
+class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     
-    var theUser:PFUser?
-    var cancelCompletion:SLCreateUserNameCancel?
-    var successCompletion:SLCreateUserNameSuccess?
+    var theUser: PFUser?
+    var cancelCompletion: SLCreateUserNameCancel?
+    var successCompletion: SLCreateUserNameSuccess?
+    var existingShortList: SLShortlist?
 
-    lazy var userNameTextField:UITextField = {
-        let userNameTextField = UITextField()
-        userNameTextField.delegate = self
-        userNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        userNameTextField.placeholder = NSLocalizedString("Enter a Username", comment: "")
-        userNameTextField.layer.borderWidth = 1.0
-        userNameTextField.layer.borderColor = UIColor.sl_Red().CGColor
-        userNameTextField.backgroundColor = UIColor.whiteColor()
-        userNameTextField.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
-        userNameTextField.layer.cornerRadius = 4.0
+    lazy var entryTextField:UITextField = {
+        let entryTextField = UITextField()
+        entryTextField.delegate = self
+        entryTextField.translatesAutoresizingMaskIntoConstraints = false
+        entryTextField.layer.borderWidth = 1.0
+        entryTextField.layer.borderColor = UIColor.sl_Red().CGColor
+        entryTextField.backgroundColor = UIColor.whiteColor()
+        entryTextField.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
+        entryTextField.layer.cornerRadius = 4.0
         
-        return userNameTextField
+        return entryTextField
     }()
     
     init(user:PFUser, onSuccess:SLCreateUserNameSuccess, onCancel:SLCreateUserNameCancel) {
         self.theUser = user
+        self.cancelCompletion = onCancel
+        self.successCompletion = onSuccess
+        
+        super.init()
+    }
+    
+    init(existingShortList:SLShortlist, onSuccess:SLCreateUserNameSuccess, onCancel:SLCreateUserNameCancel) {
+        self.existingShortList = existingShortList
         self.cancelCompletion = onCancel
         self.successCompletion = onSuccess
         
@@ -44,8 +52,6 @@ class SLEnterUserNameVC: SLBaseVC, UITextFieldDelegate {
     }
     
     init(_ coder: NSCoder? = nil) {
-        self.theUser = PFUser()
-        
         if let coder = coder {
             super.init(coder: coder)!
         }
@@ -64,7 +70,16 @@ class SLEnterUserNameVC: SLBaseVC, UITextFieldDelegate {
         titleLabel.textAlignment = NSTextAlignment.Center
         self.view.addSubview(titleLabel)
         
-        self.view.addSubview(userNameTextField)
+        
+        if let shortlist = existingShortList {
+            entryTextField.text = shortlist.shortListName
+            entryTextField.placeholder = NSLocalizedString("Enter a Username", comment: "")
+        }
+        else {
+            entryTextField.placeholder = NSLocalizedString("Enter new Shortlist name", comment: "")
+        }
+        
+        self.view.addSubview(entryTextField)
         
         let submitButton:UIButton = UIButton()
         submitButton.translatesAutoresizingMaskIntoConstraints = false;
@@ -82,13 +97,13 @@ class SLEnterUserNameVC: SLBaseVC, UITextFieldDelegate {
         cancelButton.addTarget(self, action: "cancelLogin", forControlEvents: .TouchUpInside)
         self.view.addSubview(cancelButton)
     
-        let views = ["titleLabel":titleLabel, "userNameTextField":self.userNameTextField, "submitButton":submitButton, "cancelButton":cancelButton]
+        let views = ["titleLabel":titleLabel, "entryTextField":self.entryTextField, "submitButton":submitButton, "cancelButton":cancelButton]
         
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[titleLabel]-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[userNameTextField]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[entryTextField]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[submitButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cancelButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-(130)-[titleLabel]-(30)-[userNameTextField(30)]-20-[submitButton]-10-[cancelButton]", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-(130)-[titleLabel]-(30)-[entryTextField(30)]-20-[submitButton]-10-[cancelButton]-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
 
     }
     
@@ -97,13 +112,13 @@ class SLEnterUserNameVC: SLBaseVC, UITextFieldDelegate {
     }
     
     func addUserToShortList () {
-        if self.userNameTextField.text?.characters.count > 5 {
-            SLParseController.doesUserNameExist(self.userNameTextField.text!, checkAction:{[weak self](Bool exists) in
+        if self.entryTextField.text?.characters.count > 5 {
+            SLParseController.doesUserNameExist(self.entryTextField.text!, checkAction:{[weak self](Bool exists) in
                 if (exists) {
                     self!.sl_showToastForAction(NSLocalizedString("Invalid Username", comment: ""), message: NSLocalizedString("Username must be at least 6 characters long.", comment: ""), toastType: SLToastMessageType.Failure, completion: {})
                 }
                 else  {
-                    self?.theUser?.username = self!.userNameTextField.text
+                    self?.theUser?.username = self!.entryTextField.text
                     self?.theUser?.saveInBackgroundWithBlock({(Bool success) in
                         self?.successCompletion!()
                     })
@@ -127,7 +142,7 @@ class SLEnterUserNameVC: SLBaseVC, UITextFieldDelegate {
         
         let newLength = text.characters.count + string.characters.count - range.length
         
-        return newLength <= 20
+        return newLength <= 30
     }
 
 }
