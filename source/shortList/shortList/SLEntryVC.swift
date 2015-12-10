@@ -10,12 +10,14 @@ import UIKit
 
 typealias SLCreateUserNameCancel = () -> Void
 typealias SLCreateUserNameSuccess = () -> Void
+typealias SLUpdatedShortlistNameSuccess = (shortListName:String) -> Void
 
 class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     
     var theUser: PFUser?
     var cancelCompletion: SLCreateUserNameCancel?
     var successCompletion: SLCreateUserNameSuccess?
+    var successNameCompletion: SLUpdatedShortlistNameSuccess?
     var existingShortList: SLShortlist?
 
     lazy var entryTextField:UITextField = {
@@ -39,10 +41,10 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         super.init()
     }
     
-    init(existingShortList:SLShortlist, onSuccess:SLCreateUserNameSuccess, onCancel:SLCreateUserNameCancel) {
+    init(existingShortList:SLShortlist, onSuccess:SLUpdatedShortlistNameSuccess, onCancel:SLCreateUserNameCancel) {
         self.existingShortList = existingShortList
         self.cancelCompletion = onCancel
-        self.successCompletion = onSuccess
+        self.successNameCompletion = onSuccess
         
         super.init()
     }
@@ -116,16 +118,25 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     
     func addUserToShortList () {
         if self.entryTextField.text?.characters.count > 5 {
-            SLParseController.doesUserNameExist(self.entryTextField.text!, checkAction:{[weak self](Bool exists) in
+            SLParseController.doesUserNameExist(self.entryTextField.text!, checkAction:{[unowned self](Bool exists) in
                 if (exists) {
-                    self!.sl_showToastForAction(NSLocalizedString("Invalid Username", comment: ""), message: NSLocalizedString("Username must be at least 6 characters long.", comment: ""), toastType: SLToastMessageType.Failure, completion: {})
+                    self.sl_showToastForAction(NSLocalizedString("Invalid Username", comment: ""), message: NSLocalizedString("Username must be at least 6 characters long.", comment: ""), toastType: SLToastMessageType.Failure, completion: {})
                 }
                 else  {
-                    self?.theUser?.username = self!.entryTextField.text
-                    self?.theUser?.saveInBackgroundWithBlock({(Bool success) in
-                        self?.successCompletion!()
+                    self.theUser?.username = self.entryTextField.text
+                    self.theUser?.saveInBackgroundWithBlock({(Bool success) in
+                        self.successCompletion?()
                     })
                 }
+            })
+        }
+    }
+    
+     func updateShortlistName () {
+        if let shortlist = self.existingShortList {
+            shortlist.shortListName = entryTextField.text
+            SLParseController.saveShortlist(shortlist, completion: { [unowned self] in
+                self.successNameCompletion?(shortListName: shortlist.shortListName)
             })
         }
     }

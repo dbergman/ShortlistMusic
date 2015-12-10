@@ -385,7 +385,8 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self toggleOptionsButton:YES];
     
     __weak typeof(self)weakSelf = self;
-    self.editShortlistVC = [[SLEntryVC alloc] initWithExistingShortList:self.shortList onSuccess:^{
+    self.editShortlistVC = [[SLEntryVC alloc] initWithExistingShortList:self.shortList onSuccess:^(NSString *shortlistName) {
+        weakSelf.title = shortlistName;
         [weakSelf dismissEditShortListName];
     } onCancel:^{
         [weakSelf dismissEditShortListName];
