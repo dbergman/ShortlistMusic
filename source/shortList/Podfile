@@ -13,7 +13,6 @@ pod 'ParseTwitterUtils'
 
 #Model
 pod 'Mantle'
-pod 'QBValidator'
 
 #Networking
 pod 'AFNetworking'
