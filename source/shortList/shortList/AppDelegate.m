@@ -21,11 +21,11 @@
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import <ParseTwitterUtils/ParseTwitterUtils.h>
 #import <Parse/Parse.h>
+@import HockeySDK;
+
+static NSString *const kHockeyAppCrashKey = @"406de4ad8ace4ca6aad43f73ef4496a5";
 
 @interface AppDelegate ()
-
-
-
 @end
 
 @implementation AppDelegate
@@ -34,9 +34,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
+
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
+    [self setupThirdPartyLibraries];
     [self turnOnNSURLCache];
     [self setUpParse];
     [self setupAppearance];
@@ -122,6 +123,18 @@
 - (void)turnOnNSURLCache {
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024  diskCapacity:100 * 1024 * 1024 diskPath:nil];
     [NSURLCache setSharedURLCache:sharedCache];
+}
+
+- (void)setupThirdPartyLibraries {
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppCrashKey];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus: BITCrashManagerStatusAutoSend];
+    
+#ifdef DEBUG
+    [[BITHockeyManager sharedHockeyManager] setDisableCrashManager: YES];
+#elif APPSTORE
+#endif
+    
 }
 
 @end
