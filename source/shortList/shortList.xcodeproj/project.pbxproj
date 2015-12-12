@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3A67B00A491460F0C0119307 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0D5FB60B95EE1C6AAD8165 /* libPods.a */; };
+		460A74601C1CEB8900C170E0 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 460A745F1C1CEB8900C170E0 /* appKeys.plist */; };
 		461801161B08D7A4003C0A92 /* SLCreateShortListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */; };
 		4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */; };
 		461801201B09361E003C0A92 /* SLCreateShortListEnterNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4618011F1B09361E003C0A92 /* SLCreateShortListEnterNameCell.m */; };
@@ -54,7 +55,6 @@
 		4694DD2D1C0B7790002A1D78 /* ShortList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4694DD291C0B7790002A1D78 /* ShortList.m */; };
 		4694DD2F1C0B77C4002A1D78 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4694DD2E1C0B77C4002A1D78 /* CoreData.framework */; };
 		4694DD321C0B7CA1002A1D78 /* SLShortlistCoreDataMigrtationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4694DD311C0B7CA1002A1D78 /* SLShortlistCoreDataMigrtationController.m */; };
-		4696C38C1C1931F100484EE0 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4696C38B1C1931F100484EE0 /* appKeys.plist */; };
 		46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094051AF061C00091C7F7 /* ItunesArtist.m */; };
 		46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */; };
 		46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */; };
@@ -106,6 +106,7 @@
 		1415B849DC8FE7440FF77432 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		387B84E873048CE78F83CF11 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4541FC2A6E9CC99BEBFB5502 /* Pods-shortListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.release.xcconfig"; sourceTree = "<group>"; };
+		460A745F1C1CEB8900C170E0 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = SOURCE_ROOT; };
 		461801141B08D7A4003C0A92 /* SLCreateShortListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListVC.h; sourceTree = "<group>"; };
 		461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListVC.m; sourceTree = "<group>"; };
 		461801181B08E6A0003C0A92 /* SLCreateShortListTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListTitleCell.h; sourceTree = "<group>"; };
@@ -188,7 +189,6 @@
 		4694DD2E1C0B77C4002A1D78 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4694DD301C0B7CA1002A1D78 /* SLShortlistCoreDataMigrtationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLShortlistCoreDataMigrtationController.h; sourceTree = "<group>"; };
 		4694DD311C0B7CA1002A1D78 /* SLShortlistCoreDataMigrtationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLShortlistCoreDataMigrtationController.m; sourceTree = "<group>"; };
-		4696C38B1C1931F100484EE0 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = SOURCE_ROOT; };
 		46A094041AF061C00091C7F7 /* ItunesArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesArtist.h; sourceTree = "<group>"; };
 		46A094051AF061C00091C7F7 /* ItunesArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesArtist.m; sourceTree = "<group>"; };
 		46A094091AF06A3F0091C7F7 /* ItunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesAlbum.h; sourceTree = "<group>"; };
@@ -571,6 +571,7 @@
 		46CB6ACF1AED715800BF1DF3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				460A745F1C1CEB8900C170E0 /* appKeys.plist */,
 				4665B7351B6D471A0088B0B3 /* Fonts */,
 				4648A5501B1E663E00F997F8 /* shortList-Bridging-Header.h */,
 				46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */,
@@ -578,7 +579,6 @@
 				46CB6AE11AED715800BF1DF3 /* LaunchScreen.xib */,
 				46CB6AD01AED715800BF1DF3 /* Info.plist */,
 				46CB6AD11AED715800BF1DF3 /* main.m */,
-				4696C38B1C1931F100484EE0 /* appKeys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -816,7 +816,7 @@
 				46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
 				4665B7391B6D4D4F0088B0B3 /* NixieOne.otf in Resources */,
 				46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
-				4696C38C1C1931F100484EE0 /* appKeys.plist in Resources */,
+				460A74601C1CEB8900C170E0 /* appKeys.plist in Resources */,
 				46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
 				46D4230F1B77D97800D79263 /* SpotifyAlbumResults.JSON in Resources */,
 				46CB6AE31AED715800BF1DF3 /* LaunchScreen.xib in Resources */,
@@ -895,9 +895,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "
-";
-			showEnvVarsInLog = 0;
+			shellScript = "if [ -e /opt/shortListKeys/appKeys.plist  ];\nthen\necho \"Adding appKeys.plist to Shortlist Music source\"\ncp /opt/shortListKeys/appKeys.plist  ${SRCROOT}/\nelse\necho \"You Must Add /shortListKeys/appKeys.plist to your local File System!!!\"\nfi\n\ncat /opt/shortListKeys/appKeys.plist \n";
 		};
 		A0861F878F72317DFCE57765 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
