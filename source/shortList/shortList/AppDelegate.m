@@ -41,7 +41,6 @@ static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
     
     [self setupThirdPartyLibraries];
     [self turnOnNSURLCache];
-    [self setUpParse];
     [self setupAppearance];
     
     self.window.rootViewController = [self shortListTabController];
@@ -85,11 +84,13 @@ static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
     return tabBarController;
 }
 
-- (void)setUpParse {
-    NSDictionary *appKeys = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"appKeys" ofType:@"plist"]];
-    NSAssert(appKeys, @"You Must Add /opt/shortList/appKeys to your local File System!!!");
+- (void)setUpParseForProd:(BOOL)isProd {
+    NSDictionary *appKeyDictionary = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"appKeys" ofType:@"plist"]];
+    NSAssert(appKeyDictionary, @"You Must Add /opt/shortList/appKeys to your local File System!!!");
 
-    [Parse setApplicationId:appKeys[@"ParseAppId"] clientKey:appKeys[@"ParseClientKey"]];
+    NSDictionary *envDictionary = (isProd) ? appKeyDictionary[@"ShortListMusicProd"] : appKeyDictionary[@"ShortListMusicDev"];
+    
+    [Parse setApplicationId:envDictionary[@"ParseAppId"] clientKey:envDictionary[@"ParseClientKey"]];
     [PFFacebookUtils initializeFacebook];
 
     [SLShortlist registerSubclass];
@@ -134,10 +135,13 @@ static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
     
 #ifdef DEBUG
     [[BITHockeyManager sharedHockeyManager] setDisableCrashManager: YES];
+    [self setUpParseForProd:NO];
 #elif APPSTORE
     [Flurry startSession:kFlurryAnalyticsKey];
+    [self setUpParseForProd:YES];
 #endif
     
+   
 }
 
 @end

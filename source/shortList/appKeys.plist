@@ -2,10 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ParseAppId</key>
-	<string>1WNZSCrwSglyl3KtfDnXxMQM87Khs9Nny5SwtVmi</string>
-    <key>ParseClientKey</key>
-    <string>NoSdDXZQb9nuHL9xa4zagsBtbUiBmlEJyTEiB7V7</string>
+	<key>ShortListMusicProd</key>
+	<dict>
+		<key>ParseAppId</key>
+		<string>XXXXXXXXX</string>
+		<key>ParseClientKey</key>
+		<string>XXXXXXXXX</string>
+	</dict>
+	<key>ShortListMusicDev</key>
+	<dict>
+		<key>ParseAppId</key>
+		<string>XXXXXXXX</string>
+		<key>ParseClientKey</key>
+		<string>XXXXXXXX</string>
+	</dict>
 </dict>
 </plist>
-
