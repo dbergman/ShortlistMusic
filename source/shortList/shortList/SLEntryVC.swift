@@ -103,11 +103,11 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     
         let views = ["titleLabel":titleLabel, "entryTextField":self.entryTextField, "submitButton":submitButton, "cancelButton":cancelButton]
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[titleLabel]-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[entryTextField]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[submitButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cancelButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[titleLabel]-(30)-[entryTextField(30)]-20-[submitButton]-10-[cancelButton]-20-|", options:[], metrics:nil, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[titleLabel]-|", options:[], metrics:nil, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[entryTextField]-|", options:[], metrics:nil, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[cancelButton]-[submitButton(cancelButton)]-|", options:[], metrics:nil, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[titleLabel]-(15)-[entryTextField(30)]-20-[submitButton]-20-|", options:[], metrics:nil, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cancelButton]-20-|", options:[], metrics:nil, views:views))
 
     }
     

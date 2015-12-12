@@ -145,6 +145,11 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self showOptions:YES];
 }
 
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    [self setupMoreOptions];
+    [self showOptions:YES];
+}
+
 #pragma mark - Search Itunes
 - (void)searchItunesWithQuery:(NSString *)query {
     __weak typeof(self) weakSelf = self;
@@ -158,6 +163,10 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 #pragma mark - barbuttonAdctions
 -(void)shortListEditAction:(id)sender {
+    if (self.showingOptions) {
+        [self toggleOptionsButton];
+    }
+    
     UIBarButtonItem *editButton = (UIBarButtonItem *)sender;
     
     if (self.tableView.editing) {
@@ -280,14 +289,16 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 }
 
 #pragma mark Blurring Methods
-- (void)addBlurBackground {
+- (void)addBlurBackgroundWithDismisGesture:(BOOL)dismisGesture {
     self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getBlurredScreenShot]];
     self.blurBackgroundView.userInteractionEnabled = YES;
     [self.view addSubview:self.blurBackgroundView];
-    self.blurBackgroundView.alpha = 0;
     
-    UITapGestureRecognizer *dismissGesture =  [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(toggleOptionsButton:)];
-    [self.blurBackgroundView addGestureRecognizer:dismissGesture];
+    if (dismisGesture) {
+        self.blurBackgroundView.alpha = 0;
+        UITapGestureRecognizer *dismissGesture =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOptionsButton)];
+        [self.blurBackgroundView addGestureRecognizer:dismissGesture];
+    }
 }
 
 #pragma mark Options Button
@@ -296,7 +307,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     self.addAlbumButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.addAlbumButton setImage:[UIImage imageNamed:@"searchAlbums"] forState:UIControlStateNormal];
     [self.addAlbumButton bk_addEventHandler:^(id sender) {
-        [weakSelf toggleOptionsButton:NO];
+        [weakSelf toggleOptionsButton];
         [weakSelf startSearchAlbumFlow];
     } forControlEvents:UIControlEventTouchUpInside];
     
@@ -313,7 +324,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     
     self.moreOptionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.moreOptionsButton setImage:[UIImage imageNamed:@"moreOptions"] forState:UIControlStateNormal];
-    [self.moreOptionsButton addTarget:self action:@selector(toggleOptionsButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.moreOptionsButton addTarget:self action:@selector(toggleOptionsButton) forControlEvents:UIControlEventTouchUpInside];
     
     for (UIButton *optionButton in @[self.editNameButton, self.addAlbumButton, self.sharingButton, self.moreOptionsButton]) {
         optionButton.backgroundColor = [UIColor sl_Red];
@@ -350,7 +361,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     }];
 }
 
-- (void)toggleOptionsButton:(BOOL)keepBlur {
+- (void)toggleOptionsButton {
     CGRect addButtonFrame = [self getOptionsCloseFrame];
     CGRect shareButtonFrame = [self getOptionsCloseFrame];
     CGRect editNameButtonFrame = [self getOptionsCloseFrame];
@@ -362,15 +373,12 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         editNameButtonFrame.origin.y = shareButtonFrame.origin.y;
         
         self.showingOptions = YES;
-        [self addBlurBackground];
+        [self addBlurBackgroundWithDismisGesture:YES];
     }
     else {
-        if (!keepBlur) {
-            [self.blurBackgroundView removeFromSuperview];
-            self.blurBackgroundView = nil;
-            self.showingOptions = NO;
-            [self dismissEditShortListName];
-        }
+        [self.blurBackgroundView removeFromSuperview];
+        self.blurBackgroundView = nil;
+        self.showingOptions = NO;
     }
     
     [UIView animateWithDuration:.2 animations:^{
@@ -382,7 +390,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 }
 
 - (void)showEditShortListNameFlow {
-    [self toggleOptionsButton:YES];
+    [self toggleOptionsButton];
     
     __weak typeof(self)weakSelf = self;
     self.editShortlistVC = [[SLEntryVC alloc] initWithExistingShortList:self.shortList onSuccess:^(NSString *shortlistName) {
@@ -392,12 +400,22 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         [weakSelf dismissEditShortListName];
     }];
     
+    self.editShortlistVC.view.layer.borderColor = [UIColor sl_Red].CGColor;
+    self.editShortlistVC.view.layer.borderWidth = 2.0;
+    self.editShortlistVC.view.layer.cornerRadius = 8.0;
+    self.editShortlistVC.view.clipsToBounds = YES;
+    
     CGSize editShortlistSize = [self.editShortlistVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     CGRect frame = CGRectMake(CGRectGetWidth(self.view.frame)/2.0 - editShortlistSize.width/2.0, CGRectGetHeight([UIScreen mainScreen].bounds), editShortlistSize.width, editShortlistSize.height);
     self.editShortlistVC.view.frame = frame;
+    
+    [self addBlurBackgroundWithDismisGesture:NO];
+    
     [self.view addSubview:self.editShortlistVC.view];
 
+
     [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        
         self.editShortlistVC.view.center = CGPointMake(self.view.center.x, CGRectGetHeight([UIScreen mainScreen].bounds)/2.0 - editShortlistSize.height/2.0);
     } completion:^(BOOL finished) {
         [self showOptions:NO];
@@ -410,13 +428,14 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         self.editShortlistVC.view.frame = frame;
     } completion:^(BOOL finished) {
         [self.blurBackgroundView removeFromSuperview];
+        self.blurBackgroundView = nil;
         self.editShortlistVC = nil;
         [self showOptions:YES];
     }];
 }
 
 - (void)showSharingOptions {
-    [self toggleOptionsButton:NO];
+    [self toggleOptionsButton];
     
     __weak typeof(self)weakSelf = self;
     UIAlertController * alert=   [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share Shortlist", nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];

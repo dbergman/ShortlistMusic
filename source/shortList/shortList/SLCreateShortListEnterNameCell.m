@@ -66,7 +66,7 @@
 }
 
 - (void)configShortListNameCell:(SLShortlist *)shortList {
-    (shortList) ?  self.shortListNameTextfield.text = shortList.shortListName : @"";
+    (shortList) ? self.shortListNameTextfield.text = shortList.shortListName : @"";
 }
 
 #pragma mark UITextFieldDelegate
