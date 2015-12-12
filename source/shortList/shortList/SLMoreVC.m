@@ -42,6 +42,7 @@
     self.tableView.allowsSelection = NO;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 50;
+    self.tableView.scrollEnabled = NO;
     [self.view addSubview:self.tableView];
 }
 
