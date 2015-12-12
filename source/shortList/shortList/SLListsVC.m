@@ -156,10 +156,11 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.text = (loggedIn) ? NSLocalizedString(@"You do not have any ShortLists at the moment", nil) :  NSLocalizedString(@"Log in to add Shortlists", nil);
-    [messageLabel sizeToFit];
+    CGSize messageSize = [messageLabel sizeThatFits:CGSizeMake(self.view.frame.size.width - MarginSizes.large, SLTableViewHeaderMessageheight)];
 
     CGRect frame = messageLabel.frame;
     frame.origin.y = MarginSizes.medium;
+    frame.size= messageSize;
     frame.origin.x = (self.view.frame.size.width/2.0) - frame.size.width/2.0;
     messageLabel.frame = frame;
 
