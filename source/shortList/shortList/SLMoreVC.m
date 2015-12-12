@@ -67,9 +67,9 @@
             loginCell = [[SLLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LoginCellIdentifier];
         }
         __weak typeof(self)weakSelf = self;
-        [loginCell configLoginButton:([PFUser currentUser]) ?: NO loginButtonAction:^{
+        [loginCell configLoginButton:([PFUser currentUser] !=nil) ?: NO loginButtonAction:^{
             (![PFUser currentUser]) ? [weakSelf showLoginGate] : [PFUser logOutInBackground];
-            [loginCell updateButtonWithLoginStatus:([PFUser currentUser])];
+            [loginCell updateButtonWithLoginStatus:([PFUser currentUser] != nil)];
         }];
 
         return loginCell;

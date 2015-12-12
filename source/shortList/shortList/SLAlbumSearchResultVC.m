@@ -84,7 +84,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ItunesAlbum *album = [self.albums objectAtIndex:indexPath.row];
 
-    SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:self.shortList albumId:[NSString stringWithFormat:@"%ld", album.collectionId]];
+    SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:self.shortList albumId:[NSString stringWithFormat:@"%ld", (long)album.collectionId]];
     [self.navigationController pushViewController:albumDetailsVC animated:YES];
 }
 

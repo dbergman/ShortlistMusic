@@ -47,7 +47,6 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    [self saveContext];
     [[PFFacebookUtils session] close];
 }
 
