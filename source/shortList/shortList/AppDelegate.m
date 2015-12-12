@@ -22,8 +22,10 @@
 #import <ParseTwitterUtils/ParseTwitterUtils.h>
 #import <Parse/Parse.h>
 @import HockeySDK;
+#import "Flurry.h"
 
 static NSString *const kHockeyAppCrashKey = @"406de4ad8ace4ca6aad43f73ef4496a5";
+static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
 
 @interface AppDelegate ()
 @end
@@ -133,6 +135,7 @@ static NSString *const kHockeyAppCrashKey = @"406de4ad8ace4ca6aad43f73ef4496a5";
 #ifdef DEBUG
     [[BITHockeyManager sharedHockeyManager] setDisableCrashManager: YES];
 #elif APPSTORE
+    [Flurry startSession:kFlurryAnalyticsKey];
 #endif
     
 }

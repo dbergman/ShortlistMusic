@@ -25,6 +25,7 @@ pod 'CRToast', '~> 0.0.8'
 
 #Analytics/Crash
 pod "HockeySDK", :subspecs => ['CrashOnlyLib']
+pod 'Flurry-iOS-SDK/FlurrySDK'
 
 target :"shortListTests", :exclusive => true do
 pod 'Mantle'
