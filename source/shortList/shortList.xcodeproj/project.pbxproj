@@ -54,6 +54,7 @@
 		4694DD2D1C0B7790002A1D78 /* ShortList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4694DD291C0B7790002A1D78 /* ShortList.m */; };
 		4694DD2F1C0B77C4002A1D78 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4694DD2E1C0B77C4002A1D78 /* CoreData.framework */; };
 		4694DD321C0B7CA1002A1D78 /* SLShortlistCoreDataMigrtationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4694DD311C0B7CA1002A1D78 /* SLShortlistCoreDataMigrtationController.m */; };
+		4696C38C1C1931F100484EE0 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4696C38B1C1931F100484EE0 /* appKeys.plist */; };
 		46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A094051AF061C00091C7F7 /* ItunesArtist.m */; };
 		46A0940B1AF06A3F0091C7F7 /* ItunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940A1AF06A3F0091C7F7 /* ItunesAlbum.m */; };
 		46A0940E1AF06DDA0091C7F7 /* ItunesSearchArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A0940D1AF06DDA0091C7F7 /* ItunesSearchArtist.m */; };
@@ -89,7 +90,6 @@
 		46D4230E1B77D89400D79263 /* SpotifySearchTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D4230D1B77D89400D79263 /* SpotifySearchTesting.m */; };
 		46D4230F1B77D97800D79263 /* SpotifyAlbumResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46D4230B1B77D83A00D79263 /* SpotifyAlbumResults.JSON */; };
 		71B66FE816682F53147BC434 /* libPods-shortListTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96318E4294F9670A88DFF932 /* libPods-shortListTests.a */; };
-		C902DB481B3CDA47007822A1 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C902DB471B3CDA47007822A1 /* appKeys.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,6 +188,7 @@
 		4694DD2E1C0B77C4002A1D78 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4694DD301C0B7CA1002A1D78 /* SLShortlistCoreDataMigrtationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLShortlistCoreDataMigrtationController.h; sourceTree = "<group>"; };
 		4694DD311C0B7CA1002A1D78 /* SLShortlistCoreDataMigrtationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLShortlistCoreDataMigrtationController.m; sourceTree = "<group>"; };
+		4696C38B1C1931F100484EE0 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = SOURCE_ROOT; };
 		46A094041AF061C00091C7F7 /* ItunesArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesArtist.h; sourceTree = "<group>"; };
 		46A094051AF061C00091C7F7 /* ItunesArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItunesArtist.m; sourceTree = "<group>"; };
 		46A094091AF06A3F0091C7F7 /* ItunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItunesAlbum.h; sourceTree = "<group>"; };
@@ -243,9 +244,10 @@
 		46D4230B1B77D83A00D79263 /* SpotifyAlbumResults.JSON */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SpotifyAlbumResults.JSON; sourceTree = "<group>"; };
 		46D4230D1B77D89400D79263 /* SpotifySearchTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifySearchTesting.m; sourceTree = "<group>"; };
 		6EFCC671B3C3AACECC69EBC0 /* Pods-shortListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.debug.xcconfig"; sourceTree = "<group>"; };
+		92330139F982D9BDC14835AC /* Pods-shortListTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.appstore.xcconfig"; sourceTree = "<group>"; };
 		96318E4294F9670A88DFF932 /* libPods-shortListTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shortListTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C902DB471B3CDA47007822A1 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = "<group>"; };
 		CE0D5FB60B95EE1C6AAD8165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB07E1C51B1D00C9FAB39BB3 /* Pods.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.appstore.xcconfig; path = "Pods/Target Support Files/Pods/Pods.appstore.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -576,7 +578,7 @@
 				46CB6AE11AED715800BF1DF3 /* LaunchScreen.xib */,
 				46CB6AD01AED715800BF1DF3 /* Info.plist */,
 				46CB6AD11AED715800BF1DF3 /* main.m */,
-				C902DB471B3CDA47007822A1 /* appKeys.plist */,
+				4696C38B1C1931F100484EE0 /* appKeys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -715,6 +717,8 @@
 				1415B849DC8FE7440FF77432 /* Pods.release.xcconfig */,
 				6EFCC671B3C3AACECC69EBC0 /* Pods-shortListTests.debug.xcconfig */,
 				4541FC2A6E9CC99BEBFB5502 /* Pods-shortListTests.release.xcconfig */,
+				DB07E1C51B1D00C9FAB39BB3 /* Pods.appstore.xcconfig */,
+				92330139F982D9BDC14835AC /* Pods-shortListTests.appstore.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -812,10 +816,10 @@
 				46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
 				4665B7391B6D4D4F0088B0B3 /* NixieOne.otf in Resources */,
 				46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
+				4696C38C1C1931F100484EE0 /* appKeys.plist in Resources */,
 				46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
 				46D4230F1B77D97800D79263 /* SpotifyAlbumResults.JSON in Resources */,
 				46CB6AE31AED715800BF1DF3 /* LaunchScreen.xib in Resources */,
-				C902DB481B3CDA47007822A1 /* appKeys.plist in Resources */,
 				46CB6AE01AED715800BF1DF3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1088,7 +1092,7 @@
 			};
 			name = Debug;
 		};
-		46CB6AF11AED715900BF1DF3 /* Release */ = {
+		46CB6AF11AED715900BF1DF3 /* AppStore */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1126,7 +1130,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = AppStore;
 		};
 		46CB6AF31AED715900BF1DF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1153,9 +1157,9 @@
 			};
 			name = Debug;
 		};
-		46CB6AF41AED715900BF1DF3 /* Release */ = {
+		46CB6AF41AED715900BF1DF3 /* AppStore */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1415B849DC8FE7440FF77432 /* Pods.release.xcconfig */;
+			baseConfigurationReference = DB07E1C51B1D00C9FAB39BB3 /* Pods.appstore.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1175,7 +1179,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 			};
-			name = Release;
+			name = AppStore;
 		};
 		46CB6AF61AED715900BF1DF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1198,9 +1202,9 @@
 			};
 			name = Debug;
 		};
-		46CB6AF71AED715900BF1DF3 /* Release */ = {
+		46CB6AF71AED715900BF1DF3 /* AppStore */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4541FC2A6E9CC99BEBFB5502 /* Pods-shortListTests.release.xcconfig */;
+			baseConfigurationReference = 92330139F982D9BDC14835AC /* Pods-shortListTests.appstore.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1213,7 +1217,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/shortList.app/shortList";
 			};
-			name = Release;
+			name = AppStore;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1222,28 +1226,28 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				46CB6AF01AED715900BF1DF3 /* Debug */,
-				46CB6AF11AED715900BF1DF3 /* Release */,
+				46CB6AF11AED715900BF1DF3 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = AppStore;
 		};
 		46CB6AF21AED715900BF1DF3 /* Build configuration list for PBXNativeTarget "shortList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				46CB6AF31AED715900BF1DF3 /* Debug */,
-				46CB6AF41AED715900BF1DF3 /* Release */,
+				46CB6AF41AED715900BF1DF3 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = AppStore;
 		};
 		46CB6AF51AED715900BF1DF3 /* Build configuration list for PBXNativeTarget "shortListTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				46CB6AF61AED715900BF1DF3 /* Debug */,
-				46CB6AF71AED715900BF1DF3 /* Release */,
+				46CB6AF71AED715900BF1DF3 /* AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = AppStore;
 		};
 /* End XCConfigurationList section */
 
