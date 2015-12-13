@@ -29,6 +29,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         entryTextField.backgroundColor = UIColor.whiteColor()
         entryTextField.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
         entryTextField.layer.cornerRadius = 4.0
+        entryTextField.returnKeyType = .Done
         
         return entryTextField
     }()
@@ -166,5 +167,10 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         
         return newLength <= 30
     }
-
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        return true
+    }
 }
