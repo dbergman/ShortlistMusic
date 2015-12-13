@@ -84,6 +84,10 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    if (![PFUser currentUser]) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    
     if (!self.searchResultsVC) {
         [self setupMoreOptions];
     }
