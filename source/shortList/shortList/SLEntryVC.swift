@@ -34,17 +34,17 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     }()
     
     init(user:PFUser, onSuccess:SLCreateUserNameSuccess, onCancel:SLCreateUserNameCancel) {
-        self.theUser = user
-        self.cancelCompletion = onCancel
-        self.successCompletion = onSuccess
+        theUser = user
+        cancelCompletion = onCancel
+        successCompletion = onSuccess
         
         super.init()
     }
     
     init(existingShortList:SLShortlist, onSuccess:SLUpdatedShortlistNameSuccess, onCancel:SLCreateUserNameCancel) {
         self.existingShortList = existingShortList
-        self.cancelCompletion = onCancel
-        self.successNameCompletion = onSuccess
+        cancelCompletion = onCancel
+        successNameCompletion = onSuccess
         
         super.init()
     }
@@ -65,21 +65,21 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .blackColor()
+        view.backgroundColor = .blackColor()
         
         let titleLabel:UILabel = SLLoginVC.getTempLogo(CGRectZero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.adjustsFontSizeToFitWidth = true
-        self.view.addSubview(titleLabel)
+        view.addSubview(titleLabel)
         
-        self.view.addSubview(entryTextField)
+        view.addSubview(entryTextField)
         
         let submitButton:UIButton = UIButton()
         submitButton.translatesAutoresizingMaskIntoConstraints = false;
         submitButton.backgroundColor = UIColor.sl_Green()
         submitButton.layer.cornerRadius = 4.0
-        self.view.addSubview(submitButton)
+        view.addSubview(submitButton)
         
         if let shortlist = existingShortList {
             entryTextField.text = shortlist.shortListName
@@ -99,33 +99,41 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         cancelButton.layer.cornerRadius = 4.0
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: ""), forState:.Normal)
         cancelButton.addTarget(self, action: "cancelLogin", forControlEvents: .TouchUpInside)
-        self.view.addSubview(cancelButton)
+        view.addSubview(cancelButton)
     
-        let views = ["titleLabel":titleLabel, "entryTextField":self.entryTextField, "submitButton":submitButton, "cancelButton":cancelButton]
+        let views = ["titleLabel":titleLabel, "entryTextField":entryTextField, "submitButton":submitButton, "cancelButton":cancelButton]
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[titleLabel]-|", options:[], metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[entryTextField]-|", options:[], metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[cancelButton]-[submitButton(cancelButton)]-|", options:[], metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[titleLabel]-(15)-[entryTextField(30)]-20-[submitButton]-20-|", options:[], metrics:nil, views:views))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cancelButton]-20-|", options:[], metrics:nil, views:views))
-
+        if ((existingShortList) != nil) {
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[titleLabel]-|", options:[], metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[entryTextField]-|", options:[], metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[cancelButton]-[submitButton(cancelButton)]-|", options:[], metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[titleLabel]-(15)-[entryTextField(30)]-20-[submitButton]-20-|", options:[], metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cancelButton]-20-|", options:[], metrics:nil, views:views))
+        }
+        else {
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[titleLabel]-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[entryTextField]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[submitButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cancelButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-50-[titleLabel]-(30)-[entryTextField(30)]-20-[submitButton]-10-[cancelButton]", options:[], metrics:nil, views:views))
+        }
     }
     
     func cancelLogin() {
         entryTextField.resignFirstResponder()
-        self.cancelCompletion?()
+        cancelCompletion?()
     }
     
     func addUserToShortList () {
-        if self.entryTextField.text?.characters.count > 5 {
-            SLParseController.doesUserNameExist(self.entryTextField.text!, checkAction:{[unowned self](Bool exists) in
+        if entryTextField.text?.characters.count > 5 {
+            SLParseController.doesUserNameExist(entryTextField.text!, checkAction:{[unowned self](Bool exists) in
                 if (exists) {
                     self.sl_showToastForAction(NSLocalizedString("Invalid Username", comment: ""), message: NSLocalizedString("Username must be at least 6 characters long.", comment: ""), toastType: SLToastMessageType.Failure, completion: {})
                 }
                 else  {
                     self.theUser?.username = self.entryTextField.text
                     self.theUser?.saveInBackgroundWithBlock({(Bool success) in
-                        self.successCompletion?()
+                    self.successCompletion?()
                     })
                 }
             })
@@ -133,7 +141,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     }
     
      func updateShortlistName () {
-        if let shortlist = self.existingShortList {
+        if let shortlist = existingShortList {
             shortlist.shortListName = entryTextField.text
             SLParseController.saveShortlist(shortlist, completion: { [unowned self] in
                 self.successNameCompletion?(shortListName: shortlist.shortListName)
