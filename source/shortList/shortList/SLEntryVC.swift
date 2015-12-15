@@ -144,6 +144,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
      func updateShortlistName () {
         if let shortlist = existingShortList {
             shortlist.shortListName = entryTextField.text
+            entryTextField.resignFirstResponder()
             SLParseController.saveShortlist(shortlist, completion: { [unowned self] in
                 self.successNameCompletion?(shortListName: shortlist.shortListName)
             })
@@ -159,7 +160,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
                return false
             }
         }
-        else if string == " " {
+        else if string == " " && (existingShortList) == nil {
             return false
         }
         
