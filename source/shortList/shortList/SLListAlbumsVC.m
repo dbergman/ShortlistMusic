@@ -371,11 +371,10 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     CGRect editNameButtonFrame = [self getOptionsCloseFrame];
 
     if (!self.showingOptions) {
-        addButtonFrame.origin.x = addButtonFrame.origin.x - (kShortlistAlbumsButtonSize * 3.0);
-        shareButtonFrame.origin.y = shareButtonFrame.origin.y + (kShortlistAlbumsButtonSize * 3.0);
-        editNameButtonFrame.origin.x = addButtonFrame.origin.x;
-        editNameButtonFrame.origin.y = shareButtonFrame.origin.y;
-        
+        addButtonFrame.origin.x = MarginSizes.large;
+        editNameButtonFrame.origin.x = CGRectGetWidth(self.view.frame)/2.0/2.0 + MarginSizes.large;
+        shareButtonFrame.origin.x = (CGRectGetMaxX(editNameButtonFrame) + self.moreOptionsButton.frame.origin.x)/2.0 - kShortlistAlbumsButtonSize/2.0;
+
         self.showingOptions = YES;
         [self addBlurBackgroundWithDismisGesture:YES];
     }
