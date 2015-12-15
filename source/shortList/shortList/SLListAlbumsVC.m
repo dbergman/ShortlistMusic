@@ -307,6 +307,10 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 #pragma mark Options Button
 - (void)setupMoreOptions {
+    if (self.moreOptionsButton) {
+        return;
+    }
+    
     __weak typeof(self)weakSelf = self;
     self.addAlbumButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.addAlbumButton setImage:[UIImage imageNamed:@"searchAlbums"] forState:UIControlStateNormal];
@@ -418,7 +422,6 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 
     [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        
         self.editShortlistVC.view.center = CGPointMake(self.view.center.x, CGRectGetHeight([UIScreen mainScreen].bounds)/2.0 - editShortlistSize.height/2.0);
     } completion:^(BOOL finished) {
         [self showOptions:NO];
