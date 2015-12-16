@@ -151,7 +151,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
     [self setupMoreOptions];
-    [self showOptions:YES];
+    [self showOptions:(!self.searchResultsVC)];
 }
 
 #pragma mark - Search Itunes
@@ -308,6 +308,10 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 #pragma mark Options Button
 - (void)setupMoreOptions {
     if (self.moreOptionsButton) {
+        for (UIButton *optionButton in @[self.editNameButton, self.addAlbumButton, self.sharingButton, self.moreOptionsButton]) {
+            [self.navigationController.view addSubview:optionButton];
+        }
+        
         return;
     }
     
