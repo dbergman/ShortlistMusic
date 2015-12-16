@@ -357,18 +357,22 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [UIView animateWithDuration:.2 animations:^{
         if (show) {
             self.moreOptionsButton.alpha = 1.0;
+            self.showingOptions = YES;
         }
         else {
             self.moreOptionsButton.alpha = 0.0;
             self.sharingButton.hidden = YES;
             self.addAlbumButton.hidden = YES;
             self.editNameButton.hidden = YES;
+            self.showingOptions = NO;
         }
     }completion:^(BOOL finished) {
         if (show) {
+            self.moreOptionsButton.alpha = 1.0;
             self.sharingButton.hidden = NO;
             self.addAlbumButton.hidden = NO;
             self.editNameButton.hidden = NO;
+            self.showingOptions = YES;
         }
     }];
 }
