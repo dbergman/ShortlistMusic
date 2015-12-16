@@ -37,11 +37,11 @@ static NSString * const kSLPlayerOptionVC = @"playerVC";
 }
 
 - (CGRect)getOffScreenFrame {
-    return CGRectMake(([self getScreenWidth]/2) - (([self getScreenWidth] * .8)/2), -([self getScreenHeight] * .3), [self getScreenWidth] * 0.8, ([self getScreenHeight] * ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 0.2 : 0.3)));
+    return CGRectMake(([self getScreenWidth]/2) - (([self getScreenWidth] * .8)/2), -([self getScreenHeight] * .3), [self getScreenWidth] * 0.8, ([self getScreenHeight] * 0.35));
 }
 
 - (CGRect)getOnScreenFrame {
-    return CGRectMake(([self getScreenWidth]/2) - (([self getScreenWidth] * .8)/2), ([self getScreenHeight]/2) - (([self getScreenHeight] * .3)/2), [self getScreenWidth] * 0.8, ([self getScreenHeight] * ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 0.2 : 0.3)));
+    return CGRectMake(([self getScreenWidth]/2) - (([self getScreenWidth] * .8)/2), ([self getScreenHeight]/2) - (([self getScreenHeight] * .3)/2), [self getScreenWidth] * 0.8, ([self getScreenHeight] * 0.35));
 }
 
 - (void)setPlayerViewController:(SLPlayNowViewController *)playerVC {
