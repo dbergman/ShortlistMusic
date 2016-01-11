@@ -21,10 +21,13 @@
 #import "UIViewController+Utilities.h"
 #import "UIImage+ImageEffects.h"
 #import "UIViewController+SLToastBanner.h"
+#import "SLPreviewAlbumDetailsVC.h"
+#import "SLShortListAlbum.h"
+#import "SLAlbumCell.h"
 
 static const CGFloat SLTableViewHeaderMessageheight = 50.0;
 
-@interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *shortLists;
@@ -57,6 +60,10 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     [self.view addSubview:self.tableView];
 
     [self createNewShortListView];
+    
+    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        [self registerForPreviewingWithDelegate:self sourceView:self.view];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -233,6 +240,26 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
         self.blurBackgroundView.alpha = 1.0;
     } completion:nil];
 }
+
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    SLAlbumsCollectionCell *albumCollectionCell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    NSIndexPath *collectionIndexpath = [albumCollectionCell.collectionView indexPathForItemAtPoint:location];
+
+    SLShortlist *shortList = (SLShortlist *)self.shortLists[indexPath.row];
+    SLShortListAlbum *slAbum = shortList.shortListAlbums[collectionIndexpath.row];
+    
+    SLPreviewAlbumDetailsVC *previewAlbumDetailsVC = [[SLPreviewAlbumDetailsVC alloc] initWithShortListAlbum:slAbum];
+    CGSize prieviewSize = [previewAlbumDetailsVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    
+    previewAlbumDetailsVC.preferredContentSize = CGSizeMake(0, prieviewSize.height);
+    previewingContext.sourceRect = albumCollectionCell.frame;
+    
+    return previewAlbumDetailsVC;
+}
+
 
 #pragma mark SLCreateShortListDelegate
 - (void)createShortList:(SLCreateShortListVC *)viewController willDisplayPickerWithHeight:(CGFloat)pickerHeight {
