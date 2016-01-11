@@ -90,6 +90,7 @@
 		46D4230E1B77D89400D79263 /* SpotifySearchTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D4230D1B77D89400D79263 /* SpotifySearchTesting.m */; };
 		46D4230F1B77D97800D79263 /* SpotifyAlbumResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46D4230B1B77D83A00D79263 /* SpotifyAlbumResults.JSON */; };
 		71B66FE816682F53147BC434 /* libPods-shortListTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96318E4294F9670A88DFF932 /* libPods-shortListTests.a */; };
+		C9063B7F1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9063B7E1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -246,6 +247,8 @@
 		6EFCC671B3C3AACECC69EBC0 /* Pods-shortListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.debug.xcconfig"; sourceTree = "<group>"; };
 		92330139F982D9BDC14835AC /* Pods-shortListTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.appstore.xcconfig"; sourceTree = "<group>"; };
 		96318E4294F9670A88DFF932 /* libPods-shortListTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shortListTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9063B7D1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPreviewAlbumDetailsVC.h; sourceTree = "<group>"; };
+		C9063B7E1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPreviewAlbumDetailsVC.m; sourceTree = "<group>"; };
 		CE0D5FB60B95EE1C6AAD8165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB07E1C51B1D00C9FAB39BB3 /* Pods.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.appstore.xcconfig; path = "Pods/Target Support Files/Pods/Pods.appstore.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -407,6 +410,8 @@
 				468925691B00027400A7D98C /* Cells */,
 				467D55A11AF69746005CD607 /* SLAlbumDetailsVC.h */,
 				467D55A21AF69746005CD607 /* SLAlbumDetailsVC.m */,
+				C9063B7D1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.h */,
+				C9063B7E1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m */,
 			);
 			name = "Album Details";
 			sourceTree = "<group>";
@@ -737,6 +742,7 @@
 				46CB6ACA1AED715800BF1DF3 /* Resources */,
 				46714766D042C982A4C328BD /* Copy Pods Resources */,
 				1624757558222BAF3B940C6D /* Embed Pods Frameworks */,
+				C9C1CE5E1C42E114004D8AE9 /* Build Number Script */,
 			);
 			buildRules = (
 			);
@@ -927,6 +933,20 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		C9C1CE5E1C42E114004D8AE9 /* Build Number Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Number Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
 		D74E838B1ED1BBB3DED45ADD /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1005,6 +1025,7 @@
 				46A094061AF061C00091C7F7 /* ItunesArtist.m in Sources */,
 				46A094111AF06FDF0091C7F7 /* ItunesSearchAlbum.m in Sources */,
 				466064091B81260C006AB766 /* SLInstagramController.m in Sources */,
+				C9063B7F1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m in Sources */,
 				468FB8BC1B1260DE0004DC14 /* SLShortlist.m in Sources */,
 				467D55921AF54FB4005CD607 /* SLListAlbumsVC.m in Sources */,
 				4664276A1BE1935100ECFCAE /* SLEntryVC.swift in Sources */,
@@ -1140,6 +1161,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -1155,6 +1177,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -1166,6 +1189,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -1180,6 +1204,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = AppStore;
 		};
