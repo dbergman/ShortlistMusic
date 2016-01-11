@@ -15,7 +15,6 @@ static const CGFloat kSLAlbumCellSize = 120;
 
 @interface SLAlbumsCollectionCell () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 
-@property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) SLShortlist *shortlist;
 @property (nonatomic, strong) UIView *shortlistDetailsView;
 @property (nonatomic, strong) UILabel *shortlistNamelabel;
@@ -89,6 +88,8 @@ static const CGFloat kSLAlbumCellSize = 120;
     [self.collectionView reloadData];
 }
 
+
+#pragma mark UICollectionView DataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.shortlist.shortListAlbums.count;
 }
@@ -100,10 +101,12 @@ static const CGFloat kSLAlbumCellSize = 120;
     return cell;
 }
 
+#pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(kSLAlbumCellSize, kSLAlbumCellSize);
 }
 
+#pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [UIView animateWithDuration:.2 animations:^{
         self.shortlistDetailsView.alpha = 0.0;
