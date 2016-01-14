@@ -11,6 +11,8 @@
 
 @interface SLAlbumsCollectionCell : UITableViewCell
 
+@property (nonatomic, strong) UICollectionView *collectionView;
+
 - (void)configShortListCollection:(SLShortlist *)shortList;
 
 @end

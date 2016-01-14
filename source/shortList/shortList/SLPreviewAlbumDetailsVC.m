@@ -60,8 +60,8 @@
     NSDictionary *views = NSDictionaryOfVariableBindings(_albumArtImage, _albumNameLabel, _artistNameLabel);
     NSDictionary *metrics = @{@"albumArtworkSize":@(CGRectGetWidth([UIScreen mainScreen].bounds) - MarginSizes.xxLarge)};
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_albumArtImage(albumArtworkSize)]-|" options:0 metrics:metrics views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_albumArtImage(albumArtworkSize)]-[_albumNameLabel][_artistNameLabel]" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_albumArtImage]-|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_albumArtImage]-[_albumNameLabel][_artistNameLabel]-|" options:NSLayoutFormatAlignAllLeft metrics:metrics views:views]];
 }
 
 @end

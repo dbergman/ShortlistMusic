@@ -246,15 +246,15 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     SLAlbumsCollectionCell *albumCollectionCell = [self.tableView cellForRowAtIndexPath:indexPath];
     
-    NSIndexPath *collectionIndexpath = [albumCollectionCell.collectionView indexPathForItemAtPoint:location];
+    NSIndexPath *collectionIndexpath = [albumCollectionCell.collectionView indexPathForItemAtPoint:CGPointMake(location.x, 50.0)];
+    
+   // NSLog(NSStringFromCGPoint(location));
 
     SLShortlist *shortList = (SLShortlist *)self.shortLists[indexPath.row];
     SLShortListAlbum *slAbum = shortList.shortListAlbums[collectionIndexpath.row];
     
     SLPreviewAlbumDetailsVC *previewAlbumDetailsVC = [[SLPreviewAlbumDetailsVC alloc] initWithShortListAlbum:slAbum];
-    CGSize prieviewSize = [previewAlbumDetailsVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    
-    previewAlbumDetailsVC.preferredContentSize = CGSizeMake(0, prieviewSize.height);
+    previewAlbumDetailsVC.preferredContentSize = CGSizeMake(0,0);
     previewingContext.sourceRect = albumCollectionCell.frame;
     
     return previewAlbumDetailsVC;

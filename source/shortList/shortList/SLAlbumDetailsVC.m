@@ -48,7 +48,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 @implementation SLAlbumDetailsVC
 
-- (instancetype)initWithShortList:(SLShortlist *)shortList albumId:(NSString*)albumCollectionId {
+- (instancetype)initWithShortList:(SLShortlist *)shortList albumId:(NSString *)albumCollectionId {
     self = [super init];
     
     if (self) {
