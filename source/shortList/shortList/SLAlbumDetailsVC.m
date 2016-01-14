@@ -67,12 +67,8 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     
     self.hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.hud];
-    __weak typeof(self)weakSelf = self;
-    [self.hud showAnimated:YES whileExecutingBlock:^{
-        [weakSelf getAlbumDetails];
-    } completionBlock:^{
-        [weakSelf.hud removeFromSuperview];
-    }];
+    [self.hud show:YES];
+    [self getAlbumDetails];
 
     self.coverImageView = [UIImageView new];
     self.coverImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -199,6 +195,8 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 - (void)getAlbumDetails {
     __weak typeof(self)weakSelf = self;
     [[ItunesSearchAPIController sharedManager] getTracksForAlbumID:self.albumCollectionId completion:^(ItunesSearchTracks *albumSearchResults, NSError *error) {
+        [weakSelf.hud removeFromSuperview];
+        
         if (!error) {
             weakSelf.albumDetails = [albumSearchResults getAlbumInfo];
             weakSelf.tracks = [albumSearchResults getAlbumTracks];
