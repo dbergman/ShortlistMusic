@@ -13,8 +13,9 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImage+AverageColor.h"
 
-const CGFloat kSLPlayAlbumArtSize = 100.0;
-const CGFloat kSLPlayButtonSize = 50.0;
+static const CGFloat kSLPlayAlbumArtSize = 100.0;
+static const CGFloat kSLPlayButtonSize = 50.0;
+static const CGFloat kSLPlayLabelsWidth = 210.0;
 
 @interface SLPlayNowViewController ()
 
@@ -40,12 +41,12 @@ const CGFloat kSLPlayButtonSize = 50.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.albumTitleLabel = [UILabel new];
     self.albumTitleLabel.text = self.albumDetails.collectionName;
     self.albumTitleLabel.numberOfLines = 0;
     self.albumTitleLabel.font = [SLStyle polarisFontWithSize:FontSizes.xLarge];
-    
+
     self.artistTitleLabel = [UILabel new];
     self.artistTitleLabel.text = self.albumDetails.artistName;
     self.artistTitleLabel.numberOfLines = 0;
@@ -80,15 +81,15 @@ const CGFloat kSLPlayButtonSize = 50.0;
     }];
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_albumArtView, _albumTitleLabel, _artistTitleLabel, buttonContainer, _appleMusicButton, _spotifyButton);
-    NSDictionary *metrics = @{@"albumArtSize":@(kSLPlayAlbumArtSize), @"marginSmall":@(MarginSizes.small), @"buttonSize":@(kSLPlayButtonSize)};
+    NSDictionary *metrics = @{@"albumArtSize":@(kSLPlayAlbumArtSize), @"marginSmall":@(MarginSizes.small), @"buttonSize":@(kSLPlayButtonSize), @"labelWidth":@(kSLPlayLabelsWidth)};
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-marginSmall-[_albumArtView(albumArtSize)]-[_albumTitleLabel]" options:0 metrics:metrics views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-marginSmall-[_albumArtView(albumArtSize)]-[_artistTitleLabel]" options:0 metrics:metrics views:views]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:buttonContainer attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:1.0]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-marginSmall-[_albumArtView(albumArtSize)]-[_albumTitleLabel(labelWidth)]-marginSmall-|" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-marginSmall-[_albumArtView(albumArtSize)]-[_artistTitleLabel(labelWidth)]-marginSmall-|" options:0 metrics:metrics views:views]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:buttonContainer attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-marginSmall-[_albumArtView(albumArtSize)]-[buttonContainer]" options:0 metrics:metrics views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-marginSmall-[_albumArtView(albumArtSize)]-[buttonContainer]-|" options:0 metrics:metrics views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-marginSmall-[_albumTitleLabel]-[_artistTitleLabel]" options:0 metrics:metrics views:views]];
-    
+
     [buttonContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_appleMusicButton(buttonSize)]|" options:0 metrics:metrics views:views]];
     
     if (self.albumDetails.spotifyDeepLink) {
@@ -103,9 +104,9 @@ const CGFloat kSLPlayButtonSize = 50.0;
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    
+
     self.albumTitleLabel.preferredMaxLayoutWidth = self.view.frame.size.width - self.albumArtView.frame.size.width - (MarginSizes.small * 2.0);
-    self.artistTitleLabel.preferredMaxLayoutWidth = self.albumTitleLabel.preferredMaxLayoutWidth;
+    self.artistTitleLabel.preferredMaxLayoutWidth = self.view.frame.size.width - self.albumArtView.frame.size.width - (MarginSizes.small * 2.0);
 }
 
 - (void)spotifyAction {

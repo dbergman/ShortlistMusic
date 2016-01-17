@@ -18,9 +18,16 @@ static NSString * const kSLPlayerOptionVC = @"playerVC";
 
 - (void)buildPlayerViewControllerForAlbum:(ItunesTrack *)albumDetails {
     SLPlayNowViewController *playVC = [[SLPlayNowViewController alloc] initWithAlbum:albumDetails];
-    playVC.view.frame = [self getOffScreenFrame];
-    [self.view addSubview:playVC.view];
+        
+    CGRect frame = playVC.view.frame;
+    frame.size = [playVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    playVC.view.frame = frame;
+    [self setPlayerViewController:playVC];
     
+    frame.origin = [self getOffScreenFrame].origin;
+    playVC.view.frame = frame;
+    
+    [self.view addSubview:playVC.view];
     [self setPlayerViewController:playVC];
 }
 
@@ -37,11 +44,11 @@ static NSString * const kSLPlayerOptionVC = @"playerVC";
 }
 
 - (CGRect)getOffScreenFrame {
-    return CGRectMake(([self getScreenWidth]/2) - (([self getScreenWidth] * .8)/2), -([self getScreenHeight] * .3), [self getScreenWidth] * 0.8, ([self getScreenHeight] * 0.35));
+    return CGRectMake(([self getScreenWidth]/2) - (([self playerViewController].view.frame.size.width)/2), - ([self getScreenHeight] * .3), [self playerViewController].view.frame.size.width, [self playerViewController].view.frame.size.height);
 }
 
 - (CGRect)getOnScreenFrame {
-    return CGRectMake(([self getScreenWidth]/2) - (([self getScreenWidth] * .8)/2), ([self getScreenHeight]/2) - (([self getScreenHeight] * .3)/2), [self getScreenWidth] * 0.8, ([self getScreenHeight] * 0.35));
+    return CGRectMake(([self getScreenWidth]/2) - (([self playerViewController].view.frame.size.width)/2), ([self getScreenHeight]/2) - (([self getScreenHeight] * .3)/2), [self playerViewController].view.frame.size.width, [self playerViewController].view.frame.size.height);
 }
 
 - (void)setPlayerViewController:(SLPlayNowViewController *)playerVC {
