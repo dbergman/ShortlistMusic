@@ -24,6 +24,7 @@
 #import "SLPreviewAlbumDetailsVC.h"
 #import "SLShortListAlbum.h"
 #import "SLAlbumCell.h"
+#import "SLAlbumDetailsVC.h"
 
 static const CGFloat SLTableViewHeaderMessageheight = 50.0;
 
@@ -34,6 +35,8 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
 @property (nonatomic, strong) SLCreateShortListVC *createShortListVC;
 @property (nonatomic, strong) NSArray *createSLVerticalConstraints;
 @property (nonatomic, strong) UIImageView *blurBackgroundView;
+@property (nonatomic, strong) SLShortlist *previewingShortlist;
+@property (nonatomic, strong) SLShortListAlbum *previewingAlbum;
 
 @end
 
@@ -241,7 +244,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     } completion:nil];
 }
 
-
+#pragma mark UIViewControllerPreviewingDelegate
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
     SLAlbumsCollectionCell *albumCollectionCell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -250,10 +253,10 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     
    // NSLog(NSStringFromCGPoint(location));
 
-    SLShortlist *shortList = (SLShortlist *)self.shortLists[indexPath.row];
-    SLShortListAlbum *slAbum = shortList.shortListAlbums[collectionIndexpath.row];
+    self.previewingShortlist = (SLShortlist *)self.shortLists[indexPath.row];
+    self.previewingAlbum = self.previewingShortlist.shortListAlbums[collectionIndexpath.row];
     
-    SLPreviewAlbumDetailsVC *previewAlbumDetailsVC = [[SLPreviewAlbumDetailsVC alloc] initWithShortListAlbum:slAbum];
+    SLPreviewAlbumDetailsVC *previewAlbumDetailsVC = [[SLPreviewAlbumDetailsVC alloc] initWithShortListAlbum:self.previewingAlbum];
     CGSize previewSize = [previewAlbumDetailsVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
     previewAlbumDetailsVC.preferredContentSize = CGSizeMake(previewSize.width, previewSize.height);
@@ -262,6 +265,9 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     return previewAlbumDetailsVC;
 }
 
+- (void)previewingContext:(id <UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self showViewController:[[SLAlbumDetailsVC alloc] initWithShortList:self.previewingShortlist albumId:[NSString stringWithFormat:@"%ld", (long)self.previewingAlbum.albumId]] sender:self];
+}
 
 #pragma mark SLCreateShortListDelegate
 - (void)createShortList:(SLCreateShortListVC *)viewController willDisplayPickerWithHeight:(CGFloat)pickerHeight {
