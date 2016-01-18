@@ -254,7 +254,9 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     SLShortListAlbum *slAbum = shortList.shortListAlbums[collectionIndexpath.row];
     
     SLPreviewAlbumDetailsVC *previewAlbumDetailsVC = [[SLPreviewAlbumDetailsVC alloc] initWithShortListAlbum:slAbum];
-    previewAlbumDetailsVC.preferredContentSize = CGSizeMake(0,0);
+    CGSize previewSize = [previewAlbumDetailsVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    
+    previewAlbumDetailsVC.preferredContentSize = CGSizeMake(previewSize.width, previewSize.height);
     previewingContext.sourceRect = albumCollectionCell.frame;
     
     return previewAlbumDetailsVC;
