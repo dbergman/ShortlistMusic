@@ -127,13 +127,13 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     
     func addUserToShortList () {
         if entryTextField.text?.characters.count > 5 {
-            SLParseController.doesUserNameExist(entryTextField.text!, checkAction:{[unowned self](Bool exists) in
+            SLParseController.doesUserNameExist(entryTextField.text!, checkAction:{[unowned self](exists) in
                 if (exists) {
                     self.sl_showToastForAction(NSLocalizedString("Invalid Username", comment: ""), message: NSLocalizedString("Username must be at least 6 characters long.", comment: ""), toastType: SLToastMessageType.Failure, completion: {})
                 }
                 else  {
                     self.theUser?.username = self.entryTextField.text
-                    self.theUser?.saveInBackgroundWithBlock({(Bool success) in
+                    self.theUser?.saveInBackgroundWithBlock({(success) in
                     self.successCompletion?()
                     })
                 }

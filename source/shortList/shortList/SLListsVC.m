@@ -26,7 +26,7 @@
 #import "SLAlbumCell.h"
 #import "SLAlbumDetailsVC.h"
 
-static const CGFloat SLTableViewHeaderMessageheight = 50.0;
+static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
 
 @interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate>
 
@@ -158,7 +158,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
 }
 
 - (void)addTableViewHeaderMessage:(BOOL)loggedIn {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, SLTableViewHeaderMessageheight)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, SLTableViewHeaderMessageHeight)];
     
     UILabel *messageLabel = [UILabel new];
     messageLabel.numberOfLines = 0;
@@ -166,7 +166,7 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
     messageLabel.textColor = [UIColor whiteColor];
     messageLabel.textAlignment = NSTextAlignmentCenter;
     messageLabel.text = (loggedIn) ? NSLocalizedString(@"You do not have any ShortLists at the moment", nil) :  NSLocalizedString(@"Log in to add Shortlists", nil);
-    CGSize messageSize = [messageLabel sizeThatFits:CGSizeMake(self.view.frame.size.width - MarginSizes.large, SLTableViewHeaderMessageheight)];
+    CGSize messageSize = [messageLabel sizeThatFits:CGSizeMake(self.view.frame.size.width - MarginSizes.large, SLTableViewHeaderMessageHeight)];
 
     CGRect frame = messageLabel.frame;
     frame.origin.y = MarginSizes.medium;
@@ -246,21 +246,31 @@ static const CGFloat SLTableViewHeaderMessageheight = 50.0;
 
 #pragma mark UIViewControllerPreviewingDelegate
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+    
+    CGPoint cellPostion = [self.tableView convertPoint:location fromView:self.view];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:cellPostion];
+    
     SLAlbumsCollectionCell *albumCollectionCell = [self.tableView cellForRowAtIndexPath:indexPath];
     
-    NSIndexPath *collectionIndexpath = [albumCollectionCell.collectionView indexPathForItemAtPoint:CGPointMake(location.x, 50.0)];
-    
-   // NSLog(NSStringFromCGPoint(location));
-
     self.previewingShortlist = (SLShortlist *)self.shortLists[indexPath.row];
+    
+    if (self.previewingShortlist.shortListAlbums.count == 0) {
+        self.previewingShortlist = nil;
+        return nil;
+    }
+   
+    CGPoint collectionPoint =  [albumCollectionCell.collectionView convertPoint:location fromView:self.view];
+    NSIndexPath *collectionIndexpath = [albumCollectionCell.collectionView indexPathForItemAtPoint:collectionPoint];
+    SLAlbumCell *albumcell = (SLAlbumCell*)[albumCollectionCell.collectionView cellForItemAtIndexPath:collectionIndexpath];
+  
     self.previewingAlbum = self.previewingShortlist.shortListAlbums[collectionIndexpath.row];
     
     SLPreviewAlbumDetailsVC *previewAlbumDetailsVC = [[SLPreviewAlbumDetailsVC alloc] initWithShortListAlbum:self.previewingAlbum];
-    CGSize previewSize = [previewAlbumDetailsVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     
+    CGSize previewSize = [previewAlbumDetailsVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     previewAlbumDetailsVC.preferredContentSize = CGSizeMake(previewSize.width, previewSize.height);
-    previewingContext.sourceRect = albumCollectionCell.frame;
+    
+    previewingContext.sourceRect = [self.view convertRect:albumcell.frame fromView:albumCollectionCell.collectionView];
     
     return previewAlbumDetailsVC;
 }
