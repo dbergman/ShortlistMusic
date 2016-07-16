@@ -19,10 +19,4 @@ static NSString * const kSLSpotifyDeepLinkPrefix = @"spotify:";
       };
 }
 
-+ (NSValueTransformer *)spotifyAlbumUrlJSONTransformer {
-    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *spotifyUrl, BOOL *success, NSError *__autoreleasing *error) {
-        return [NSString stringWithFormat:@"%@%@",kSLSpotifyDeepLinkPrefix, spotifyUrl];
-    }];
-}
-
 @end

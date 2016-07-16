@@ -174,6 +174,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     __weak typeof(self) weakSelf = self;
     [[SpotifySearchApiController sharedManager] spotifySearchByArist:self.albumDetails.artistName album:self.albumDetails.collectionName completion:^(SpotifyAlbums *albums, NSError *error) {
         weakSelf.albumDetails.spotifyDeepLink = [(SpotifyAlbum *)albums.albumResults.firstObject spotifyAlbumUrl];
+        [weakSelf buildPlayerViewControllerForAlbum:weakSelf.albumDetails];
     }];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:([self getShortListAlbum])? NSLocalizedString(@"Remove", nil) : NSLocalizedString(@"Add", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
@@ -185,8 +186,6 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     __weak typeof(self) weakSelf = self;
     [self.coverImageView sd_setImageWithURL:[NSURL URLWithString:self.albumDetails.artworkUrl600] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [weakSelf.view addSubview:weakSelf.tableView];
-        
-        [weakSelf buildPlayerViewControllerForAlbum:weakSelf.albumDetails];
         [weakSelf setupPlayNowButton];
     }];
 }
