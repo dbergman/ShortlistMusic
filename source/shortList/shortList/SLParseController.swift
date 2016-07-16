@@ -46,7 +46,7 @@ class SLParseController : NSObject {
                         self.getShortListAlbums(shortList, completion: { (albums) -> Void in
                             shortList.shortListAlbums = albums as [AnyObject]
                             
-                            shortListCounter++
+                            shortListCounter += 1
                             if (shortListCounter == shortLists!.count) {
                                 completion(shortlists: shortLists!)
                             }

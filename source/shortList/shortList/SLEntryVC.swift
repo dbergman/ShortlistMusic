@@ -86,12 +86,12 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
             entryTextField.text = shortlist.shortListName
             entryTextField.placeholder = NSLocalizedString("Enter new Shortlist name", comment: "")
             submitButton.setTitle(NSLocalizedString("Save", comment: ""), forState:.Normal)
-            submitButton.addTarget(self, action: "updateShortlistName", forControlEvents: .TouchUpInside)
+            submitButton.addTarget(self, action: #selector(SLEntryVC.updateShortlistName), forControlEvents: .TouchUpInside)
         }
         else {
             entryTextField.placeholder = NSLocalizedString("Enter a Username", comment: "")
             submitButton.setTitle(NSLocalizedString("Submit", comment: ""), forState:.Normal)
-            submitButton.addTarget(self, action: "addUserToShortList", forControlEvents: .TouchUpInside)
+            submitButton.addTarget(self, action: #selector(SLEntryVC.addUserToShortList), forControlEvents: .TouchUpInside)
         }
         
         let cancelButton:UIButton = UIButton()
@@ -99,7 +99,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         cancelButton.backgroundColor = UIColor.sl_Red()
         cancelButton.layer.cornerRadius = 4.0
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: ""), forState:.Normal)
-        cancelButton.addTarget(self, action: "cancelLogin", forControlEvents: .TouchUpInside)
+        cancelButton.addTarget(self, action: #selector(SLEntryVC.cancelLogin), forControlEvents: .TouchUpInside)
         view.addSubview(cancelButton)
     
         let views = ["titleLabel":titleLabel, "entryTextField":entryTextField, "submitButton":submitButton, "cancelButton":cancelButton]
