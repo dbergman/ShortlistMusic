@@ -32,6 +32,8 @@ static NSString * const kSLPlayerOptionVC = @"playerVC";
 }
 
 - (void)showPlayerView {
+    [self.view bringSubviewToFront:[self playerViewController].view];
+    
     [UIView animateWithDuration:.2 animations:^{
         [self playerViewController].view.frame = [self getOnScreenFrame];
     }];
