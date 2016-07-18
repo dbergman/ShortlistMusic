@@ -27,10 +27,11 @@
 #import "SLInstagramController.h"
 #import "UIViewController+SLAlbumArtImaging.h"
 #import "MBProgressHUD.h"
+#import "SLPreviewAlbumDetailsVC.h"
 
 const CGFloat kShortlistAlbumsButtonSize = 50.0;
 
-@interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate>
+@interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate, UIViewControllerPreviewingDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *blurBackgroundView;
@@ -44,6 +45,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 @property (nonatomic, strong) UIButton *editNameButton;
 @property (nonatomic, strong) SLEntryVC *editShortlistVC;
 @property (nonatomic, assign) BOOL showingOptions;
+@property (nonatomic, strong) SLShortListAlbum *previewingAlbum;
 
 @end
 
@@ -79,6 +81,10 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self.view addSubview:self.tableView];
     
     self.definesPresentationContext = YES;
+    
+    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
+        [self registerForPreviewingWithDelegate:self sourceView:self.view];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -507,6 +513,34 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     SLAlbumArtImaging *albumArtImaging = [SLAlbumArtImaging new];
     
     return [albumArtImaging buildShortListAlbumArt:self.shortList];
+}
+
+
+#pragma mark UIViewControllerPreviewingDelegate
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    
+    CGPoint cellPostion = [self.tableView convertPoint:location fromView:self.view];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:cellPostion];
+    
+    SLListAbumCell *shortListAlbumCell = (SLListAbumCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    
+    SLShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
+    
+    self.previewingAlbum = album;
+    
+    SLPreviewAlbumDetailsVC *previewAlbumDetailsVC = [[SLPreviewAlbumDetailsVC alloc] initWithShortListAlbum:album];
+    
+    CGSize previewSize = [previewAlbumDetailsVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    previewAlbumDetailsVC.preferredContentSize = CGSizeMake(previewSize.width, previewSize.height);
+    
+    previewingContext.sourceRect = [self.view convertRect:shortListAlbumCell.frame fromView:self.tableView];
+    
+    return previewAlbumDetailsVC;
+}
+
+- (void)previewingContext:(id <UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:self.shortList albumId:[NSString stringWithFormat:@"%ld",(long)self.previewingAlbum.albumId]];
+    [self.navigationController pushViewController:albumDetailsVC animated:YES];
 }
 
 #pragma mark Utilities
