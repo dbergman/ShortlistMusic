@@ -139,9 +139,7 @@ static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
 #elif APPSTORE
     [Flurry startSession:kFlurryAnalyticsKey];
     [self setUpParseForProd:YES];
-#endif
-    
-   
+#endif 
 }
 
 @end
