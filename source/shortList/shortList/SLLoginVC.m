@@ -74,7 +74,7 @@
     }
 }
 
-- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(PFUI_NULLABLE NSError *)error {
+- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
     [self sl_showToastForAction:NSLocalizedString(@"Login Failed", nil) message:NSLocalizedString(@"Invalid ID or password.", nil) toastType:SLToastMessageFailure completion:nil];
 }
 

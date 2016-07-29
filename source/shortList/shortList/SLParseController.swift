@@ -34,8 +34,8 @@ class SLParseController : NSObject {
     class func getUsersShortLists(completion:SLGetUsersShortListBlock) {
         let query:PFQuery = PFQuery (className: ShortLists)
         query.whereKey("shortListUserId", equalTo: SLParseController.getCurrentUser().objectId!)
-        
-        query.findObjectsInBackgroundWithBlock { (shortLists: [AnyObject]?, error: NSError?) -> Void in
+
+        query.findObjectsInBackgroundWithBlock { shortLists, error in
             if (error == nil) {
                 if (shortLists!.count == 0) {
                     completion(shortlists: shortLists!)
@@ -61,10 +61,9 @@ class SLParseController : NSObject {
         let query:PFQuery = PFQuery (className: ShortListAlbums)
         query.whereKey("shortListId", equalTo: shortList.objectId!)
         query.orderByAscending("shortListRank")
-
-        query.findObjectsInBackgroundWithBlock {
-            (albums: [AnyObject]?, error: NSError?) -> Void in
-            if !(error != nil) {
+        
+        query.findObjectsInBackgroundWithBlock { albums, error in
+            if error == nil {
                 completion(albums: albums!)
             }
             else {
@@ -129,8 +128,8 @@ class SLParseController : NSObject {
     class func doesUserNameExist(username:String, checkAction:SLIdCheckAction) {
         let query = PFUser.query()
         query!.whereKey("username", equalTo: username)
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) in
+        
+        query?.findObjectsInBackgroundWithBlock { objects, error in
             if error == nil {
                 if (objects!.count > 0){
                     checkAction(exists: true)
@@ -146,8 +145,8 @@ class SLParseController : NSObject {
     class func doesUserEmailExist(email:String, checkAction:SLIdCheckAction) {
         let query = PFUser.query()
         query!.whereKey("email", equalTo: email)
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) in
+        
+        query!.findObjectsInBackgroundWithBlock { objects, error in
             if error == nil {
                 if (objects!.count > 0){
                     checkAction(exists: true)
@@ -163,8 +162,7 @@ class SLParseController : NSObject {
     class func doesSocialIdExist(socialId:String, checkAction:SLIdCheckAction) {
         let query = PFUser.query()
         query!.whereKey("socialId", equalTo: socialId)
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) in
+        query!.findObjectsInBackgroundWithBlock { objects, error in
             if error == nil {
                 if (objects!.count > 0){
                     checkAction(exists: true)

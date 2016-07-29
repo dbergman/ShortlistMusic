@@ -39,7 +39,7 @@ static NSString * const kBaseURL = @"https://api.spotify.com/v1/";
 -(void)spotifySearchByArist:(NSString *)artist album:(NSString *)album completion:(SLSpotifyFetchResultsBlock)completion {
     NSDictionary *params = @{@"q":[NSString stringWithFormat:@"album:%@ artist:%@",album, artist], @"type": @"album", @"market": @"us", @"limit": @(1)};
     
-    [self GET:@"search" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self GET:@"search" parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *error;
         SpotifyAlbums *spotifyAlbums = [MTLJSONAdapter modelOfClass:[SpotifyAlbums class]  fromJSONDictionary:responseObject error:&error];
         if (error) {
@@ -52,9 +52,9 @@ static NSString * const kBaseURL = @"https://api.spotify.com/v1/";
                 completion(spotifyAlbums, nil);
             }
         }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"FAILURE");
-        }];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"FAILURE");
+    }];
 }
 
 @end

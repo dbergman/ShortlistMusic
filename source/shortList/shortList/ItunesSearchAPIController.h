@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPRequestOperationManager.h"
+#import "AFHTTPSessionManager.h"
 
 @class ItunesSearchAlbum;
 
 typedef void(^SLItunesFetchResultsBlock)(id responseObject, NSError *error);
 
-@interface ItunesSearchAPIController : AFHTTPRequestOperationManager
+@interface ItunesSearchAPIController : AFHTTPSessionManager
 
 + (ItunesSearchAPIController *)sharedManager;
 

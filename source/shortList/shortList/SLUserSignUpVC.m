@@ -45,7 +45,7 @@
     }];
 }
 
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(PFUI_NULLABLE NSError *)error {
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(nullable NSError *)error; {
     [self sl_showToastForAction:NSLocalizedString(@"Setup Failed", nil) message:NSLocalizedString(@"Invalid ID, Email or password.", nil) toastType:SLToastMessageFailure completion:nil];
 }
 

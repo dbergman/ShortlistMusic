@@ -89,8 +89,13 @@ static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
     NSAssert(appKeyDictionary, @"You Must Add /opt/shortList/appKeys to your local File System!!!");
 
     NSDictionary *envDictionary = (isProd) ? appKeyDictionary[@"ShortListMusicProd"] : appKeyDictionary[@"ShortListMusicDev"];
+
+    [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
+        configuration.applicationId = envDictionary[@"ParseAppId"];
+        configuration.clientKey = envDictionary[@"ParseClientKey"];
+        configuration.server = @"https://parseapi.back4app.com";
+    }]];
     
-    [Parse setApplicationId:envDictionary[@"ParseAppId"] clientKey:envDictionary[@"ParseClientKey"]];
     [PFFacebookUtils initializeFacebook];
 
     [SLShortlist registerSubclass];

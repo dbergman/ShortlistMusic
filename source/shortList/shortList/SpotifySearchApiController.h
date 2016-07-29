@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPRequestOperationManager.h"
+#import "AFHTTPSessionManager.h"
 
 @class SpotifyAlbums;
 
 typedef void(^SLSpotifyFetchResultsBlock)(SpotifyAlbums *spotifyAlbums, NSError *error);
 
-@interface SpotifySearchApiController : AFHTTPRequestOperationManager
+@interface SpotifySearchApiController : AFHTTPSessionManager
 
 + (SpotifySearchApiController *)sharedManager;
 

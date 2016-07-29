@@ -41,28 +41,7 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
 -(void)getSearchResultsWithBlock:(NSString *)artist completion:(SLItunesFetchResultsBlock)completion {
     NSDictionary *params = @{@"term": artist, @"media": @"music", @"entity": @"musicArtist", @"attribute": @"artistTerm", @"limit": @"200"};
     
-    [self GET:@"search" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSError *error;
-        ItunesSearchArtist *itunesSearchArtist = [MTLJSONAdapter modelOfClass:[ItunesSearchArtist class] fromJSONDictionary:responseObject error:&error];
-        if (error) {
-            if (completion) {
-                completion(nil, error);
-            }
-        }
-        else {
-            if (completion) {
-                completion(itunesSearchArtist, nil);
-            }
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"FAILURE");
-    }];
-}
-
-- (void)getAlbumsForArtist:(NSNumber *) artistId completion:(SLItunesFetchResultsBlock)completion {
-    NSDictionary *params = @{@"id": artistId, @"media": @"music", @"entity": @"album", @"limit": @"200"};
-    
-    [self GET:@"lookup" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self GET:@"search" parameters:params progress:nil success:^(NSURLSessionDataTask * task, id responseObject) {
         NSError *error;
         ItunesSearchAlbum *itunesSearchAlbum = [MTLJSONAdapter modelOfClass:[ItunesSearchAlbum class] fromJSONDictionary:responseObject error:&error];
         if (error) {
@@ -75,7 +54,28 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
                 completion(itunesSearchAlbum, nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"FAILURE");
+    }];
+}
+
+- (void)getAlbumsForArtist:(NSNumber *) artistId completion:(SLItunesFetchResultsBlock)completion {
+    NSDictionary *params = @{@"id": artistId, @"media": @"music", @"entity": @"album", @"limit": @"200"};
+    
+    [self GET:@"lookup" parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSError *error;
+        ItunesSearchAlbum *itunesSearchAlbum = [MTLJSONAdapter modelOfClass:[ItunesSearchAlbum class] fromJSONDictionary:responseObject error:&error];
+        if (error) {
+            if (completion) {
+                completion(nil, error);
+            }
+        }
+        else {
+            if (completion) {
+                completion(itunesSearchAlbum, nil);
+            }
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"FAILURE");
     }];
 }
@@ -83,7 +83,7 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
 - (void)getTracksForAlbumID:(NSString *)albumID completion:(SLItunesFetchResultsBlock)completion{
     NSDictionary *params = @{@"id": albumID, @"entity": @"song"};
     
-    [self GET:@"lookup" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self GET:@"lookup" parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *error;
         ItunesSearchTracks *itunesSearchTracks = [MTLJSONAdapter modelOfClass:[ItunesSearchTracks class] fromJSONDictionary:responseObject error:&error];
         if (error) {
@@ -96,7 +96,7 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
                 completion(itunesSearchTracks, nil);
             }
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"FAILURE");
     }];
 }
