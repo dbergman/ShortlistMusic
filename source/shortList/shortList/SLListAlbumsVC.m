@@ -569,11 +569,11 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
 }
 
 #pragma mark UIPickerView Methods
-- (int)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
 }
 
-- (int)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     return self.shortlistYearArray.count;
 }
 
