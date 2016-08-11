@@ -9,6 +9,7 @@
 #import "SLCreateShortListEnterYearCell.h"
 #import "SLStyle.h"
 #import "SLShortlist.h"
+#import "ShortList+ShortlistYears.h"
 
 @interface SLCreateShortListEnterYearCell () <UIPickerViewDelegate>
 
@@ -52,7 +53,7 @@
         [self.allYearLabel setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
         [self.contentView addSubview:self.allYearLabel];
 
-        self.yearFilterArray = [self generateYearList];
+        self.yearFilterArray = [ShortList generateYearList];
 
         NSDictionary *views = NSDictionaryOfVariableBindings(_shortListYearLabel, _yearPicker, _allYearLabel);
         NSDictionary *metrics = @{@"margin":@(MarginSizes.medium), @"space":@(MarginSizes.small), @"pickerWidth":@(self.contentView.frame.size.width/3.0)};
@@ -142,24 +143,6 @@
     if (self.createYearAction) {
         self.createYearAction([self.yearFilterArray objectAtIndex:row]);
     }
-}
-
-- (NSArray *)generateYearList {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy"];
-    NSString *theYear = [formatter stringFromDate:[NSDate date]];
-    
-    NSMutableArray *years = [[NSMutableArray alloc]init];
-    [years addObject:@"All"];
-    
-    NSString *earlyYear = @"1959";
-    
-    while (![theYear isEqualToString: earlyYear]) {
-        [years addObject:theYear];
-        theYear = [NSString stringWithFormat:@"%d", [theYear intValue]-1];
-    }
-    
-    return [years copy];
 }
 
 @end
