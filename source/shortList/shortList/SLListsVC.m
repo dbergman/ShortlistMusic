@@ -53,6 +53,20 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
             ([PFUser currentUser]) ? [weakSelf showCreateShortListView:nil]:[weakSelf showLoginGate];
         }];
     
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"sortShortlists"] style:UIBarButtonItemStylePlain handler:^(id sender) {
+        
+        if (weakSelf.tableView.editing) {
+            weakSelf.navigationItem.leftBarButtonItem.title = nil;
+            weakSelf.navigationItem.leftBarButtonItem.image = [UIImage imageNamed:@"sortShortlists"];
+        }
+        else {
+            weakSelf.navigationItem.leftBarButtonItem.title = @"Done";
+            weakSelf.navigationItem.leftBarButtonItem.image = nil;
+        }
+        
+        [weakSelf.tableView setEditing:!weakSelf.tableView.editing animated:YES];
+    }];
+    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor blackColor];
     self.tableView.delegate = self;
@@ -129,7 +143,16 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     return YES;
 }
 
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return UITableViewCellEditingStyleNone;
+//}
+
+- (BOOL)tableView:(UITableView *)tableview shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     __weak typeof(self) weakSelf = self;
     __block SLShortlist *sl = self.shortLists[indexPath.row];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -148,6 +171,9 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
                 [CATransaction commit];
         }];
     }
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
 }
 
 #pragma mark GestureRecognizers

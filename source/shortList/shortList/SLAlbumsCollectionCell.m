@@ -29,6 +29,10 @@ static const CGFloat kSLAlbumCellSize = 120;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
+        self.backgroundColor = [UIColor blackColor];
+        
+        self.shouldIndentWhileEditing = NO;
+        
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         layout.minimumInteritemSpacing = 0;

@@ -91,6 +91,7 @@
 		46D4230F1B77D97800D79263 /* SpotifyAlbumResults.JSON in Resources */ = {isa = PBXBuildFile; fileRef = 46D4230B1B77D83A00D79263 /* SpotifyAlbumResults.JSON */; };
 		71B66FE816682F53147BC434 /* libPods-shortListTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96318E4294F9670A88DFF932 /* libPods-shortListTests.a */; };
 		C9063B7F1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9063B7E1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m */; };
+		C9B7A1541D56A79B0069F228 /* ShortList+ShortlistYears.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7A1531D56A79B0069F228 /* ShortList+ShortlistYears.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -249,6 +250,8 @@
 		96318E4294F9670A88DFF932 /* libPods-shortListTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shortListTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9063B7D1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPreviewAlbumDetailsVC.h; sourceTree = "<group>"; };
 		C9063B7E1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPreviewAlbumDetailsVC.m; sourceTree = "<group>"; };
+		C9B7A1521D56A79B0069F228 /* ShortList+ShortlistYears.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShortList+ShortlistYears.h"; sourceTree = "<group>"; };
+		C9B7A1531D56A79B0069F228 /* ShortList+ShortlistYears.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ShortList+ShortlistYears.m"; sourceTree = "<group>"; };
 		CE0D5FB60B95EE1C6AAD8165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB07E1C51B1D00C9FAB39BB3 /* Pods.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.appstore.xcconfig; path = "Pods/Target Support Files/Pods/Pods.appstore.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -332,7 +335,6 @@
 				466063F31B81251F006AB766 /* SLLoginVC.m */,
 				466063FA1B81251F006AB766 /* SLUserSignUpVC.h */,
 				466063FB1B81251F006AB766 /* SLUserSignUpVC.m */,
-				466427691BE1935100ECFCAE /* SLEntryVC.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -352,6 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				464CF71D1B9D2DFF008356F6 /* Login */,
+				466427691BE1935100ECFCAE /* SLEntryVC.swift */,
 				466063F41B81251F006AB766 /* SLNavigationController.h */,
 				466063F51B81251F006AB766 /* SLNavigationController.m */,
 				466063F61B81251F006AB766 /* SLPlayNowViewController.h */,
@@ -435,6 +438,8 @@
 				466DF3661B80D3B600563095 /* UIViewController+SLAlbumArtImaging.m */,
 				464CF70E1B9B6A76008356F6 /* UIViewController+SLToastBanner.h */,
 				464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */,
+				C9B7A1521D56A79B0069F228 /* ShortList+ShortlistYears.h */,
+				C9B7A1531D56A79B0069F228 /* ShortList+ShortlistYears.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1001,6 +1006,7 @@
 				46A094171AF076C80091C7F7 /* ItunesSearchTracks.m in Sources */,
 				46B242351B57166100BA20D4 /* SLAlbumsCollectionCell.m in Sources */,
 				46CB6AD21AED715800BF1DF3 /* main.m in Sources */,
+				C9B7A1541D56A79B0069F228 /* ShortList+ShortlistYears.m in Sources */,
 				467D55961AF55F3A005CD607 /* SLArtistSearchResultsVC.m in Sources */,
 				468925681B00026B00A7D98C /* SLAlbumTrackCell.m in Sources */,
 				467D559E1AF62A4F005CD607 /* SLAlbumSearchResultsCellTableViewCell.m in Sources */,
@@ -1167,6 +1173,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = shortList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1196,6 +1203,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = shortList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -28,10 +28,12 @@
 #import "UIViewController+SLAlbumArtImaging.h"
 #import "MBProgressHUD.h"
 #import "SLPreviewAlbumDetailsVC.h"
+#import "ShortList+ShortlistYears.h"
 
 const CGFloat kShortlistAlbumsButtonSize = 50.0;
+const CGFloat kShortlistEditToolbarHeight = 30.0;
 
-@interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate, UIViewControllerPreviewingDelegate>
+@interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate, UIViewControllerPreviewingDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *blurBackgroundView;
@@ -46,6 +48,9 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 @property (nonatomic, strong) SLEntryVC *editShortlistVC;
 @property (nonatomic, assign) BOOL showingOptions;
 @property (nonatomic, strong) SLShortListAlbum *previewingAlbum;
+@property (nonatomic, strong) UIPickerView *yearPicker;
+@property (nonatomic, strong) NSArray *shortlistYearArray;
+@property (nonatomic, strong) UIView *pickerViewContainer;
 
 @end
 
@@ -67,7 +72,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     self.view.backgroundColor = [UIColor blackColor];
     [self setTitle:self.shortList.shortListName];
  
-    self.editShortListBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", nil) style:UIBarButtonItemStylePlain target:self action:@selector(shortListEditAction:)];
+    self.editShortListBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sortShortlists"] style:UIBarButtonItemStylePlain target:self action:@selector(shortListEditAction:)];
     self.navigationItem.rightBarButtonItem = self.editShortListBarButton;
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -114,6 +119,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [self.addAlbumButton removeFromSuperview];
     [self.sharingButton removeFromSuperview];
     [self.editNameButton removeFromSuperview];
+    self.tabBarController.tabBar.alpha = 1.0;
 }
 
 - (void)startSearchAlbumFlow {
@@ -180,13 +186,15 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     UIBarButtonItem *editButton = (UIBarButtonItem *)sender;
     
     if (self.tableView.editing) {
-        editButton.title = NSLocalizedString(@"Edit", nil);
+        editButton.image = [UIImage imageNamed:@"sortShortlists"];
+        editButton.title = nil;
         [self.tableView setEditing:NO animated:YES];
         [self showOptions:YES];
         
     }
     else {
         editButton.title = NSLocalizedString(@"Done", nil);
+        editButton.image = nil;
         [self.tableView setEditing:YES animated:YES];
         [self showOptions:NO];
     }
@@ -421,6 +429,23 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
         [weakSelf dismissEditShortListName];
     }];
     
+    [self hidePickerView];
+    
+    [self.editShortlistVC setShowPickerView:^(BOOL showPicker) {
+        if (showPicker && !weakSelf.yearPicker) {
+            weakSelf.shortlistYearArray = [ShortList generateYearList];
+            weakSelf.yearPicker = [UIPickerView new];
+            weakSelf.yearPicker.delegate = weakSelf;
+            weakSelf.yearPicker.dataSource = weakSelf;
+            weakSelf.yearPicker.backgroundColor = [UIColor blackColor];
+            weakSelf.yearPicker.showsSelectionIndicator = YES;
+            [weakSelf showPickerView];
+        }
+        else {
+            [weakSelf hidePickerView];
+        }
+    }];
+    
     self.editShortlistVC.view.layer.borderColor = [UIColor sl_Red].CGColor;
     self.editShortlistVC.view.layer.borderWidth = 2.0;
     self.editShortlistVC.view.layer.cornerRadius = 8.0;
@@ -434,9 +459,8 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     
     [self.view addSubview:self.editShortlistVC.view];
 
-
     [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.editShortlistVC.view.center = CGPointMake(self.view.center.x, CGRectGetHeight([UIScreen mainScreen].bounds)/2.0 - editShortlistSize.height/2.0);
+        self.editShortlistVC.view.center = CGPointMake(self.view.center.x, CGRectGetHeight([UIScreen mainScreen].bounds)/2.0 - editShortlistSize.height/2.0 - 12.0);
     } completion:^(BOOL finished) {
         [self showOptions:NO];
     }];
@@ -446,6 +470,7 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
     [UIView animateWithDuration:.3 animations:^{
         CGRect frame = CGRectMake(CGRectGetWidth(self.view.frame)/2.0 - CGRectGetWidth(self.editShortlistVC.view.frame)/2.0, CGRectGetHeight([UIScreen mainScreen].bounds), self.editShortlistVC.view.frame.size.width, self.editShortlistVC.view.frame.size.height);
         self.editShortlistVC.view.frame = frame;
+        [self hidePickerView];
     } completion:^(BOOL finished) {
         [self.blurBackgroundView removeFromSuperview];
         self.blurBackgroundView = nil;
@@ -541,6 +566,79 @@ const CGFloat kShortlistAlbumsButtonSize = 50.0;
 - (void)previewingContext:(id <UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:self.shortList albumId:[NSString stringWithFormat:@"%ld",(long)self.previewingAlbum.albumId]];
     [self.navigationController pushViewController:albumDetailsVC animated:YES];
+}
+
+#pragma mark UIPickerView Methods
+- (int)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (int)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.shortlistYearArray.count;
+}
+
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    return self.shortlistYearArray[row];
+}
+
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:self.shortlistYearArray[row] attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    return attString;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    NSString *selectedYear = [NSString stringWithFormat:@"Year: %@", self.shortlistYearArray[row]];
+    
+    self.editShortlistVC.existingShortList.shortListYear = self.shortlistYearArray[row];
+    [self.editShortlistVC.changeYearButton setTitle:selectedYear forState:UIControlStateNormal];
+}
+
+- (void)showPickerView {
+    self.pickerViewContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.yearPicker.frame) + kShortlistEditToolbarHeight)];
+    self.pickerViewContainer.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:self.pickerViewContainer];
+    [self.pickerViewContainer addSubview:self.yearPicker];
+    
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), kShortlistEditToolbarHeight)];
+    toolBar.barStyle = UIBarStyleBlackOpaque;
+    
+    __weak typeof(self)weakSelf = self;
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemDone handler:^(id sender) {
+        [weakSelf hidePickerView];
+    }];
+    
+    [toolBar setItems:[NSArray arrayWithObjects:doneButton, nil]];
+    [self.pickerViewContainer addSubview:toolBar];
+    toolBar.userInteractionEnabled = YES;
+
+    __block CGRect frame = self.pickerViewContainer.frame;
+    frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds);
+    self.pickerViewContainer.frame = frame;
+    
+    self.yearPicker.frame = CGRectMake(self.view.frame.size.width/2.0 - self.yearPicker.frame.size.width/2.0, kShortlistEditToolbarHeight, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetHeight(self.yearPicker.frame));
+
+    [UIView animateWithDuration:0.3 animations:^{
+        frame.origin.y = frame.origin.y - frame.size.height;
+        self.pickerViewContainer.frame = frame;
+        self.tabBarController.tabBar.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        NSInteger selectedIndex = [self.shortlistYearArray indexOfObject:self.shortList.shortListYear];
+        [self.yearPicker selectRow:selectedIndex inComponent:0 animated:YES];
+    }];
+}
+
+- (void)hidePickerView {
+    __block CGRect frame = self.pickerViewContainer.frame;
+    frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds);
+   
+    [UIView animateWithDuration:0.3 animations:^{
+        self.pickerViewContainer.frame = frame;
+        self.tabBarController.tabBar.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        self.yearPicker = nil;
+        self.pickerViewContainer = nil;
+    }];
 }
 
 #pragma mark Utilities

@@ -10,7 +10,8 @@ import UIKit
 
 typealias SLCreateUserNameCancel = () -> Void
 typealias SLCreateUserNameSuccess = () -> Void
-typealias SLUpdatedShortlistNameSuccess = (shortListName:String) -> Void
+typealias SLUpdatedShortlistNameSuccess = (shortListName: String) -> Void
+typealias SLShouldShowYearSelector = (showYearSelector: Bool) -> Void
 
 class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     
@@ -18,7 +19,9 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     var cancelCompletion: SLCreateUserNameCancel?
     var successCompletion: SLCreateUserNameSuccess?
     var successNameCompletion: SLUpdatedShortlistNameSuccess?
+    var showPickerView: SLShouldShowYearSelector?
     var existingShortList: SLShortlist?
+    var changeYearButton = UIButton()
 
     lazy var entryTextField:UITextField = {
         let entryTextField = UITextField()
@@ -83,6 +86,34 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         view.addSubview(submitButton)
         
         if let shortlist = existingShortList {
+            changeYearButton.translatesAutoresizingMaskIntoConstraints = false;
+            changeYearButton.layer.borderWidth = 1.0
+            changeYearButton.layer.cornerRadius = 4.0
+            changeYearButton.layer.borderColor = UIColor.sl_Red().CGColor
+            changeYearButton.tintColor = .whiteColor()
+            changeYearButton.contentHorizontalAlignment = .Left
+            changeYearButton.addTarget(self, action: #selector(showShortlistYearSelector), forControlEvents: .TouchUpInside)
+            
+            if let year = existingShortList?.shortListYear  {
+                changeYearButton.setTitle("Year: \(year)", forState: .Normal)
+            }
+            else {
+                changeYearButton.setTitle("Year:", forState: .Normal)
+            }
+
+            changeYearButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5.0, 0, 0)
+            view.addSubview(changeYearButton)
+            
+            let arrowImageView = UIImageView(image: UIImage(named: "arrowRight")?.imageWithRenderingMode(.AlwaysTemplate))
+            arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+            arrowImageView.tintColor = UIColor.whiteColor()
+
+            changeYearButton.addSubview(arrowImageView)
+
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[arrowImageView]-|", options:[], metrics:nil, views:["arrowImageView":arrowImageView]))
+            
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[arrowImageView]-|", options:[], metrics:nil, views:["arrowImageView":arrowImageView]))
+            
             entryTextField.text = shortlist.shortListName
             entryTextField.placeholder = NSLocalizedString("Enter new Shortlist name", comment: "")
             submitButton.setTitle(NSLocalizedString("Save", comment: ""), forState:.Normal)
@@ -102,27 +133,32 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         cancelButton.addTarget(self, action: #selector(SLEntryVC.cancelLogin), forControlEvents: .TouchUpInside)
         view.addSubview(cancelButton)
     
-        let views = ["titleLabel":titleLabel, "entryTextField":entryTextField, "submitButton":submitButton, "cancelButton":cancelButton]
+        var views = ["titleLabel":titleLabel, "entryTextField":entryTextField, "submitButton":submitButton, "cancelButton":cancelButton]
         
-        if ((existingShortList) != nil) {
+        if existingShortList != nil {
+            views["yearButton"] = changeYearButton
+            
             view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[titleLabel]-|", options:[], metrics:nil, views:views))
             view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[entryTextField]-|", options:[], metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[yearButton]-|", options:[], metrics:nil, views:views))
+            
             view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[cancelButton]-[submitButton(cancelButton)]-|", options:[], metrics:nil, views:views))
-            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[titleLabel]-(15)-[entryTextField(30)]-20-[submitButton]-20-|", options:[], metrics:nil, views:views))
-            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cancelButton]-20-|", options:[], metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[titleLabel][entryTextField(30)]-[yearButton]-[submitButton]-10-|", options:[], metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cancelButton]-10-|", options:[], metrics:nil, views:views))
         }
         else {
             view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[titleLabel]-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
             view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[entryTextField]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
             view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[submitButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
             view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cancelButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-50-[titleLabel]-(30)-[entryTextField(30)]-20-[submitButton]-10-[cancelButton]", options:[], metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-50-[titleLabel]-30-[entryTextField(30)]-20-[submitButton]-10-[cancelButton]", options:[], metrics:nil, views:views))
         }
     }
     
     func cancelLogin() {
         entryTextField.resignFirstResponder()
         cancelCompletion?()
+        showPickerView?(showYearSelector: false)
     }
     
     func addUserToShortList () {
@@ -147,8 +183,13 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
             entryTextField.resignFirstResponder()
             SLParseController.saveShortlist(shortlist, completion: { [unowned self] in
                 self.successNameCompletion?(shortListName: shortlist.shortListName)
+                self.showPickerView?(showYearSelector: false)
             })
         }
+    }
+    
+    func showShortlistYearSelector() {
+       showPickerView?(showYearSelector: true)
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
