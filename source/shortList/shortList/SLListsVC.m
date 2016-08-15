@@ -25,13 +25,14 @@
 #import "SLShortListAlbum.h"
 #import "SLAlbumCell.h"
 #import "SLAlbumDetailsVC.h"
+#import "SLNavigationController.h"
 
 static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
 
 @interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *shortLists;
+@property (nonatomic, strong) NSArray <SLShortlist *> *shortLists;
 @property (nonatomic, strong) SLCreateShortListVC *createShortListVC;
 @property (nonatomic, strong) NSArray *createSLVerticalConstraints;
 @property (nonatomic, strong) UIImageView *blurBackgroundView;
@@ -54,17 +55,10 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
         }];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"sortShortlists"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-        
-        if (weakSelf.tableView.editing) {
-            weakSelf.navigationItem.leftBarButtonItem.title = nil;
-            weakSelf.navigationItem.leftBarButtonItem.image = [UIImage imageNamed:@"sortShortlists"];
-        }
-        else {
-            weakSelf.navigationItem.leftBarButtonItem.title = @"Done";
-            weakSelf.navigationItem.leftBarButtonItem.image = nil;
-        }
-        
-        [weakSelf.tableView setEditing:!weakSelf.tableView.editing animated:YES];
+    
+        SLSortOptionsVC *sortVC = [[SLSortOptionsVC alloc] init];
+        SLNavigationController *nvc = [[SLNavigationController alloc] initWithRootViewController:sortVC];
+        [weakSelf presentViewController:nvc animated:YES completion:nil];
     }];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
@@ -95,7 +89,7 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
             }
             else {
                 weakSelf.tableView.tableHeaderView = nil;
-                weakSelf.shortLists = shortlists;
+                weakSelf.shortLists = [SLSortOptionsVC orderShortListForDisplay: shortlists];
             }
             
             [weakSelf.tableView reloadData];
@@ -142,10 +136,6 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
-
-//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return UITableViewCellEditingStyleNone;
-//}
 
 - (BOOL)tableView:(UITableView *)tableview shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
