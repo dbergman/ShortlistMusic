@@ -43,7 +43,7 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
     
     [self GET:@"search" parameters:params progress:nil success:^(NSURLSessionDataTask * task, id responseObject) {
         NSError *error;
-        ItunesSearchAlbum *itunesSearchAlbum = [MTLJSONAdapter modelOfClass:[ItunesSearchAlbum class] fromJSONDictionary:responseObject error:&error];
+        ItunesSearchArtist *itunesSearchArtist = [MTLJSONAdapter modelOfClass:[ItunesSearchArtist class] fromJSONDictionary:responseObject error:&error];
         if (error) {
             if (completion) {
                 completion(nil, error);
@@ -51,7 +51,7 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
         }
         else {
             if (completion) {
-                completion(itunesSearchAlbum, nil);
+                completion(itunesSearchArtist, nil);
             }
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
