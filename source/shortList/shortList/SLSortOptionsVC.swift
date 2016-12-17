@@ -25,7 +25,7 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = UIColor.blackColor()
+        tableView.backgroundColor = UIColor.black
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = self.view.bounds
@@ -33,78 +33,78 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
         return tableView
     }()
     
-    lazy var selectedIndexPath: NSIndexPath = {
-        guard let storeSortOption = NSUserDefaults.standardUserDefaults().stringForKey(shortlistSortOption) else { return NSIndexPath(forRow: 0, inSection: 0) }
-        guard let row =  ShortlistSortOption(rawValue: storeSortOption) else { return NSIndexPath(forRow: 0, inSection: 0) }
+    lazy var selectedIndexPath: IndexPath = {
+        guard let storeSortOption = UserDefaults.standard.string(forKey: shortlistSortOption) else { return IndexPath(row: 0, section: 0) }
+        guard let row =  ShortlistSortOption(rawValue: storeSortOption) else { return  IndexPath(row: 0, section: 0) }
 
-        return NSIndexPath(forRow: row.hashValue, inSection: 0)
+        return IndexPath(row: row.hashValue, section: 0)
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Sorting Options"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(cancelSort))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(applySort))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSort))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(applySort))
         
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: sortCellIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: sortCellIdentifier)
         view.addSubview(tableView)
     }
     
     func cancelSort() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func applySort() {
-        dismissViewControllerAnimated(true) {
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(ShortlistSortOption.allValues[self.selectedIndexPath.row].rawValue, forKey: shortlistSortOption)
+        dismiss(animated: true) {
+            let defaults = UserDefaults.standard
+            defaults.set(ShortlistSortOption.allValues[self.selectedIndexPath.row].rawValue, forKey: shortlistSortOption)
         }
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ShortlistSortOption.allValues.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier(sortCellIdentifier) as UITableViewCell!
-        cell.contentView.backgroundColor = UIColor.blackColor()
-        cell.backgroundColor = UIColor.blackColor()
-        cell.textLabel?.font = SLStyle.polarisFontWithSize(14.0)
-        cell.textLabel?.textColor = UIColor.whiteColor()
+        let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: sortCellIdentifier) as UITableViewCell!
+        cell.contentView.backgroundColor = UIColor.black
+        cell.backgroundColor = UIColor.black
+        cell.textLabel?.font = SLStyle.polarisFont(withSize: 14.0)
+        cell.textLabel?.textColor = UIColor.white
         cell.textLabel?.text = ShortlistSortOption.allValues[indexPath.row].rawValue
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         cell.tintColor = UIColor.sl_Red()
         
         if indexPath.row == selectedIndexPath.row {
-            cell.accessoryType = .Checkmark
+            cell.accessoryType = .checkmark
             cell.textLabel?.textColor = UIColor.sl_Red()
         }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectedIndexPath == indexPath {
             return
         }
         
-        tableView.cellForRowAtIndexPath(selectedIndexPath)?.accessoryType = .None
-        tableView.cellForRowAtIndexPath(selectedIndexPath)?.textLabel?.textColor = UIColor.whiteColor()
+        tableView.cellForRow(at: selectedIndexPath)?.accessoryType = .none
+        tableView.cellForRow(at: selectedIndexPath)?.textLabel?.textColor = UIColor.white
         
         selectedIndexPath = indexPath
         
-        tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = .Checkmark
-        tableView.cellForRowAtIndexPath(selectedIndexPath)?.textLabel?.textColor = UIColor.sl_Red()
+        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        tableView.cellForRow(at: selectedIndexPath)?.textLabel?.textColor = UIColor.sl_Red()
     }
     
     static func orderShortListForDisplay(shortlists: [SLShortlist]) -> [SLShortlist] {
         var sortOption: ShortlistSortOption
         
-        let prefs = NSUserDefaults.standardUserDefaults()
+        let prefs = UserDefaults.standard
 
-        if let shortlistSortOption = prefs.stringForKey(shortlistSortOption),
+        if let shortlistSortOption = prefs.string(forKey: shortlistSortOption),
         let option = ShortlistSortOption(rawValue: shortlistSortOption) {
             sortOption = option
         }
@@ -112,7 +112,7 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
             sortOption = ShortlistSortOption.YearDescending
         }
 
-        return shortlists.sort {
+        return shortlists.sorted {
             
             switch sortOption {
             case ShortlistSortOption.YearDescending:
@@ -120,9 +120,9 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
             case ShortlistSortOption.YearAscending:
                 return $0.shortListYear < $1.shortListYear
             case ShortlistSortOption.UpdatedDateDescending:
-                return $0.updatedAt?.compare($1.updatedAt!) ==  NSComparisonResult.OrderedDescending
+                return $0.updatedAt?.compare($1.updatedAt!) ==  ComparisonResult.orderedDescending
             case ShortlistSortOption.UpdatedDateAscending:
-                return $0.updatedAt?.compare($1.updatedAt!) ==  NSComparisonResult.OrderedAscending
+                return $0.updatedAt?.compare($1.updatedAt!) ==  ComparisonResult.orderedAscending
             }
         }
     }

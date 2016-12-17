@@ -89,7 +89,7 @@
     [request startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user,  NSError *error) {
         if (!error) {
             __block NSString *fbId = [user objectForKey:@"id"];
-            [SLParseController doesSocialIdExist:fbId checkAction:^(BOOL exists) {
+            [SLParseController doesSocialIdExistWithSocialId:fbId checkAction:^(BOOL exists) {
                 if (exists) {
                     if (weakSelf.completion) {
                         weakSelf.completion(weakUser, isLoggedIn);

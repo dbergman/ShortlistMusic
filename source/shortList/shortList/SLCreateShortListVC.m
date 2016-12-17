@@ -92,7 +92,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
             weakSelf.shortList.shortListName = weakSelf.shortListName;
             weakSelf.shortList.shortListYear = (weakSelf.shortListYear) ? weakSelf.shortListYear: NSLocalizedString(@"All", nil);
             
-            [SLParseController saveShortlist:weakSelf.shortList completion:^{}];
+            [SLParseController saveShortlistWithNewShortList:weakSelf.shortList completion:^{}];
             
             [weakSelf cleanupCreateShortListView];
             
@@ -107,7 +107,7 @@ NSInteger const kSLCreateShortListCellCount = 3;
             
             [weakSelf cleanupCreateShortListView];
             
-            [SLParseController saveShortlist:weakSelf.shortList completion:^{}];
+            [SLParseController saveShortlistWithNewShortList:weakSelf.shortList completion:^{}];
             
             if (weakSelf.completion) {
                 weakSelf.completion(weakSelf.shortList, NO);

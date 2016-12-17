@@ -82,14 +82,16 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     
     __weak typeof(self) weakSelf = self;
     if ([PFUser currentUser]) {
-        [SLParseController getUsersShortLists:^(NSArray *shortlists) {
+        [SLParseController getUsersShortListsWithCompletion:^(NSArray *shortlists) {
             if (shortlists.count == 0) {
                 [weakSelf addTableViewHeaderMessage:YES];
                 weakSelf.shortLists = nil;
+                weakSelf.navigationItem.leftBarButtonItem.enabled = NO;
             }
             else {
                 weakSelf.tableView.tableHeaderView = nil;
-                weakSelf.shortLists = [SLSortOptionsVC orderShortListForDisplay: shortlists];
+                weakSelf.shortLists = [SLSortOptionsVC orderShortListForDisplayWithShortlists: shortlists];
+                weakSelf.navigationItem.leftBarButtonItem.enabled = YES;
             }
             
             [weakSelf.tableView reloadData];
@@ -98,7 +100,9 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     else {
         [self addTableViewHeaderMessage:NO];
         self.shortLists = nil;
-        [weakSelf.tableView reloadData];
+        [self.tableView reloadData];
+        
+        self.navigationItem.leftBarButtonItem.enabled = NO;
     }
 }
 
@@ -146,7 +150,7 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     __weak typeof(self) weakSelf = self;
     __block SLShortlist *sl = self.shortLists[indexPath.row];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [SLParseController removeShortList:sl completion:^(NSArray * shortlists) {
+        [SLParseController removeShortListWithShortlist:sl completion:^(NSArray * shortlists) {
             weakSelf.shortLists = shortlists;
     
                 [CATransaction begin];
@@ -204,7 +208,7 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
         createSLHeightConstraint.constant = kSLCreateShortListCellCount * kSLCreateShortListCellHeight;
         weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
         
-        [SLParseController getUsersShortLists:^(NSArray *shortlists) {
+        [SLParseController getUsersShortListsWithCompletion:^(NSArray *shortlists) {
             weakSelf.shortLists = shortlists;
             [weakSelf.tableView reloadData];
         }];

@@ -232,13 +232,13 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 #pragma mark - Add to Shortlist
 - (void)addAlbumToShortList {
     __weak typeof(self) weakSelf = self;
-    [SLParseController getShortListAlbums:self.shortList completion:^(NSArray *allAlbums) {
+    [SLParseController getShortListAlbumsWithShortList:self.shortList completion:^(NSArray *allAlbums) {
         SLShortListAlbum *slAlbum = [SLShortListAlbum createShortListAlbum:weakSelf.albumDetails];
         slAlbum.shortListId = weakSelf.shortList.objectId;
         slAlbum.shortListRank = allAlbums.count + 1;
 
-        [SLParseController addAlbumToShortList:slAlbum shortlist:weakSelf.shortList completion:^{
-            [SLParseController getShortListAlbums:self.shortList completion:^(NSArray *allAlbums) {
+        [SLParseController addAlbumToShortListWithShortlistAlbum:slAlbum shortlist:weakSelf.shortList completion:^{
+            [SLParseController getShortListAlbumsWithShortList: self.shortList completion:^(NSArray *allAlbums) {
                 weakSelf.shortList.shortListAlbums = allAlbums;
                 [weakSelf sl_showToastForAction:NSLocalizedString(@"Added", nil) message:weakSelf.albumDetails.collectionName toastType:SLToastMessageSuccess completion:^{
                     [weakSelf.navigationController popViewControllerAnimated:YES];
@@ -251,10 +251,10 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 #pragma mark - Remove from Shortlist
 - (void)removeAlbumFromShortList {
     __weak typeof(self) weakSelf = self;
-    [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:[self getShortListAlbum] completion:^(NSArray *albums) {
+    [SLParseController removeAlbumFromShortListWithShortList:self.shortList shortlistAlbum:[self getShortListAlbum] completion:^(NSArray *albums) {
         weakSelf.shortList.shortListAlbums = albums;
         [weakSelf reorderShortList];
-        [SLParseController updateShortListAlbums:weakSelf.shortList completion:^{
+        [SLParseController updateShortListAlbumsWithShortlist:weakSelf.shortList completion:^{
             [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:weakSelf.albumDetails.collectionName toastType:SLToastMessageSuccess completion:^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             }];

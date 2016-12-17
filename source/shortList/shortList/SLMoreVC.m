@@ -169,9 +169,9 @@
     __weak typeof(self)weakself = self;
     
     if ([weakself isValidEmailAddress:email]) {
-        [SLParseController doesUserEmailExist:email.lowercaseString checkAction:^(BOOL exists) {
+        [SLParseController doesUserEmailExistWithEmail:email.lowercaseString checkAction:^(BOOL exists) {
             if (exists) {
-                [SLParseController resetPassword:email successAction:^{
+                [SLParseController resetPasswordWithEmail:email successAction:^{
                     [weakself sl_showToastForAction:NSLocalizedString(@"Success", nil) message:NSLocalizedString(@"Please check your email for reset password link", nil) toastType:SLToastMessageSuccess completion:nil];
                 } failureAction:^{
                     [weakself sl_standardToastUnableToCompleteRequest];

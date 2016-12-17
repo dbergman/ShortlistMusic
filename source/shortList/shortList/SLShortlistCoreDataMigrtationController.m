@@ -33,7 +33,7 @@
     newShortList.shortListYear = existingSL.shortListYear;
     
     __weak typeof(self)weakSelf = self;
-    [SLParseController saveShortlist:newShortList completion:^{
+    [SLParseController saveShortlistWithNewShortList:newShortList completion:^{
         [weakSelf addExistingAlbums:[[ShortListCoreDataManager sharedManager] getShortListAlbums:existingSL] toShortlist:newShortList];
     }];
 }
@@ -53,8 +53,8 @@
         slAlbum.shortListRank = rank;
         slAlbum.albumArtWork = [album.albumCoverURL stringByReplacingOccurrencesOfString:@"100x100" withString:@"600x600"];
         slAlbum.shortListId = shortlist.objectId;
-        
-        [SLParseController addAlbumToShortList:slAlbum shortlist:shortlist completion:^{}];
+
+        [SLParseController addAlbumToShortListWithShortlistAlbum:slAlbum shortlist:shortlist completion:^{}];
         rank++;
     }
 }

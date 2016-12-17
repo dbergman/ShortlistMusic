@@ -263,7 +263,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     [self reorderShortList];
     
     __weak typeof(self)weakSelf = self;
-    [SLParseController updateShortListAlbums:self.shortList completion:^{
+    [SLParseController updateShortListAlbumsWithShortlist:self.shortList completion:^{
         [weakSelf.tableView reloadData];
     }];
 }
@@ -286,7 +286,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     __weak typeof(self) weakSelf = self;
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         __block SLShortListAlbum *slAbum = self.shortList.shortListAlbums[indexPath.row];
-        [SLParseController removeAlbumFromShortList:self.shortList shortlistAlbum:slAbum completion:^(NSArray *albums) {
+        [SLParseController removeAlbumFromShortListWithShortList:self.shortList shortlistAlbum:slAbum completion:^(NSArray *albums) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -295,7 +295,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
             weakSelf.shortList.shortListAlbums = albums;
             [weakSelf reorderShortList];
             
-            [SLParseController updateShortListAlbums:self.shortList completion:^{
+            [SLParseController updateShortListAlbumsWithShortlist:self.shortList completion:^{
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:slAbum.albumName toastType:SLToastMessageSuccess completion:^{
                         [weakSelf.tableView reloadData];
@@ -644,7 +644,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
 #pragma mark Utilities
 - (void)refreshShortLists {
     __weak typeof(self) weakSelf = self;
-    [SLParseController getShortListAlbums:self.shortList completion:^(NSArray * albums) {
+    [SLParseController getShortListAlbumsWithShortList:self.shortList completion:^(NSArray * albums) {
         weakSelf.shortList.shortListAlbums = albums;
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.tableView reloadData];
