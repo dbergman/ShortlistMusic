@@ -488,7 +488,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     UIAlertAction *email = [UIAlertAction actionWithTitle:NSLocalizedString(@"Email", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                             MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
                             [weakSelf.navigationController.view addSubview:hud];
-                            hud.labelText = NSLocalizedString(@"Building Image", nil);
+                            hud.label.text = NSLocalizedString(@"Building Image", nil);
                             
                             [hud showAnimated:YES whileExecutingBlock:^{
                                 [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
@@ -501,7 +501,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
        UIAlertAction *instagram =  [UIAlertAction actionWithTitle:NSLocalizedString(@"Instagram", nil)  style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
             [weakSelf.navigationController.view addSubview:hud];
-            hud.labelText = NSLocalizedString(@"Building Image", nil);
+            hud.label.text = NSLocalizedString(@"Building Image", nil);
             [hud showAnimated:YES whileExecutingBlock:^{
                 [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
             }];
@@ -513,7 +513,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     UIAlertAction *saveImage =  [UIAlertAction actionWithTitle:NSLocalizedString(@"Save Image", nil)  style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
         [weakSelf.navigationController.view addSubview:hud];
-        hud.labelText = NSLocalizedString(@"Building Image", nil);
+        hud.label.text = NSLocalizedString(@"Building Image", nil);
         [hud showAnimated:YES whileExecutingBlock:^{
             UIImageWriteToSavedPhotosAlbum([weakSelf getAlbumArtCollectionImage], nil, nil, nil);
         }];

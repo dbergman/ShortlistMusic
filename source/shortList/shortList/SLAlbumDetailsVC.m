@@ -67,7 +67,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     
     self.hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.hud];
-    [self.hud show:YES];
+    [self.hud showAnimated:YES];
     [self getAlbumDetails];
 
     self.coverImageView = [UIImageView new];

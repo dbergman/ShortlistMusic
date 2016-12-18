@@ -3,7 +3,9 @@ platform :ios, '8.0'
 
 #We'll add this back in later
 inhibit_all_warnings!
+#use_frameworks!
 
+target :"shortList" do
 
 #Foundation Helpers
 pod 'BlocksKit', '2.2.5'
@@ -20,13 +22,15 @@ pod 'SDWebImage'
 
 #UI
 pod 'ParseUI'
-pod 'MBProgressHUD', '~> 0.9'
-pod 'CRToast', '~> 0.0.8'
+pod 'MBProgressHUD'
+pod 'CRToast'
 
 #Analytics/Crash
 pod "HockeySDK", :subspecs => ['CrashOnlyLib']
 pod 'Flurry-iOS-SDK/FlurrySDK'
 
-target :"shortListTests", :exclusive => true do
+end
+
+target :"shortListTests" do
 pod 'Mantle'
 end
