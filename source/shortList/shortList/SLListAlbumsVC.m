@@ -489,10 +489,15 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
                             MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
                             [weakSelf.navigationController.view addSubview:hud];
                             hud.label.text = NSLocalizedString(@"Building Image", nil);
-                            
-                            [hud showAnimated:YES whileExecutingBlock:^{
-                                [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
-                            }];
+                            [hud showAnimated:YES];
+    
+                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                            [weakSelf shareShortlistByEmail:weakSelf.shortList albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage]];
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [hud hideAnimated:YES];
+                                });
+                            });
+        
                         }];
     [alert addAction:email];
     
@@ -502,9 +507,14 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
             MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
             [weakSelf.navigationController.view addSubview:hud];
             hud.label.text = NSLocalizedString(@"Building Image", nil);
-            [hud showAnimated:YES whileExecutingBlock:^{
-                [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
-            }];
+            [hud showAnimated:YES];
+           
+           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+               [[SLInstagramController sharedInstance] shareShortlistToInstagram:weakSelf.shortList  albumArtCollectionImage:[weakSelf getAlbumArtCollectionImage] attachToView:weakSelf.view];
+               dispatch_async(dispatch_get_main_queue(), ^{
+                   [hud hideAnimated:YES];
+               });
+           });
         }];
         
         [alert addAction:instagram];
@@ -514,9 +524,15 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
         MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:weakSelf.navigationController.view];
         [weakSelf.navigationController.view addSubview:hud];
         hud.label.text = NSLocalizedString(@"Building Image", nil);
-        [hud showAnimated:YES whileExecutingBlock:^{
+        
+        [hud showAnimated:YES];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             UIImageWriteToSavedPhotosAlbum([weakSelf getAlbumArtCollectionImage], nil, nil, nil);
-        }];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [hud hideAnimated:YES];
+            });
+        });
     }];
     
     [alert addAction:saveImage];

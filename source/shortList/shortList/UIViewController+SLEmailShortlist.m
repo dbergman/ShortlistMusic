@@ -37,11 +37,8 @@
         NSString *fileName = @"albumArtCollectionImage";
         fileName = [fileName stringByAppendingPathExtension:@"jpeg"];
         [mailComposeVC addAttachmentData:albumArtCollectionImageData mimeType:@"image/jpeg" fileName:fileName];
-        
 
-        [self presentViewController:mailComposeVC animated:YES completion:^{
-            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-        }];
+        [self presentViewController:mailComposeVC animated:YES completion:nil];
     }
 }
 
@@ -58,9 +55,7 @@
         [mailComposeVC setToRecipients:@[@"shortlistapp01@gmail.com"]];
         [mailComposeVC setSubject:[NSString stringWithFormat:@"Hey Mr.ShortListMusic: "]];
 
-        [self presentViewController:mailComposeVC animated:YES completion:^{
-            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-        }];
+        [self presentViewController:mailComposeVC animated:YES completion:nil];
     }
 }
 - (NSString *)createShortListEmailBody:(SLShortlist *)shortlist {

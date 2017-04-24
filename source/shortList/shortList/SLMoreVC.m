@@ -17,7 +17,7 @@
 #import "SLStyle.h"
 #import "UIViewController+SLToastBanner.h"
 #import "UIViewController+SLEmailShortlist.h"
-#import "shortlist-Swift.h"
+#import "shortList-Swift.h"
 
 @interface SLMoreVC () <UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate>
 

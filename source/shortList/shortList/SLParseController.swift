@@ -109,7 +109,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func updateShortListAlbums(shortlist:SLShortlist, completion:dispatch_block_t) {
+    class func updateShortListAlbums(shortlist:SLShortlist, completion:SLCompletion) {
         if (shortlist.shortListAlbums.count == 0) {
             completion()
             return
