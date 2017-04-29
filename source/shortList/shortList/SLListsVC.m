@@ -55,7 +55,6 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
         }];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithImage:[UIImage imageNamed:@"sortShortlists"] style:UIBarButtonItemStylePlain handler:^(id sender) {
-    
         SLSortOptionsVC *sortVC = [[SLSortOptionsVC alloc] init];
         SLNavigationController *nvc = [[SLNavigationController alloc] initWithRootViewController:sortVC];
         [weakSelf presentViewController:nvc animated:YES completion:nil];
@@ -74,6 +73,13 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     
     if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
         [self registerForPreviewingWithDelegate:self sourceView:self.view];
+    }
+    
+    if ([PFUser currentUser]) {
+        self.shortLists = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getStorageLocation]];
+        if (self.shortLists.count > 0) {
+            [self.tableView reloadData];
+        }
     }
 }
 
@@ -211,6 +217,7 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
         [SLParseController getUsersShortListsWithCompletion:^(NSArray *shortlists) {
             weakSelf.shortLists = shortlists;
             [weakSelf.tableView reloadData];
+            [NSKeyedArchiver archiveRootObject:weakSelf.shortLists toFile:[weakSelf getStorageLocation]];
         }];
         
         [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
