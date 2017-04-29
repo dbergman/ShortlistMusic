@@ -98,6 +98,8 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
                 weakSelf.tableView.tableHeaderView = nil;
                 weakSelf.shortLists = [SLSortOptionsVC orderShortListForDisplayWithShortlists: shortlists];
                 weakSelf.navigationItem.leftBarButtonItem.enabled = YES;
+                
+                [NSKeyedArchiver archiveRootObject:weakSelf.shortLists toFile:[weakSelf getStorageLocation]];
             }
             
             [weakSelf.tableView reloadData];
@@ -213,10 +215,13 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
         NSLayoutConstraint *createSLHeightConstraint = weakSelf.createSLVerticalConstraints[1];
         createSLHeightConstraint.constant = kSLCreateShortListCellCount * kSLCreateShortListCellHeight;
         weakSelf.navigationItem.rightBarButtonItem.enabled = YES;
+        weakSelf.navigationItem.leftBarButtonItem.enabled = YES;
         
         [SLParseController getUsersShortListsWithCompletion:^(NSArray *shortlists) {
-            weakSelf.shortLists = shortlists;
+            weakSelf.shortLists = [SLSortOptionsVC orderShortListForDisplayWithShortlists: shortlists];
+            weakSelf.navigationItem.leftBarButtonItem.enabled = YES;
             [weakSelf.tableView reloadData];
+            
             [NSKeyedArchiver archiveRootObject:weakSelf.shortLists toFile:[weakSelf getStorageLocation]];
         }];
         
@@ -264,6 +269,7 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     [self.view addConstraints:self.createSLVerticalConstraints];
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     
     [UIView animateWithDuration:.3 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self.view layoutIfNeeded];
@@ -330,6 +336,15 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
 
 - (void)removeBlurBackground {
     [self.blurBackgroundView removeFromSuperview];
+}
+
+
+- (NSString *)getStorageLocation {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *docDir = [paths objectAtIndex: 0];
+    NSString *storageURLString = [docDir stringByAppendingPathComponent: @"ShortListStorage"];
+    
+    return storageURLString;
 }
 
 @end

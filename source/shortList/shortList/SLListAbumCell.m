@@ -96,12 +96,25 @@ static const CGFloat kSLALbumCellHeight = 120;
 }
 
 - (void)configureCell:(SLShortListAlbum *)album {
-    __weak typeof(self)weakSelf = self;
-    [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        UIImage *blurArtwork = [image applyBlurWithRadius:20 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.2] saturationDeltaFactor:1.0 maskImage:nil];
-        weakSelf.albumBackgroundImage.image = blurArtwork;
-    }];
+    NSString *collectionID = [@(album.albumId) stringValue];
     
+    //Not a real url,just a unique key to get the Image from cache
+    NSString *blurredAlbumArtKey = [NSString stringWithFormat:@"%@/%@", album.albumArtWork, collectionID];
+    UIImage* blurredAlbumArt = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:blurredAlbumArtKey];
+    
+    if (blurredAlbumArt) {
+        self.albumBackgroundImage.image = blurredAlbumArt;
+    }
+    else {
+        
+        __weak typeof(self)weakSelf = self;
+        [self.albumBackgroundImage sd_setImageWithURL:[NSURL URLWithString:album.albumArtWork] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            UIImage *blurArtwork = [image applyBlurWithRadius:20 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.2] saturationDeltaFactor:1.0 maskImage:nil];
+            weakSelf.albumBackgroundImage.image = blurArtwork;
+            [[SDWebImageManager sharedManager] saveImageToCache:blurArtwork forURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@", album.albumArtWork, collectionID]]];
+        }];
+    }
+
     self.artistNameLabel.text = album.artistName;
     self.albumRankLabel.text = [NSString stringWithFormat:@"%ld.", (long)album.shortListRank];
     self.albumTitleLabel.text = [album.albumName uppercaseString];
