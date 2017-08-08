@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		35A771AF0330548174B8FE16 /* libPods-shortListTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 512C7F814DAC96482B4A4FD8 /* libPods-shortListTests.a */; };
-		460A74601C1CEB8900C170E0 /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 460A745F1C1CEB8900C170E0 /* appKeys.plist */; };
 		461801161B08D7A4003C0A92 /* SLCreateShortListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */; };
 		4618011A1B08E6A0003C0A92 /* SLCreateShortListTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 461801191B08E6A0003C0A92 /* SLCreateShortListTitleCell.m */; };
 		461801201B09361E003C0A92 /* SLCreateShortListEnterNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4618011F1B09361E003C0A92 /* SLCreateShortListEnterNameCell.m */; };
@@ -92,6 +91,7 @@
 		8827545C6125A4271D50F33B /* libPods-shortList.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05FC029CF3BE838FABCE59CA /* libPods-shortList.a */; };
 		C905D44D1D5C2A35002ED87E /* SLSortOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C905D44C1D5C2A35002ED87E /* SLSortOptionsVC.swift */; };
 		C9063B7F1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9063B7E1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m */; };
+		C99E250E1F0702D5002B243C /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C99E250D1F0702D5002B243C /* appKeys.plist */; };
 		C9B7A1541D56A79B0069F228 /* ShortList+ShortlistYears.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7A1531D56A79B0069F228 /* ShortList+ShortlistYears.m */; };
 /* End PBXBuildFile section */
 
@@ -108,7 +108,6 @@
 /* Begin PBXFileReference section */
 		05FC029CF3BE838FABCE59CA /* libPods-shortList.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shortList.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DF7573C6C218B8DD05E3EB7 /* Pods-shortListTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.appstore.xcconfig"; sourceTree = "<group>"; };
-		460A745F1C1CEB8900C170E0 /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = SOURCE_ROOT; };
 		461801141B08D7A4003C0A92 /* SLCreateShortListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListVC.h; sourceTree = "<group>"; };
 		461801151B08D7A4003C0A92 /* SLCreateShortListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLCreateShortListVC.m; sourceTree = "<group>"; };
 		461801181B08E6A0003C0A92 /* SLCreateShortListTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLCreateShortListTitleCell.h; sourceTree = "<group>"; };
@@ -252,6 +251,7 @@
 		C905D44C1D5C2A35002ED87E /* SLSortOptionsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLSortOptionsVC.swift; sourceTree = "<group>"; };
 		C9063B7D1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPreviewAlbumDetailsVC.h; sourceTree = "<group>"; };
 		C9063B7E1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPreviewAlbumDetailsVC.m; sourceTree = "<group>"; };
+		C99E250D1F0702D5002B243C /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = appKeys.plist; sourceTree = "<group>"; };
 		C9B7A1521D56A79B0069F228 /* ShortList+ShortlistYears.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShortList+ShortlistYears.h"; sourceTree = "<group>"; };
 		C9B7A1531D56A79B0069F228 /* ShortList+ShortlistYears.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ShortList+ShortlistYears.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -582,7 +582,7 @@
 		46CB6ACF1AED715800BF1DF3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				460A745F1C1CEB8900C170E0 /* appKeys.plist */,
+				C99E250D1F0702D5002B243C /* appKeys.plist */,
 				4665B7351B6D471A0088B0B3 /* Fonts */,
 				4648A5501B1E663E00F997F8 /* shortList-Bridging-Header.h */,
 				46CB6AD61AED715800BF1DF3 /* shortList.xcdatamodeld */,
@@ -828,7 +828,7 @@
 				46A094291AF1B8150091C7F7 /* ItunesArtistSearchResults.JSON in Resources */,
 				4665B7391B6D4D4F0088B0B3 /* NixieOne.otf in Resources */,
 				46A0942A1AF1B8150091C7F7 /* ItunesAlbumSearchResults.JSON in Resources */,
-				460A74601C1CEB8900C170E0 /* appKeys.plist in Resources */,
+				C99E250E1F0702D5002B243C /* appKeys.plist in Resources */,
 				46A0942B1AF1B8150091C7F7 /* ItunesTracksSearchResult.JSON in Resources */,
 				46D4230F1B77D97800D79263 /* SpotifyAlbumResults.JSON in Resources */,
 				46CB6AE31AED715800BF1DF3 /* LaunchScreen.xib in Resources */,
@@ -906,7 +906,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		577F87F956B33AF30ED29723 /* [CP] Embed Pods Frameworks */ = {
@@ -965,7 +965,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1117,7 +1117,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = " $(inherited) ";
+				OTHER_LDFLAGS = "$(inherited)  ";
 				PRODUCT_MODULE_NAME = shortList;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1161,7 +1161,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = " $(inherited) ";
+				OTHER_LDFLAGS = "$(inherited)  ";
 				PRODUCT_MODULE_NAME = shortList;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -171,12 +171,13 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 #pragma mark UI setup
 - (void)setupNavigationController {
-    __weak typeof(self) weakSelf = self;
-    [[SpotifySearchApiController sharedManager] spotifySearchByArist:self.albumDetails.artistName album:self.albumDetails.collectionName completion:^(SpotifyAlbums *albums, NSError *error) {
-        weakSelf.albumDetails.spotifyDeepLink = [(SpotifyAlbum *)albums.albumResults.firstObject spotifyAlbumUrl];
-        [weakSelf buildPlayerViewControllerForAlbum:weakSelf.albumDetails];
-    }];
+    NSString *spotifyDeeplinkUrl = [NSString stringWithFormat:@"spotify://search/%@", self.albumDetails.collectionName];
+    NSString* encodedSpotifyDeeplinkUrl = [spotifyDeeplinkUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+
+    self.albumDetails.spotifyDeepLink = encodedSpotifyDeeplinkUrl;
+    [self buildPlayerViewControllerForAlbum:self.albumDetails];
     
+    __weak typeof(self) weakSelf = self;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:([self getShortListAlbum])? NSLocalizedString(@"Remove", nil) : NSLocalizedString(@"Add", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
         ([weakSelf getShortListAlbum]) ? [weakSelf removeAlbumFromShortList] : [weakSelf addAlbumToShortList];
     }];
