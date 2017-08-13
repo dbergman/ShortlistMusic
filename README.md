@@ -5,10 +5,10 @@ This project has the following dependencies:
 - Cocoapods
 
 #Important!!
-This project needs to run with cocoapods 0.39.0 or higher
+This project needs to run with cocoapods 1.2.1 or higher
 ```
 sudo sudo gem uninstall cocoapods
-sudo gem install cocoapods -v 0.39.0
+sudo gem install cocoapods -v 1.2.1
 ```
 
 # Installation
@@ -33,7 +33,5 @@ Below is a description of each scheme and its purpose
 
 #API
 - iTunes Search API
-
-- Spotify Search API
 
 - Parse
