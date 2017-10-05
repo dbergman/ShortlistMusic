@@ -285,7 +285,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 - (void)addBlurBackground {
     self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getBlurredScreenShot]];
     self.blurBackgroundView.userInteractionEnabled = YES;
-    [self.view insertSubview:self.blurBackgroundView atIndex:2];
+    [self.view addSubview:self.blurBackgroundView];
     self.blurBackgroundView.alpha = 0;
 }
 

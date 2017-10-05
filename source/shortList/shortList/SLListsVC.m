@@ -62,6 +62,7 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     self.tableView.backgroundColor = [UIColor blackColor];
+    self.tableView.separatorColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -153,26 +154,20 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) {
     __weak typeof(self) weakSelf = self;
-    __block SLShortlist *sl = self.shortLists[indexPath.row];
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [SLParseController removeShortListWithShortlist:sl completion:^(NSArray * shortlists) {
-            weakSelf.shortLists = shortlists;
+    __block SLShortlist *shortlist = self.shortLists[indexPath.row];
+    UIContextualAction *delete = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        
+        [weakSelf deleteShortlist:shortlist atIndexPath:indexPath];
+        
+        completionHandler(YES);
+    }];
     
-                [CATransaction begin];
-                [CATransaction setCompletionBlock:^{
-                    [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:sl.shortListName toastType:SLToastMessageSuccess completion:nil];
-                }];
-                
-                [tableView beginUpdates];
-                 [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                [tableView endUpdates];
-                
-                [CATransaction commit];
-        }];
-    }
+    UISwipeActionsConfiguration *swipeActionConfig = [UISwipeActionsConfiguration configurationWithActions:@[delete]];
+    swipeActionConfig.performsFirstActionWithFullSwipe = NO;
+    
+    return swipeActionConfig;
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
@@ -183,6 +178,24 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     SLAlbumsCollectionCell *cell = (SLAlbumsCollectionCell *)[gestureRecognizer view];
     SLShortlist *shortList = self.shortLists[cell.tag];
     [self.navigationController pushViewController:[[SLListAlbumsVC alloc] initWithShortList:shortList] animated:YES];
+}
+
+- (void)deleteShortlist:(SLShortlist *)shortlist atIndexPath:(NSIndexPath *)indexPath {
+    __weak typeof(self) weakSelf = self;
+    [SLParseController removeShortListWithShortlist:shortlist completion:^(NSArray * shortlists) {
+        weakSelf.shortLists = shortlists;
+        
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:shortlist.shortListName toastType:SLToastMessageSuccess completion:nil];
+        }];
+        
+        [self.tableView beginUpdates];
+        [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+        
+        [CATransaction commit];
+    }];
 }
 
 - (void)addTableViewHeaderMessage:(BOOL)loggedIn {

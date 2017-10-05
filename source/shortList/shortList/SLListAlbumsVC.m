@@ -306,6 +306,17 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     }
 }
 
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) {
+    UIContextualAction *delete = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        completionHandler(YES);
+    }];
+
+    UISwipeActionsConfiguration *swipeActionConfig = [UISwipeActionsConfiguration configurationWithActions:@[delete]];
+    swipeActionConfig.performsFirstActionWithFullSwipe = NO;
+    
+    return swipeActionConfig;
+}
+
 #pragma mark Blurring Methods
 - (void)addBlurBackgroundWithDismisGesture:(BOOL)dismisGesture {
     self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getBlurredScreenShot]];

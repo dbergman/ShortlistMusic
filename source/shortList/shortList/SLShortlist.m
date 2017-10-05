@@ -7,6 +7,7 @@
 //
 
 #import "SLShortlist.h"
+#import "SLShortListAlbum.h"
 
 @implementation SLShortlist
 

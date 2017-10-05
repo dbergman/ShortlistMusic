@@ -10,7 +10,7 @@
 @class SLShortlist;
 
 typedef void(^SLCreateNameAction)(NSString *shortListName);
-typedef void(^SLTCreatingShortListName)();
+typedef void(^SLTCreatingShortListName)(void);
 
 @interface SLCreateShortListEnterNameCell : UITableViewCell
 

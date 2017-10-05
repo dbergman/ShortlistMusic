@@ -7,12 +7,13 @@
 //
 
 #import <Parse/Parse.h>
+@class SLShortListAlbum;
 
 @interface SLShortlist : PFObject <PFSubclassing, NSCoding>
 
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;
 @property (nonatomic, strong) NSString *shortListUserId;
-@property (nonatomic, strong) NSArray *shortListAlbums;
+@property (nonatomic, strong) NSArray<SLShortListAlbum*> *shortListAlbums;
 
 @end

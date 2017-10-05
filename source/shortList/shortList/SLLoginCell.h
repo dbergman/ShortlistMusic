@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SLLoginButtonCellAction)();
+typedef void(^SLLoginButtonCellAction)(void);
 
 @interface SLLoginCell : UITableViewCell
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^SLButtonActionBlock)();
+typedef void(^SLButtonActionBlock)(void);
 
 @interface SLGenericOneButtonCell : UITableViewCell
 
