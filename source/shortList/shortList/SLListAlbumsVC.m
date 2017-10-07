@@ -177,7 +177,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     }];
 }
 
-#pragma mark - barbuttonAdctions
+#pragma mark - barbuttonActions
 -(void)shortListEditAction:(id)sender {
     if (self.showingOptions) {
         [self toggleOptionsButton];
@@ -282,32 +282,14 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    __weak typeof(self) weakSelf = self;
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        __block SLShortListAlbum *slAbum = self.shortList.shortListAlbums[indexPath.row];
-        [SLParseController removeAlbumFromShortListWithShortList:self.shortList shortlistAlbum:slAbum completion:^(NSArray *albums) {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            });
-            
-            weakSelf.shortList.shortListAlbums = albums;
-            [weakSelf reorderShortList];
-            
-            [SLParseController updateShortListAlbumsWithShortlist:self.shortList completion:^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:slAbum.albumName toastType:SLToastMessageSuccess completion:^{
-                        [weakSelf.tableView reloadData];
-                    }];
-                });
-            }];
-         }];
-    }
-}
-
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) {
+    __weak typeof(self) weakSelf = self;
+    
     UIContextualAction *delete = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        SLShortListAlbum *slAbum = self.shortList.shortListAlbums[indexPath.row];
+        
+        [weakSelf deleteAlbum:slAbum atIndexPath:indexPath];
+        
         completionHandler(YES);
     }];
 
@@ -317,7 +299,28 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     return swipeActionConfig;
 }
 
-#pragma mark Blurring Methods
+#pragma mark - Actions
+- (void)deleteAlbum:(SLShortListAlbum *)shortlistAbum atIndexPath:(NSIndexPath *)indexPath {
+    __weak typeof(self) weakSelf = self;
+    [SLParseController removeAlbumFromShortListWithShortList:self.shortList shortlistAlbum:shortlistAbum completion:^(NSArray *albums) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        });
+        
+        weakSelf.shortList.shortListAlbums = albums;
+        [weakSelf reorderShortList];
+        
+        [SLParseController updateShortListAlbumsWithShortlist:self.shortList completion:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf sl_showToastForAction:NSLocalizedString(@"Removed", nil) message:shortlistAbum.albumName toastType:SLToastMessageSuccess completion:^{
+                    [weakSelf.tableView reloadData];
+                }];
+            });
+        }];
+    }];
+}
+
+#pragma mark - Blurring Methods
 - (void)addBlurBackgroundWithDismisGesture:(BOOL)dismisGesture {
     self.blurBackgroundView = [[UIImageView alloc] initWithImage:[self getBlurredScreenShot]];
     self.blurBackgroundView.userInteractionEnabled = YES;
