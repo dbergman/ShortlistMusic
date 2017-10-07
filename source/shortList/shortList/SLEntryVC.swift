@@ -161,7 +161,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         showPickerView?(false)
     }
     
-    func addUserToShortList () {
+    func addUserToShortList() {
         if (entryTextField.text?.characters.count)! > 5 {
             SLParseController.doesUserNameExist(username: entryTextField.text!, checkAction:{[unowned self](exists) in
                 if (exists) {

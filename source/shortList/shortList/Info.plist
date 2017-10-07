@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>707</string>
+	<string>726</string>
 	<key>FacebookAppID</key>
 	<string>1636037233334583</string>
 	<key>FacebookDisplayName</key>
@@ -45,8 +45,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Used to save ShortList Image</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo Library Access Warning</string>
+	<string>Used to save ShortList Image</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Polaris.otf</string>

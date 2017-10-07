@@ -50,8 +50,9 @@ static const CGFloat kShortListAlbumArtWorkSize = 320.0;
    NSURL *albumArtUrl = [NSURL URLWithString:[slAlbum.albumArtWork stringByReplacingOccurrencesOfString:@"400" withString:@"1200"]];
    NSData *imageData = [[NSData alloc] initWithContentsOfURL:albumArtUrl];
     
+    // Image is not available.
     if (!imageData) {
-        imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:slAlbum.albumArtWork]];
+        return @{kShortListAlbumArtKey:[UIImage imageNamed:@"albumPlaceHolder"], kShortListAlbumRankKey:@(slAlbum.shortListRank)};
     }
 
     return @{kShortListAlbumArtKey:[UIImage imageWithData: imageData], kShortListAlbumRankKey:@(slAlbum.shortListRank)};
@@ -87,7 +88,6 @@ static const CGFloat kShortListAlbumArtWorkSize = 320.0;
         if (idx+1 > 16) {
             *stop = YES;
         }
-        
     }];
     
     UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
