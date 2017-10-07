@@ -66,7 +66,7 @@ static const CGFloat kSLAlbumCellSize = 120;
         }
 
         NSDictionary *views = NSDictionaryOfVariableBindings(_collectionView, _shortlistDetailsView, _shortlistNamelabel, _shortlistYearlabel);
-        NSDictionary *metrics = @{@"collectionViewHeight":@(kSLAlbumCellSize), @"shortlistDetailsViewHeight":@(30)};
+        NSDictionary *metrics = @{@"collectionViewHeight":@(kSLAlbumCellSize), @"shortlistDetailsViewHeight":@(40)};
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|" options:0 metrics:metrics views:views]];
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView(collectionViewHeight)]|" options:0 metrics:metrics views:views]];
@@ -90,6 +90,8 @@ static const CGFloat kSLAlbumCellSize = 120;
     self.shortlistYearlabel.text = shortList.shortListYear;
     
     [self.collectionView reloadData];
+    [self.collectionView setContentOffset:CGPointZero animated:NO];
+    self.shortlistDetailsView.alpha = 0.7;
 }
 
 
