@@ -170,9 +170,6 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     return swipeActionConfig;
 }
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-}
-
 #pragma mark GestureRecognizers
 - (void)shortListCellSelected:(UIGestureRecognizer *)gestureRecognizer {
     SLAlbumsCollectionCell *cell = (SLAlbumsCollectionCell *)[gestureRecognizer view];

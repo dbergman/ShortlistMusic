@@ -31,6 +31,7 @@
     self.shortListYear = [decoder decodeObjectForKey:@"shortListYear"];
     self.shortListUserId = [decoder decodeObjectForKey:@"shortListUserId"];
     self.shortListAlbums = [decoder decodeObjectForKey:@"shortListAlbums"];
+    self.objectId = [decoder decodeObjectForKey:@"objectId"];
     
     return self;
 }
@@ -40,6 +41,7 @@
     [encoder encodeObject:self.shortListYear forKey:@"shortListYear"];
     [encoder encodeObject:self.shortListUserId forKey:@"shortListUserId"];
     [encoder encodeObject:self.shortListAlbums forKey:@"shortListAlbums"];
+    [encoder encodeObject:self.objectId forKey:@"objectId"];
 }
 
 @end
