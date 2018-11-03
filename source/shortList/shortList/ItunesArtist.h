@@ -14,9 +14,11 @@
 @property (nonatomic, copy, readonly) NSString *artistType;
 @property (nonatomic, copy, readonly) NSString *artistName;
 @property (nonatomic, copy, readonly) NSString *artistLinkUrl;
-@property (nonatomic, assign, readonly) NSInteger artistId;
+@property (nonatomic, copy, readonly) NSString *artistId;
 @property (nonatomic, copy, readonly) NSString *primaryGenreName;
 @property (nonatomic, assign, readonly) NSInteger primaryGenreId;
-@property (nonatomic, copy, readonly) NSString *radioStationUrl;
+//@property (nonatomic, copy, readonly) NSString *radioStationUrl;
+
+
 
 @end

@@ -33,7 +33,6 @@
       @"kind" : @"kind",
       @"previewUrl" : @"previewUrl",
       @"primaryGenreName" : @"primaryGenreName",
-      @"radioStationUrl" : @"radioStationUrl",
       @"releaseDate" : @"releaseDate",
       @"trackCensoredName" : @"trackCensoredName",
       @"trackCount" : @"trackCount",
@@ -82,7 +81,18 @@
     }];
 }
 
-
++ (NSValueTransformer *)collectionIdJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        
+        //return [value stringValue];
+        
+        if ([value isKindOfClass:[NSNumber class]]) {
+            return [value stringValue];
+        }
+        
+        return value;
+    }];
+}
 
 
 @end

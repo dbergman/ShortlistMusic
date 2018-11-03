@@ -19,8 +19,8 @@
       @"artistLinkUrl": @"artistLinkUrl",
       @"artistId": @"artistId",
       @"primaryGenreName": @"primaryGenreName",
-      @"primaryGenreId": @"primaryGenreId",
-      @"radioStationUrl": @"radioStationUrl"
+      @"primaryGenreId": @"primaryGenreId" //,
+     // @"radioStationUrl": @"radioStationUrl"
       };
 }
 

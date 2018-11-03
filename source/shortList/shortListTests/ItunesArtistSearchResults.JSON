@@ -1,1173 +1,182 @@
 {
-    "resultCount":117,
-    "results":[
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles/id136975?uo=4",
-               "artistId":136975,
-               "amgArtistId":3644,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.136975"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Bornagen Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-bornagen-beatles/id287063657?uo=4",
-               "artistId":287063657,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.287063657"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Ultimate Beatles Cover Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/ultimate-beatles-cover-band/id353296836?uo=4",
-               "artistId":353296836,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.353296836"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Appreciation Society",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-appreciation-society/id338798545?uo=4",
-               "artistId":338798545,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.338798545"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Backstage Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/backstage-beatles/id353129789?uo=4",
-               "artistId":353129789,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.353129789"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Celebration",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-celebration/id369309908?uo=4",
-               "artistId":369309908,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.369309908"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Sing Alongs",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-sing-alongs/id185141098?uo=4",
-               "artistId":185141098,
-               "primaryGenreName":"Soundtrack",
-               "primaryGenreId":16,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.185141098"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Recovered Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-recovered-band/id460120475?uo=4",
-               "artistId":460120475,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.460120475"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Greatest Beatles Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/greatest-beatles-tribute-band/id377603066?uo=4",
-               "artistId":377603066,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.377603066"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"#1 Beatles Tribute Group",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/1-beatles-tribute-group/id377435952?uo=4",
-               "artistId":377435952,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.377435952"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Fab Four (The Ultimate Tribute to The Beatles)",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/fab-four-ultimate-tribute/id404505627?uo=4",
-               "artistId":404505627,
-               "primaryGenreName":"Holiday",
-               "primaryGenreId":8,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.404505627"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Bornagen Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/bornagen-beatles/id417746653?uo=4",
-               "artistId":417746653,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.417746653"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles #1 Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-1-tribute-band/id398293508?uo=4",
-               "artistId":398293508,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.398293508"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Tribute",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-tribute/id75078756?uo=4",
-               "artistId":75078756,
-               "amgArtistId":2378263,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.75078756"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Gold & Platinum Tribute",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-gold-platinum-tribute/id387710323?uo=4",
-               "artistId":387710323,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.387710323"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Orchestra",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-orchestra/id329709909?uo=4",
-               "artistId":329709909,
-               "amgArtistId":2370192,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.329709909"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Rumba Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-rumba-band/id297420666?uo=4",
-               "artistId":297420666,
-               "primaryGenreName":"Latino",
-               "primaryGenreId":12,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.297420666"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Revival Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-revival-band/id102803424?uo=4",
-               "artistId":102803424,
-               "amgArtistId":37339,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.102803424"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Cover Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-cover-band/id257708246?uo=4",
-               "artistId":257708246,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.257708246"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"3 Normal Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/3-normal-beatles/id269076416?uo=4",
-               "artistId":269076416,
-               "primaryGenreName":"Alternative",
-               "primaryGenreId":20,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.269076416"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"#1 Beatles Lovers",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/1-beatles-lovers/id370331152?uo=4",
-               "artistId":370331152,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.370331152"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Tony Sheridan",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/tony-sheridan/id136971?uo=4",
-               "artistId":136971,
-               "amgArtistId":26955,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.136971"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Savage Young Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/savage-young-beatles/id79623511?uo=4",
-               "artistId":79623511,
-               "amgArtistId":877930,
-               "primaryGenreName":"Dance",
-               "primaryGenreId":17,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.79623511"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Platinum Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-platinum-beatles/id371061808?uo=4",
-               "artistId":371061808,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.371061808"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Party Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-party-band/id369583179?uo=4",
-               "artistId":369583179,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.369583179"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Austin Beatles Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/austin-beatles-tribute-band/id352487353?uo=4",
-               "artistId":352487353,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.352487353"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Rolling Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-rolling-beatles/id439964146?uo=4",
-               "artistId":439964146,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.439964146"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Ringer Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-ringer-beatles/id338540934?uo=4",
-               "artistId":338540934,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.338540934"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Celebration",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-celebration/id380663915?uo=4",
-               "artistId":380663915,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.380663915"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Revival Band & Orchestra",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-revival-band-orchestra/id443425560?uo=4",
-               "artistId":443425560,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.443425560"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-tribute-band/id304954919?uo=4",
-               "artistId":304954919,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.304954919"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beat Les",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beat-les/id891386102?uo=4",
-               "artistId":891386102,
-               "primaryGenreName":"Electronic",
-               "primaryGenreId":7,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.891386102"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Forever",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-forever/id377603165?uo=4",
-               "artistId":377603165,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.377603165"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Acoustic Trio",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-acoustic-trio/id976631872?uo=4",
-               "artistId":976631872,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.976631872"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"#1 Beatles Tribute Band In The World",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/1-beatles-tribute-band-in/id388338404?uo=4",
-               "artistId":388338404,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.388338404"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Juice",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-juice/id384321977?uo=4",
-               "artistId":384321977,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.384321977"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Jukebox",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-jukebox/id369310978?uo=4",
-               "artistId":369310978,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.369310978"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Savage Young Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-savage-young-beatles/id304600324?uo=4",
-               "artistId":304600324,
-               "amgArtistId":877930,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.304600324"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Chillout",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-chillout/id386772496?uo=4",
-               "artistId":386772496,
-               "primaryGenreName":"Electronic",
-               "primaryGenreId":7,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.386772496"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Symphony Orchestra",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-symphony-orchestra/id411160366?uo=4",
-               "artistId":411160366,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.411160366"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Connection",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-connection/id911648932?uo=4",
-               "artistId":911648932,
-               "primaryGenreName":"Britpop",
-               "primaryGenreId":1132,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.911648932"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"#1 Beatles Cover Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/1-beatles-cover-band/id368500343?uo=4",
-               "artistId":368500343,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.368500343"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Silver Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/silver-beatles/id495487236?uo=4",
-               "artistId":495487236,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.495487236"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles On Guitar",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-on-guitar/id784290324?uo=4",
-               "artistId":784290324,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":8022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.784290324"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"A Gold Tribute To Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/a-gold-tribute-to-beatles/id635643811?uo=4",
-               "artistId":635643811,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.635643811"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Surreal Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-surreal-beatles/id734385234?uo=4",
-               "artistId":734385234,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.734385234"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Revival Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-revival-band/id215066533?uo=4",
-               "artistId":215066533,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.215066533"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles #1 Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-1-tribute-band/id371242490?uo=4",
-               "artistId":371242490,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.371242490"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Fabulous Beatles Cover Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/fabulous-beatles-cover-band/id376191686?uo=4",
-               "artistId":376191686,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.376191686"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Made famous by The Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/made-famous-by-the-beatles/id379409679?uo=4",
-               "artistId":379409679,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.379409679"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Symphonic Orchestra",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-symphonic-orchestra/id410698389?uo=4",
-               "artistId":410698389,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.410698389"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Karaoke - The Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/karaoke-the-beatles/id145133393?uo=4",
-               "artistId":145133393,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.145133393"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Philharmonic Beatles Experience",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/philharmonic-beatles-experience/id410698395?uo=4",
-               "artistId":410698395,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.410698395"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Songs The Beatles Gave Away",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/songs-the-beatles-gave-away/id321298056?uo=4",
-               "artistId":321298056,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.321298056"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"#1 Beatles Luvers",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/1-beatles-luvers/id373509645?uo=4",
-               "artistId":373509645,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.373509645"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Fan Club – (All Over The World)",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-fan-club-all-over/id446254905?uo=4",
-               "artistId":446254905,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.446254905"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Recoverd Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-recoverd-band/id460120505?uo=4",
-               "artistId":460120505,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.460120505"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Symphony of Los Angeles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-symphony-los-angeles/id319518125?uo=4",
-               "artistId":319518125,
-               "primaryGenreName":"New Age",
-               "primaryGenreId":13,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.319518125"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Liverpool Lads a Beatles Tribute",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/liverpool-lads-beatles-tribute/id416921195?uo=4",
-               "artistId":416921195,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.416921195"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Vaghi Beatles Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/vaghi-beatles-tribute-band/id429301949?uo=4",
-               "artistId":429301949,
-               "primaryGenreName":"Alternative",
-               "primaryGenreId":20,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.429301949"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Madonna",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-madonna/id405806132?uo=4",
-               "artistId":405806132,
-               "primaryGenreName":"World",
-               "primaryGenreId":19,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.405806132"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"A Gold Tribute To Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/a-gold-tribute-to-beatles/id635644031?uo=4",
-               "artistId":635644031,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.635644031"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Queen Lounge",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-queen-lounge/id424461099?uo=4",
-               "artistId":424461099,
-               "primaryGenreName":"World",
-               "primaryGenreId":19,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.424461099"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Incredible Beatles Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/incredible-beatles-tribute/id384363707?uo=4",
-               "artistId":384363707,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.384363707"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Bossa n The Beatles by Harry Dj",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/bossa-n-the-beatles-by-harry-dj/id380962636?uo=4",
-               "artistId":380962636,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.380962636"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-tribute-band/id369903766?uo=4",
-               "artistId":369903766,
-               "amgArtistId":1143014,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.369903766"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Paul McCartney",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/paul-mccartney/id12224?uo=4",
-               "artistId":12224,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.12224"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Stuart Sutcliffe",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/stuart-sutcliffe/id475393602?uo=4",
-               "artistId":475393602,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.475393602"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"John Lennon",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/john-lennon/id4416594?uo=4",
-               "artistId":4416594,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.4416594"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"George Harrison",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/george-harrison/id255233?uo=4",
-               "artistId":255233,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.255233"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-best-tribute-band/id885185489?uo=4",
-               "artistId":885185489,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.885185489"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Orchestra",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/orchestra/id86643?uo=4",
-               "artistId":86643,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.86643"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles On Panpipes",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-on-panpipes/id784299963?uo=4",
-               "artistId":784299963,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":8022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.784299963"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Great Beatles Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/great-beatles-tribute-band/id387626989?uo=4",
-               "artistId":387626989,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.387626989"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"#1 Ultimate Beatles Tribute",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/1-ultimate-beatles-tribute/id382738960?uo=4",
-               "artistId":382738960,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.382738960"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Ukulele Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-ukulele-beatles/id606182486?uo=4",
-               "artistId":606182486,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.606182486"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"A Gold Tribute To Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/a-gold-tribute-to-beatles/id635644137?uo=4",
-               "artistId":635644137,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.635644137"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Incredible Beatles Cover Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/incredible-beatles-cover-band/id368472603?uo=4",
-               "artistId":368472603,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.368472603"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles World",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-world/id378820335?uo=4",
-               "artistId":378820335,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.378820335"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-best-tribute-band/id886684975?uo=4",
-               "artistId":886684975,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.886684975"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Incredible Beatles Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/incredible-beatles-tribute/id370331334?uo=4",
-               "artistId":370331334,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.370331334"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Michael Andersen & The Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/michael-andersen-the-beatles/id557983907?uo=4",
-               "artistId":557983907,
-               "primaryGenreName":"Alternative",
-               "primaryGenreId":20,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.557983907"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Tribute",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-tribute/id201227410?uo=4",
-               "artistId":201227410,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.201227410"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Recovered Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-recovered-band/id661163245?uo=4",
-               "artistId":661163245,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.661163245"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-best-tribute-band/id886684261?uo=4",
-               "artistId":886684261,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.886684261"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"A Gold Tribute To Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/a-gold-tribute-to-beatles/id635644101?uo=4",
-               "artistId":635644101,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.635644101"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Ungrateful Dead Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-ungrateful-dead-beatles/id843553221?uo=4",
-               "artistId":843553221,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.843553221"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-best-tribute-band/id886684687?uo=4",
-               "artistId":886684687,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.886684687"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-best-tribute-band/id886684831?uo=4",
-               "artistId":886684831,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.886684831"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"A Gold Tribute To Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/a-gold-tribute-to-beatles/id635643671?uo=4",
-               "artistId":635643671,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.635643671"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Back to the Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/back-to-the-beatles/id304676159?uo=4",
-               "artistId":304676159,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.304676159"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Ultimate Beatles Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/ultimate-beatles-tribute-band/id365576247?uo=4",
-               "artistId":365576247,
-               "amgArtistId":2287642,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.365576247"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles & White Flag",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-white-flag/id256967167?uo=4",
-               "artistId":256967167,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.256967167"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"#1 Beatles Hit Machine",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/1-beatles-hit-machine/id378649511?uo=4",
-               "artistId":378649511,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.378649511"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Orchestra",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-orchestra/id489796800?uo=4",
-               "artistId":489796800,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.489796800"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles etcetera",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-etcetera/id388195904?uo=4",
-               "artistId":388195904,
-               "primaryGenreName":"Spoken Word",
-               "primaryGenreId":50000061,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.388195904"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beatles Karaoke Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beatles-karaoke-band/id436036864?uo=4",
-               "artistId":436036864,
-               "primaryGenreName":"World",
-               "primaryGenreId":19,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.436036864"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Elvis Presley & The Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/elvis-presley-the-beatles/id892054024?uo=4",
-               "artistId":892054024,
-               "primaryGenreName":"Spoken Word",
-               "primaryGenreId":50000061,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.892054024"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-best-tribute-band/id886685140?uo=4",
-               "artistId":886685140,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.886685140"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatles Celebration & Friends",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-celebration-friends/id386472998?uo=4",
-               "artistId":386472998,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.386472998"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Greek Beats (The Beatles Live Tribute Band)",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/greek-beats-beatles-live-tribute/id336131022?uo=4",
-               "artistId":336131022,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.336131022"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The New Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-new-beatles/id725998758?uo=4",
-               "artistId":725998758,
-               "primaryGenreName":"Pop/Rock",
-               "primaryGenreId":1133,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.725998758"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Rock Guitar Beatles Tribute",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/rock-guitar-beatles-tribute/id428918726?uo=4",
-               "artistId":428918726,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.428918726"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-best-tribute-band/id886684545?uo=4",
-               "artistId":886684545,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.886684545"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Dung Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-dung-beatles/id639625886?uo=4",
-               "artistId":639625886,
-               "primaryGenreName":"Singer/Songwriter",
-               "primaryGenreId":10,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.639625886"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Bootleg Beatles & Friends",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-bootleg-beatles-friends/id369309337?uo=4",
-               "artistId":369309337,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.369309337"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Wart",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-wart/id577701203?uo=4",
-               "artistId":577701203,
-               "amgArtistId":2992181,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.577701203"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Tony Sheridan & The Beat Brothers & The Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/tony-sheridan-beat-brothers/id593265483?uo=4",
-               "artistId":593265483,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.593265483"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Tony Sheridan & The Beatles",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/tony-sheridan-the-beatles/id466474187?uo=4",
-               "artistId":466474187,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.466474187"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-best-tribute-band/id886685618?uo=4",
-               "artistId":886685618,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.886685618"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-best-tribute-band/id886685370?uo=4",
-               "artistId":886685370,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.886685370"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Beatle's Best Tribute Band",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/beatles-best-tribute-band/id886685458?uo=4",
-               "artistId":886685458,
-               "primaryGenreName":"Tribute",
-               "primaryGenreId":100022,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.886685458"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Better Than the Beatles: A Tribute to the Shaggs",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/better-than-beatles-tribute/id76863626?uo=4",
-               "artistId":76863626,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.76863626"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Gene Vincent",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/gene-vincent/id531519?uo=4",
-               "artistId":531519,
-               "amgArtistId":5764,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.531519"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Elvis Presley",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/elvis-presley/id197443?uo=4",
-               "artistId":197443,
-               "amgArtistId":5175,
-               "primaryGenreName":"Rock",
-               "primaryGenreId":21,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.197443"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"Marty Murray",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/marty-murray/id208137297?uo=4",
-               "artistId":208137297,
-               "amgArtistId":3012867,
-               "primaryGenreName":"Pop",
-               "primaryGenreId":14,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.208137297"
-               },
-               {
-               "wrapperType":"artist",
-               "artistType":"Artist",
-               "artistName":"The Beat Brothers",
-               "artistLinkUrl":"https://itunes.apple.com/us/artist/the-beat-brothers/id260435186?uo=4",
-               "artistId":260435186,
-               "amgArtistId":300384,
-               "primaryGenreName":"Dance",
-               "primaryGenreId":17,
-               "radioStationUrl":"https://itunes.apple.com/station/idra.260435186"
-               }
-               ]
+    "resultCount": 22,
+    "results": [{
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid/1857507?uo=4",
+        "artistId": "1857507",
+        "amgArtistId": 41116,
+        "primaryGenreName": "Rock",
+        "primaryGenreId": 21
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Rembrandt",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-rembrandt/394935687?uo=4",
+        "artistId": "394935687",
+        "primaryGenreName": "Pop",
+        "primaryGenreId": 14
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Vat",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-vat/60317124?uo=4",
+        "artistId": "60317124",
+        "amgArtistId": 311009,
+        "primaryGenreName": "Alternative",
+        "primaryGenreId": 20
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Buju Banton Feat. Rancid",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/buju-banton-feat-rancid/355289473?uo=4",
+        "artistId": "355289473"
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Hell Spawn",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-hell-spawn/212958698?uo=4",
+        "artistId": "212958698",
+        "primaryGenreName": "Alternative",
+        "primaryGenreId": 20
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Polecats",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-polecats/159878838?uo=4",
+        "artistId": "159878838",
+        "amgArtistId": 476499,
+        "primaryGenreName": "Rock",
+        "primaryGenreId": 21
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Chew On My Rancid Shank",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/chew-on-my-rancid-shank/604169323?uo=4",
+        "artistId": "604169323",
+        "primaryGenreName": "Electronic",
+        "primaryGenreId": 7
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "The Gods of the Rancid Weeds",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/the-gods-of-the-rancid-weeds/714455342?uo=4",
+        "artistId": "714455342",
+        "amgArtistId": 3014817,
+        "primaryGenreName": "Rock",
+        "primaryGenreId": 21
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Crisis",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-crisis/1273803710?uo=4",
+        "artistId": "1273803710",
+        "primaryGenreName": "Rock",
+        "primaryGenreId": 21
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Mr Rancid",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/mr-rancid/638394292?uo=4",
+        "artistId": "638394292",
+        "primaryGenreName": "Hip-Hop/Rap",
+        "primaryGenreId": 18
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Enigma",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-enigma/1291469522?uo=4",
+        "artistId": "1291469522",
+        "primaryGenreName": "House",
+        "primaryGenreId": 1048
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Skull",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-skull/1336932354?uo=4",
+        "artistId": "1336932354",
+        "primaryGenreName": "Rock",
+        "primaryGenreId": 21
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Asteroids",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-asteroids/1291465231?uo=4",
+        "artistId": "1291465231",
+        "primaryGenreName": "House",
+        "primaryGenreId": 1048
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "DJ Rancid",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/dj-rancid/577283631?uo=4",
+        "artistId": "577283631",
+        "primaryGenreName": "Electronic",
+        "primaryGenreId": 7
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Jazz",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-jazz/1191927880?uo=4",
+        "artistId": "1191927880",
+        "primaryGenreName": "Alternative",
+        "primaryGenreId": 20
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Rimjob Rampage",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-rimjob-rampage/1381202626?uo=4",
+        "artistId": "1381202626",
+        "primaryGenreName": "Metal",
+        "primaryGenreId": 1153
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Poultry",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-poultry/1230580796?uo=4",
+        "artistId": "1230580796",
+        "primaryGenreName": "Alternative",
+        "primaryGenreId": 20
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Opera",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-opera/1352387795?uo=4",
+        "artistId": "1352387795",
+        "primaryGenreName": "Hip-Hop/Rap",
+        "primaryGenreId": 18
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Butter",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-butter/557909452?uo=4",
+        "artistId": "557909452",
+        "primaryGenreName": "Electronic",
+        "primaryGenreId": 7
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Shapeless Rancid Animal",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/shapeless-rancid-animal/1390455227?uo=4",
+        "artistId": "1390455227",
+        "primaryGenreName": "Rock",
+        "primaryGenreId": 21
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Eddie",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-eddie/1387838375?uo=4",
+        "artistId": "1387838375",
+        "primaryGenreName": "Alternative",
+        "primaryGenreId": 20
+    }, {
+        "wrapperType": "artist",
+        "artistType": "Artist",
+        "artistName": "Rancid Decay",
+        "artistLinkUrl": "https://itunes.apple.com/us/artist/rancid-decay/1008486554?uo=4",
+        "artistId": "1008486554",
+        "primaryGenreName": "Metal",
+        "primaryGenreId": 1153
+    }]
 }

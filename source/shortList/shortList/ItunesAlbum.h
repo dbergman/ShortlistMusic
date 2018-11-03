@@ -12,14 +12,14 @@
 
 //Itunes
 @property (nonatomic, assign, readonly) NSInteger amgArtistId;
-@property (nonatomic, assign, readonly) NSInteger artistId;
+@property (nonatomic, copy, readonly) NSString *artistId;
 @property (nonatomic, copy, readonly) NSString *artistName;
 @property (nonatomic, copy, readonly) NSString *artistViewUrl;
 @property (nonatomic, copy, readonly) NSString *artworkUrl100;
 @property (nonatomic, copy, readonly) NSString *artworkUrl60;
 @property (nonatomic, copy, readonly) NSString *collectionCensoredName;
 @property (nonatomic, copy, readonly) NSString *collectionExplicitness;
-@property (nonatomic, assign, readonly) NSInteger collectionId;
+@property (nonatomic, copy, readonly) NSString *collectionId;
 @property (nonatomic, copy, readonly) NSString *collectionName;
 @property (nonatomic, copy, readonly) NSNumber *collectionPrice;
 @property (nonatomic, copy, readonly) NSString *collectionType;

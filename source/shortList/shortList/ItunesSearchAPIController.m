@@ -59,7 +59,7 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
     }];
 }
 
-- (void)getAlbumsForArtist:(NSNumber *) artistId completion:(SLItunesFetchResultsBlock)completion {
+- (void)getAlbumsForArtist:(NSString *) artistId completion:(SLItunesFetchResultsBlock)completion {
     NSDictionary *params = @{@"id": artistId, @"media": @"music", @"entity": @"album", @"limit": @"200"};
     
     [self GET:@"lookup" parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

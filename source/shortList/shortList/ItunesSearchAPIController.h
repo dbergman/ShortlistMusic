@@ -21,7 +21,7 @@ typedef void(^SLItunesFetchResultsBlock)(id responseObject, NSError *error);
 -(void)getSearchResultsWithBlock:(NSString *)artist completion:(SLItunesFetchResultsBlock)completion;
 
 //Albums
-- (void)getAlbumsForArtist:(NSNumber *)artistId completion:(SLItunesFetchResultsBlock)completion;
+- (void)getAlbumsForArtist:(NSString *)artistId completion:(SLItunesFetchResultsBlock)completion;
 
 //Tracks
 - (void)getTracksForAlbumID:(NSString *)albumID completion:(SLItunesFetchResultsBlock)completion;
