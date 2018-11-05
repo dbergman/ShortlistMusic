@@ -86,7 +86,7 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     __weak typeof(self) weakSelf = self;
     if ([PFUser currentUser]) {
         [SLParseController getUsersShortListsWithCompletion:^(NSArray *shortlists) {

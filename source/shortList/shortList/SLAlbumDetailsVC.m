@@ -161,7 +161,10 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 - (SLShortListAlbum *)getShortListAlbum {
     for (SLShortListAlbum *slAlbum in self.shortList.shortListAlbums) {
-        if (slAlbum.albumId == self.albumDetails.collectionId) {
+        
+        NSString *albumId = [NSString stringWithFormat:@"%ld", (long)slAlbum.albumId];
+        
+        if (albumId == self.albumDetails.collectionId) {
             return slAlbum;
         }
     }
@@ -181,7 +184,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     [self buildPlayerViewControllerForAlbum:self.albumDetails];
     
     __weak typeof(self) weakSelf = self;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:([self getShortListAlbum])? NSLocalizedString(@"Remove", nil) : NSLocalizedString(@"Add", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:([self getShortListAlbum]) ? NSLocalizedString(@"Remove", nil) : NSLocalizedString(@"Add", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
         ([weakSelf getShortListAlbum]) ? [weakSelf removeAlbumFromShortList] : [weakSelf addAlbumToShortList];
     }];
 }
