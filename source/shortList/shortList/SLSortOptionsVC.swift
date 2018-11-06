@@ -51,11 +51,11 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
         view.addSubview(tableView)
     }
     
-    func cancelSort() {
+    @objc func cancelSort() {
         dismiss(animated: true, completion: nil)
     }
     
-    func applySort() {
+    @objc func applySort() {
         dismiss(animated: true) {
             let defaults = UserDefaults.standard
             defaults.set(ShortlistSortOption.allValues[self.selectedIndexPath.row].rawValue, forKey: shortlistSortOption)
@@ -67,8 +67,7 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: sortCellIdentifier) as UITableViewCell!
+        let cell = tableView.dequeueReusableCell(withIdentifier:sortCellIdentifier, for: indexPath)
         cell.contentView.backgroundColor = UIColor.black
         cell.backgroundColor = UIColor.black
         cell.textLabel?.font = SLStyle.polarisFont(withSize: 14.0)
@@ -99,7 +98,7 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
         tableView.cellForRow(at: selectedIndexPath)?.textLabel?.textColor = UIColor.sl_Red()
     }
     
-    static func orderShortListForDisplay(shortlists: [SLShortlist]) -> [SLShortlist] {
+    @objc static func orderShortListForDisplay(shortlists: [SLShortlist]) -> [SLShortlist] {
         var sortOption: ShortlistSortOption
         
         let prefs = UserDefaults.standard

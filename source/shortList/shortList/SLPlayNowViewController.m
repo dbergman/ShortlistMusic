@@ -110,11 +110,11 @@ static const CGFloat kSLPlayLabelsWidth = 210.0;
 }
 
 - (void)spotifyAction {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.albumDetails.spotifyDeepLink]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.albumDetails.spotifyDeepLink] options:@{} completionHandler:nil];
 }
 
 - (void)appleMusicAction {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.albumDetails.collectionViewUrl]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.albumDetails.collectionViewUrl] options:@{} completionHandler:nil];
 }
 
 #pragma mark - Coloring

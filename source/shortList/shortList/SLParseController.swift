@@ -15,11 +15,11 @@ typealias SLCompletion = () -> Void
 
 import Foundation
 
-class SLParseController : NSObject {
+@objc class SLParseController : NSObject {
     private static let ShortLists = "SLShortlist"
     private static let ShortListAlbums = "SLShortListAlbum"
     
-    class func saveShortlist (newShortList:SLShortlist, completion: @escaping SLCompletion) {
+    @objc class func saveShortlist (newShortList:SLShortlist, completion: @escaping SLCompletion) {
         guard let shortListUserId = PFUser.current()?.objectId else { assertionFailure("SLParseController saveShortlist Fail"); return }
         
         newShortList.shortListUserId = shortListUserId
@@ -30,7 +30,7 @@ class SLParseController : NSObject {
         }
     }
 
-    class func getUsersShortLists(completion:@escaping SLGetUsersShortListBlock) {
+    @objc class func getUsersShortLists(completion:@escaping SLGetUsersShortListBlock) {
         guard let shortListUserId = PFUser.current()?.objectId else { assertionFailure("SLParseController getUsersShortLists Fail"); return }
         
         let query = PFQuery(className: ShortLists)
@@ -55,7 +55,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func getShortListAlbums(shortList: SLShortlist?, completion:@escaping SLShortListAlbumsBlock) {
+    @objc class func getShortListAlbums(shortList: SLShortlist?, completion:@escaping SLShortListAlbumsBlock) {
         guard let shortList = shortList else { return }
         guard let shortListId = shortList.objectId else { return }
         
@@ -71,7 +71,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func removeShortList(shortlist:SLShortlist, completion:@escaping SLGetUsersShortListBlock) {
+    @objc class func removeShortList(shortlist:SLShortlist, completion:@escaping SLGetUsersShortListBlock) {
         for album in shortlist.shortListAlbums {
             album.deleteInBackground(block: { _, _ in })
         }
@@ -81,7 +81,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func addAlbumToShortList(shortlistAlbum:SLShortListAlbum, shortlist:SLShortlist, completion:@escaping SLCompletion) {
+    @objc class func addAlbumToShortList(shortlistAlbum:SLShortListAlbum, shortlist:SLShortlist, completion:@escaping SLCompletion) {
         guard let shortListUserId = PFUser.current()?.objectId else { assertionFailure("SLParseController addAlbumToShortList Fail"); return }
         
         shortlistAlbum.shortListUserId = shortListUserId
@@ -97,7 +97,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func removeAlbumFromShortList(shortList:SLShortlist, shortlistAlbum:SLShortListAlbum, completion:@escaping SLShortListAlbumsBlock) {
+    @objc class func removeAlbumFromShortList(shortList:SLShortlist, shortlistAlbum:SLShortListAlbum, completion:@escaping SLShortListAlbumsBlock) {
         shortlistAlbum.deleteInBackground { success, _ in
             if success {
                 SLParseController.getShortListAlbums(shortList: shortList, completion: completion)
@@ -105,7 +105,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func updateShortListAlbums(shortlist:SLShortlist, completion:@escaping SLCompletion) {
+    @objc class func updateShortListAlbums(shortlist:SLShortlist, completion:@escaping SLCompletion) {
         guard !shortlist.shortListAlbums.isEmpty  else { completion(); return  }
         
         for album in shortlist.shortListAlbums {
@@ -119,7 +119,7 @@ class SLParseController : NSObject {
         completion()
     }
     
-    class func doesUserNameExist(username:String, checkAction:@escaping SLIdCheckAction) {
+    @objc class func doesUserNameExist(username:String, checkAction:@escaping SLIdCheckAction) {
         guard let query = PFUser.query() else { return }
         
         query.whereKey("username", equalTo: username).findObjectsInBackground { objects, error in
@@ -129,7 +129,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func doesUserEmailExist(email:String, checkAction:@escaping SLIdCheckAction) {
+    @objc class func doesUserEmailExist(email:String, checkAction:@escaping SLIdCheckAction) {
         guard let query = PFUser.query() else { return }
         
         query.whereKey("email", equalTo: email).findObjectsInBackground { objects, error in
@@ -139,7 +139,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func doesSocialIdExist(socialId:String, checkAction:@escaping SLIdCheckAction) {
+    @objc class func doesSocialIdExist(socialId:String, checkAction:@escaping SLIdCheckAction) {
         guard let query = PFUser.query() else { return }
         
         query.whereKey("socialId", equalTo: socialId).findObjectsInBackground { objects, error in
@@ -149,7 +149,7 @@ class SLParseController : NSObject {
         }
     }
     
-    class func resetPassword(email: String, successAction:@escaping SLResetEmailSuccess, failureAction:@escaping SLResetEmailFailure) {
+    @objc class func resetPassword(email: String, successAction:@escaping SLResetEmailSuccess, failureAction:@escaping SLResetEmailFailure) {
         let emailClean = email.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
         PFUser.requestPasswordResetForEmail(inBackground: emailClean) { _, error in

@@ -164,7 +164,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
         
         NSString *albumId = [NSString stringWithFormat:@"%ld", (long)slAlbum.albumId];
         
-        if (albumId == self.albumDetails.collectionId) {
+        if ([albumId isEqualToString:self.albumDetails.collectionId]) {
             return slAlbum;
         }
     }

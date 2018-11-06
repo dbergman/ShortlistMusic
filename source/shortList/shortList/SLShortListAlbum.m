@@ -29,7 +29,7 @@
     
     if (shortList) {
         shortList.albumName = albumDetails.collectionName;
-        shortList.albumId = albumDetails.collectionId;
+        shortList.albumId = [albumDetails.collectionId integerValue];
         shortList.artistName = albumDetails.artistName;
         shortList.releaseYear = albumDetails.releaseYear;
         shortList.albumArtWork = albumDetails.artworkUrl600;

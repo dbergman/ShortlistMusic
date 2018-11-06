@@ -13,15 +13,15 @@ typealias SLCreateUserNameSuccess = () -> Void
 typealias SLUpdatedShortlistNameSuccess = (_ shortListName: String) -> Void
 typealias SLShouldShowYearSelector = (_ showYearSelector: Bool) -> Void
 
-class SLEntryVC: SLBaseVC, UITextFieldDelegate {
+@objc class SLEntryVC: SLBaseVC, UITextFieldDelegate {
     
     var theUser: PFUser?
     var cancelCompletion: SLCreateUserNameCancel?
     var successCompletion: SLCreateUserNameSuccess?
     var successNameCompletion: SLUpdatedShortlistNameSuccess?
-    var showPickerView: SLShouldShowYearSelector?
-    var existingShortList: SLShortlist?
-    var changeYearButton = UIButton()
+    @objc var showPickerView: SLShouldShowYearSelector?
+    @objc var existingShortList: SLShortlist?
+    @objc var changeYearButton = UIButton()
 
     lazy var entryTextField:UITextField = {
         let entryTextField = UITextField()
@@ -37,7 +37,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         return entryTextField
     }()
     
-    init(user:PFUser, onSuccess:@escaping SLCreateUserNameSuccess, onCancel:@escaping SLCreateUserNameCancel) {
+    @objc init(user:PFUser, onSuccess:@escaping SLCreateUserNameSuccess, onCancel:@escaping SLCreateUserNameCancel) {
         theUser = user
         cancelCompletion = onCancel
         successCompletion = onSuccess
@@ -45,7 +45,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         super.init()
     }
     
-    init(existingShortList:SLShortlist, onSuccess:@escaping SLUpdatedShortlistNameSuccess, onCancel:@escaping SLCreateUserNameCancel) {
+    @objc init(existingShortList:SLShortlist, onSuccess:@escaping SLUpdatedShortlistNameSuccess, onCancel:@escaping SLCreateUserNameCancel) {
         self.existingShortList = existingShortList
         cancelCompletion = onCancel
         successNameCompletion = onSuccess
@@ -101,7 +101,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
                 changeYearButton.setTitle("Year:", for: .normal)
             }
 
-            changeYearButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5.0, 0, 0)
+            changeYearButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5.0, bottom: 0, right: 0)
             view.addSubview(changeYearButton)
             
             let arrowImageView = UIImageView(image: UIImage(named: "arrowRight")?.withRenderingMode(.alwaysTemplate))
@@ -147,37 +147,38 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
             view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[cancelButton]-10-|", options:[], metrics:nil, views:views))
         }
         else {
-            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[titleLabel]-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[entryTextField]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[submitButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
-            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[cancelButton]-15-|", options:NSLayoutFormatOptions(rawValue: 0), metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[titleLabel]-|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[entryTextField]-15-|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[submitButton]-15-|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:nil, views:views))
+            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-15-[cancelButton]-15-|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:nil, views:views))
             view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-50-[titleLabel]-30-[entryTextField(30)]-20-[submitButton]-10-[cancelButton]", options:[], metrics:nil, views:views))
         }
     }
     
-    func cancelLogin() {
+    @objc func cancelLogin() {
         entryTextField.resignFirstResponder()
         cancelCompletion?()
         showPickerView?(false)
     }
     
-    func addUserToShortList() {
-        if (entryTextField.text?.characters.count)! > 5 {
+    @objc func addUserToShortList() {
+        if let entryText = entryTextField.text, entryText.count > 5 {
             SLParseController.doesUserNameExist(username: entryTextField.text!, checkAction:{[unowned self](exists) in
                 if (exists) {
                     self.sl_showToast(forAction: NSLocalizedString("Invalid Username", comment: ""), message: NSLocalizedString("Username must be at least 6 characters long.", comment: ""), toastType: SLToastMessageType.failure, completion: {})
                 }
                 else  {
                     self.theUser?.username = self.entryTextField.text
-                    self.theUser?.saveInBackground(block: {(success) in
-                    self.successCompletion?()
+                    
+                    self.theUser?.saveInBackground(block: { _, _ in
+                        self.successCompletion?()
                     })
                 }
             })
         }
     }
     
-     func updateShortlistName () {
+     @objc func updateShortlistName () {
         if let shortlist = existingShortList {
             shortlist.shortListName = entryTextField.text
             entryTextField.resignFirstResponder()
@@ -188,14 +189,14 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
         }
     }
     
-    func showShortlistYearSelector() {
+    @objc func showShortlistYearSelector() {
        showPickerView?(true)
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         
-        if text.characters.count == 0  {
+        if text.isEmpty {
             let firstChar = Int(string)
             if firstChar != nil {
                return false
@@ -205,7 +206,7 @@ class SLEntryVC: SLBaseVC, UITextFieldDelegate {
             return false
         }
         
-        let newLength = text.characters.count + string.characters.count - range.length
+        let newLength = text.count + string.count - range.length
         
         return newLength <= 30
     }
