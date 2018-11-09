@@ -45,4 +45,27 @@
         return nil;
     }];
 }
+
++ (NSValueTransformer *)artistIdJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        
+        if ([value isKindOfClass:[NSNumber class]]) {
+            return [value stringValue];
+        }
+        
+        return value;
+    }];
+}
+
++ (NSValueTransformer *)collectionIdJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        
+        if ([value isKindOfClass:[NSNumber class]]) {
+            return [value stringValue];
+        }
+        
+        return value;
+    }];
+}
+
 @end

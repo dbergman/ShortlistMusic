@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, '10.0'
 
 #We'll add this back in later
 inhibit_all_warnings!
@@ -10,8 +10,8 @@ target :"shortList" do
 #Foundation Helpers
 pod 'BlocksKit', '2.2.5'
 pod 'Parse'
-pod 'ParseFacebookUtils'
-pod 'ParseTwitterUtils'
+pod 'Parse/FacebookUtils'
+pod 'Parse/TwitterUtils'
 
 #Model
 pod 'Mantle'
@@ -21,7 +21,7 @@ pod 'AFNetworking'
 pod 'SDWebImage'
 
 #UI
-pod 'ParseUI'
+pod 'Parse/UI'
 pod 'MBProgressHUD'
 pod 'CRToast'
 

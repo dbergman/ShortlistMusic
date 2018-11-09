@@ -18,11 +18,12 @@
 #import "SLShortlist.h"
 #import "SLShortListAlbum.h"
 #import "SLStyle.h"
-#import <ParseFacebookUtils/PFFacebookUtils.h>
-#import <ParseTwitterUtils/ParseTwitterUtils.h>
+#import <Parse/PFTwitterUtils.h>
+#import <Parse/PFFacebookUtils.h>
 #import <Parse/Parse.h>
 @import HockeySDK;
 #import "Flurry.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 static NSString *const kHockeyAppCrashKey = @"406de4ad8ace4ca6aad43f73ef4496a5";
 static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
@@ -45,12 +46,22 @@ static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
     
     self.window.rootViewController = [self shortListTabController];
     
+    [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+    
     return YES;
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application {
-    [[PFFacebookUtils session] close];
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    
+    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+                        openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                        annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+    return handled;
 }
+
+- (void)applicationWillTerminate:(UIApplication *)application {}
 
 - (UIViewController *)shortListTabController {
     SLFeedVC *slFeedVC = [SLFeedVC new];
@@ -96,8 +107,6 @@ static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
         configuration.server = @"https://parseapi.back4app.com";
     }]];
     
-    [PFFacebookUtils initializeFacebook];
-
     [SLShortlist registerSubclass];
     [SLShortListAlbum registerSubclass];
 }
@@ -115,14 +124,6 @@ static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
     
     NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [SLStyle polarisFontWithSize:FontSizes.medium] , NSForegroundColorAttributeName: [UIColor whiteColor]};
     [[UIBarButtonItem appearance] setTitleTextAttributes:barButtonAppearanceDict forState:UIControlStateNormal];
-}
-
-//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-//    return [FBAppCall handleOpenURL:url  sourceApplication:sourceApplication  withSession:[PFFacebookUtils session]];
-//}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 
 - (void)turnOnNSURLCache {

@@ -20,7 +20,7 @@ enum ShortlistSortOption: String {
 private let sortCellIdentifier = "sortCellIdentifier"
 private let shortlistSortOption = "shortlistSortOption"
 
-class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
+public class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -40,7 +40,7 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
         return IndexPath(row: row.hashValue, section: 0)
     }()
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Sorting Options"
@@ -62,11 +62,11 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
         }
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ShortlistSortOption.allValues.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier:sortCellIdentifier, for: indexPath)
         cell.contentView.backgroundColor = UIColor.black
         cell.backgroundColor = UIColor.black
@@ -84,7 +84,7 @@ class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSource  {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    private func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectedIndexPath == indexPath {
             return
         }

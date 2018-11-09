@@ -61,6 +61,7 @@
 #pragma mark - Itunes Networking
 - (void)getArtistReleases:(ItunesArtist *)itunesArtist {
     __weak typeof(self) weakSelf = self;
+
     [[ItunesSearchAPIController sharedManager] getAlbumsForArtist:itunesArtist.artistId completion:^(ItunesSearchAlbum *albumResult, NSError *error) {
         if (!error) {
             [ItunesSearchAPIController filterAlbums:albumResult ByYear:weakSelf.shortList.shortListYear];

@@ -9,11 +9,11 @@
 #import "SLLoginVC.h"
 #import "SLStyle.h"
 #import "UIViewController+SLToastBanner.h"
-#import <Facebook-iOS-SDK/FacebookSDK/FBRequest.h>
+#import <Parse/PFTwitterUtils.h>
+#import <Parse/PFFacebookUtils.h>
 #import <Parse/Parse.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "shortList-Swift.h"
-#import <ParseTwitterUtils.h>
-#import <ParseFacebookUtils/PFFacebookUtils.h>
 #import "ShortListCoreDataManager.h"
 #import "SLShortlistCoreDataMigrtationController.h"
 
@@ -83,24 +83,28 @@
 }
 
 - (void)userCheck:(PFUser *)pfuser isLoggedIn:(BOOL)isLoggedIn {
-    FBRequest *request = [FBRequest requestForMe];
-    __weak typeof(self)weakSelf = self;
-    __weak typeof(PFUser *)weakUser = pfuser;
-    [request startWithCompletionHandler:^(FBRequestConnection *connection, NSDictionary<FBGraphUser> *user,  NSError *error) {
-        if (!error) {
-            __block NSString *fbId = [user objectForKey:@"id"];
-            [SLParseController doesSocialIdExistWithSocialId:fbId checkAction:^(BOOL exists) {
-                if (exists) {
-                    if (weakSelf.completion) {
-                        weakSelf.completion(weakUser, isLoggedIn);
+        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"/me"
+                                          parameters:@{@"fields": @"id,name,email,first_name,last_name,gender,birthday,picture.type(large)",}
+                                          HTTPMethod:@"GET"];
+        
+        [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+            if (!error) {
+                
+                __weak typeof(self)weakSelf = self;
+                __weak typeof(PFUser *)weakUser = pfuser;
+                __block NSString *fbId = [result objectForKey:@"id"];
+                [SLParseController doesSocialIdExistWithSocialId:fbId checkAction:^(BOOL exists) {
+                    if (exists) {
+                        if (weakSelf.completion) {
+                            weakSelf.completion(weakUser, isLoggedIn);
+                        }
                     }
-                }
-                else {
-                    [weakSelf createUsernameforUser:weakUser socialId:fbId];
-                }
-            }];
-        }
-    }];
+                    else {
+                        [weakSelf createUsernameforUser:weakUser socialId:fbId];
+                    }
+                }];
+            }
+        }];
 }
 
 - (void)createUsernameforUser:(PFUser *)user socialId:(NSString *)socialId {

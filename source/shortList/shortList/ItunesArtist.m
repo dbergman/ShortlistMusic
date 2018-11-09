@@ -19,9 +19,19 @@
       @"artistLinkUrl": @"artistLinkUrl",
       @"artistId": @"artistId",
       @"primaryGenreName": @"primaryGenreName",
-      @"primaryGenreId": @"primaryGenreId" //,
-     // @"radioStationUrl": @"radioStationUrl"
+      @"primaryGenreId": @"primaryGenreId" 
       };
+}
+
++ (NSValueTransformer *)artistIdJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        
+        if ([value isKindOfClass:[NSNumber class]]) {
+            return [value stringValue];
+        }
+        
+        return value;
+    }];
 }
 
 @end

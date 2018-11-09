@@ -16,12 +16,9 @@
 		4648A5521B1E663F00F997F8 /* SLParseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5511B1E663F00F997F8 /* SLParseController.swift */; };
 		4648A5561B234CC300F997F8 /* SLShortListAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 4648A5551B234CC300F997F8 /* SLShortListAlbum.m */; };
 		464CF7101B9B6A76008356F6 /* UIViewController+SLToastBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF70F1B9B6A76008356F6 /* UIViewController+SLToastBanner.m */; };
-		464CF7131B9C9DE6008356F6 /* libParseFacebookUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7111B9C9DE6008356F6 /* libParseFacebookUtils.a */; };
-		464CF7141B9C9DE6008356F6 /* libParseTwitterUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7121B9C9DE6008356F6 /* libParseTwitterUtils.a */; };
 		464CF7161B9C9EA1008356F6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7151B9C9EA1008356F6 /* Social.framework */; };
 		464CF7181B9C9EAC008356F6 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7171B9C9EAC008356F6 /* Twitter.framework */; };
 		464CF71C1B9CD205008356F6 /* SLLoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CF71B1B9CD205008356F6 /* SLLoginCell.m */; };
-		464CF7211B9E38E5008356F6 /* libFacebook-iOS-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CF7201B9E38E5008356F6 /* libFacebook-iOS-SDK.a */; };
 		4651CE261B4C9992003E9C0F /* SLListAbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4651CE251B4C9992003E9C0F /* SLListAbumCell.m */; };
 		465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 465415B31B6E7EE500E51893 /* UIViewController+Utilities.m */; };
 		465740C31B83F681004DECFF /* SLAlbumArtImaging.m in Sources */ = {isa = PBXBuildFile; fileRef = 465740C21B83F681004DECFF /* SLAlbumArtImaging.m */; };
@@ -262,11 +259,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4694DD2F1C0B77C4002A1D78 /* CoreData.framework in Frameworks */,
-				464CF7211B9E38E5008356F6 /* libFacebook-iOS-SDK.a in Frameworks */,
 				464CF7181B9C9EAC008356F6 /* Twitter.framework in Frameworks */,
 				464CF7161B9C9EA1008356F6 /* Social.framework in Frameworks */,
-				464CF7131B9C9DE6008356F6 /* libParseFacebookUtils.a in Frameworks */,
-				464CF7141B9C9DE6008356F6 /* libParseTwitterUtils.a in Frameworks */,
 				8827545C6125A4271D50F33B /* libPods-shortList.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -745,7 +739,6 @@
 				46AB4A9E1B042B680056EC35 /* Copy ShortList Keys */,
 				46CB6ACA1AED715800BF1DF3 /* Resources */,
 				C9C1CE5E1C42E114004D8AE9 /* Build Number Script */,
-				24BAB71509639FC936717CCC /* [CP] Embed Pods Frameworks */,
 				2B6E77B469C3DA3519DF24F4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -765,8 +758,6 @@
 				46CB6AE41AED715800BF1DF3 /* Sources */,
 				46CB6AE51AED715800BF1DF3 /* Frameworks */,
 				46CB6AE61AED715800BF1DF3 /* Resources */,
-				577F87F956B33AF30ED29723 /* [CP] Embed Pods Frameworks */,
-				7FB2481402A92BF786CC76BF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -850,30 +841,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		24BAB71509639FC936717CCC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-shortList/Pods-shortList-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2B6E77B469C3DA3519DF24F4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-shortList/Pods-shortList-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Parse/Parse.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Parse/TwitterUtils.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Parse/ParseUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/HockeySDKResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Parse.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterUtils.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ParseUI.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -900,43 +887,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-shortListTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		577F87F956B33AF30ED29723 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7FB2481402A92BF786CC76BF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C9C1CE5E1C42E114004D8AE9 /* Build Number Script */ = {
@@ -959,13 +919,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-shortList-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

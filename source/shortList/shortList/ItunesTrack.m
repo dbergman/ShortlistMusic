@@ -83,8 +83,17 @@
 
 + (NSValueTransformer *)collectionIdJSONTransformer {
     return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+
+        if ([value isKindOfClass:[NSNumber class]]) {
+            return [value stringValue];
+        }
         
-        //return [value stringValue];
+        return value;
+    }];
+}
+
++ (NSValueTransformer *)artistIdJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
         
         if ([value isKindOfClass:[NSNumber class]]) {
             return [value stringValue];
@@ -94,6 +103,16 @@
     }];
 }
 
++ (NSValueTransformer *)trackIdJSONTransformer {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        
+        if ([value isKindOfClass:[NSNumber class]]) {
+            return [value stringValue];
+        }
+        
+        return value;
+    }];
+}
 
 @end
 
