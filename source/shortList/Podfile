@@ -23,7 +23,7 @@ pod 'SDWebImage'
 #UI
 pod 'Parse/UI'
 pod 'MBProgressHUD'
-pod 'CRToast'
+pod 'Toast', '~> 4.0.0'
 
 #Analytics/Crash
 pod "HockeySDK", :subspecs => ['CrashOnlyLib']

@@ -8,19 +8,22 @@
 
 #import "UIViewController+SLToastBanner.h"
 #import "SLStyle.h"
-#import <CRToast/CRToast.h>
+#import "UIView+Toast.h"
 
 @implementation UIViewController (SLToastBanner)
 
 - (void)sl_showToastForAction:(NSString *)toastAction message:(NSString *)toastMessage toastType:(SLToastMessageType)toastMessageType completion:(dispatch_block_t)completion {
-    [CRToastManager showNotificationWithOptions:[self getOptionsForAction:toastAction message:toastMessage type:toastMessageType] completionBlock:^{
-        if (completion) {
-            completion();
-        }
+    
+    CSToastStyle *style = [self getOptionsForAction:toastAction message:toastMessage type:toastMessageType];
+    
+    [self.navigationController.view makeToast:toastMessage duration:2.0 position:CSToastPositionTop title:toastAction image:nil style:style completion:^(BOOL didTap) {
+            if (completion) {
+                completion();
+            }
     }];
 }
 
-- (NSDictionary *)getOptionsForAction:(NSString *)actionText message:(NSString *)message type:(SLToastMessageType)toastMessageType  {
+- (CSToastStyle *)getOptionsForAction:(NSString *)actionText message:(NSString *)message type:(SLToastMessageType)toastMessageType  {
     UIColor *backGroundColor;
     if (toastMessageType == SLToastMessageSuccess) {
         backGroundColor = [UIColor sl_Green];
@@ -32,23 +35,17 @@
         backGroundColor = [UIColor redColor];
     }
     
-    NSDictionary *options = @{
-                              kCRToastTextKey : (actionText) ?: @"",
-                              kCRToastTextColorKey : [UIColor blackColor],
-                              kCRToastFontKey : [SLStyle polarisFontWithSize:FontSizes.xLarge],
-                              kCRToastSubtitleTextKey :(message) ?: @"",
-                              kCRToastSubtitleTextColorKey : [UIColor blackColor],
-                              kCRToastSubtitleFontKey : [SLStyle polarisFontWithSize:FontSizes.small],
-                              kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
-                              kCRToastBackgroundColorKey : backGroundColor,
-                              kCRToastAnimationInDirectionKey : @(CRToastAnimationTypeLinear),
-                              kCRToastAnimationOutDirectionKey : @(CRToastAnimationTypeLinear),
-                              kCRToastNotificationPresentationTypeKey : @(CRToastPresentationTypeCover),
-                              kCRToastNotificationTypeKey :@(CRToastTypeNavigationBar),
-                              kCRToastTimeIntervalKey : @(1.5),
-                              kCRToastInteractionRespondersKey:@[[CRToastInteractionResponder interactionResponderWithInteractionType:CRToastInteractionTypeTap automaticallyDismiss:YES block:nil]],
-                              };
-    return options;
+    CSToastStyle *style = [[CSToastStyle alloc] initWithDefaultStyle];
+    style.messageFont = [SLStyle polarisFontWithSize:FontSizes.xSmall];
+    style.messageColor = [UIColor blackColor];
+    style.titleColor = [UIColor blackColor];
+    style.titleFont = [SLStyle polarisFontWithSize:FontSizes.xLarge];
+    style.messageAlignment = NSTextAlignmentCenter;
+    style.titleAlignment = NSTextAlignmentCenter;
+    style.backgroundColor = backGroundColor;
+    style.horizontalPadding = 20.0;
+
+    return style;
 }
 
 - (void)sl_standardToastUnableToCompleteRequest {
