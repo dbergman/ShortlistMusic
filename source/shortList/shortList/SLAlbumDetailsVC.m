@@ -174,7 +174,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
 
 #pragma mark UI setup
 - (void)setupNavigationController {
-    NSString *spotifyDeeplinkUrl = [NSString stringWithFormat:@"spotify://search/%@", self.albumDetails.collectionName];
+    NSString *spotifyDeeplinkUrl = [NSString stringWithFormat:@"spotify:search:%@", self.albumDetails.collectionName];
     NSString* encodedSpotifyDeeplinkUrl = [spotifyDeeplinkUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:encodedSpotifyDeeplinkUrl]]) {

@@ -16,10 +16,12 @@
     
     CSToastStyle *style = [self getOptionsForAction:toastAction message:toastMessage type:toastMessageType];
     
-    [self.navigationController.view makeToast:toastMessage duration:2.0 position:CSToastPositionTop title:toastAction image:nil style:style completion:^(BOOL didTap) {
-            if (completion) {
-                completion();
-            }
+    UIView *displayFromView = self.navigationController != nil ? self.navigationController.view : self.view;
+    
+    [displayFromView makeToast:toastMessage duration:2.0 position:CSToastPositionTop title:toastAction image:nil style:style completion:^(BOOL didTap) {
+        if (completion) {
+            completion();
+        }
     }];
 }
 
@@ -43,7 +45,7 @@
     style.messageAlignment = NSTextAlignmentCenter;
     style.titleAlignment = NSTextAlignmentCenter;
     style.backgroundColor = backGroundColor;
-    style.horizontalPadding = 20.0;
+    style.horizontalPadding = 40.0;
 
     return style;
 }
