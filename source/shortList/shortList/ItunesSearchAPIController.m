@@ -39,7 +39,7 @@ static NSString * const kBaseURL = @"https://itunes.apple.com/";
 }
 
 -(void)getSearchResultsWithBlock:(NSString *)artist completion:(SLItunesFetchResultsBlock)completion {
-    NSDictionary *params = @{@"term": artist, @"media": @"music", @"entity": @"musicArtist", @"attribute": @"artistTerm", @"limit": @"200"};
+    NSDictionary *params = @{@"term": artist, @"media": @"music", @"entity": @"musicArtist", @"limit": @"200"};
     
     [self GET:@"search" parameters:params progress:nil success:^(NSURLSessionDataTask * task, id responseObject) {
         NSError *error;

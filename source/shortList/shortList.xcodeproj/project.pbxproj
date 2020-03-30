@@ -847,7 +847,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-shortList/Pods-shortList-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-shortList/Pods-shortList-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/HockeySDK/HockeySDKResources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/Parse/Parse.bundle",
@@ -864,7 +864,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-shortList/Pods-shortList-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-shortList/Pods-shortList-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		46AB4A9E1B042B680056EC35 /* Copy ShortList Keys */ = {
@@ -1088,7 +1088,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				PRODUCT_MODULE_NAME = shortList;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1140,7 +1143,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				PRODUCT_MODULE_NAME = shortList;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

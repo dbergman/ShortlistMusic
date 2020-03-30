@@ -136,9 +136,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     self.searchController.searchBar.barTintColor = [UIColor blackColor];
     self.searchController.searchBar.tintColor = [UIColor blackColor];
     self.searchController.searchBar.backgroundColor = [UIColor whiteColor];
-    UITextField *txtSearchField = [self.searchController.searchBar valueForKey:@"_searchField"];
-    txtSearchField.backgroundColor = [UIColor whiteColor];
-    
+
     self.searchController.searchBar.keyboardAppearance = UIKeyboardAppearanceDark;
     
     __weak typeof(self)weakSelf = self;
