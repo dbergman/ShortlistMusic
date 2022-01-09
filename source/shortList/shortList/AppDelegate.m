@@ -21,11 +21,9 @@
 #import <Parse/PFTwitterUtils.h>
 #import <Parse/PFFacebookUtils.h>
 #import <Parse/Parse.h>
-@import HockeySDK;
 #import "Flurry.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
-static NSString *const kHockeyAppCrashKey = @"406de4ad8ace4ca6aad43f73ef4496a5";
 static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
 
 @interface AppDelegate ()
@@ -132,12 +130,7 @@ static NSString *const kFlurryAnalyticsKey = @"3QHC8HXPGJF7Q6D2JTD7";
 }
 
 - (void)setupThirdPartyLibraries {
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppCrashKey];
-    [[BITHockeyManager sharedHockeyManager] startManager];
-    [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus: BITCrashManagerStatusAutoSend];
-    
 #ifdef DEBUG
-    [[BITHockeyManager sharedHockeyManager] setDisableCrashManager: YES];
     [self setUpParseForProd:NO];
 #elif APPSTORE
     [Flurry startSession:kFlurryAnalyticsKey];

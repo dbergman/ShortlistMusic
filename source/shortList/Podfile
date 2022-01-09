@@ -26,7 +26,6 @@ pod 'MBProgressHUD'
 pod 'Toast', '~> 4.0.0'
 
 #Analytics/Crash
-pod "HockeySDK", :subspecs => ['CrashOnlyLib']
 pod 'Flurry-iOS-SDK/FlurrySDK'
 
 end
