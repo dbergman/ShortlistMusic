@@ -38,6 +38,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.fields = (PFLogInFieldsUsernameAndPassword
+                               | PFLogInFieldsLogInButton
+                               | PFLogInFieldsSignUpButton
+                               | PFLogInFieldsPasswordForgotten
+                               | PFLogInFieldsDismissButton);
+    
     self.view.backgroundColor = [UIColor blackColor];
     self.logInView.logo = [SLLoginVC getTempLogo:self.logInView.logo.frame];
     self.delegate = self;
