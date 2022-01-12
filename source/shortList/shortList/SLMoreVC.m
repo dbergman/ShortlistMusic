@@ -33,6 +33,8 @@
     [self setTitle:NSLocalizedString(@"More", nil)];
     self.view.backgroundColor = [UIColor blackColor];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userLogin:) name:PFLogInSuccessNotification object:nil];
+
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
@@ -52,15 +54,23 @@
     [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
+- (void)userLogin:(NSNotification *)notification {
+    [self.tableView reloadData];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return ([PFUser currentUser]) ? 4 : 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *LoginCellIdentifier = @"LoginCell";
-    static NSString *ContactCellIdentifier = @"ContactCell";
+    static NSString *GenericOneButtonCell = @"GenericCell";
     
     if (indexPath.row == 0) {
         SLLoginCell *loginCell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
@@ -69,7 +79,14 @@
         }
         __weak typeof(self)weakSelf = self;
         [loginCell configLoginButton:([PFUser currentUser] !=nil) ?: NO loginButtonAction:^{
-            (![PFUser currentUser]) ? [weakSelf showLoginGate] : [PFUser logOutInBackground];
+            if (![PFUser currentUser]) {
+                [weakSelf showLoginGate];
+            } else {
+                [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+                    [weakSelf.tableView reloadData];
+                }];
+            }
+
             [loginCell updateButtonWithLoginStatus:([PFUser currentUser] != nil)];
         }];
 
@@ -77,9 +94,9 @@
     }
     
     else if (indexPath.row == 1) {
-        SLGenericOneButtonCell *forgetPasswordCell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
+        SLGenericOneButtonCell *forgetPasswordCell = [tableView dequeueReusableCellWithIdentifier:GenericOneButtonCell];
         if (forgetPasswordCell == nil) {
-            forgetPasswordCell = [[SLGenericOneButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContactCellIdentifier];
+            forgetPasswordCell = [[SLGenericOneButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:GenericOneButtonCell];
         }
         
         [forgetPasswordCell.oneButton setTitle:NSLocalizedString(@"Forgot or Reset Password", nil) forState:UIControlStateNormal];
@@ -95,9 +112,28 @@
         return forgetPasswordCell;
     }
     
-    SLGenericOneButtonCell *contactMeCell = [tableView dequeueReusableCellWithIdentifier:LoginCellIdentifier];
+    else if ([PFUser currentUser] && indexPath.row == 2) {
+        SLGenericOneButtonCell *exportShortListCell = [tableView dequeueReusableCellWithIdentifier:GenericOneButtonCell];
+        if (exportShortListCell == nil) {
+            exportShortListCell = [[SLGenericOneButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:GenericOneButtonCell];
+        }
+        
+        [exportShortListCell.oneButton setTitle:NSLocalizedString(@"Export ShortLists", nil) forState:UIControlStateNormal];
+        [exportShortListCell.oneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        exportShortListCell.oneButton.titleLabel.font = [SLStyle polarisFontWithSize:FontSizes.medium];
+        exportShortListCell.oneButton.backgroundColor = [UIColor greenColor];
+        
+        __weak typeof(self)weakSelf = self;
+        [exportShortListCell setButtonAction:^{
+            NSLog(@"exportShortListCell");
+        }];
+        
+        return exportShortListCell;
+    }
+    
+    SLGenericOneButtonCell *contactMeCell = [tableView dequeueReusableCellWithIdentifier:GenericOneButtonCell];
     if (contactMeCell == nil) {
-        contactMeCell = [[SLGenericOneButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ContactCellIdentifier];
+        contactMeCell = [[SLGenericOneButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:GenericOneButtonCell];
     }
     
     [contactMeCell.oneButton setTitle:NSLocalizedString(@"Contact Me", nil) forState:UIControlStateNormal];
