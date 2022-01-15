@@ -90,6 +90,7 @@
 		C9063B7F1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C9063B7E1C433DE400B1B1C6 /* SLPreviewAlbumDetailsVC.m */; };
 		C99E250E1F0702D5002B243C /* appKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = C99E250D1F0702D5002B243C /* appKeys.plist */; };
 		C9B7A1541D56A79B0069F228 /* ShortList+ShortlistYears.m in Sources */ = {isa = PBXBuildFile; fileRef = C9B7A1531D56A79B0069F228 /* ShortList+ShortlistYears.m */; };
+		DAEA59572793809400523DF9 /* ExportShortListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEA59562793809400523DF9 /* ExportShortListProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -251,6 +252,7 @@
 		C99E250D1F0702D5002B243C /* appKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = appKeys.plist; path = ../appKeys.plist; sourceTree = "<group>"; };
 		C9B7A1521D56A79B0069F228 /* ShortList+ShortlistYears.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShortList+ShortlistYears.h"; sourceTree = "<group>"; };
 		C9B7A1531D56A79B0069F228 /* ShortList+ShortlistYears.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ShortList+ShortlistYears.m"; sourceTree = "<group>"; };
+		DAEA59562793809400523DF9 /* ExportShortListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportShortListProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,6 +306,7 @@
 			children = (
 				461FCA001AED9C8E001C3F46 /* ItunesSearchAPIController.h */,
 				461FCA011AED9C8E001C3F46 /* ItunesSearchAPIController.m */,
+				DAEA59562793809400523DF9 /* ExportShortListProvider.swift */,
 				4648A5511B1E663F00F997F8 /* SLParseController.swift */,
 				46D423011B77AF2A00D79263 /* SpotifySearchApiController.h */,
 				46D423021B77AF2A00D79263 /* SpotifySearchApiController.m */,
@@ -986,6 +989,7 @@
 				468925651AFFE10500A7D98C /* SLAlbumDetailsCell.m in Sources */,
 				46B2423B1B5DC14100BA20D4 /* SLAlbumCell.m in Sources */,
 				466064021B81251F006AB766 /* SLPlayNowViewController.m in Sources */,
+				DAEA59572793809400523DF9 /* ExportShortListProvider.swift in Sources */,
 				461801231B095206003C0A92 /* SLCreateShortListEnterYearCell.m in Sources */,
 				467D55A31AF69746005CD607 /* SLAlbumDetailsVC.m in Sources */,
 				465415B41B6E7EE500E51893 /* UIViewController+Utilities.m in Sources */,
@@ -1162,6 +1166,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = J93BBX354J;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = shortList/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1198,6 +1203,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = J93BBX354J;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = shortList/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
