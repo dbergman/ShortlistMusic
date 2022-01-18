@@ -22,6 +22,7 @@
 @interface SLMoreVC () <UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) ExportShortListProvider *exportProvider;
 
 @end
 
@@ -125,7 +126,8 @@
         
         __weak typeof(self)weakSelf = self;
         [exportShortListCell setButtonAction:^{
-            NSLog(@"exportShortListCell");
+            weakSelf.exportProvider = [[ExportShortListProvider alloc] initWithVc:self];
+            [weakSelf.exportProvider emailShortList];
         }];
         
         return exportShortListCell;
