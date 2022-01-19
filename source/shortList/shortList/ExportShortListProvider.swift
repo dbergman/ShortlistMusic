@@ -25,20 +25,17 @@ class ExportShortListProvider: NSObject {
     }
     
     private func sendEmail(with shortlists: [SLShortlist]) {
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
-            mail.setSubject("ShortListMusic Export")
-            mail.setMessageBody(buildEmailBody(shortlists: shortlists), isHTML: true)
+        guard MFMailComposeViewController.canSendMail() else { return }
 
-            vc?.present(mail, animated: true)
-        } else {
-            // show failure alert
-        }
+        let mail = MFMailComposeViewController()
+        mail.mailComposeDelegate = self
+        mail.setSubject("ShortListMusic Export")
+        mail.setMessageBody(buildEmailBody(shortlists: shortlists), isHTML: true)
+        vc?.present(mail, animated: true)
     }
     
-    func buildEmailBody(shortlists: [SLShortlist]) -> String {
-        let htmlStart = "<html><body><table border=\"1\">"
+    private func buildEmailBody(shortlists: [SLShortlist]) -> String {
+        let htmlStart = "<html><body>"
         var shortListBodyHTML = ""
         
         for shortlist in shortlists {
@@ -50,7 +47,7 @@ class ExportShortListProvider: NSObject {
                 continue
             }
 
-            let shortlistHeader = "<tr><th colspan = 3>\(shortlistName)</th><th colspan = 1>\(shortlistYer)</th></tr>"
+            let shortlistHeader = "<table border=\"1\"><tr><th colspan = 3>\(shortlistName)</th><th colspan = 1>\(shortlistYer)</th></tr>"
             
             var albumRows = ""
             for album in shortlist.shortListAlbums {
@@ -65,10 +62,10 @@ class ExportShortListProvider: NSObject {
                 albumRows = albumRows + "<tr><td>\(album.shortListRank)</td><td>\(albumName)</td><td>\(artistName)</td><td>\(releaseYear)</td></tr>"
             }
             
-            shortListBodyHTML = shortListBodyHTML + shortlistHeader + albumRows
+            shortListBodyHTML = shortListBodyHTML + shortlistHeader + albumRows + "</table> <br><br>"
         }
         
-        let completeHTML = htmlStart + shortListBodyHTML + "</table></body></html>"
+        let completeHTML = htmlStart + shortListBodyHTML + "</body></html>"
         
         return completeHTML
     }
