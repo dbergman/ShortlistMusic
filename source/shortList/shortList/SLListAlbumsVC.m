@@ -33,7 +33,7 @@
 const CGFloat kShortlistAlbumsButtonSize = 50.0;
 const CGFloat kShortlistEditToolbarHeight = 30.0;
 
-@interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate, UIViewControllerPreviewingDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface SLListAlbumsVC () <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchBarDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *blurBackgroundView;
@@ -86,10 +86,6 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     [self.view addSubview:self.tableView];
     
     self.definesPresentationContext = YES;
-    
-    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        [self registerForPreviewingWithDelegate:self sourceView:self.view];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -450,7 +446,6 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
             weakSelf.yearPicker.delegate = weakSelf;
             weakSelf.yearPicker.dataSource = weakSelf;
             weakSelf.yearPicker.backgroundColor = [UIColor blackColor];
-            weakSelf.yearPicker.showsSelectionIndicator = YES;
             [weakSelf showPickerView];
         }
         else {
@@ -568,34 +563,6 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     return [albumArtImaging buildShortListAlbumArt:self.shortList];
 }
 
-
-#pragma mark UIViewControllerPreviewingDelegate
-- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    
-    CGPoint cellPostion = [self.tableView convertPoint:location fromView:self.view];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:cellPostion];
-    
-    SLListAbumCell *shortListAlbumCell = (SLListAbumCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    
-    SLShortListAlbum *album = self.shortList.shortListAlbums[indexPath.row];
-    
-    self.previewingAlbum = album;
-    
-    SLPreviewAlbumDetailsVC *previewAlbumDetailsVC = [[SLPreviewAlbumDetailsVC alloc] initWithShortListAlbum:album];
-    
-    CGSize previewSize = [previewAlbumDetailsVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    previewAlbumDetailsVC.preferredContentSize = CGSizeMake(previewSize.width, previewSize.height);
-    
-    previewingContext.sourceRect = [self.view convertRect:shortListAlbumCell.frame fromView:self.tableView];
-    
-    return previewAlbumDetailsVC;
-}
-
-- (void)previewingContext:(id <UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    SLAlbumDetailsVC *albumDetailsVC = [[SLAlbumDetailsVC alloc] initWithShortList:self.shortList albumId:[NSString stringWithFormat:@"%ld",(long)self.previewingAlbum.albumId]];
-    [self.navigationController pushViewController:albumDetailsVC animated:YES];
-}
-
 #pragma mark UIPickerView Methods
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
@@ -629,7 +596,7 @@ const CGFloat kShortlistEditToolbarHeight = 30.0;
     [self.pickerViewContainer addSubview:self.yearPicker];
     
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), kShortlistEditToolbarHeight)];
-    toolBar.barStyle = UIBarStyleBlackOpaque;
+    toolBar.barStyle = UIBarStyleBlack;
     
     __weak typeof(self)weakSelf = self;
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] bk_initWithBarButtonSystemItem:UIBarButtonSystemItemDone handler:^(id sender) {

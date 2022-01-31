@@ -68,4 +68,8 @@
     [encoder encodeInteger:self.shortListRank forKey:@"shortListRank"];
 }
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end

@@ -63,7 +63,6 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor blackColor];
-    self.automaticallyAdjustsScrollViewInsets = YES;
     
     self.hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.hud];
@@ -76,6 +75,7 @@ static CGFloat const kSLPlayButtonSize = 50.0;
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.contentInsetAdjustmentBehavior = YES;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UITableView new];

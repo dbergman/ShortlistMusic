@@ -36,6 +36,10 @@
     return self;
 }
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 - (void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeObject:self.shortListName forKey:@"shortListName"];
     [encoder encodeObject:self.shortListYear forKey:@"shortListYear"];

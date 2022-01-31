@@ -9,7 +9,7 @@
 #import <Parse/Parse.h>
 @class SLShortListAlbum;
 
-@interface SLShortlist : PFObject <PFSubclassing, NSCoding>
+@interface SLShortlist : PFObject <PFSubclassing, NSSecureCoding>
 
 @property (nonatomic, strong) NSString *shortListName;
 @property (nonatomic, strong) NSString *shortListYear;

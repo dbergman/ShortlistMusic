@@ -244,6 +244,7 @@
 		46D4230D1B77D89400D79263 /* SpotifySearchTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotifySearchTesting.m; sourceTree = "<group>"; };
 		512C7F814DAC96482B4A4FD8 /* libPods-shortListTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shortListTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABDC291B26DF9679832C3F3 /* Pods-shortList.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortList.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-shortList/Pods-shortList.appstore.xcconfig"; sourceTree = "<group>"; };
+		8B0672CE279D01890083FFA0 /* shortList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = shortList.entitlements; sourceTree = "<group>"; };
 		AF08C75AC186A2D34CAC9EB4 /* Pods-shortList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shortList/Pods-shortList.debug.xcconfig"; sourceTree = "<group>"; };
 		B5A9A1D2BDCED8EF911103C3 /* Pods-shortListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-shortListTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-shortListTests/Pods-shortListTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C905D44C1D5C2A35002ED87E /* SLSortOptionsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SLSortOptionsVC.swift; sourceTree = "<group>"; };
@@ -566,6 +567,7 @@
 		46CB6ACE1AED715800BF1DF3 /* shortList */ = {
 			isa = PBXGroup;
 			children = (
+				8B0672CE279D01890083FFA0 /* shortList.entitlements */,
 				46CB6AD31AED715800BF1DF3 /* AppDelegate.h */,
 				46CB6AD41AED715800BF1DF3 /* AppDelegate.m */,
 				46CB6AFA1AED76F400BF1DF3 /* UI */,
@@ -1088,7 +1090,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)  ";
@@ -1141,7 +1143,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "$(inherited)  ";
 				PRODUCT_MODULE_NAME = shortList;
@@ -1160,6 +1162,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = shortList/shortList.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Dustin Bergman (4MUWJM84ZE)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -1168,7 +1171,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = shortList/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1196,6 +1199,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_ENTITLEMENTS = shortList/shortList.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Dustin Bergman (4MUWJM84ZE)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -1204,7 +1208,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = shortList/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

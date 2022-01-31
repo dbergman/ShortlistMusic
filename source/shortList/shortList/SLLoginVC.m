@@ -58,10 +58,7 @@
 }
 
 #pragma mark PFLogInViewControllerDelegate
-- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    BOOL linkedWithFacebook = [PFFacebookUtils isLinkedWithUser:user];
-    BOOL linkedWithTwitter = [PFTwitterUtils isLinkedWithUser:user];
-    
+- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL migrated = [userDefaults boolForKey:@"migratedToParse"];
     
@@ -70,13 +67,8 @@
         [self.dataMigrtationController addExistingShortListsToParse:[[ShortListCoreDataManager sharedManager] getAllShortLists]];
     }
 
-    if (linkedWithFacebook || linkedWithTwitter) {
-        [self userCheck:user isLoggedIn:YES];
-    }
-    else {
-        if (self.completion) {
-            self.completion(user, YES);
-        }
+    if (self.completion) {
+        self.completion(user, YES);
     }
 }
 
@@ -86,31 +78,6 @@
 
 - (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)userCheck:(PFUser *)pfuser isLoggedIn:(BOOL)isLoggedIn {
-        FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"/me"
-                                          parameters:@{@"fields": @"id,name,email,first_name,last_name,gender,birthday,picture.type(large)",}
-                                          HTTPMethod:@"GET"];
-        
-        [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-            if (!error) {
-                
-                __weak typeof(self)weakSelf = self;
-                __weak typeof(PFUser *)weakUser = pfuser;
-                __block NSString *fbId = [result objectForKey:@"id"];
-                [SLParseController doesSocialIdExistWithSocialId:fbId checkAction:^(BOOL exists) {
-                    if (exists) {
-                        if (weakSelf.completion) {
-                            weakSelf.completion(weakUser, isLoggedIn);
-                        }
-                    }
-                    else {
-                        [weakSelf createUsernameforUser:weakUser socialId:fbId];
-                    }
-                }];
-            }
-        }];
 }
 
 - (void)createUsernameforUser:(PFUser *)user socialId:(NSString *)socialId {

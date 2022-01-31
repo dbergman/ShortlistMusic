@@ -9,7 +9,7 @@
 #import <Parse/Parse.h>
 @class ItunesTrack;
 
-@interface SLShortListAlbum : PFObject <PFSubclassing>
+@interface SLShortListAlbum : PFObject <PFSubclassing, NSSecureCoding>
 
 @property (nonatomic, strong) NSString *albumName;
 @property (nonatomic, assign) NSInteger albumId; //collectionId

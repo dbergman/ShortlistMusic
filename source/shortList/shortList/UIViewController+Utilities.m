@@ -12,7 +12,17 @@
 @implementation UIViewController (Utilities)
 
 - (CGFloat)getStatusBarHeight {
-    return [UIApplication sharedApplication].statusBarFrame.size.height;
+    NSArray *windows = UIApplication.sharedApplication.windows;
+    UIWindow *keyWindow = nil;
+    
+    for (UIWindow *window in windows) {
+        if (window.isKeyWindow) {
+            keyWindow = window;
+            break;
+        }
+    }
+    
+    return keyWindow.windowScene.statusBarManager.statusBarFrame.size.height;
 }
 
 - (CGFloat)getNavigationBarHeight {

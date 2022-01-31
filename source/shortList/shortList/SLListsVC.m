@@ -29,7 +29,7 @@
 
 static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
 
-@interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate>
+@interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray <SLShortlist *> *shortLists;
@@ -71,13 +71,12 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     [self.view addSubview:self.tableView];
 
     [self createNewShortListView];
-    
-    if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        [self registerForPreviewingWithDelegate:self sourceView:self.view];
-    }
-    
+
     if ([PFUser currentUser]) {
-        self.shortLists = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getStorageLocation]];
+        NSData *shortlistData = [NSData dataWithContentsOfFile:[self getStorageLocation]];
+        NSSet *allowedClasses = [NSSet setWithObjects:[NSArray class], [SLShortlist class], [SLShortListAlbum class], nil];
+        self.shortLists = [NSKeyedUnarchiver unarchivedObjectOfClasses:allowedClasses fromData:shortlistData error:nil];
+        
         if (self.shortLists.count > 0) {
             [self.tableView reloadData];
         }
@@ -99,8 +98,9 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
                 weakSelf.tableView.tableHeaderView = nil;
                 weakSelf.shortLists = [SLSortOptionsVC orderShortListForDisplayWithShortlists: shortlists];
                 weakSelf.navigationItem.leftBarButtonItem.enabled = YES;
-                
-                [NSKeyedArchiver archiveRootObject:weakSelf.shortLists toFile:[weakSelf getStorageLocation]];
+  
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:weakSelf.shortLists requiringSecureCoding:NO error:nil];
+                [data writeToFile:[weakSelf getStorageLocation] options:NSDataWritingAtomic error:nil];
             }
             
             [weakSelf.tableView reloadData];
@@ -232,7 +232,8 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
             weakSelf.navigationItem.leftBarButtonItem.enabled = YES;
             [weakSelf.tableView reloadData];
             
-            [NSKeyedArchiver archiveRootObject:weakSelf.shortLists toFile:[weakSelf getStorageLocation]];
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:weakSelf.shortLists requiringSecureCoding:NO error:nil];
+            [data writeToFile:[weakSelf getStorageLocation] options:NSDataWritingAtomic error:nil];
         }];
         
         [weakSelf.view addConstraints:weakSelf.createSLVerticalConstraints];
@@ -285,41 +286,6 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
         [self.view layoutIfNeeded];
         self.blurBackgroundView.alpha = 1.0;
     } completion:nil];
-}
-
-#pragma mark UIViewControllerPreviewingDelegate
-- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
-    
-    CGPoint cellPostion = [self.tableView convertPoint:location fromView:self.view];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:cellPostion];
-    
-    SLAlbumsCollectionCell *albumCollectionCell = [self.tableView cellForRowAtIndexPath:indexPath];
-    
-    self.previewingShortlist = (SLShortlist *)self.shortLists[indexPath.row];
-    
-    if (self.previewingShortlist.shortListAlbums.count == 0) {
-        self.previewingShortlist = nil;
-        return nil;
-    }
-   
-    CGPoint collectionPoint =  [albumCollectionCell.collectionView convertPoint:location fromView:self.view];
-    NSIndexPath *collectionIndexpath = [albumCollectionCell.collectionView indexPathForItemAtPoint:collectionPoint];
-    SLAlbumCell *albumcell = (SLAlbumCell*)[albumCollectionCell.collectionView cellForItemAtIndexPath:collectionIndexpath];
-  
-    self.previewingAlbum = self.previewingShortlist.shortListAlbums[collectionIndexpath.row];
-    
-    SLPreviewAlbumDetailsVC *previewAlbumDetailsVC = [[SLPreviewAlbumDetailsVC alloc] initWithShortListAlbum:self.previewingAlbum];
-    
-    CGSize previewSize = [previewAlbumDetailsVC.view systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    previewAlbumDetailsVC.preferredContentSize = CGSizeMake(previewSize.width, previewSize.height);
-    
-    previewingContext.sourceRect = [self.view convertRect:albumcell.frame fromView:albumCollectionCell.collectionView];
-    
-    return previewAlbumDetailsVC;
-}
-
-- (void)previewingContext:(id <UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
-    [self showViewController:[[SLAlbumDetailsVC alloc] initWithShortList:self.previewingShortlist albumId:[NSString stringWithFormat:@"%ld", (long)self.previewingAlbum.albumId]] sender:self];
 }
 
 #pragma mark SLCreateShortListDelegate

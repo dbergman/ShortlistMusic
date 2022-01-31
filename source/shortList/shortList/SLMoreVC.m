@@ -163,16 +163,6 @@
         [alert addAction:email];
     }
     
-    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
-        UIAlertAction *twitter = [UIAlertAction actionWithTitle:NSLocalizedString(@"Twitter", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-            [tweetSheet setInitialText:@"Hey @shortlistmusic:"];
-            [weakSelf presentViewController:tweetSheet animated:YES completion:nil];
-        }];
-        
-        [alert addAction:twitter];
-    }
-    
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
         [alert dismissViewControllerAnimated:YES completion:nil];
     }];

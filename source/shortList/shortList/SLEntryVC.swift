@@ -101,7 +101,6 @@ typealias SLShouldShowYearSelector = (_ showYearSelector: Bool) -> Void
                 changeYearButton.setTitle("Year:", for: .normal)
             }
 
-            changeYearButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5.0, bottom: 0, right: 0)
             view.addSubview(changeYearButton)
             
             let arrowImageView = UIImageView(image: UIImage(named: "arrowRight")?.withRenderingMode(.alwaysTemplate))

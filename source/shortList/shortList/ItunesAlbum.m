@@ -32,7 +32,6 @@
       @"primaryGenreName": @"primaryGenreName",
       @"releaseDate": @"releaseDate",
       @"trackCount": @"trackCount",
-      @"wrapperType": @"wrapperType",
       @"releaseYear": @"releaseDate"
     };
 }
