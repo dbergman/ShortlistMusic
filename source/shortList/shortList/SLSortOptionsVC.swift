@@ -84,7 +84,7 @@ public class SLSortOptionsVC: SLBaseVC, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-    private func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if selectedIndexPath == indexPath {
             return
         }

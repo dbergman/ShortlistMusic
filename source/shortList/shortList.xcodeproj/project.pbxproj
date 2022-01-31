@@ -787,7 +787,7 @@
 					46CB6ACB1AED715800BF1DF3 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = J93BBX354J;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1320;
 						ProvisioningStyle = Automatic;
 					};
 					46CB6AE71AED715800BF1DF3 = {
@@ -1184,7 +1184,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1220,7 +1220,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "shortList/shortList-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
