@@ -46,6 +46,7 @@
         self.shortListNameTextfield.backgroundColor = [UIColor whiteColor];
         self.shortListNameTextfield.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0);
         [self.shortListNameTextfield setTintColor:[UIColor sl_Red]];
+        self.shortListNameTextfield.textColor = [UIColor blackColor];
         [self.contentView addSubview:self.shortListNameTextfield];
         
         NSDictionary *views = NSDictionaryOfVariableBindings(_shortListNameLabel, _shortListNameTextfield);

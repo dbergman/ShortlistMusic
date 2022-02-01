@@ -163,6 +163,20 @@
         [alert addAction:email];
     }
     
+    UIAlertAction *twitter = [UIAlertAction actionWithTitle:NSLocalizedString(@"Twitter", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+
+        NSURL *appURL = [NSURL URLWithString: @"twitter://user?screen_name=shortlistmusic"];
+        NSURL *webURL = [NSURL URLWithString: @"https://twitter.com/shortlistmusic"];
+
+        if ([[UIApplication sharedApplication] canOpenURL: appURL]) {
+            [[UIApplication sharedApplication] openURL:appURL options:@{} completionHandler:nil];
+        } else {
+            [[UIApplication sharedApplication] openURL:webURL options:@{} completionHandler:nil];
+        }
+    }];
+    
+    [alert addAction:twitter];
+
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
         [alert dismissViewControllerAnimated:YES completion:nil];
     }];
