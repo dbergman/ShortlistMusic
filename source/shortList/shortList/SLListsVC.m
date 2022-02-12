@@ -27,6 +27,7 @@
 #import "SLAlbumDetailsVC.h"
 #import "SLNavigationController.h"
 
+static NSString *const kShowedVersionUpdateMessage = @"showedVersionUpdateMessage";
 static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
 
 @interface SLListsVC () <SLCreateShortListDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -115,10 +116,42 @@ static const CGFloat SLTableViewHeaderMessageHeight = 50.0;
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL showedMessage = [userDefaults boolForKey:kShowedVersionUpdateMessage];
+    
+    if (showedMessage == false && [PFUser currentUser]) {
+        [self showVersioningMessage];
+    }
+}
+
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     self.tableView.frame = self.view.bounds;
+}
+
+- (void)showVersioningMessage {
+    UIAlertController * alert = [UIAlertController
+                                alertControllerWithTitle:@"Hi There"
+                                message:@"This is my last update for this version of the app. Exciting new features are underway, but make sure to use the export tool ASAP, as your existing Shortlists will be lost in this process. Feel free to contact me with any questions or feature requests!"
+                                preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* okButton = [UIAlertAction
+                                actionWithTitle:@"OK"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+                                    NSLog(@"closed");
+                                }];
+    
+    [alert addAction:okButton];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:YES forKey:kShowedVersionUpdateMessage];
+    [userDefaults synchronize];
 }
 
 #pragma mark - Table view data source
