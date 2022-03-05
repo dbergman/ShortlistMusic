@@ -21,24 +21,26 @@
 
 - (void)shareShortlistByEmail:(SLShortlist *)shortlist albumArtCollectionImage:(UIImage *)albumArtCollectionImage {
     if ([MFMailComposeViewController canSendMail]) {
-        MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
-        mailComposeVC.mailComposeDelegate = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MFMailComposeViewController *mailComposeVC = [[MFMailComposeViewController alloc] init];
+            mailComposeVC.mailComposeDelegate = self;
 
-        NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [SLStyle polarisFontWithSize:FontSizes.large], NSForegroundColorAttributeName: [UIColor whiteColor]};
-        [[mailComposeVC navigationBar] setTitleTextAttributes:barButtonAppearanceDict];
-        [[mailComposeVC navigationBar] setBarTintColor:[UIColor blackColor]];
-        [[mailComposeVC navigationBar] setTintColor:[UIColor whiteColor]];
-        
-        [mailComposeVC setSubject:[NSString stringWithFormat:@"ShortListMusic: %@", shortlist.shortListName]];
-        [mailComposeVC setMessageBody:[self createShortListEmailBody:shortlist] isHTML:YES];
-        
-        NSData *albumArtCollectionImageData = UIImageJPEGRepresentation(albumArtCollectionImage, 1);
-        
-        NSString *fileName = @"albumArtCollectionImage";
-        fileName = [fileName stringByAppendingPathExtension:@"jpeg"];
-        [mailComposeVC addAttachmentData:albumArtCollectionImageData mimeType:@"image/jpeg" fileName:fileName];
+            NSDictionary *barButtonAppearanceDict = @{NSFontAttributeName : [SLStyle polarisFontWithSize:FontSizes.large], NSForegroundColorAttributeName: [UIColor whiteColor]};
+            [[mailComposeVC navigationBar] setTitleTextAttributes:barButtonAppearanceDict];
+            [[mailComposeVC navigationBar] setBarTintColor:[UIColor blackColor]];
+            [[mailComposeVC navigationBar] setTintColor:[UIColor whiteColor]];
+            
+            [mailComposeVC setSubject:[NSString stringWithFormat:@"ShortListMusic: %@", shortlist.shortListName]];
+            [mailComposeVC setMessageBody:[self createShortListEmailBody:shortlist] isHTML:YES];
+            
+            NSData *albumArtCollectionImageData = UIImageJPEGRepresentation(albumArtCollectionImage, 1);
+            
+            NSString *fileName = @"albumArtCollectionImage";
+            fileName = [fileName stringByAppendingPathExtension:@"jpeg"];
+            [mailComposeVC addAttachmentData:albumArtCollectionImageData mimeType:@"image/jpeg" fileName:fileName];
 
-        [self presentViewController:mailComposeVC animated:YES completion:nil];
+            [self presentViewController:mailComposeVC animated:YES completion:nil];
+        });
     }
 }
 
