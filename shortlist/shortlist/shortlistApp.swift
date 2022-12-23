@@ -13,7 +13,7 @@ struct shortlistApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ShortlistCollections()
+            ShortlistCollectionsView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
