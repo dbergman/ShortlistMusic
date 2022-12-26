@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ShortlistDetailsView: View {
-    
     @State private var isPresented = false
     
     var body: some View {
@@ -19,7 +18,7 @@ struct ShortlistDetailsView: View {
             .onTapGesture {
                 isPresented.toggle()
             }.fullScreenCover(isPresented: $isPresented, content: {
-                SearchMusicKit()
+                SearchMusicKit(isPresented: $isPresented)
             })
         )
     }

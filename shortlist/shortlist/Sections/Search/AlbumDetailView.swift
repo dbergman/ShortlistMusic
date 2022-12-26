@@ -30,23 +30,17 @@ struct AlbumView: View {
         self.album = album
     }
     
-    var formatter1: RelativeDateTimeFormatter {
-        let formatter = RelativeDateTimeFormatter()
-        return formatter
-    }
-    
     var formatter2: DateComponentsFormatter {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
         return formatter
     }
     
-    
     @MainActor
     func getTheTracks() async throws {
         let detailedAlbum = try await album.with([.artists, .tracks])
         tracks = detailedAlbum.tracks
-        let _ = print("dustin12 \(detailedAlbum.tracks)")
+       // let _ = print("dustin12 \(detailedAlbum.tracks)")
     }
     
     var body: some View {

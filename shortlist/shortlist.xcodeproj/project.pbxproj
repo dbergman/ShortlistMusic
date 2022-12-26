@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8B15AEAC29552021005CE9F6 /* MusicKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B15AEAA2953F023005CE9F6 /* MusicKit.framework */; };
 		8B15AEAF29554B10005CE9F6 /* Formatters+StandardFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15AEAE29554B10005CE9F6 /* Formatters+StandardFormatters.swift */; };
+		8B15AEB129576581005CE9F6 /* SearchAlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15AEB029576581005CE9F6 /* SearchAlbumsView.swift */; };
+		8B15AEB32957671C005CE9F6 /* SearchAlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15AEB22957671C005CE9F6 /* SearchAlbumsViewModel.swift */; };
 		8B1EEAF129188ADC00D28E47 /* MusicPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1EEAF029188ADC00D28E47 /* MusicPermissionView.swift */; };
 		8B1EEAF32918910D00D28E47 /* MusicPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1EEAF22918910D00D28E47 /* MusicPermission.swift */; };
 		8B685AD3290B791100F6AD7F /* shortlistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD2290B791100F6AD7F /* shortlistApp.swift */; };
@@ -25,6 +27,8 @@
 /* Begin PBXFileReference section */
 		8B15AEAA2953F023005CE9F6 /* MusicKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MusicKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/System/Library/Frameworks/MusicKit.framework; sourceTree = DEVELOPER_DIR; };
 		8B15AEAE29554B10005CE9F6 /* Formatters+StandardFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatters+StandardFormatters.swift"; sourceTree = "<group>"; };
+		8B15AEB029576581005CE9F6 /* SearchAlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAlbumsView.swift; sourceTree = "<group>"; };
+		8B15AEB22957671C005CE9F6 /* SearchAlbumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAlbumsViewModel.swift; sourceTree = "<group>"; };
 		8B1EEAF029188ADC00D28E47 /* MusicPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPermissionView.swift; sourceTree = "<group>"; };
 		8B1EEAF22918910D00D28E47 /* MusicPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPermission.swift; sourceTree = "<group>"; };
 		8B685ACF290B791100F6AD7F /* shortlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shortlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +136,8 @@
 			children = (
 				8B685AE9290B7B1400F6AD7F /* SearchMusicKit.swift */,
 				8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */,
+				8B15AEB029576581005CE9F6 /* SearchAlbumsView.swift */,
+				8B15AEB22957671C005CE9F6 /* SearchAlbumsViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -215,7 +221,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B15AEB32957671C005CE9F6 /* SearchAlbumsViewModel.swift in Sources */,
 				8B685AEC290B7B3300F6AD7F /* ShortlistCollectionsView.swift in Sources */,
+				8B15AEB129576581005CE9F6 /* SearchAlbumsView.swift in Sources */,
 				8B1EEAF129188ADC00D28E47 /* MusicPermissionView.swift in Sources */,
 				8B1EEAF32918910D00D28E47 /* MusicPermission.swift in Sources */,
 				8B685AEA290B7B1400F6AD7F /* SearchMusicKit.swift in Sources */,

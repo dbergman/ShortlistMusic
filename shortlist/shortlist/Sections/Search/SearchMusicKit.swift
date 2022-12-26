@@ -8,7 +8,13 @@
 import MusicKit
 import SwiftUI
 
+enum Route: Hashable {
+    case artist(Artist)
+    case album(Album)
+}
+
 struct SearchMusicKit: View {
+    @Binding var isPresented: Bool
     
     // MARK: - View
     
@@ -22,6 +28,7 @@ struct SearchMusicKit: View {
         VStack {
             searchResultsList
                 .animation(.default, value: albums)
+                .animation(.default, value: artists)
         }
     }
     
@@ -31,7 +38,7 @@ struct SearchMusicKit: View {
             navigationViewContents
                 .navigationTitle("Music Albums")
         }
-        .searchable(text: $searchTerm, prompt: "Albums")
+        .searchable(text: $searchTerm, prompt: "Search for Artist or Album")
     }
     
     // MARK: - Search results requesting
@@ -41,17 +48,44 @@ struct SearchMusicKit: View {
     
     /// The albums the app loads using MusicKit that match the current search term.
     @State private var albums: MusicItemCollection<Album> = []
+    @State private var artists: MusicItemCollection<Artist> = []
 
     /// A list of albums to display below the search bar.
     private var searchResultsList: some View {
-        List(albums) { album in
-            NavigationLink(value: album) {
-                AlbumCell(album)
+        List {
+            Section("Artists") {
+                ForEach(artists) { artist in
+                    NavigationLink(value: Route.artist(artist)) {
+                        Text(artist.name)
+                    }
+                }
+            }
+            Section("Albums") {
+                ForEach(albums) { album in
+                    NavigationLink(value: Route.album(album)) {
+                        MusicItemCell(
+                            artwork: album.artwork,
+                            title: album.title,
+                            subtitle: album.artistName
+                        )
+                    }
+                }
             }
         }
+        .scrollDismissesKeyboard(.immediately)
         .navigationTitle("Album")
-        .navigationDestination(for: Album.self) { album in
-            AlbumView(album: album)
+        .navigationDestination(for: Route.self) { route in
+            switch route {
+            case .album(let album):
+                AlbumView(album: album)
+            case .artist(let artist):
+                SearchAlbumsView(artist: artist)
+            }
+        }
+        .toolbar {
+            Button("Done") {
+                isPresented = false
+            }
         }
     }
     
@@ -63,7 +97,7 @@ struct SearchMusicKit: View {
             } else {
                 do {
                     // Issue a catalog search request for albums matching the search term.
-                    var searchRequest = MusicCatalogSearchRequest(term: searchTerm, types: [Album.self])
+                    var searchRequest = MusicCatalogSearchRequest(term: searchTerm, types: [Album.self, Artist.self])
                     searchRequest.limit = 25
                     let searchResponse = try await searchRequest.response()
                     
@@ -81,48 +115,26 @@ struct SearchMusicKit: View {
     @MainActor
     private func apply(_ searchResponse: MusicCatalogSearchResponse, for searchTerm: String) {
         if self.searchTerm == searchTerm {
-            self.albums = searchResponse.albums
+            self.albums = searchResponse.albums //[..<5]
+            self.artists = searchResponse.artists
         }
     }
     
     /// Safely resets the `albums` property on the main thread.
     @MainActor
     private func reset() {
+        self.artists = []
         self.albums = []
     }
 }
 
 // MARK: - Previews
 
-struct SearchMusicKit_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchMusicKit()
-    }
-}
-
-/// `AlbumCell` is a view to use in a SwiftUI `List` to represent an `Album`.
-struct AlbumCell: View {
-    
-    // MARK: - Object lifecycle
-    
-    init(_ album: Album) {
-        self.album = album
-    }
-    
-    // MARK: - Properties
-    
-    let album: Album
-    
-    // MARK: - View
-    
-    var body: some View {
-        MusicItemCell(
-            artwork: album.artwork,
-            title: album.title,
-            subtitle: album.artistName
-        )
-    }
-}
+//struct SearchMusicKit_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SearchMusicKit(isPresented: )
+//    }
+//}
 
 /// `MusicItemCell` is a view to use in a SwiftUI `List` to represent a `MusicItem`.
 struct MusicItemCell: View {
