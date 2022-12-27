@@ -34,7 +34,7 @@ struct SearchAlbumsView: View {
         .scrollDismissesKeyboard(.immediately)
         .navigationTitle(artist.name)
         .navigationDestination(for: Album.self) { album in
-            AlbumView(album: album)
+            AlbumDetailView(album: album)
         }
     }
 }

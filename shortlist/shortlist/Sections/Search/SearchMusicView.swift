@@ -1,5 +1,5 @@
 //
-//  SearchMusicKit.swift
+//  SearchMusicView.swift
 //  shortlist
 //
 //  Created by Dustin Bergman on 10/27/22.
@@ -13,7 +13,7 @@ enum Route: Hashable {
     case album(Album)
 }
 
-struct SearchMusicKit: View {
+struct SearchMusicView: View {
     @Binding var isPresented: Bool
     
     // MARK: - View
@@ -77,7 +77,7 @@ struct SearchMusicKit: View {
         .navigationDestination(for: Route.self) { route in
             switch route {
             case .album(let album):
-                AlbumView(album: album)
+                AlbumDetailView(album: album)
             case .artist(let artist):
                 SearchAlbumsView(artist: artist)
             }

@@ -18,7 +18,7 @@ struct ShortlistDetailsView: View {
             .onTapGesture {
                 isPresented.toggle()
             }.fullScreenCover(isPresented: $isPresented, content: {
-                SearchMusicKit(isPresented: $isPresented)
+                SearchMusicView(isPresented: $isPresented)
             })
         )
     }
