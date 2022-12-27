@@ -76,6 +76,24 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		8B15AEB8295AA9BF005CE9F6 /* Album Details */ = {
+			isa = PBXGroup;
+			children = (
+				8B15AEB6295A2CC7005CE9F6 /* AlbumDetailViewModel.swift */,
+				8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */,
+			);
+			path = "Album Details";
+			sourceTree = "<group>";
+		};
+		8B15AEB9295AA9E4005CE9F6 /* Search Albums */ = {
+			isa = PBXGroup;
+			children = (
+				8B15AEB22957671C005CE9F6 /* SearchAlbumsViewModel.swift */,
+				8B15AEB029576581005CE9F6 /* SearchAlbumsView.swift */,
+			);
+			path = "Search Albums";
+			sourceTree = "<group>";
+		};
 		8B685AC6290B791100F6AD7F = {
 			isa = PBXGroup;
 			children = (
@@ -140,10 +158,8 @@
 			children = (
 				8B15AEB4295A2851005CE9F6 /* SearchMusicViewModel.swift */,
 				8B685AE9290B7B1400F6AD7F /* SearchMusicView.swift */,
-				8B15AEB6295A2CC7005CE9F6 /* AlbumDetailViewModel.swift */,
-				8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */,
-				8B15AEB22957671C005CE9F6 /* SearchAlbumsViewModel.swift */,
-				8B15AEB029576581005CE9F6 /* SearchAlbumsView.swift */,
+				8B15AEB9295AA9E4005CE9F6 /* Search Albums */,
+				8B15AEB8295AA9BF005CE9F6 /* Album Details */,
 			);
 			path = Search;
 			sourceTree = "<group>";
