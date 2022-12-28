@@ -9,7 +9,7 @@ import Foundation
 import MusicKit
 
 extension SearchAlbumsView {
-    @MainActor  class ViewModel: ObservableObject {
+    @MainActor class ViewModel: ObservableObject {
         @Published var artistAlbums: [Content]?
         
         func loadAlbums(for artist: Artist, size: CGFloat) async {
@@ -20,20 +20,11 @@ extension SearchAlbumsView {
             var albums = [Content]()
             
             for album in discography {
-                let releaseYear: String
-
-                if let releaseDate = album.releaseDate {
-                    let myCalendar = Calendar(identifier: .gregorian)
-                    releaseYear = "\(myCalendar.component(.year, from: releaseDate))"
-                } else {
-                    releaseYear = ""
-                }
-
                 let record = Content(
                     album: album,
                     artworkURL: album.artwork?.url(width: Int(size), height: Int(size)),
                     title: album.title,
-                    releaseYear: releaseYear
+                    releaseYear: album.releaseYear
                 )
                 
                 albums.append(record)

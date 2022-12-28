@@ -14,22 +14,11 @@ extension AlbumDetailView {
 
         func loadTracks(for album: Album, size: CGFloat) async {
             let detailedAlbum = try? await album.with([.artists, .tracks])
-            
-            var theTracks = [Content.TrackDetails]()
-            
-            guard let albumTracks = detailedAlbum?.tracks else { return }
-            for track in albumTracks {
-                let trackDuration: String
-                
-                if let duration = track.duration {
-                    trackDuration = DateFormatter.durationFormatter.string(from: duration) ?? ""
-                } else {
-                    trackDuration = ""
-                }
 
-                theTracks.append(Content.TrackDetails(title: track.title, duration:trackDuration))
-            }
+            guard let albumTracks = detailedAlbum?.tracks else { return }
             
+            let theTracks = albumTracks.map { Content.TrackDetails(title: $0.title, duration: $0.displayDuration) }
+
             let details = Content(
                 artist: album.artistName,
                 artworkURL: album.artwork?.url(width: Int(size), height: Int(size)),

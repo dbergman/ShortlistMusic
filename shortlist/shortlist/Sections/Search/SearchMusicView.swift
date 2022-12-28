@@ -8,125 +8,115 @@
 import MusicKit
 import SwiftUI
 
-enum Route: Hashable {
-    case artist(Artist)
-    case album(Album)
+extension SearchMusicView {
+    struct Content {
+        struct Artist: Hashable, Identifiable {
+            let id = UUID()
+            let name: String
+            let artistImageURL: URL?
+            let musicKitArtist: MusicKit.Artist?
+        }
+        
+        struct Album: Hashable, Identifiable {
+            let id = UUID()
+            let name: String
+            let artworkURL: URL?
+            let artist: String
+            let releaseYear: String
+            let musicKitAlbum: MusicKit.Album?
+        }
+    }
+}
+
+extension SearchMusicView {
+    enum Route: Hashable {
+        case artist(Content.Artist)
+        case album(Content.Album)
+    }
 }
 
 struct SearchMusicView: View {
     @Binding var isPresented: Bool
+    @StateObject private var viewModel = ViewModel()
+    @State private var searchTerm = ""
     
     // MARK: - View
     
     var body: some View {
-        rootView
-            .onChange(of: searchTerm, perform: requestUpdatedSearchResults)
-    }
-    
-    /// The various components of the main navigation view.
-    private var navigationViewContents: some View {
-        VStack {
-            searchResultsList
-                .animation(.default, value: albums)
-                .animation(.default, value: artists)
-        }
-    }
-    
-    /// The top-level content view.
-    private var rootView: some View {
         NavigationStack {
-            navigationViewContents
-                .navigationTitle("Music Albums")
+            VStack {
+                SearchResultsList(artists: viewModel.artists, albums: viewModel.albums)
+                    .scrollDismissesKeyboard(.immediately)
+                    .navigationTitle("Add to {Name}")
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case .album(let album):
+                            if let albumMK = album.musicKitAlbum {
+                                AlbumDetailView(album:  albumMK)
+                            }
+                            
+                        case .artist(let artist):
+                            if let artistMK = artist.musicKitArtist {
+                                SearchAlbumsView(artist: artistMK)
+                            }
+                        }
+                    }
+                    .toolbar {
+                        Button("Done") {
+                            isPresented = false
+                        }
+                    }
+            }
         }
         .searchable(text: $searchTerm, prompt: "Search for Artist or Album")
+        .onChange(of: searchTerm, perform: requestUpdatedSearchResults)
     }
-    
-    // MARK: - Search results requesting
-    
-    /// The current search term the user enters.
-    @State private var searchTerm = ""
-    
-    /// The albums the app loads using MusicKit that match the current search term.
-    @State private var albums: MusicItemCollection<Album> = []
-    @State private var artists: MusicItemCollection<Artist> = []
 
-    /// A list of albums to display below the search bar.
-    private var searchResultsList: some View {
-        List {
-            Section("Artists") {
-                ForEach(artists) { artist in
-                    NavigationLink(value: Route.artist(artist)) {
-                        Text(artist.name)
-                    }
-                }
-            }
-            Section("Albums") {
-                ForEach(albums) { album in
-                    NavigationLink(value: Route.album(album)) {
-                        MusicItemCell(
-                            artwork: album.artwork,
-                            title: album.title,
-                            subtitle: album.artistName
-                        )
-                    }
-                }
-            }
-        }
-        .scrollDismissesKeyboard(.immediately)
-        .navigationTitle("Album")
-        .navigationDestination(for: Route.self) { route in
-            switch route {
-            case .album(let album):
-                AlbumDetailView(album: album)
-            case .artist(let artist):
-                SearchAlbumsView(artist: artist)
-            }
-        }
-        .toolbar {
-            Button("Done") {
-                isPresented = false
-            }
-        }
-    }
-    
-    /// Makes a new search request to MusicKit when the current search term changes.
     private func requestUpdatedSearchResults(for searchTerm: String) {
         Task {
             if searchTerm.isEmpty {
-                await self.reset()
+                self.viewModel.resetResults()
             } else {
-                do {
-                    // Issue a catalog search request for albums matching the search term.
-                    var searchRequest = MusicCatalogSearchRequest(term: searchTerm, types: [Album.self, Artist.self])
-                    searchRequest.limit = 25
-                    let searchResponse = try await searchRequest.response()
-                    
-                    // Update the user interface with the search response.
-                    await self.apply(searchResponse, for: searchTerm)
-                } catch {
-                    print("Search request failed with error: \(error).")
-                    await self.reset()
+                await viewModel.performSearch(for: searchTerm)
+            }
+        }
+    }
+}
+
+extension SearchMusicView {
+    struct SearchResultsList: View {
+        private let artists: [Content.Artist]
+        private let albums: [Content.Album]
+
+        init(artists: [Content.Artist], albums: [Content.Album]) {
+            self.artists = artists
+            self.albums = albums
+        }
+
+        var body: some View {
+            List {
+                Section("Artists") {
+                    ForEach(artists) { artist in
+                        NavigationLink(value: Route.artist(artist)) {
+                            SearchMusicArtistCell(artist: artist)
+                        }
+                    }
+                }
+                Section("Albums") {
+                    ForEach(albums) { album in
+                        NavigationLink(value: Route.album(album)) {
+                            SearchMusicAlbumCell(album: album)
+                        }
+                    }
                 }
             }
         }
     }
-    
-    /// Safely updates the `albums` property on the main thread.
-    @MainActor
-    private func apply(_ searchResponse: MusicCatalogSearchResponse, for searchTerm: String) {
-        if self.searchTerm == searchTerm {
-            self.albums = searchResponse.albums //[..<5]
-            self.artists = searchResponse.artists
-        }
-    }
-    
-    /// Safely resets the `albums` property on the main thread.
-    @MainActor
-    private func reset() {
-        self.artists = []
-        self.albums = []
-    }
 }
+
+
+
+
 
 // MARK: - Previews
 
@@ -135,42 +125,6 @@ struct SearchMusicView: View {
 //        SearchMusicKit(isPresented: )
 //    }
 //}
-
-/// `MusicItemCell` is a view to use in a SwiftUI `List` to represent a `MusicItem`.
-struct MusicItemCell: View {
-    
-    // MARK: - Properties
-    
-    let artwork: Artwork?
-    let title: String
-    let subtitle: String
-    
-    // MARK: - View
-    
-    var body: some View {
-        HStack {
-            if let existingArtwork = artwork {
-                VStack {
-                    Spacer()
-                    ArtworkImage(existingArtwork, width: 56)
-                        .cornerRadius(6)
-                    Spacer()
-                }
-            }
-            VStack(alignment: .leading) {
-                Text(title)
-                    .lineLimit(1)
-                    .foregroundColor(.primary)
-                if !subtitle.isEmpty {
-                    Text(subtitle)
-                        .lineLimit(1)
-                        .foregroundColor(.secondary)
-                        .padding(.top, -4.0)
-                }
-            }
-        }
-    }
-}
 
 
 //struct SearchMusicKit: View {

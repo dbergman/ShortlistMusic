@@ -9,9 +9,9 @@ import MusicKit
 import SwiftUI
 
 extension SearchAlbumsView {
-    struct Content: Hashable, Identifiable  {
+    struct Content: Hashable, Identifiable {
         let id = UUID()
-        let album: Album?
+        let album: MusicKit.Album?
         let artworkURL: URL?
         let title: String
         let releaseYear: String
@@ -20,12 +20,7 @@ extension SearchAlbumsView {
 
 extension SearchAlbumsView {
     struct SearchAlbumCell: View {
-        
-        // MARK: - Properties
-        
         let album: Content
-        
-        // MARK: - View
         
         var body: some View {
             HStack {
