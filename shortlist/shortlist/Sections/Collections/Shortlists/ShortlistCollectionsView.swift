@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ShortlistCollectionsView: View {
+    @State var isPresented = false
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -47,12 +49,16 @@ struct ShortlistCollectionsView: View {
                 .navigationTitle("ShortListMusic")
                 .toolbar {
                     Button {
-                        print("Search")
+                        self.isPresented.toggle()
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: "doc")
                     }
                 }
                 .welcomeSheet()
+        }
+        .sheet(isPresented: $isPresented) {
+            CreateShortlistView(isPresented: $isPresented)
+                .presentationDetents([.medium, .large])
         }
     }
 }
