@@ -9,12 +9,10 @@ import SwiftUI
 
 @main
 struct ShortlistApp: App {
-    let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
             ShortlistCollectionsView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
