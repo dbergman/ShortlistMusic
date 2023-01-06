@@ -19,6 +19,7 @@ extension CreateShortlistView {
             getUserID { userId in
                 let record = CKRecord(recordType: "Shortlists")
 
+                record.setValue(UUID().uuidString, forKey: "id")
                 record.setValue(name, forKey: "name")
                 record.setValue(year, forKey: "year")
                 record.setValue(userId, forKey: "userId")
