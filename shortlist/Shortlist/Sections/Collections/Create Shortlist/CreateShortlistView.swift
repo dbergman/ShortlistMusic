@@ -9,13 +9,19 @@ import SwiftUI
 
 struct CreateShortlistView: View {
     @Binding var isPresented: Bool
+    @FocusState private var focus: Bool
     @State private var shortlistName = ""
     @State private var selectedYear = "All"
-    @FocusState private var focus: Bool
+    @StateObject private var viewModel = ViewModel()
     
     var body: some View {
         NavigationStack {
             Form {
+                !viewModel.createShortlistError.isEmpty ? Section(header: Text("Error")) {
+                   Text("\(viewModel.createShortlistError)")
+                       .foregroundColor(.red)
+                       .animation(.easeIn)
+                } : nil
                 Section(header: Text("Shortlist Details")) {
                     TextField("Shortlist Name", text: $shortlistName)
                         .focused($focus)
@@ -35,7 +41,11 @@ struct CreateShortlistView: View {
                 }
                 Section {
                     Button(action: {
-                        isPresented = false
+                        Task {
+                            viewModel.addNewShortlist(name: shortlistName, year: selectedYear) {
+                                self.isPresented = false
+                            }
+                        }
                     }, label: {
                         HStack {
                             Spacer()
@@ -43,6 +53,7 @@ struct CreateShortlistView: View {
                             Spacer()
                         }
                     })
+                    .disabled(shortlistName.isEmpty || shortlistName.count < 5)
                 }
             }
             .navigationTitle("New Shortlist")
