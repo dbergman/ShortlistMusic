@@ -9,10 +9,11 @@ import SwiftUI
 
 struct ShortlistCollectionsView: View {
     @State var isPresented = false
+    @StateObject private var viewModel = ViewModel()
 
     var body: some View {
         NavigationStack {
-            CollectionsView()
+            CollectionsView(shortlists: viewModel.shortlists)
                 .navigationTitle("ShortListMusic")
                 .task {
                     await MusicPermission.shared.requestMusicKitAuthorization()
@@ -28,6 +29,10 @@ struct ShortlistCollectionsView: View {
                 .sheet(isPresented: $isPresented) {
                     CreateShortlistView(isPresented: $isPresented)
                         .presentationDetents([.medium, .large])
+                }.onAppear() {
+                    Task {
+                        try? viewModel.getShortlists()
+                    }
                 }
         }
     }
@@ -35,26 +40,36 @@ struct ShortlistCollectionsView: View {
 
 extension ShortlistCollectionsView {
     struct CollectionsView: View {
+        private var shortlists: [String]
+
+        init(shortlists: [String]?) {
+            self.shortlists = shortlists ?? []
+        }
+
         var body: some View {
-            ScrollView {
-                VStack(alignment: .leading) {
+            List {
+                ForEach(shortlists, id: \.self) { shortlist in
                     HStack {
                         NavigationLink(destination: ShortlistDetailsView()) {
-                            Text("ShortList Goes here")
+                            Text(shortlist)
                                 .padding(.leading, 12)
-                            
-                            Spacer().frame(height: 50)
+                             Spacer()
+                                .frame(height: 50)
                         }
                     }
-                    .contentShape(Rectangle())
                 }
+                .onDelete(perform: delete)
             }
+        }
+        
+        func delete(at offsets: IndexSet) {
+            print()
         }
     }
 }
 
-struct ShortlistCollections_Previews: PreviewProvider {
-    static var previews: some View {
-        ShortlistCollectionsView.CollectionsView()
-    }
-}
+//struct ShortlistCollections_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ShortlistCollectionsView.CollectionsView()
+//    }
+//}
