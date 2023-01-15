@@ -22,7 +22,6 @@ extension CreateShortlistView {
                 record.setValue(UUID().uuidString, forKey: "id")
                 record.setValue(name, forKey: "name")
                 record.setValue(year, forKey: "year")
-                record.setValue(userId, forKey: "userId")
 
                 CKContainer.default().publicCloudDatabase.save(record) { savedRecord, error in
                     if error != nil {

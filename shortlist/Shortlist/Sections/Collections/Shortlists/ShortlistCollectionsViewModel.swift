@@ -10,34 +10,46 @@ import Foundation
 
 extension ShortlistCollectionsView {
     class ViewModel: ObservableObject {
-        typealias GetShortlistsCompletion = ([String]) -> Void
+        @Published var shortlists: [Shortlist] = []
         
-        @Published var shortlists: [String] = []
+        init(shortlists: [Shortlist] = []) {
+            self.shortlists = shortlists
+        }
+
         func getShortlists() throws {
             CKContainer.default().fetchUserRecordID { id, error in
-                let pred = NSPredicate(format: "creatorUserRecordID = %@", CKRecord.ID(recordName: id!.recordName))
-                let query = CKQuery(recordType: "Shortlists", predicate: pred)
+                let predicate = NSPredicate(format: "creatorUserRecordID = %@", CKRecord.ID(recordName: id!.recordName))
+                let query = CKQuery(recordType: "Shortlists", predicate: predicate)
 
                 CKContainer.default().publicCloudDatabase.fetch(withQuery: query) { results in
                     do {
                         let records = try results.get()
+
                         let shortlists = records.matchResults
                             .compactMap { _, result in try? result.get() }
-                            .compactMap { $0["name"] as? String }
+                            .compactMap { Shortlist(with: $0) }
                         
                         DispatchQueue.main.async {
                             self.shortlists = shortlists
                         }
                         
                     } catch {
-                        
+                        print("ERROR")
                     }
                 }
             }
         }
         
-        func removeShortList() {
-            
+        func remove(shortlist: Shortlist) {
+            CKContainer.default().publicCloudDatabase.delete(withRecordID: shortlist.recordID) { _, error in
+                if error == nil {
+                    DispatchQueue.main.async {
+                        self.shortlists.removeAll(where: { $0.recordID == shortlist.recordID })
+                    }
+                } else {
+                    print("ERROR")
+                }
+            }
         }
     }
 }
