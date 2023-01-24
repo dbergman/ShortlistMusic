@@ -25,6 +25,8 @@
 		8B685AEC290B7B3300F6AD7F /* ShortlistCollectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AEB290B7B3300F6AD7F /* ShortlistCollectionsView.swift */; };
 		8B685AEE290B86C800F6AD7F /* ShortlistDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */; };
 		8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */; };
+		8BC843EB297FA4B100FA6B78 /* ShortlistToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EA297FA4B100FA6B78 /* ShortlistToolbar.swift */; };
+		8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */; };
 		8BE7D451295FB38F0099EF4E /* MusicPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D450295FB38F0099EF4E /* MusicPermissionView.swift */; };
 		8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4542960DD870099EF4E /* PresentationCoordinator.swift */; };
 		8BE7D4582965EE870099EF4E /* CreateShortlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4572965EE870099EF4E /* CreateShortlistViewModel.swift */; };
@@ -54,6 +56,8 @@
 		8B685AEB290B7B3300F6AD7F /* ShortlistCollectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistCollectionsView.swift; sourceTree = "<group>"; };
 		8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistDetailsView.swift; sourceTree = "<group>"; };
 		8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailView.swift; sourceTree = "<group>"; };
+		8BC843EA297FA4B100FA6B78 /* ShortlistToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistToolbar.swift; sourceTree = "<group>"; };
+		8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		8BE7D450295FB38F0099EF4E /* MusicPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPermissionView.swift; sourceTree = "<group>"; };
 		8BE7D4542960DD870099EF4E /* PresentationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationCoordinator.swift; sourceTree = "<group>"; };
 		8BE7D456296283570099EF4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 			children = (
 				8B15AEAE29554B10005CE9F6 /* Formatters+StandardFormatters.swift */,
 				8B15AEBA295BC6F8005CE9F6 /* MusicKit+Extension.swift */,
+				8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */,
+				8BC843EA297FA4B100FA6B78 /* ShortlistToolbar.swift */,
 			);
 			path = "Shortlist Detail";
 			sourceTree = "<group>";
@@ -308,12 +314,14 @@
 				8BE7D45D2967AE210099EF4E /* ShortlistCollectionsViewModel.swift in Sources */,
 				8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */,
 				8B685AEA290B7B1400F6AD7F /* SearchMusicView.swift in Sources */,
+				8BC843EB297FA4B100FA6B78 /* ShortlistToolbar.swift in Sources */,
 				8BF28669295CF32F00E80C53 /* CreateShortlistView.swift in Sources */,
 				8B15AEAF29554B10005CE9F6 /* Formatters+StandardFormatters.swift in Sources */,
 				8B15AEB7295A2CC7005CE9F6 /* AlbumDetailViewModel.swift in Sources */,
 				8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */,
 				8BE7D451295FB38F0099EF4E /* MusicPermissionView.swift in Sources */,
 				8B685AD3290B791100F6AD7F /* ShortlistApp.swift in Sources */,
+				8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */,
 				8B685AD8290B791100F6AD7F /* Shortlist.xcdatamodeld in Sources */,
 				8B15AEBF295CC752005CE9F6 /* SearchMusicAlbumCell.swift in Sources */,
 				8B685AEE290B86C800F6AD7F /* ShortlistDetailsView.swift in Sources */,
