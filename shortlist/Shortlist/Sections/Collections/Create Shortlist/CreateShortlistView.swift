@@ -10,9 +10,10 @@ import SwiftUI
 struct CreateShortlistView: View {
     @Binding var isPresented: Bool
     @FocusState private var focus: Bool
+    @ObservedObject private var viewModel = ViewModel()
     @State private var shortlistName = ""
     @State private var selectedYear = "All"
-    @StateObject private var viewModel = ViewModel()
+    @Binding var shortlists: [Shortlist]
     
     var body: some View {
         NavigationStack {
@@ -42,7 +43,11 @@ struct CreateShortlistView: View {
                 Section {
                     Button(action: {
                         Task {
-                            viewModel.addNewShortlist(name: shortlistName, year: selectedYear) {
+                            viewModel.addNewShortlist(name: shortlistName, year: selectedYear) { shortlist in
+                                DispatchQueue.main.async {
+                                    self.shortlists.append(shortlist)
+                                }
+                                
                                 self.isPresented = false
                             }
                         }
@@ -83,6 +88,6 @@ struct CreateShortlistView: View {
 
 struct CreateShortlistView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateShortlistView(isPresented: .constant(false))
+        CreateShortlistView(isPresented: .constant(false), shortlists: .constant([]))
     }
 }

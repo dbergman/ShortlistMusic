@@ -28,7 +28,7 @@ struct ShortlistCollectionsView: View {
                 }
                 .onBoardingSheet()
                 .sheet(isPresented: $isPresented) {
-                    CreateShortlistView(isPresented: $isPresented)
+                    CreateShortlistView(isPresented: $isPresented, shortlists: $viewModel.shortlists)
                         .presentationDetents([.medium, .large])
                 }.onAppear() {
                     Task {
@@ -51,7 +51,7 @@ extension ShortlistCollectionsView {
             List {
                 ForEach(viewModel.shortlists, id: \.self) { shortlist in
                     HStack {
-                        NavigationLink(destination: ShortlistDetailsView()) {
+                        NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
                             Text(shortlist.name)
                                 .padding(.leading, 12)
                              Spacer()

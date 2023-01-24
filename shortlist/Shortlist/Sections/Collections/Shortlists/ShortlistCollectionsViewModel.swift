@@ -10,7 +10,11 @@ import Foundation
 
 extension ShortlistCollectionsView {
     class ViewModel: ObservableObject {
-        @Published var shortlists: [Shortlist] = []
+        @Published var shortlists: [Shortlist] = [] {
+            didSet {
+                print("dustin didSet shortlists count: \(shortlists.count)")
+            }
+        }
         
         init(shortlists: [Shortlist] = []) {
             self.shortlists = shortlists
@@ -31,6 +35,7 @@ extension ShortlistCollectionsView {
                         
                         DispatchQueue.main.async {
                             self.shortlists = shortlists
+                            print("Dustin sL count: \(self.shortlists.count)")
                         }
                         
                     } catch {

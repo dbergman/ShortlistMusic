@@ -9,12 +9,43 @@ import SwiftUI
 
 struct ShortlistToolbar: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Spacer()
+            Button(action: {
+                // button action 1
+            }) {
+                Image(systemName: "plus")
+                    .font(.title2)
+            }
+            Spacer()
+            Button(action: {
+                // button action 2
+            }) {
+                Image(systemName: "list.number")
+                    .font(.title2)
+            }
+            Spacer()
+            Button(action: {
+                // button action 3
+            }) {
+                Image(systemName: "pencil")
+                    .font(.title2)
+            }
+            Spacer()
+            Button(action: {
+                // button action 4
+            }) {
+                Image(systemName: "square.and.arrow.down")
+                    .font(.title2)
+            }
+            Spacer()
+        }
     }
 }
 
+
 struct ShortlistToolbar_Previews: PreviewProvider {
     static var previews: some View {
-        ShortlistToolbar()
+        return ShortlistToolbar()
     }
 }
