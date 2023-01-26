@@ -161,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				8B685AE8290B7AED00F6AD7F /* Search */,
+				8B15AEB8295AA9BF005CE9F6 /* Album Details */,
 				8B685AE7290B7AE200F6AD7F /* Collections */,
 			);
 			path = Sections;
@@ -184,7 +185,6 @@
 				8B15AEBC295CC653005CE9F6 /* SearchMusicArtistCell.swift */,
 				8B15AEBE295CC752005CE9F6 /* SearchMusicAlbumCell.swift */,
 				8B15AEB9295AA9E4005CE9F6 /* Search Albums */,
-				8B15AEB8295AA9BF005CE9F6 /* Album Details */,
 			);
 			path = Search;
 			sourceTree = "<group>";

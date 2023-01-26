@@ -39,8 +39,7 @@ struct SearchMusicView: View {
     @Binding var isPresented: Bool
     @StateObject private var viewModel = ViewModel()
     @State private var searchTerm = ""
-    
-    // MARK: - View
+    let shortlist: Shortlist
     
     var body: some View {
         NavigationStack {
@@ -52,12 +51,12 @@ struct SearchMusicView: View {
                         switch route {
                         case .album(let album):
                             if let albumMK = album.musicKitAlbum {
-                                AlbumDetailView(album:  albumMK)
+                                AlbumDetailView(album:  albumMK, shortlist: shortlist)
                             }
                             
                         case .artist(let artist):
                             if let artistMK = artist.musicKitArtist {
-                                SearchAlbumsView(artist: artistMK)
+                                SearchAlbumsView(artist: artistMK, shortlist: shortlist)
                             }
                         }
                     }

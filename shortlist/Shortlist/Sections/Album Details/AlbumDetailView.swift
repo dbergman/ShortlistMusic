@@ -5,6 +5,7 @@
 //  Created by Dustin Bergman on 12/21/22.
 //
 
+import CloudKit
 import MusicKit
 import SwiftUI
 
@@ -27,7 +28,7 @@ extension AlbumDetailView {
     struct AlbumView: View {
         private var albumDetails: Content
 
-        init(albumDetails: Content) {
+        init(albumDetails: Content, shortlist: Shortlist) {
             self.albumDetails = albumDetails
         }
         
@@ -56,17 +57,27 @@ extension AlbumDetailView {
                     }
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                Button {
+
+                } label: {
+                    Image(systemName: "plus.circle")
+                }
+            }
         }
     }
 }
 
 struct AlbumDetailView: View {
     private var album: Album
+    private var shortlist: Shortlist
     
     @StateObject private var viewModel = ViewModel()
     
-    init(album: Album) {
+    init(album: Album, shortlist: Shortlist) {
         self.album = album
+        self.shortlist = shortlist
     }
     
     var body: some View {
@@ -79,13 +90,19 @@ struct AlbumDetailView: View {
             }
             .opacity(viewModel.albumDetails == nil ? 1 : 0)
         if let albumDetails = viewModel.albumDetails {
-            AlbumView(albumDetails: albumDetails)
+            AlbumView(albumDetails: albumDetails, shortlist: shortlist)
         }
     }
 }
 
 struct AlbumDetailView_Previews: PreviewProvider {
     static var previews: some View {
+        let recordID1 = CKRecord.ID(recordName: "uniqueRecordName1")
+        let record1 = CKRecord(recordType: "Shortlists", recordID: recordID1)
+        record1.setValue("Shortlist One", forKey: "name")
+        record1.setValue("All", forKey: "year")
+        let shortlist1 = Shortlist(with: record1)!
+        
         let albumDetails = AlbumDetailView.Content(
             artist: "Panda Bear and Sonic Boom",
             artworkURL: URL(string: "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/07/89/c6/0789c6e0-5dad-404c-ac40-9603659dab77/887828051366.png/390x390bb.jpg"),
@@ -103,6 +120,6 @@ struct AlbumDetailView_Previews: PreviewProvider {
             ]
         )
 
-        AlbumDetailView.AlbumView.init(albumDetails: albumDetails)
+        return AlbumDetailView.AlbumView(albumDetails: albumDetails, shortlist: shortlist1)
     }
 }

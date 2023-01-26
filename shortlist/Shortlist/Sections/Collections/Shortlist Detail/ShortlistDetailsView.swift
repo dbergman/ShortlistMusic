@@ -29,13 +29,10 @@ struct ShortlistDetailsView: View {
                     .onTapGesture {
                         isPresented.toggle()
                     }.fullScreenCover(isPresented: $isPresented, content: {
-                        SearchMusicView(isPresented: $isPresented)
+                        SearchMusicView(isPresented: $isPresented, shortlist: shortlist)
                     })
                 )
-        }
-        
-        
-        
+        } 
     }
 }
 

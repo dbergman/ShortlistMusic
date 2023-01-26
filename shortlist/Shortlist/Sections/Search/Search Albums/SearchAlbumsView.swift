@@ -70,9 +70,11 @@ extension SearchAlbumsView {
 struct SearchAlbumsView: View {
     private let artist: Artist
     @StateObject private var viewModel = ViewModel()
+    private let shortlist: Shortlist
     
-    init(artist: Artist) {
+    init(artist: Artist, shortlist: Shortlist) {
         self.artist = artist
+        self.shortlist = shortlist
     }
     
     var body: some View {
@@ -83,7 +85,7 @@ struct SearchAlbumsView: View {
         .scrollDismissesKeyboard(.immediately)
         .navigationTitle(artist.name)
         .navigationDestination(for: Album.self) { album in
-            AlbumDetailView(album: album)
+            AlbumDetailView(album: album, shortlist: shortlist)
         }
     }
 }
