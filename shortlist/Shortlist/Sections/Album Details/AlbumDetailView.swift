@@ -11,11 +11,13 @@ import SwiftUI
 
 extension AlbumDetailView {
     struct Content {
+        let id: String
         let artist: String
         let artworkURL: URL?
         let title: String
+        let upc: String?
         let trackDetails: [TrackDetails]
-        
+
         struct TrackDetails: Hashable, Identifiable {
             let id = UUID()
             let title: String
@@ -26,25 +28,28 @@ extension AlbumDetailView {
 
 extension AlbumDetailView {
     struct AlbumView: View {
-        private var albumDetails: Content
+        private var album: Content
+        private var shortlist: Shortlist
+        @StateObject private var viewModel = ViewModel()
 
-        init(albumDetails: Content, shortlist: Shortlist) {
-            self.albumDetails = albumDetails
+        init(album: Content, shortlist: Shortlist) {
+            self.album = album
+            self.shortlist = shortlist
         }
         
         var body: some View {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    AsyncImage(url: albumDetails.artworkURL)
+                    AsyncImage(url: album.artworkURL)
                         .cornerRadius(8)
 
-                    Text(albumDetails.title)
+                    Text(album.title)
                         .font(.title)
                         .bold()
-                    Text(albumDetails.artist)
+                    Text(album.artist)
                         .font(.subheadline)
 
-                    if let theTracks = albumDetails.trackDetails {
+                    if let theTracks = album.trackDetails {
                         ForEach(theTracks) { track in
                             HStack {
                                 Text(track.title)
@@ -60,7 +65,8 @@ extension AlbumDetailView {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button {
-
+                    viewModel.addAlbumToShortlist(
+                        shortlist: shortlist, album: album)
                 } label: {
                     Image(systemName: "plus.circle")
                 }
@@ -88,9 +94,9 @@ struct AlbumDetailView: View {
                     size: UIScreen.main.bounds.size.width
                 )
             }
-            .opacity(viewModel.albumDetails == nil ? 1 : 0)
-        if let albumDetails = viewModel.albumDetails {
-            AlbumView(albumDetails: albumDetails, shortlist: shortlist)
+            .opacity(viewModel.album == nil ? 1 : 0)
+        if let album = viewModel.album {
+            AlbumView(album: album, shortlist: shortlist)
         }
     }
 }
@@ -102,11 +108,13 @@ struct AlbumDetailView_Previews: PreviewProvider {
         record1.setValue("Shortlist One", forKey: "name")
         record1.setValue("All", forKey: "year")
         let shortlist1 = Shortlist(with: record1)!
-        
-        let albumDetails = AlbumDetailView.Content(
+
+        let album = AlbumDetailView.Content(
+            id: "666",
             artist: "Panda Bear and Sonic Boom",
             artworkURL: URL(string: "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/07/89/c6/0789c6e0-5dad-404c-ac40-9603659dab77/887828051366.png/390x390bb.jpg"),
             title: "Reset",
+            upc: "666",
             trackDetails: [
                 AlbumDetailView.Content.TrackDetails(title: "Gettin' to the Point", duration: "2:30"),
                 AlbumDetailView.Content.TrackDetails(title: "Go On", duration: "4:46"),
@@ -120,6 +128,6 @@ struct AlbumDetailView_Previews: PreviewProvider {
             ]
         )
 
-        return AlbumDetailView.AlbumView(albumDetails: albumDetails, shortlist: shortlist1)
+        return AlbumDetailView.AlbumView(album: album, shortlist: shortlist1)
     }
 }

@@ -22,7 +22,9 @@ extension ShortlistCollectionsView {
 
         func getShortlists() throws {
             CKContainer.default().fetchUserRecordID { id, error in
-                let predicate = NSPredicate(format: "creatorUserRecordID = %@", CKRecord.ID(recordName: id!.recordName))
+                guard let recordName = id?.recordName else { return }
+                
+                let predicate = NSPredicate(format: "creatorUserRecordID = %@", CKRecord.ID(recordName: recordName))
                 let query = CKQuery(recordType: "Shortlists", predicate: predicate)
 
                 CKContainer.default().publicCloudDatabase.fetch(withQuery: query) { results in

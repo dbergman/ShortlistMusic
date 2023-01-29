@@ -9,21 +9,23 @@ import CloudKit
 import Foundation
 
 struct Shortlist: Hashable {
-    var name: String
-    var year: String
-    var recordID: CKRecord.ID
+    let id: String
+    let name: String
+    let year: String
+    let recordID: CKRecord.ID
     
     init?(with record: CKRecord) {
         guard
             let name = record["name"] as? String,
-            let year = record["year"] as? String
-                
+            let year = record["year"] as? String,
+            let id = record["id"] as? String
         else {
             return nil
         }
 
         self.name = name
         self.year = year
+        self.id = id
         recordID = record.recordID
     }
 }

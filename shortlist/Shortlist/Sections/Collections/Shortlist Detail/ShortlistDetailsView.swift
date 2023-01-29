@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ShortlistDetailsView: View {
     @State private var isPresented = false
+    @ObservedObject private var viewModel = ViewModel()
     private var shortlist: Shortlist
     
     init(isPresented: Bool = false, shortlist: Shortlist) {
@@ -19,7 +20,14 @@ struct ShortlistDetailsView: View {
     
     var body: some View {
         VStack {
-            Text("List of Albums")
+            List {
+                ForEach(viewModel.albums, id: \.self) { album in
+                    HStack {
+                        Text(album.title)
+                            .padding(.leading, 12)
+                    }
+                }
+            }
             Spacer()
             ShortlistToolbar()
                 .padding(.bottom)
@@ -32,7 +40,12 @@ struct ShortlistDetailsView: View {
                         SearchMusicView(isPresented: $isPresented, shortlist: shortlist)
                     })
                 )
-        } 
+        }
+        .onAppear() {
+            Task {
+                viewModel.getAlbums(for:shortlist)
+            }
+        }
     }
 }
 
