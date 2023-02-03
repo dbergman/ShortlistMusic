@@ -30,7 +30,7 @@ extension AlbumDetailView {
     struct AlbumView: View {
         private var album: Content
         private var shortlist: Shortlist
-        @StateObject private var viewModel = ViewModel()
+        @StateObject private var viewModel = ViewModel(size: UIScreen.main.bounds.size.width)
 
         init(album: Content, shortlist: Shortlist) {
             self.album = album
@@ -76,23 +76,32 @@ extension AlbumDetailView {
 }
 
 struct AlbumDetailView: View {
-    private var album: Album
+    enum AlbumType {
+    case musicKit(Album)
+    case shortlistAlbum(ShortListAlbum)
+    }
+
+    //private var album: Album
     private var shortlist: Shortlist
+    private var albumType: AlbumType
     
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel = ViewModel(size: UIScreen.main.bounds.size.width)
     
-    init(album: Album, shortlist: Shortlist) {
-        self.album = album
+    init(albumType: AlbumType, shortlist: Shortlist) {
+        self.albumType = albumType
         self.shortlist = shortlist
     }
     
     var body: some View {
         ProgressView()
             .task {
-                await self.viewModel.loadTracks(
-                    for: album,
-                    size: UIScreen.main.bounds.size.width
-                )
+                switch albumType {
+                case .musicKit(let album):
+                    await self.viewModel.loadTracks(for: album)
+                
+                case .shortlistAlbum(let shortlistAlbum):
+                    await self.viewModel.getAlbum(albumId: shortlistAlbum.id)
+                }
             }
             .opacity(viewModel.album == nil ? 1 : 0)
         if let album = viewModel.album {

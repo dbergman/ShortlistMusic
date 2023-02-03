@@ -51,7 +51,8 @@ struct SearchMusicView: View {
                         switch route {
                         case .album(let album):
                             if let albumMK = album.musicKitAlbum {
-                                AlbumDetailView(album:  albumMK, shortlist: shortlist)
+                                let albumType = AlbumDetailView.AlbumType.musicKit(albumMK)
+                                AlbumDetailView(albumType:  albumType, shortlist: shortlist)
                             }
                             
                         case .artist(let artist):

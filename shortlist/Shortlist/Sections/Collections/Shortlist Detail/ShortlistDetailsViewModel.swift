@@ -19,18 +19,13 @@ extension ShortlistDetailsView {
             CKContainer.default().publicCloudDatabase.fetch(withQuery: query) { results in
                 do {
                     let records = try results.get()
-                    
-                    print("dustin:\(records)")
 
                     let albums = records.matchResults
                         .compactMap { _, result in try? result.get() }
                         .compactMap { ShortListAlbum(with: $0) }
-                    
-                    print("")
 
                     DispatchQueue.main.async {
                         self.albums = albums
-                        print("Dustin albums count: \(self.albums.count)")
                     }
                     
                 } catch {

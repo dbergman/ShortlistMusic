@@ -22,9 +22,14 @@ struct ShortlistDetailsView: View {
         VStack {
             List {
                 ForEach(viewModel.albums, id: \.self) { album in
-                    HStack {
-                        Text(album.title)
-                            .padding(.leading, 12)
+                    let albumType = AlbumDetailView.AlbumType.shortlistAlbum(album)
+                    NavigationLink(
+                        destination: AlbumDetailView(albumType: albumType, shortlist: shortlist)
+                    ){
+                        HStack {
+                            Text(album.title)
+                                .padding(.leading, 12)
+                        }
                     }
                 }
             }

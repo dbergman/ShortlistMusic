@@ -85,7 +85,8 @@ struct SearchAlbumsView: View {
         .scrollDismissesKeyboard(.immediately)
         .navigationTitle(artist.name)
         .navigationDestination(for: Album.self) { album in
-            AlbumDetailView(album: album, shortlist: shortlist)
+            let albumType = AlbumDetailView.AlbumType.musicKit(album)
+            AlbumDetailView(albumType: albumType, shortlist: shortlist)
         }
     }
 }

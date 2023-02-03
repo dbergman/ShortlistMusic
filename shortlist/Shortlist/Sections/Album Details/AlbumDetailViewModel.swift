@@ -12,8 +12,13 @@ import MusicKit
 extension AlbumDetailView {
     class ViewModel: ObservableObject {
         @Published var album: Content?
+        private let size: CGFloat
+        
+        init(size: CGFloat) {
+            self.size = size
+        }
 
-        func loadTracks(for album: Album, size: CGFloat) async {
+        func loadTracks(for album: Album) async {
             let detailedAlbum = try? await album.with([.artists, .tracks])
 
             guard let albumTracks = detailedAlbum?.tracks else { return }
@@ -33,6 +38,17 @@ extension AlbumDetailView {
             }
         }
         
+        func getAlbum(albumId: String) async {
+            let request = MusicCatalogResourceRequest<Album>(matching: \.id, memberOf: [MusicItemID(stringLiteral: albumId)])
+            let response = try? await request.response()
+
+            if let album =  response?.items.first {
+                await loadTracks(for: album)
+            }
+            
+            print("")
+        }
+        
         func addAlbumToShortlist(shortlist: Shortlist, album: Content) {
             let record = CKRecord(recordType: "Albums")
             record.setValue(album.artist, forKey: "artist")
@@ -44,11 +60,11 @@ extension AlbumDetailView {
             record.setValue(shortlist.id, forKey: "shortlistId")
             
 
-            CKContainer.default().publicCloudDatabase.save(record) { [weak self] savedRecord, error in
+            CKContainer.default().publicCloudDatabase.save(record) { savedRecord, error in
                 if error != nil {
                     print("Unable to save")
                 } else if let savedRecord = savedRecord {
-                    print("")
+                    print("dustin saved \(savedRecord)")
                 }
             }
         }
