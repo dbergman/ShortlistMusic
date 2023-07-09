@@ -10,7 +10,11 @@ import Foundation
 
 extension ShortlistDetailsView {
     class ViewModel: ObservableObject {
-        @Published var albums: [ShortListAlbum] = []
+        @Published var shortlist: Shortlist
+        
+        init(shortlist: Shortlist) {
+            self.shortlist = shortlist
+        }
         
         func getAlbums(for shortlist: Shortlist) {
             let predicate = NSPredicate(format: "shortlistId == %@", shortlist.id)
@@ -25,7 +29,7 @@ extension ShortlistDetailsView {
                         .compactMap { ShortListAlbum(with: $0) }
 
                     DispatchQueue.main.async {
-                        self.albums = albums
+                        self.shortlist.albums = albums
                     }
                     
                 } catch {

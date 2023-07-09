@@ -13,6 +13,7 @@ struct Shortlist: Hashable {
     let name: String
     let year: String
     let recordID: CKRecord.ID
+    var albums: [ShortListAlbum]?
     
     init?(with record: CKRecord) {
         guard

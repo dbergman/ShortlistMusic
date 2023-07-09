@@ -10,21 +10,20 @@ import SwiftUI
 
 struct ShortlistDetailsView: View {
     @State private var isPresented = false
-    @ObservedObject private var viewModel = ViewModel()
-    private var shortlist: Shortlist
+    @ObservedObject private var viewModel: ViewModel
     
     init(isPresented: Bool = false, shortlist: Shortlist) {
+        viewModel = ViewModel.init(shortlist: shortlist)
         self.isPresented = isPresented
-        self.shortlist = shortlist
     }
     
     var body: some View {
         VStack {
             List {
-                ForEach(viewModel.albums, id: \.self) { album in
+                ForEach(viewModel.shortlist.albums ?? [], id: \.self) { album in
                     let albumType = AlbumDetailView.AlbumType.shortlistAlbum(album)
                     NavigationLink(
-                        destination: AlbumDetailView(albumType: albumType, shortlist: shortlist)
+                        destination: AlbumDetailView(albumType: albumType, shortlist: viewModel.shortlist)
                     ){
                         HStack {
                             Text(album.title)
@@ -36,19 +35,19 @@ struct ShortlistDetailsView: View {
             Spacer()
             ShortlistToolbar()
                 .padding(.bottom)
-                .navigationBarTitle(shortlist.name)
+                .navigationBarTitle(viewModel.shortlist.name)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Image(systemName: "magnifyingglass")
                     .onTapGesture {
                         isPresented.toggle()
                     }.fullScreenCover(isPresented: $isPresented, content: {
-                        SearchMusicView(isPresented: $isPresented, shortlist: shortlist)
+                        SearchMusicView(isPresented: $isPresented, shortlist: viewModel.shortlist)
                     })
                 )
         }
         .onAppear() {
             Task {
-                viewModel.getAlbums(for:shortlist)
+                viewModel.getAlbums(for: viewModel.shortlist)
             }
         }
     }

@@ -16,7 +16,6 @@ struct ShortListAlbum: Hashable, Identifiable {
     let rank: Int
     let shortlistId: String
     let upc: String?
-
     var recordID: CKRecord.ID
     
     init?(with record: CKRecord) {

@@ -16,6 +16,7 @@ extension AlbumDetailView {
         let artworkURL: URL?
         let title: String
         let upc: String?
+        var recordID: CKRecord.ID?
         let trackDetails: [TrackDetails]
 
         struct TrackDetails: Hashable, Identifiable {
@@ -30,11 +31,17 @@ extension AlbumDetailView {
     struct AlbumView: View {
         private var album: Content
         private var shortlist: Shortlist
-        @StateObject private var viewModel = ViewModel(size: UIScreen.main.bounds.size.width)
+        @State private var buttonImage = "plus.circle"
+        @State private var albumOnShortlist = false
+        @StateObject private var viewModel = ViewModel(screenSize: UIScreen.main.bounds.size.width)
 
         init(album: Content, shortlist: Shortlist) {
+            let _ = print("dustin AlbumView init")
+            
             self.album = album
             self.shortlist = shortlist
+
+            albumOnShortlist = isAlbumOnShortlist()
         }
         
         var body: some View {
@@ -49,28 +56,37 @@ extension AlbumDetailView {
                     Text(album.artist)
                         .font(.subheadline)
 
-                    if let theTracks = album.trackDetails {
-                        ForEach(theTracks) { track in
-                            HStack {
-                                Text(track.title)
-                                    .font(.headline)
-                                Spacer()
-                                Text(track.duration)
-                                    .font(.subheadline)
-                            }
+                    ForEach(album.trackDetails ) { track in
+                        HStack {
+                            Text(track.title)
+                                .font(.headline)
+                            Spacer()
+                            Text(track.duration)
+                                .font(.subheadline)
                         }
                     }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button {
-                    viewModel.addAlbumToShortlist(
-                        shortlist: shortlist, album: album)
-                } label: {
-                    Image(systemName: "plus.circle")
+                Button(action: {
+                    Task {
+                        if albumOnShortlist {
+                            viewModel.removeAlbumFromShortlist(album: album)
+                        } else {
+                            await viewModel.addAlbumToShortlist(shortlist: shortlist, album: album)
+                        }
+                        
+                        albumOnShortlist.toggle()
+                    }
+                }) {
+                    Image(systemName: albumOnShortlist ? "minus.circle" : "plus.circle")
                 }
             }
+        }
+        
+        private func isAlbumOnShortlist() -> Bool {
+            return shortlist.albums?.contains { $0.id == album.id } == true
         }
     }
 }
@@ -85,7 +101,7 @@ struct AlbumDetailView: View {
     private var shortlist: Shortlist
     private var albumType: AlbumType
     
-    @StateObject private var viewModel = ViewModel(size: UIScreen.main.bounds.size.width)
+    @StateObject private var viewModel = ViewModel(screenSize: UIScreen.main.bounds.size.width)
     
     init(albumType: AlbumType, shortlist: Shortlist) {
         self.albumType = albumType
@@ -97,10 +113,13 @@ struct AlbumDetailView: View {
             .task {
                 switch albumType {
                 case .musicKit(let album):
-                    await self.viewModel.loadTracks(for: album)
+                    await self.viewModel.loadTracks(for: album, shortlist: shortlist)
                 
                 case .shortlistAlbum(let shortlistAlbum):
-                    await self.viewModel.getAlbum(albumId: shortlistAlbum.id)
+                    await self.viewModel.getAlbum(
+                        shortListAlbum: shortlistAlbum,
+                        shortlist: shortlist
+                    )
                 }
             }
             .opacity(viewModel.album == nil ? 1 : 0)
