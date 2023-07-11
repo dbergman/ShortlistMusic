@@ -31,7 +31,6 @@ extension AlbumDetailView {
     struct AlbumView: View {
         private var album: Content
         private var shortlist: Shortlist
-        @State private var buttonImage = "plus.circle"
         @State private var albumOnShortlist = false
         @StateObject private var viewModel = ViewModel(screenSize: UIScreen.main.bounds.size.width)
 
@@ -40,8 +39,6 @@ extension AlbumDetailView {
             
             self.album = album
             self.shortlist = shortlist
-
-            albumOnShortlist = isAlbumOnShortlist()
         }
         
         var body: some View {
@@ -56,7 +53,7 @@ extension AlbumDetailView {
                     Text(album.artist)
                         .font(.subheadline)
 
-                    ForEach(album.trackDetails ) { track in
+                    ForEach(album.trackDetails) { track in
                         HStack {
                             Text(track.title)
                                 .font(.headline)
@@ -82,6 +79,9 @@ extension AlbumDetailView {
                 }) {
                     Image(systemName: albumOnShortlist ? "minus.circle" : "plus.circle")
                 }
+            }
+            .onAppear {
+                albumOnShortlist = isAlbumOnShortlist()
             }
         }
         

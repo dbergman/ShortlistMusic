@@ -62,12 +62,11 @@ extension AlbumDetailView {
             record.setValue(album.upc, forKey: "upc")
             record.setValue(shortlist.id, forKey: "shortlistId")
   
-            CKContainer.default().publicCloudDatabase.save(record) { savedRecord, error in
-                if error != nil {
-                    print("Unable to save")
-                } else if let savedRecord = savedRecord {
-                    print("dustin saved \(savedRecord)")
-                }
+            do {
+                let savedRecord = try await CKContainer.default().publicCloudDatabase.save(record)
+                print("dustin saved \(savedRecord)")
+            } catch {
+                print("Unable to save")
             }
         }
         
