@@ -40,7 +40,9 @@ struct ShortlistDetailsView: View {
                 .navigationBarItems(trailing: Image(systemName: "magnifyingglass")
                     .onTapGesture {
                         isPresented.toggle()
-                    }.fullScreenCover(isPresented: $isPresented, content: {
+                    }.fullScreenCover(isPresented: $isPresented, onDismiss: {
+                        viewModel.getAlbums(for: viewModel.shortlist)
+                    }, content: {
                         SearchMusicView(isPresented: $isPresented, shortlist: viewModel.shortlist)
                     })
                 )
