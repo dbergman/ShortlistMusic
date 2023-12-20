@@ -44,7 +44,7 @@ struct SearchMusicView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                SearchResultsList(artists: viewModel.artists, albums: viewModel.albums)
+                SearchResultsList(albums: viewModel.albums)
                     .scrollDismissesKeyboard(.immediately)
                     .navigationTitle("Add to {Name}")
                     .navigationDestination(for: SearchMusicView.Route.self) { route in
@@ -85,23 +85,14 @@ struct SearchMusicView: View {
 
 extension SearchMusicView {
     struct SearchResultsList: View {
-        private let artists: [Content.Artist]
         private let albums: [Content.Album]
 
-        init(artists: [Content.Artist], albums: [Content.Album]) {
-            self.artists = artists
+        init(albums: [Content.Album]) {
             self.albums = albums
         }
 
         var body: some View {
             List {
-                Section("Artists") {
-                    ForEach(artists) { artist in
-                        NavigationLink(value: SearchMusicView.Route.artist(artist)) {
-                            SearchMusicView.SearchMusicArtistCell(artist: artist)
-                        }
-                    }
-                }
                 Section("Albums") {
                     ForEach(albums) { album in
                         NavigationLink(value: SearchMusicView.Route.album(album)) {
@@ -117,24 +108,6 @@ extension SearchMusicView {
 
 struct Previews_SearchMusicView_Previews: PreviewProvider {
     static var previews: some View {
-        let artists = [
-            SearchMusicView.Content.Artist(
-                name: "Pennywise",
-                artistImageURL: URL(string: "https://is2-ssl.mzstatic.com/image/thumb/Features125/v4/b7/37/09/b73709de-5e70-3ae3-f675-d1d700029d32/mzm.zxgudqvp.jpg/60x60bb.jpg"),
-                musicKitArtist: nil
-            ),
-            SearchMusicView.Content.Artist(
-                name: "Pennywise",
-                artistImageURL: URL(string:""),
-                musicKitArtist: nil
-            ),
-            SearchMusicView.Content.Artist(
-                name: "Pennywise",
-                artistImageURL: URL(string:"https://is1-ssl.mzstatic.com/image/thumb/Music6/v4/a9/7a/03/a97a030b-4d23-2ead-ed46-8eb2a153dfe2/cover_10074670.jpg/60x60ac.jpg"),
-                musicKitArtist: nil
-            )
-        ]
-        
         let albums = [
             SearchMusicView.Content.Album(
                 name: "About Time (2005 Remaster)",
@@ -159,6 +132,6 @@ struct Previews_SearchMusicView_Previews: PreviewProvider {
             )
         ]
         
-        SearchMusicView.SearchResultsList(artists: artists, albums: albums)
+        SearchMusicView.SearchResultsList(albums: albums)
     }
 }

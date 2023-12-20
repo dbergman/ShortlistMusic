@@ -61,6 +61,7 @@ struct ShortlistDetails_Previews: PreviewProvider {
         let record1 = CKRecord(recordType: "Shortlists", recordID: recordID1)
         record1.setValue("Shortlist One", forKey: "name")
         record1.setValue("All", forKey: "year")
+        record1.setValue(UUID().uuidString, forKey: "id")
         let shortlist1 = Shortlist(with: record1)!
         
         return ShortlistDetailsView(shortlist: shortlist1)

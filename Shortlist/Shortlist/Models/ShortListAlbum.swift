@@ -17,7 +17,9 @@ struct ShortListAlbum: Hashable, Identifiable {
     let shortlistId: String
     let upc: String?
     var recordID: CKRecord.ID
-    
+}
+
+extension ShortListAlbum {
     init?(with record: CKRecord) {
         guard
             let id = record["id"] as? String,

@@ -52,10 +52,33 @@ extension ShortlistCollectionsView {
                 ForEach(viewModel.shortlists, id: \.self) { shortlist in
                     HStack {
                         NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
-                            Text(shortlist.name)
-                                .padding(.leading, 12)
-                             Spacer()
-                                .frame(height: 50)
+                            VStack {
+                                Text(shortlist.name)
+                                HStack {
+                                    if
+                                        let firstAlbum = shortlist.albums?.first,
+                                        let firstAlbumArt = firstAlbum.artworkURL
+                                    {
+                                        AsyncImage(url: firstAlbumArt) { image in
+                                            image
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 100, height: 100)
+                                                .cornerRadius(10)
+                                                .clipped()
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
+                                    }
+                                    
+                                    HStack(spacing: 10) {
+                                        VStack(spacing: 10) {
+                                        }
+                                    }
+
+
+                                }
+                            }
                         }
                     }
                 }
@@ -78,27 +101,11 @@ extension ShortlistCollectionsView {
 
 struct ShortlistCollections_Previews: PreviewProvider {
     static var previews: some View {
-        let recordID1 = CKRecord.ID(recordName: "uniqueRecordName1")
-        let record1 = CKRecord(recordType: "Shortlists", recordID: recordID1)
-        record1.setValue("Shortlist One", forKey: "name")
-        record1.setValue("All", forKey: "year")
-        let shortlist1 = Shortlist(with: record1)!
-        
-        let recordID2 = CKRecord.ID(recordName: "uniqueRecordName2")
-        let record2 = CKRecord(recordType: "Shortlists", recordID: recordID2)
-        record2.setValue("Shortlist Two", forKey: "name")
-        record2.setValue("All", forKey: "year")
-        let shortlist2 = Shortlist(with: record2)!
-        
-        let recordID3 = CKRecord.ID(recordName: "uniqueRecordName3")
-        let record3 = CKRecord(recordType: "Shortlists", recordID: recordID3)
-        record3.setValue("Shortlist Three", forKey: "name")
-        record3.setValue("All", forKey: "year")
-        let shortlist3 = Shortlist(with: record3)!
+        let shortlist = TestData.ShortLists.shortList
         
         return ShortlistCollectionsView.CollectionsView(
             viewModel: ShortlistCollectionsView.ViewModel(
-                shortlists: [shortlist1, shortlist2, shortlist3]
+                shortlists: [shortlist]
             )
         )
     }

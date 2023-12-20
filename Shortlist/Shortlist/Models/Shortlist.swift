@@ -14,7 +14,9 @@ struct Shortlist: Hashable {
     let year: String
     let recordID: CKRecord.ID
     var albums: [ShortListAlbum]?
-    
+}
+
+extension Shortlist {
     init?(with record: CKRecord) {
         guard
             let name = record["name"] as? String,
@@ -24,6 +26,10 @@ struct Shortlist: Hashable {
             return nil
         }
 
+        if let albums = record["albums"] as? [ShortListAlbum] {
+            self.albums = albums
+        }
+        
         self.name = name
         self.year = year
         self.id = id
