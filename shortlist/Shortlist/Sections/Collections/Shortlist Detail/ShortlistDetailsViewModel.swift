@@ -26,7 +26,7 @@ extension ShortlistDetailsView {
 
                     let albums = records.matchResults
                         .compactMap { _, result in try? result.get() }
-                        .compactMap { ShortListAlbum(with: $0) }
+                        .compactMap { ShortlistAlbum(with: $0) }
 
                     DispatchQueue.main.async {
                         self.shortlist.albums = albums

@@ -29,14 +29,6 @@ extension SearchMusicView {
             
             var albums = [Content.Album]()
             for album in albumSearchList {
-                
-                if album.artistName == "The Beatles" {
-                    print("dustin: title \(album.title)")
-                    print("dustin: artist \(album.artistName)")
-                    print("dustin: artworkURL \(album.artwork?.url(width: 60, height: 60))")
-                    print("dustin: upc \(album.upc)")
-                    print("dustin:====================")
-                }
                 albums.append(
                     Content.Album(
                         name: album.title,

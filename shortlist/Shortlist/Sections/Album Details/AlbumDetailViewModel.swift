@@ -39,7 +39,7 @@ extension AlbumDetailView {
             }
         }
         
-        func getAlbum(shortListAlbum: ShortListAlbum, shortlist: Shortlist) async {
+        func getAlbum(shortListAlbum: ShortlistAlbum, shortlist: Shortlist) async {
             let request = MusicCatalogResourceRequest<Album>(
                 matching: \.id,
                 memberOf: [MusicItemID(stringLiteral: shortListAlbum.id)]

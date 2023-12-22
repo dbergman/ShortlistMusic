@@ -15,14 +15,18 @@ struct TestData {
                 id: "uniqueShortlistID",
                 name: "Shortlist One",
                 year: "All",
-                recordID: CKRecord.ID(recordName: "uniqueRecordName1"),
-                albums: [TestData.ShortListAlbums.revolverShortListAlbum])
+                recordID: CKRecord.ID(recordName: "uniqueRecordName1"), 
+                createdTimestamp: Date(),
+                albums: [
+                    TestData.ShortListAlbums.revolverShortListAlbum,
+                    TestData.ShortListAlbums.sgtPepperShortListAlbum
+                ])
         }()
     }
 
     struct ShortListAlbums {
-        static let revolverShortListAlbum: ShortListAlbum = {
-            ShortListAlbum(
+        static let revolverShortListAlbum: ShortlistAlbum = {
+            ShortlistAlbum(
                 id: UUID().uuidString,
                 title: "Revolver",
                 artist: "The Beatles",
@@ -34,8 +38,8 @@ struct TestData {
             )
         }()
 
-        static let sgtPepperShortListAlbum: ShortListAlbum = {
-            ShortListAlbum(
+        static let sgtPepperShortListAlbum: ShortlistAlbum = {
+            ShortlistAlbum(
                 id: UUID().uuidString,
                 title: "Sgt. Pepper's Lonely Hearts Club Band",
                 artist: "The Beatles",
@@ -47,8 +51,8 @@ struct TestData {
             )
         }()
         
-        static let whiteShortListAlbum: ShortListAlbum = {
-            ShortListAlbum(
+        static let whiteShortListAlbum: ShortlistAlbum = {
+            ShortlistAlbum(
                 id: UUID().uuidString,
                 title: "The Beatles (White Album)",
                 artist: "The Beatles",
@@ -60,8 +64,8 @@ struct TestData {
             )
         }()
         
-        static let abbeyRoadShortListAlbum: ShortListAlbum = {
-            ShortListAlbum(
+        static let abbeyRoadShortListAlbum: ShortlistAlbum = {
+            ShortlistAlbum(
                 id: UUID().uuidString,
                 title: "Abbey Road",
                 artist: "The Beatles",
@@ -73,8 +77,8 @@ struct TestData {
             )
         }()
         
-        static let letItBeShortListAlbum: ShortListAlbum = {
-            ShortListAlbum(
+        static let letItBeShortListAlbum: ShortlistAlbum = {
+            ShortlistAlbum(
                 id: UUID().uuidString,
                 title: "Let It Be",
                 artist: "The Beatles",
@@ -86,8 +90,8 @@ struct TestData {
             )
         }()
 
-        static let magicalMysteryTourShortListAlbum: ShortListAlbum = {
-            ShortListAlbum(
+        static let magicalMysteryTourShortListAlbum: ShortlistAlbum = {
+            ShortlistAlbum(
                 id: UUID().uuidString,
                 title: "Magical Mystery Tour",
                 artist: "The Beatles",

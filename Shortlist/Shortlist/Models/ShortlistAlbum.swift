@@ -1,5 +1,5 @@
 //
-//  Album.swift
+//  ShortlistAlbum.swift
 //  Shortlist
 //
 //  Created by Dustin Bergman on 1/29/23.
@@ -8,7 +8,7 @@
 import CloudKit
 import Foundation
 
-struct ShortListAlbum: Hashable, Identifiable {
+struct ShortlistAlbum: Hashable, Identifiable {
     let id: String
     let title: String
     let artist: String
@@ -19,7 +19,7 @@ struct ShortListAlbum: Hashable, Identifiable {
     var recordID: CKRecord.ID
 }
 
-extension ShortListAlbum {
+extension ShortlistAlbum {
     init?(with record: CKRecord) {
         guard
             let id = record["id"] as? String,

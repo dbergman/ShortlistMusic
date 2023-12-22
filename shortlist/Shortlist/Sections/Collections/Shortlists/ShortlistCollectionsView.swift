@@ -53,7 +53,10 @@ extension ShortlistCollectionsView {
                     HStack {
                         NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
                             VStack {
-                                Text(shortlist.name)
+                                HStack {
+                                    Text(shortlist.name)
+                                    Spacer()
+                                }
                                 HStack {
                                     if
                                         let firstAlbum = shortlist.albums?.first,
@@ -63,7 +66,7 @@ extension ShortlistCollectionsView {
                                             image
                                                 .resizable()
                                                 .scaledToFill()
-                                                .frame(width: 100, height: 100)
+                                                .frame(width: 150, height: 150)
                                                 .cornerRadius(10)
                                                 .clipped()
                                         } placeholder: {
@@ -71,11 +74,53 @@ extension ShortlistCollectionsView {
                                         }
                                     }
                                     
-                                    HStack(spacing: 10) {
+                                    HStack {
                                         VStack(spacing: 10) {
+                                            ForEach(shortlist.albums?.suffix(2) ?? []) { album in
+                                                if let albumArt = album.artworkURL {
+                                                    AsyncImage(url: albumArt) { image in
+                                                        image
+                                                            .resizable()
+                                                            .scaledToFill()
+                                                            .frame(width: 70, height: 70)
+                                                            .cornerRadius(10)
+                                                            .clipped()
+                                                    } placeholder: {
+                                                        ProgressView()
+                                                    }
+                                                } else {
+                                                    Color.orange
+                                                        .frame(width: 70, height: 70)
+                                                        .cornerRadius(10)
+                                                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 2))
+                                                }
+                                            }
                                         }
                                     }
-
+                                    
+                                    HStack {
+                                        VStack(spacing: 10) {
+                                            ForEach(shortlist.albums?.suffix(2) ?? []) { album in
+                                                if let albumArt = album.artworkURL {
+                                                    AsyncImage(url: albumArt) { image in
+                                                        image
+                                                            .resizable()
+                                                            .scaledToFill()
+                                                            .frame(width: 70, height: 70)
+                                                            .cornerRadius(10)
+                                                            .clipped()
+                                                    } placeholder: {
+                                                        ProgressView()
+                                                    }
+                                                } else {
+                                                    Color.orange
+                                                        .frame(width: 70, height: 70)
+                                                        .cornerRadius(10)
+                                                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 2))
+                                                }
+                                            }
+                                        }
+                                    }
 
                                 }
                             }

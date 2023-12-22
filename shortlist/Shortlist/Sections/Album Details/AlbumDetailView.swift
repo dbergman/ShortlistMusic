@@ -94,7 +94,7 @@ extension AlbumDetailView {
 struct AlbumDetailView: View {
     enum AlbumType {
     case musicKit(Album)
-    case shortlistAlbum(ShortListAlbum)
+    case shortlistAlbum(ShortlistAlbum)
     }
 
     //private var album: Album

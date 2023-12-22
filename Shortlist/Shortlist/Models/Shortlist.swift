@@ -13,7 +13,8 @@ struct Shortlist: Hashable {
     let name: String
     let year: String
     let recordID: CKRecord.ID
-    var albums: [ShortListAlbum]?
+    let createdTimestamp: Date
+    var albums: [ShortlistAlbum]?
 }
 
 extension Shortlist {
@@ -21,12 +22,13 @@ extension Shortlist {
         guard
             let name = record["name"] as? String,
             let year = record["year"] as? String,
-            let id = record["id"] as? String
+            let id = record["id"] as? String,
+            let createdTimestamp = record.creationDate
         else {
             return nil
         }
 
-        if let albums = record["albums"] as? [ShortListAlbum] {
+        if let albums = record["albums"] as? [ShortlistAlbum] {
             self.albums = albums
         }
         
@@ -34,5 +36,15 @@ extension Shortlist {
         self.year = year
         self.id = id
         recordID = record.recordID
+        self.createdTimestamp = createdTimestamp
+    }
+    
+    init(shortlist: Shortlist, shortlistAlbums: [ShortlistAlbum]){
+        self.name = shortlist.name
+        self.year = shortlist.year
+        self.id = shortlist.id
+        albums = shortlistAlbums
+        recordID = shortlist.recordID
+        createdTimestamp = shortlist.createdTimestamp
     }
 }
