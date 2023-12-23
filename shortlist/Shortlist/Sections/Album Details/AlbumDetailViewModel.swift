@@ -55,7 +55,7 @@ extension AlbumDetailView {
         func addAlbumToShortlist(shortlist: Shortlist, album: Content) async {
             let record = CKRecord(recordType: "Albums")
             record.setValue(album.artist, forKey: "artist")
-            record.setValue(album.artworkURL?.absoluteString, forKey: "artwork")
+            record.setValue(album.artworkURL!.absoluteString, forKey: "artwork")
             record.setValue(album.id, forKey: "id")
             record.setValue(0, forKey: "rank")
             record.setValue(album.title, forKey: "title")

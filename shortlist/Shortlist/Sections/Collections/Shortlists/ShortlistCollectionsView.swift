@@ -60,7 +60,7 @@ extension ShortlistCollectionsView {
                                 HStack {
                                     if
                                         let firstAlbum = shortlist.albums?.first,
-                                        let firstAlbumArt = firstAlbum.artworkURL
+                                        let firstAlbumArt = URL(string: firstAlbum.artworkURLString)
                                     {
                                         AsyncImage(url: firstAlbumArt) { image in
                                             image
@@ -77,7 +77,7 @@ extension ShortlistCollectionsView {
                                     HStack {
                                         VStack(spacing: 10) {
                                             ForEach(shortlist.albums?.suffix(2) ?? []) { album in
-                                                if let albumArt = album.artworkURL {
+                                                if let albumArt = URL(string: album.artworkURLString) {
                                                     AsyncImage(url: albumArt) { image in
                                                         image
                                                             .resizable()
@@ -101,7 +101,7 @@ extension ShortlistCollectionsView {
                                     HStack {
                                         VStack(spacing: 10) {
                                             ForEach(shortlist.albums?.suffix(2) ?? []) { album in
-                                                if let albumArt = album.artworkURL {
+                                                if let albumArt = URL(string: album.artworkURLString) {
                                                     AsyncImage(url: albumArt) { image in
                                                         image
                                                             .resizable()
