@@ -19,7 +19,12 @@ struct TestData {
                 createdTimestamp: Date(),
                 albums: [
                     TestData.ShortListAlbums.revolverShortListAlbum,
-                    TestData.ShortListAlbums.sgtPepperShortListAlbum
+                    TestData.ShortListAlbums.sgtPepperShortListAlbum,
+                    TestData.ShortListAlbums.whiteShortListAlbum,
+                    TestData.ShortListAlbums.abbeyRoadShortListAlbum,
+                    TestData.ShortListAlbums.letItBeShortListAlbum,
+                    TestData.ShortListAlbums.magicalMysteryTourShortListAlbum
+                    
                 ])
         }()
     }
