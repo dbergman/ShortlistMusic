@@ -11,11 +11,12 @@ import Foundation
 extension ShortlistCollectionsView {
     class ViewModel: ObservableObject {
         @Published var shortlists: [Shortlist] = []
+        @Published var isloading = true
         
         init(shortlists: [Shortlist] = []) {
             self.shortlists = shortlists
         }
-
+        
         func getShortlists() throws {
             CKContainer.default().fetchUserRecordID { id, error in
                 guard let recordName = id?.recordName else { return }
@@ -25,7 +26,7 @@ extension ShortlistCollectionsView {
                 
                 let shortlistPredicate = NSPredicate(format: "creatorUserRecordID = %@", CKRecord.ID(recordName: recordName))
                 let shortlistQuery = CKQuery(recordType: "Shortlists", predicate: shortlistPredicate)
-
+                
                 CKContainer.default().publicCloudDatabase.fetch(withQuery: shortlistQuery) { shortlistRecords in
                     do {
                         let records = try shortlistRecords.get()
@@ -53,25 +54,27 @@ extension ShortlistCollectionsView {
                                 }
                             }
                         }
-
+                        
                         dispatchGroup.notify(queue: .main) {
+                            self.isloading = false
                             self.shortlists = createdShortlists
-                                self.shortlists = createdShortlists.sorted { (shortlist1, shortlist2) in
-                                    if shortlist1.year != shortlist2.year {
-                                        return shortlist1.year < shortlist2.year
-                                    } else {
-                                        return shortlist1.createdTimestamp < shortlist2.createdTimestamp
-                                    }
+                            self.shortlists = createdShortlists.sorted { shortlist1, shortlist2 in
+                                if shortlist1.year != shortlist2.year {
+                                    return shortlist1.year < shortlist2.year
+                                } else {
+                                    return shortlist1.createdTimestamp < shortlist2.createdTimestamp
                                 }
                             }
-
+                            
+                        }
+                        
                     } catch {
                         print("ERROR")
                     }
                 }
             }
         }
- 
+        
         func remove(shortlist: Shortlist) {
             CKContainer.default().publicCloudDatabase.delete(withRecordID: shortlist.recordID) { _, error in
                 if error == nil {

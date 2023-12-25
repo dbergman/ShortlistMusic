@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B06B1D12B3953EE00260A8D /* TestSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B06B1D02B3953EE00260A8D /* TestSwiftUI.swift */; };
 		8B15AEAC29552021005CE9F6 /* MusicKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B15AEAA2953F023005CE9F6 /* MusicKit.framework */; };
 		8B15AEAF29554B10005CE9F6 /* Formatters+StandardFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15AEAE29554B10005CE9F6 /* Formatters+StandardFormatters.swift */; };
 		8B15AEB129576581005CE9F6 /* SearchAlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15AEB029576581005CE9F6 /* SearchAlbumsView.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B06B1D02B3953EE00260A8D /* TestSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSwiftUI.swift; sourceTree = "<group>"; };
 		8B15AEAA2953F023005CE9F6 /* MusicKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MusicKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/System/Library/Frameworks/MusicKit.framework; sourceTree = DEVELOPER_DIR; };
 		8B15AEAE29554B10005CE9F6 /* Formatters+StandardFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatters+StandardFormatters.swift"; sourceTree = "<group>"; };
 		8B15AEB029576581005CE9F6 /* SearchAlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAlbumsView.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				8B685ADD290B791300F6AD7F /* Shortlist.entitlements */,
 				8B685AD6290B791100F6AD7F /* Shortlist.xcdatamodeld */,
 				8B685ADE290B791300F6AD7F /* Preview Content */,
+				8B06B1D02B3953EE00260A8D /* TestSwiftUI.swift */,
 			);
 			path = Shortlist;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				8BE7D451295FB38F0099EF4E /* MusicPermissionView.swift in Sources */,
 				8B685AD3290B791100F6AD7F /* ShortlistApp.swift in Sources */,
 				8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */,
+				8B06B1D12B3953EE00260A8D /* TestSwiftUI.swift in Sources */,
 				8B685AD8290B791100F6AD7F /* Shortlist.xcdatamodeld in Sources */,
 				8B15AEBF295CC752005CE9F6 /* SearchMusicAlbumCell.swift in Sources */,
 				8B685AEE290B86C800F6AD7F /* ShortlistDetailsView.swift in Sources */,

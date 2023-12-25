@@ -48,28 +48,33 @@ extension ShortlistCollectionsView {
         }
         
         var body: some View {
-            List {
-                ForEach(viewModel.shortlists, id: \.self) { shortlist in
-                    Section {
-                        HStack {
-                            NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
-                                VStack {
-                                    HStack {
-                                        Text(shortlist.name)
-                                        Spacer()
-                                    }
-                                    HStack {
-                                        loadImage(from: shortlist, with: 0)
-                                        
-                                        VStack {
-                                            Grid {
-                                                GridRow {
-                                                    loadImage(from: shortlist, with: 1)
-                                                    loadImage(from: shortlist, with: 2)
-                                                }
-                                                GridRow {
-                                                    loadImage(from: shortlist, with: 3)
-                                                    loadImage(from: shortlist, with: 4)
+            if viewModel.isloading {
+                loadingPlaceholder()
+                //TestSwiftUI()
+            } else {
+                List {
+                    ForEach(viewModel.shortlists, id: \.self) { shortlist in
+                        Section {
+                            HStack {
+                                NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
+                                    VStack {
+                                        HStack {
+                                            Text(shortlist.name)
+                                            Spacer()
+                                        }
+                                        HStack {
+                                            loadImage(from: shortlist, with: 0)
+                                            
+                                            VStack {
+                                                Grid {
+                                                    GridRow {
+                                                        loadImage(from: shortlist, with: 1)
+                                                        loadImage(from: shortlist, with: 2)
+                                                    }
+                                                    GridRow {
+                                                        loadImage(from: shortlist, with: 3)
+                                                        loadImage(from: shortlist, with: 4)
+                                                    }
                                                 }
                                             }
                                         }
@@ -78,22 +83,27 @@ extension ShortlistCollectionsView {
                             }
                         }
                     }
+                    .onDelete(perform: delete)
                 }
-                .onDelete(perform: delete)
             }
         }
         
         @ViewBuilder
-        private func loadImage(from shortlist: Shortlist, with index: Int) -> some View {
+        private func loadImage(from shortlist: Shortlist?, with index: Int) -> some View {
+            let size: CGFloat = index == 0 ? 150 :70
+            let placeholder = Image(systemName: "record.circle.fill")
+                .resizable()
+                .scaledToFit()
+                .cornerRadius(10)
+                .frame(width: size, height: size)
             if
-                let shortlistAlbums = shortlist.albums,
+                let shortlistAlbums = shortlist?.albums,
                 shortlistAlbums.count > index,
-                let artworkURLString = shortlist.albums?[index].artworkURLString,
+                let artworkURLString = shortlist?.albums?[index].artworkURLString,
                 let url = URL(string: artworkURLString)
             {
                 AsyncImage(url: url) { image in
                     let size: CGFloat = index == 0 ? 150 :70
-                    
                     image
                         .resizable()
                         .scaledToFill()
@@ -101,15 +111,54 @@ extension ShortlistCollectionsView {
                         .cornerRadius(10)
                         .clipped()
                 } placeholder: {
-                    let size: CGFloat = index == 0 ? 150 :70
-                    Image(systemName: "applelogo")
-                        .resizable()
-                        .scaledToFit()
-                        .cornerRadius(10)
-                        .redacted(reason: .placeholder)
-                        .frame(width: size, height: size)
+                    placeholder
                 }
             }
+        }
+        
+        @ViewBuilder
+        private func loadingPlaceholder() -> some View {
+            List {
+                ForEach(0..<3) { _ in
+                    Section {
+                        HStack {
+                            VStack {
+                                HStack {
+                                    Text("Shortlist Name")
+                                    Spacer()
+                                    Text("year")
+                                        .padding(.trailing, 10)
+                                }
+                                HStack {
+                                    placeHolderRect(with: 150)
+                                    VStack {
+                                        Grid {
+                                            GridRow {
+                                                placeHolderRect(with: 70)
+                                                placeHolderRect(with: 70)
+                                            }
+                                            GridRow {
+                                                placeHolderRect(with: 70)
+                                                placeHolderRect(with: 70)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .redacted(reason: .placeholder)
+                }
+            }
+        }
+        
+        @ViewBuilder
+        private func placeHolderRect(with size: CGFloat) -> some View {
+            Rectangle()
+                .scaledToFit()
+                .foregroundColor(Color(red: 0.8, green: 0.8, blue: 0.8))
+                .cornerRadius(10)
+                .frame(width: size, height: size)
         }
         
         private func delete(at offsets: IndexSet) {
