@@ -11,7 +11,7 @@ import SwiftUI
 struct ShortlistCollectionsView: View {
     @State var isPresented = false
     @ObservedObject private var viewModel = ViewModel()
-
+    
     var body: some View {
         NavigationStack {
             CollectionsView(viewModel: viewModel)
@@ -42,47 +42,35 @@ struct ShortlistCollectionsView: View {
 extension ShortlistCollectionsView {
     struct CollectionsView: View {
         @ObservedObject private var viewModel: ViewModel
-
+        
         init(viewModel: ViewModel) {
             self.viewModel = viewModel
         }
-
+        
         var body: some View {
             List {
                 ForEach(viewModel.shortlists, id: \.self) { shortlist in
-                    HStack {
-                        NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
-                            VStack {
-                                HStack {
-                                    Text(shortlist.name)
-                                    Spacer()
-                                }
-                                HStack {
-                                    if
-                                        let firstAlbum = shortlist.albums?.first,
-                                        let firstAlbumArt = URL(string: firstAlbum.artworkURLString)
-                                    {
-                                        AsyncImage(url: firstAlbumArt) { image in
-                                            image
-                                                .resizable()
-                                                .scaledToFill()
-                                                .frame(width: 150, height: 150)
-                                                .cornerRadius(10)
-                                                .clipped()
-                                        } placeholder: {
-                                            ProgressView()
-                                        }
+                    Section {
+                        HStack {
+                            NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
+                                VStack {
+                                    HStack {
+                                        Text(shortlist.name)
+                                        Spacer()
                                     }
-     
-                                    VStack {
-                                        Grid {
-                                            GridRow {
-                                                loadImage(from: shortlist, with: 1)
-                                                loadImage(from: shortlist, with: 2)
-                                            }
-                                            GridRow {
-                                                loadImage(from: shortlist, with: 3)
-                                                loadImage(from: shortlist, with: 4)
+                                    HStack {
+                                        loadImage(from: shortlist, with: 0)
+                                        
+                                        VStack {
+                                            Grid {
+                                                GridRow {
+                                                    loadImage(from: shortlist, with: 1)
+                                                    loadImage(from: shortlist, with: 2)
+                                                }
+                                                GridRow {
+                                                    loadImage(from: shortlist, with: 3)
+                                                    loadImage(from: shortlist, with: 4)
+                                                }
                                             }
                                         }
                                     }
@@ -104,27 +92,27 @@ extension ShortlistCollectionsView {
                 let url = URL(string: artworkURLString)
             {
                 AsyncImage(url: url) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 70, height: 70)
-                                    .cornerRadius(10)
-                                    .clipped()
-                            } placeholder: {
-                                ProgressView()
-                            }
+                    let size: CGFloat = index == 0 ? 150 :70
+                    
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: size, height: size)
+                        .cornerRadius(10)
+                        .clipped()
+                } placeholder: {
+                    let size: CGFloat = index == 0 ? 150 :70
+                    Image(systemName: "applelogo")
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(10)
+                        .redacted(reason: .placeholder)
+                        .frame(width: size, height: size)
+                }
             }
         }
         
-        func randomColor() -> Color {
-            let red = Double.random(in: 0...1)
-            let green = Double.random(in: 0...1)
-            let blue = Double.random(in: 0...1)
-            
-            return Color(red: red, green: green, blue: blue)
-        }
-        
-        func delete(at offsets: IndexSet) {
+        private func delete(at offsets: IndexSet) {
             guard
                 let index = offsets.first
             else {
