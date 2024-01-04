@@ -18,7 +18,7 @@ struct ShortlistDetailsView: View {
     ]
     
     init(isPresented: Bool = false, shortlist: Shortlist) {
-        viewModel = ViewModel.init(shortlist: shortlist)
+        viewModel = ViewModel(shortlist: shortlist)
         self.isPresented = isPresented
     }
     
@@ -35,11 +35,11 @@ struct ShortlistDetailsView: View {
                                 image
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(10)
-                                
+                                    .cornerRadius(20)
                             } placeholder: {
                                 ProgressView()
                             }
+                            .padding(.bottom, 10)
                             
                             Text(album.title)
                                 .lineLimit(2)
@@ -47,9 +47,14 @@ struct ShortlistDetailsView: View {
                                 .lineLimit(1)
                             Spacer()
                         }
+                        .overlay(
+                              RoundedRectangle(cornerRadius: 20)
+                                  .stroke(Color(red: 0.8, green: 0.8, blue: 0.8), lineWidth: 1)
+                              )
                         .padding(.bottom, 20)
                         .padding(.leading, 10)
                         .padding(.trailing, 10)
+                        
                     }
                 }
             }

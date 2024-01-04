@@ -90,12 +90,6 @@ extension ShortlistCollectionsView {
         
         @ViewBuilder
         private func loadImage(from shortlist: Shortlist?, with index: Int) -> some View {
-            let size: CGFloat = index == 0 ? 150 :70
-            let placeholder = Image(systemName: "record.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .cornerRadius(10)
-                .frame(width: size, height: size)
             if
                 let shortlistAlbums = shortlist?.albums,
                 shortlistAlbums.count > index,
@@ -111,7 +105,7 @@ extension ShortlistCollectionsView {
                         .cornerRadius(10)
                         .clipped()
                 } placeholder: {
-                    placeholder
+                    placeHolderRect(with: index == 0 ? 150 :70)
                 }
             }
         }

@@ -29,31 +29,30 @@ extension AlbumDetailView {
 
 extension AlbumDetailView {
     struct AlbumView: View {
-        private var album: Content
         private var shortlist: Shortlist
         @State private var albumOnShortlist = false
-        @StateObject private var viewModel = ViewModel(screenSize: UIScreen.main.bounds.size.width)
+        @ObservedObject private var viewModel: ViewModel
 
-        init(album: Content, shortlist: Shortlist) {
+        init(album: Content, shortlist: Shortlist, viewModel: ViewModel) {
             let _ = print("dustin AlbumView init")
             
-            self.album = album
+            self.viewModel = viewModel
             self.shortlist = shortlist
         }
         
         var body: some View {
             ScrollView(.vertical) {
                 VStack(alignment: .leading) {
-                    AsyncImage(url: album.artworkURL)
+                    AsyncImage(url: viewModel.album?.artworkURL)
                         .cornerRadius(8)
 
-                    Text(album.title)
+                    Text(viewModel.album?.title ?? "")
                         .font(.title)
                         .bold()
-                    Text(album.artist)
+                    Text(viewModel.album?.artist ?? "")
                         .font(.subheadline)
 
-                    ForEach(album.trackDetails) { track in
+                    ForEach(viewModel.album?.trackDetails ?? []) { track in
                         HStack {
                             Text(track.title)
                                 .font(.headline)
@@ -69,11 +68,11 @@ extension AlbumDetailView {
                 Button(action: {
                     Task {
                         if albumOnShortlist {
-                            viewModel.removeAlbumFromShortlist(album: album)
+                            await viewModel.removeAlbumFromShortlist()
                         } else {
-                            await viewModel.addAlbumToShortlist(shortlist: shortlist, album: album)
+                            await viewModel.addAlbumToShortlist()
                         }
-                        
+
                         albumOnShortlist.toggle()
                     }
                 }) {
@@ -81,12 +80,10 @@ extension AlbumDetailView {
                 }
             }
             .onAppear {
-                albumOnShortlist = isAlbumOnShortlist()
+                Task {
+                    albumOnShortlist = await viewModel.isAlbumOnShortlist()
+                }
             }
-        }
-        
-        private func isAlbumOnShortlist() -> Bool {
-            return shortlist.albums?.contains { $0.id == album.id } == true
         }
     }
 }
@@ -97,15 +94,18 @@ struct AlbumDetailView: View {
     case shortlistAlbum(ShortlistAlbum)
     }
 
-    //private var album: Album
     private var shortlist: Shortlist
     private var albumType: AlbumType
-    
-    @StateObject private var viewModel = ViewModel(screenSize: UIScreen.main.bounds.size.width)
-    
+    @ObservedObject private var viewModel: ViewModel
+
     init(albumType: AlbumType, shortlist: Shortlist) {
         self.albumType = albumType
         self.shortlist = shortlist
+        self.viewModel = ViewModel(
+            album: nil,
+            shortlist: shortlist,
+            screenSize: UIScreen.main.bounds.size.width
+        )
     }
     
     var body: some View {
@@ -113,7 +113,7 @@ struct AlbumDetailView: View {
             .task {
                 switch albumType {
                 case .musicKit(let album):
-                    await self.viewModel.loadTracks(for: album, shortlist: shortlist)
+                    await self.viewModel.loadTracks(for: album)
                 
                 case .shortlistAlbum(let shortlistAlbum):
                     await self.viewModel.getAlbum(
@@ -124,38 +124,38 @@ struct AlbumDetailView: View {
             }
             .opacity(viewModel.album == nil ? 1 : 0)
         if let album = viewModel.album {
-            AlbumView(album: album, shortlist: shortlist)
+            AlbumView(album: album, shortlist: shortlist, viewModel: viewModel)
         }
     }
 }
 
-struct AlbumDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        let recordID1 = CKRecord.ID(recordName: "uniqueRecordName1")
-        let record1 = CKRecord(recordType: "Shortlists", recordID: recordID1)
-        record1.setValue("Shortlist One", forKey: "name")
-        record1.setValue("All", forKey: "year")
-        let shortlist1 = Shortlist(with: record1)!
-
-        let album = AlbumDetailView.Content(
-            id: "666",
-            artist: "Panda Bear and Sonic Boom",
-            artworkURL: URL(string: "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/07/89/c6/0789c6e0-5dad-404c-ac40-9603659dab77/887828051366.png/390x390bb.jpg"),
-            title: "Reset",
-            upc: "666",
-            trackDetails: [
-                AlbumDetailView.Content.TrackDetails(title: "Gettin' to the Point", duration: "2:30"),
-                AlbumDetailView.Content.TrackDetails(title: "Go On", duration: "4:46"),
-                AlbumDetailView.Content.TrackDetails(title: "Everyday", duration: "3:52"),
-                AlbumDetailView.Content.TrackDetails(title: "Edge of the Edge", duration: "4:48"),
-                AlbumDetailView.Content.TrackDetails(title: "In My Body", duration: "3:51"),
-                AlbumDetailView.Content.TrackDetails(title: "Whirlpool", duration: "5:01"),
-                AlbumDetailView.Content.TrackDetails(title: "Danger", duration: "5:38"),
-                AlbumDetailView.Content.TrackDetails(title: "Livin' in the After", duration: "2:54"),
-                AlbumDetailView.Content.TrackDetails(title: "Everything's Been Leading to This", duration:"5:08")
-            ]
-        )
-
-        return AlbumDetailView.AlbumView(album: album, shortlist: shortlist1)
-    }
-}
+//struct AlbumDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let recordID1 = CKRecord.ID(recordName: "uniqueRecordName1")
+//        let record1 = CKRecord(recordType: "Shortlists", recordID: recordID1)
+//        record1.setValue("Shortlist One", forKey: "name")
+//        record1.setValue("All", forKey: "year")
+//        let shortlist1 = Shortlist(with: record1)!
+//
+//        let album = AlbumDetailView.Content(
+//            id: "666",
+//            artist: "Panda Bear and Sonic Boom",
+//            artworkURL: URL(string: "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/07/89/c6/0789c6e0-5dad-404c-ac40-9603659dab77/887828051366.png/390x390bb.jpg"),
+//            title: "Reset",
+//            upc: "666",
+//            trackDetails: [
+//                AlbumDetailView.Content.TrackDetails(title: "Gettin' to the Point", duration: "2:30"),
+//                AlbumDetailView.Content.TrackDetails(title: "Go On", duration: "4:46"),
+//                AlbumDetailView.Content.TrackDetails(title: "Everyday", duration: "3:52"),
+//                AlbumDetailView.Content.TrackDetails(title: "Edge of the Edge", duration: "4:48"),
+//                AlbumDetailView.Content.TrackDetails(title: "In My Body", duration: "3:51"),
+//                AlbumDetailView.Content.TrackDetails(title: "Whirlpool", duration: "5:01"),
+//                AlbumDetailView.Content.TrackDetails(title: "Danger", duration: "5:38"),
+//                AlbumDetailView.Content.TrackDetails(title: "Livin' in the After", duration: "2:54"),
+//                AlbumDetailView.Content.TrackDetails(title: "Everything's Been Leading to This", duration:"5:08")
+//            ]
+//        )
+//
+//        return AlbumDetailView.AlbumView(album: album, shortlist: shortlist1)
+//    }
+//}

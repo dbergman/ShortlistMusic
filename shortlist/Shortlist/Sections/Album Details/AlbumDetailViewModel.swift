@@ -12,19 +12,22 @@ import MusicKit
 extension AlbumDetailView {
     class ViewModel: ObservableObject {
         @Published var album: Content?
+        let shortlist: Shortlist
+        private var currentShortlistAlbums: [ShortlistAlbum]?
         private let screenSize: CGFloat
         
-        init(screenSize: CGFloat) {
+        init(album: Content?, shortlist: Shortlist, screenSize: CGFloat) {
+            self.album = album
+            self.shortlist = shortlist
             self.screenSize = screenSize
         }
-
-        func loadTracks(for album: Album, shortlist: Shortlist, recordID: CKRecord.ID? = nil) async {
+        
+        func loadTracks(for album: Album, recordID: CKRecord.ID? = nil) async {
             let detailedAlbum = try? await album.with([.artists, .tracks])
-
             guard let albumTracks = detailedAlbum?.tracks else { return }
             
             let theTracks = albumTracks.map { Content.TrackDetails(title: $0.title, duration: $0.displayDuration) }
-
+            
             let details = Content(
                 id: album.id.rawValue,
                 artist: album.artistName,
@@ -33,7 +36,18 @@ extension AlbumDetailView {
                 upc: album.upc,
                 recordID: recordID,
                 trackDetails: theTracks)
-
+            
+            currentShortlistAlbums = await withCheckedContinuation { continuation in
+                updateShortlistAlbums(completion: { result in
+                       switch result {
+                       case .success(let albums):
+                           continuation.resume(returning: albums)
+                       case .failure(let error):
+                           print("Error: \(error)")
+                       }
+                   })
+             }
+            
             DispatchQueue.main.async {
                 self.album = details
             }
@@ -44,44 +58,106 @@ extension AlbumDetailView {
                 matching: \.id,
                 memberOf: [MusicItemID(stringLiteral: shortListAlbum.id)]
             )
-    
+            
             let response = try? await request.response()
-
+            
             if let album =  response?.items.first {
-                await loadTracks(for: album, shortlist: shortlist, recordID: shortListAlbum.recordID)
+                await loadTracks(for: album, recordID: shortListAlbum.recordID)
+            }
+        }
+
+        private func updateShortlistAlbums(completion: @escaping (Result<[ShortlistAlbum], Error>) -> Void) {
+            let predicate = NSPredicate(format: "shortlistId == %@", shortlist.id)
+            let albumQuery = CKQuery(recordType: "Albums", predicate: predicate)
+            
+            CKContainer.default().publicCloudDatabase.fetch(withQuery: albumQuery) { albumRecords in
+                do {
+                    let records = try albumRecords.get()
+                    
+                    let albums = records.matchResults
+                        .compactMap { _, result in try? result.get() }
+                        .compactMap { ShortlistAlbum(with: $0) }
+                    
+                    completion(.success(albums))
+                    
+                    print("dustin album count \(albums.count)")
+                 } catch {
+                    completion(.failure(error))
+                }
             }
         }
         
-        func addAlbumToShortlist(shortlist: Shortlist, album: Content) async {
+        func addAlbumToShortlist() async {
+            guard let album = album else { return }
+
             let record = CKRecord(recordType: "Albums")
             record.setValue(album.artist, forKey: "artist")
             if let artworkURLString = album.artworkURL?.absoluteString {
                 record.setValue(artworkURLString, forKey: "artwork")
             }
+            
+            let albumRank: Int
+            
+            if let count = currentShortlistAlbums?.count {
+                albumRank = count + 1
+            } else {
+                albumRank = 1
+            }
+            
+            print("dustin theRank: \(albumRank)")
+            
             record.setValue(album.id, forKey: "id")
-            record.setValue(0, forKey: "rank")
+            record.setValue(albumRank, forKey: "rank")
             record.setValue(album.title, forKey: "title")
             record.setValue(album.upc, forKey: "upc")
             record.setValue(shortlist.id, forKey: "shortlistId")
-  
+            
             do {
                 let savedRecord = try await CKContainer.default().publicCloudDatabase.save(record)
-                print("dustin saved \(savedRecord)")
+                
+                print("dustin saved \(album.title)")
+   
+                currentShortlistAlbums = await withCheckedContinuation { continuation in
+                    updateShortlistAlbums(completion: { result in
+                           switch result {
+                           case .success(let albums):
+                               continuation.resume(returning: albums)
+                           case .failure(let error):
+                               print("Error: \(error)")
+                           }
+                       })
+                 }
             } catch {
                 print("Unable to save")
             }
+            
+            
         }
         
-        func removeAlbumFromShortlist(album: Content) {
-            guard let recordID = album.recordID else { return }
-
-            CKContainer.default().publicCloudDatabase.delete(withRecordID: recordID) { deletedRecord, error in
-                if error != nil {
-                    print("Unable to delete")
-                } else if let deletedRecord = deletedRecord {
-                    print("dustin delete \(deletedRecord)")
-                }
+        func removeAlbumFromShortlist() async {
+            guard let recordID = album?.recordID else { return }
+            
+            do {
+                let deletedRecord = try await CKContainer.default().publicCloudDatabase.deleteRecord(withID: recordID)
+                print("dustin delete \(deletedRecord)")
+                
+                currentShortlistAlbums = await withCheckedContinuation { continuation in
+                    updateShortlistAlbums(completion: { result in
+                           switch result {
+                           case .success(let albums):
+                               continuation.resume(returning: albums)
+                           case .failure(let error):
+                               print("Error: \(error)")
+                           }
+                       })
+                 }
+            } catch {
+                print("Unable to delete")
             }
+        }
+
+        func isAlbumOnShortlist() async -> Bool {
+            currentShortlistAlbums?.contains { $0.id == self.album?.id } == true
         }
     }
 }
