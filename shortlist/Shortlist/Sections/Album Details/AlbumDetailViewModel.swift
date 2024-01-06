@@ -39,14 +39,14 @@ extension AlbumDetailView {
             
             currentShortlistAlbums = await withCheckedContinuation { continuation in
                 updateShortlistAlbums(completion: { result in
-                       switch result {
-                       case .success(let albums):
-                           continuation.resume(returning: albums)
-                       case .failure(let error):
-                           print("Error: \(error)")
-                       }
-                   })
-             }
+                    switch result {
+                    case .success(let albums):
+                        continuation.resume(returning: albums)
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
+                })
+            }
             
             DispatchQueue.main.async {
                 self.album = details
@@ -65,7 +65,7 @@ extension AlbumDetailView {
                 await loadTracks(for: album, recordID: shortListAlbum.recordID)
             }
         }
-
+        
         private func updateShortlistAlbums(completion: @escaping (Result<[ShortlistAlbum], Error>) -> Void) {
             let predicate = NSPredicate(format: "shortlistId == %@", shortlist.id)
             let albumQuery = CKQuery(recordType: "Albums", predicate: predicate)
@@ -81,7 +81,7 @@ extension AlbumDetailView {
                     completion(.success(albums))
                     
                     print("dustin album count \(albums.count)")
-                 } catch {
+                } catch {
                     completion(.failure(error))
                 }
             }
@@ -89,7 +89,7 @@ extension AlbumDetailView {
         
         func addAlbumToShortlist() async {
             guard let album = album else { return }
-
+            
             let record = CKRecord(recordType: "Albums")
             record.setValue(album.artist, forKey: "artist")
             if let artworkURLString = album.artworkURL?.absoluteString {
@@ -116,22 +116,20 @@ extension AlbumDetailView {
                 let savedRecord = try await CKContainer.default().publicCloudDatabase.save(record)
                 
                 print("dustin saved \(album.title)")
-   
+                
                 currentShortlistAlbums = await withCheckedContinuation { continuation in
                     updateShortlistAlbums(completion: { result in
-                           switch result {
-                           case .success(let albums):
-                               continuation.resume(returning: albums)
-                           case .failure(let error):
-                               print("Error: \(error)")
-                           }
-                       })
-                 }
+                        switch result {
+                        case .success(let albums):
+                            continuation.resume(returning: albums)
+                        case .failure(let error):
+                            print("Error: \(error)")
+                        }
+                    })
+                }
             } catch {
                 print("Unable to save")
             }
-            
-            
         }
         
         func removeAlbumFromShortlist() async {
@@ -143,19 +141,59 @@ extension AlbumDetailView {
                 
                 currentShortlistAlbums = await withCheckedContinuation { continuation in
                     updateShortlistAlbums(completion: { result in
-                           switch result {
-                           case .success(let albums):
-                               continuation.resume(returning: albums)
-                           case .failure(let error):
-                               print("Error: \(error)")
-                           }
-                       })
-                 }
+                        switch result {
+                        case .success(let albums):
+                            continuation.resume(returning: albums)
+                        case .failure(let error):
+                            print("Error: \(error)")
+                        }
+                    })
+                }
+                
+                await updateShortlistAlbumRanking()
             } catch {
                 print("Unable to delete")
             }
         }
-
+        
+        func updateShortlistAlbumRanking() async {
+            guard let currentShortlistAlbums = currentShortlistAlbums else { return }
+            
+            for (index, album) in currentShortlistAlbums.enumerated() {
+                await buildAlbumRecord(from: album, updatedRank: index + 1)
+            }
+        }
+        
+        func buildAlbumRecord(from shortlistAlbum: ShortlistAlbum?, updatedRank: Int) async {
+            guard let album = shortlistAlbum else { return }
+            
+            await withCheckedContinuation { continuation in
+                CKContainer.default().publicCloudDatabase.fetch(withRecordID: album.recordID) { recordToSave, _ in
+                    if let recordToSave {
+                        print("dustin Updated theRank: \(updatedRank)")
+                        
+                        recordToSave.setValue(updatedRank, forKey: "rank")
+                        
+                        let modifyRecords = CKModifyRecordsOperation(recordsToSave:[recordToSave], recordIDsToDelete: nil)
+                        modifyRecords.savePolicy = CKModifyRecordsOperation.RecordSavePolicy.allKeys
+                        modifyRecords.qualityOfService = QualityOfService.userInitiated
+                        modifyRecords.modifyRecordsResultBlock = { result in
+                            switch result {
+                            case .success:
+                                print("dustin Updated \(album.title)")
+                            case .failure(let error):
+                                print(error)
+                            }
+                            
+                            continuation.resume()
+                        }
+                        
+                        CKContainer.default().publicCloudDatabase.add(modifyRecords)
+                    }
+                }
+            }
+        }
+        
         func isAlbumOnShortlist() async -> Bool {
             currentShortlistAlbums?.contains { $0.id == self.album?.id } == true
         }
