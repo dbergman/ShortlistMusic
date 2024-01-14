@@ -7,9 +7,11 @@
 
 import CloudKit
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ShortlistDetailsView: View {
     @State private var isPresented = false
+    @State var draggedAlbumId: String?
     @ObservedObject private var viewModel: ViewModel
     
     let layout = [
@@ -31,13 +33,25 @@ struct ShortlistDetailsView: View {
                         destination: AlbumDetailView(albumType: albumType, shortlist: viewModel.shortlist)
                     ){
                         VStack {
-                            AsyncImage(url: URL(string: album.artworkURLString)) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .cornerRadius(20)
-                            } placeholder: {
-                                ProgressView()
+                            ZStack(alignment: .bottomLeading) {
+                                AsyncImage(url: URL(string: album.artworkURLString)) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .cornerRadius(20)
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                                ZStack {
+                                    Circle()
+                                        .foregroundColor(.blue)
+                                        .frame(width: 22, height: 22)
+                                    
+                                    Text("\(album.rank)")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 12, weight: .bold, design: .default))
+                                }
+                                .padding(EdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 0))
                             }
                             .padding(.bottom, 10)
                             
@@ -47,15 +61,20 @@ struct ShortlistDetailsView: View {
                                 .lineLimit(1)
                             Spacer()
                         }
-                        .overlay(
-                              RoundedRectangle(cornerRadius: 20)
-                                  .stroke(Color(red: 0.8, green: 0.8, blue: 0.8), lineWidth: 1)
-                              )
-                        .padding(.bottom, 20)
-                        .padding(.leading, 10)
-                        .padding(.trailing, 10)
-                        
+                        .padding(EdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10))
+                        .onDrag {
+                            draggedAlbumId = album.id
+                            return NSItemProvider(item: nil, typeIdentifier: album.id)
+                        }
                     }
+                    .onDrop(
+                        of: [UTType.text],
+                        delegate: MyDropDelegate(
+                            item: album.id,
+                            items: $viewModel.shortlist.albums,
+                            draggedItem: $draggedAlbumId
+                        )
+                    )
                 }
             }
         }
@@ -84,5 +103,37 @@ struct ShortlistDetailsView: View {
 struct ShortlistDetails_Previews: PreviewProvider {
     static var previews: some View {
         return ShortlistDetailsView(shortlist: TestData.ShortLists.shortList)
+    }
+}
+
+struct MyDropDelegate: DropDelegate {
+    let item: String
+    @Binding var items: [ShortlistAlbum]?
+    @Binding var draggedItem: String?
+    
+    func performDrop(info: DropInfo) -> Bool {
+        guard
+            let items = items,
+            items.count < 1
+        else { return false }
+        
+        return true
+    }
+    
+    func dropEntered(info: DropInfo) {
+        guard
+            let draggedItem = self.draggedItem
+        else { return }
+        
+        if draggedItem != item {
+            guard
+                let from = items?.firstIndex(where: { $0.id == draggedItem }),
+                let to = items?.firstIndex(where: { $0.id == item })
+            else { return }
+            
+            withAnimation(.default) {
+                items?.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
+            }
+        }
     }
 }
