@@ -70,9 +70,10 @@ struct ShortlistDetailsView: View {
                     .onDrop(
                         of: [UTType.text],
                         delegate: MyDropDelegate(
-                            item: album.id,
-                            items: $viewModel.shortlist.albums,
-                            draggedItem: $draggedAlbumId
+                            updatedAlbumId: album.id,
+                            shortlistAlbums: $viewModel.shortlist.albums,
+                            draggedItem: $draggedAlbumId,
+                            viewModel: viewModel
                         )
                     )
                 }
@@ -98,42 +99,48 @@ struct ShortlistDetailsView: View {
                 }
             }
     }
+    
+    struct MyDropDelegate: DropDelegate {
+        let updatedAlbumId: String
+        @Binding var shortlistAlbums: [ShortlistAlbum]?
+        @Binding var draggedItem: String?
+        @ObservedObject var viewModel: ViewModel
+        
+        func performDrop(info: DropInfo) -> Bool {
+            guard let shortlistAlbums = shortlistAlbums else { return true }
+            
+            Task {
+                await viewModel.updateShortlistAlbumRanking(sortedAlbums: shortlistAlbums)
+            }
+            
+            return true
+        }
+        
+        func dropEntered(info: DropInfo) {
+            guard
+                let draggedItem = self.draggedItem
+            else { return }
+            
+            if draggedItem != updatedAlbumId {
+                guard
+                    let from = shortlistAlbums?.firstIndex(where: { $0.id == draggedItem }),
+                    let to = shortlistAlbums?.firstIndex(where: { $0.id == updatedAlbumId })
+                else { return }
+                
+                withAnimation(.default) {
+                    shortlistAlbums?.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
+                }
+            }
+        }
+        
+        func dropUpdated(info: DropInfo) -> DropProposal? {
+            return DropProposal(operation: .move)
+        }
+    }
 }
 
 struct ShortlistDetails_Previews: PreviewProvider {
     static var previews: some View {
         return ShortlistDetailsView(shortlist: TestData.ShortLists.shortList)
-    }
-}
-
-struct MyDropDelegate: DropDelegate {
-    let item: String
-    @Binding var items: [ShortlistAlbum]?
-    @Binding var draggedItem: String?
-    
-    func performDrop(info: DropInfo) -> Bool {
-        guard
-            let items = items,
-            items.count < 1
-        else { return false }
-        
-        return true
-    }
-    
-    func dropEntered(info: DropInfo) {
-        guard
-            let draggedItem = self.draggedItem
-        else { return }
-        
-        if draggedItem != item {
-            guard
-                let from = items?.firstIndex(where: { $0.id == draggedItem }),
-                let to = items?.firstIndex(where: { $0.id == item })
-            else { return }
-            
-            withAnimation(.default) {
-                items?.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
-            }
-        }
     }
 }

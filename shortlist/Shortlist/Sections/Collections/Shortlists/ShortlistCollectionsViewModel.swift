@@ -37,6 +37,7 @@ extension ShortlistCollectionsView {
                         for shortlist in shortlists {
                             let predicate = NSPredicate(format: "shortlistId == %@", shortlist.id)
                             let albumQuery = CKQuery(recordType: "Albums", predicate: predicate)
+                            albumQuery.sortDescriptors = [NSSortDescriptor(key: "rank", ascending: true)]
                             dispatchGroup.enter()
                             
                             CKContainer.default().publicCloudDatabase.fetch(withQuery: albumQuery) { albumRecords in

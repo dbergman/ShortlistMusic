@@ -164,7 +164,7 @@ extension AlbumDetailView {
             }
         }
         
-        func buildAlbumRecord(from shortlistAlbum: ShortlistAlbum?, updatedRank: Int) async {
+        private func buildAlbumRecord(from shortlistAlbum: ShortlistAlbum?, updatedRank: Int) async {
             guard let album = shortlistAlbum else { return }
             
             await withCheckedContinuation { continuation in
