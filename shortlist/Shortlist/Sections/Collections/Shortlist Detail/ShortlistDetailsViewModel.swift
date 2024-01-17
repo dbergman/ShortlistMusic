@@ -39,39 +39,67 @@ extension ShortlistDetailsView {
         }
         
         func updateShortlistAlbumRanking(sortedAlbums: [ShortlistAlbum]) async {
-            for (index, album) in sortedAlbums.enumerated() {
-                await buildAlbumRecord(from: album, updatedRank: index + 1)
+            let albumRecordIds = sortedAlbums.map { $0.recordID }
+            
+            let sortedAlbumsWithRank = Task {
+                var sortedAlbumsWithRank = [ShortlistAlbum]()
+                for (rankIndex, album) in sortedAlbums.enumerated() {
+                    let shortlistAlbum = ShortlistAlbum(shortlistAlbum: album, rank: rankIndex + 1)
+                    sortedAlbumsWithRank.append(shortlistAlbum)
+                }
+                
+                return sortedAlbumsWithRank
             }
             
-            getAlbums(for: shortlist)
-        }
-        
-        private func buildAlbumRecord(from shortlistAlbum: ShortlistAlbum?, updatedRank: Int) async {
-            guard let album = shortlistAlbum else { return }
-            
-            await withCheckedContinuation { continuation in
-                CKContainer.default().publicCloudDatabase.fetch(withRecordID: album.recordID) { recordToSave, _ in
-                    if let recordToSave {
-                        recordToSave.setValue(updatedRank, forKey: "rank")
-                        
-                        let modifyRecords = CKModifyRecordsOperation(recordsToSave:[recordToSave], recordIDsToDelete: nil)
-                        modifyRecords.savePolicy = CKModifyRecordsOperation.RecordSavePolicy.allKeys
-                        modifyRecords.qualityOfService = QualityOfService.userInitiated
-                        modifyRecords.modifyRecordsResultBlock = { result in
-                            switch result {
-                            case .success:
-                                print("dustin Updated \(album.title)")
-                            case .failure(let error):
-                                print(error)
-                            }
-                            
-                            continuation.resume()
-                        }
-                        
-                        CKContainer.default().publicCloudDatabase.add(modifyRecords)
-                    }
+            DispatchQueue.main.async {
+                Task {
+                    try await self.shortlist = Shortlist(shortlist: self.shortlist, shortlistAlbums: sortedAlbumsWithRank.result.get())
                 }
             }
+            
+            let completion: ([CKRecord]) -> Void = { recordsToSave in
+                Task {
+                    await self.updateRecords(recordsToSave: recordsToSave)
+                }
+            }
+            
+            CKContainer.default().publicCloudDatabase.fetch(withRecordIDs: albumRecordIds) { result in
+                var recordsToSave = [CKRecord]()
+                
+                switch result {
+                case .success(let albumDict):
+                    for (rankIndex, album) in sortedAlbums.enumerated() {
+                        let shortlistAlbumResult = albumDict[album.recordID]
+                        
+                        if case .success(let shortlistAlbum) = shortlistAlbumResult {
+                            shortlistAlbum.setValue(rankIndex + 1, forKey: "rank")
+                            recordsToSave.append(shortlistAlbum)
+                        }
+                    }
+                    
+                    completion(recordsToSave)
+                    
+                case .failure:
+                    print("ERROR")
+                }
+            }
+        }
+        
+        func updateRecords(recordsToSave: [CKRecord]) async {
+            let modifyRecords = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
+            modifyRecords.savePolicy = CKModifyRecordsOperation.RecordSavePolicy.allKeys
+            modifyRecords.qualityOfService = QualityOfService.userInteractive
+            modifyRecords.modifyRecordsResultBlock = { result in
+                switch result {
+                case .success:
+                    print("dustin Updated")
+                    // self.getAlbums(for: self.shortlist)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            
+            CKContainer.default().publicCloudDatabase.add(modifyRecords)
         }
     }
 }

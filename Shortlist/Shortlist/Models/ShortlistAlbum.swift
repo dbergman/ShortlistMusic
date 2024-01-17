@@ -41,4 +41,15 @@ extension ShortlistAlbum {
         self.upc = record["upc"] as? String
         recordID = record.recordID
     }
+    
+    init(shortlistAlbum: ShortlistAlbum, rank: Int) {
+        self.id = shortlistAlbum.id
+        self.title = shortlistAlbum.title
+        self.artist = shortlistAlbum.artist
+        self.artworkURLString = shortlistAlbum.artworkURLString
+        self.rank = rank
+        self.shortlistId = shortlistAlbum.shortlistId
+        self.upc = shortlistAlbum.upc
+        recordID = shortlistAlbum.recordID
+    }
 }
