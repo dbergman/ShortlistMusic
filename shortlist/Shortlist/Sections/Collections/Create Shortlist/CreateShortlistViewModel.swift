@@ -8,7 +8,7 @@
 import CloudKit
 import Foundation
 
-extension CreateShortlistView {
+extension CreateAndEditShortlistView {
     class ViewModel: ObservableObject {
         private typealias GetUserIdCompletion = (String) -> Void
         typealias Completion = (Shortlist) -> Void

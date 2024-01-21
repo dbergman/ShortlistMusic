@@ -36,7 +36,7 @@
 		8BE7D4582965EE870099EF4E /* CreateShortlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4572965EE870099EF4E /* CreateShortlistViewModel.swift */; };
 		8BE7D45B2965F0520099EF4E /* Shortlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D45A2965F0520099EF4E /* Shortlist.swift */; };
 		8BE7D45D2967AE210099EF4E /* ShortlistCollectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D45C2967AE210099EF4E /* ShortlistCollectionsViewModel.swift */; };
-		8BF28669295CF32F00E80C53 /* CreateShortlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF28668295CF32F00E80C53 /* CreateShortlistView.swift */; };
+		8BF28669295CF32F00E80C53 /* CreateAndEditShortlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF28668295CF32F00E80C53 /* CreateAndEditShortlistView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,7 +72,7 @@
 		8BE7D4572965EE870099EF4E /* CreateShortlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShortlistViewModel.swift; sourceTree = "<group>"; };
 		8BE7D45A2965F0520099EF4E /* Shortlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortlist.swift; sourceTree = "<group>"; };
 		8BE7D45C2967AE210099EF4E /* ShortlistCollectionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistCollectionsViewModel.swift; sourceTree = "<group>"; };
-		8BF28668295CF32F00E80C53 /* CreateShortlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShortlistView.swift; sourceTree = "<group>"; };
+		8BF28668295CF32F00E80C53 /* CreateAndEditShortlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAndEditShortlistView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,7 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				8BE7D4572965EE870099EF4E /* CreateShortlistViewModel.swift */,
-				8BF28668295CF32F00E80C53 /* CreateShortlistView.swift */,
+				8BF28668295CF32F00E80C53 /* CreateAndEditShortlistView.swift */,
 			);
 			path = "Create Shortlist";
 			sourceTree = "<group>";
@@ -338,7 +338,7 @@
 				8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */,
 				8B685AEA290B7B1400F6AD7F /* SearchMusicView.swift in Sources */,
 				8BC843EB297FA4B100FA6B78 /* ShortlistToolbar.swift in Sources */,
-				8BF28669295CF32F00E80C53 /* CreateShortlistView.swift in Sources */,
+				8BF28669295CF32F00E80C53 /* CreateAndEditShortlistView.swift in Sources */,
 				8B15AEAF29554B10005CE9F6 /* Formatters+StandardFormatters.swift in Sources */,
 				8B15AEB7295A2CC7005CE9F6 /* AlbumDetailViewModel.swift in Sources */,
 				8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */,
