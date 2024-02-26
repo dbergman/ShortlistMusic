@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ShortlistToolbar: View {
+    @State private var isEditShortlistViewPresented = false
+    @State var shortlist: Shortlist
+
     var body: some View {
         HStack {
             Spacer()
@@ -26,10 +29,18 @@ struct ShortlistToolbar: View {
             }
             Spacer()
             Button(action: {
-                // button action 3
+                isEditShortlistViewPresented.toggle()
             }) {
                 Image(systemName: "pencil")
                     .font(.title2)
+            }
+            .sheet(isPresented: $isEditShortlistViewPresented) {
+                EditShortlistView(
+                    isPresented: $isEditShortlistViewPresented,
+                    shortlist: $shortlist,
+                    shortlistName: shortlist.name,
+                    selectedYear: shortlist.year)
+                .presentationDetents([.medium, .large])
             }
             Spacer()
             Button(action: {
@@ -44,8 +55,8 @@ struct ShortlistToolbar: View {
 }
 
 
-struct ShortlistToolbar_Previews: PreviewProvider {
-    static var previews: some View {
-        return ShortlistToolbar()
-    }
-}
+//struct ShortlistToolbar_Previews: PreviewProvider {
+//    static var previews: some View {
+//        return ShortlistToolbar()
+//    }
+//}

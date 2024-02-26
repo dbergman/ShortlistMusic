@@ -28,7 +28,7 @@ struct ShortlistCollectionsView: View {
                 }
                 .onBoardingSheet()
                 .sheet(isPresented: $isPresented) {
-                    CreateAndEditShortlistView(isPresented: $isPresented, shortlists: $viewModel.shortlists)
+                    CreateShortlistView(isPresented: $isPresented, shortlists: $viewModel.shortlists)
                         .presentationDetents([.medium, .large])
                 }.onAppear() {
                     Task {

@@ -85,7 +85,7 @@ extension ShortlistDetailsView {
             }
         }
         
-        func updateRecords(recordsToSave: [CKRecord]) async {
+        private func updateRecords(recordsToSave: [CKRecord]) async {
             let modifyRecords = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
             modifyRecords.savePolicy = CKModifyRecordsOperation.RecordSavePolicy.allKeys
             modifyRecords.qualityOfService = QualityOfService.userInteractive

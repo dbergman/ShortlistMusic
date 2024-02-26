@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CreateAndEditShortlistView: View {
+struct CreateShortlistView: View {
     @Binding var isPresented: Bool
     @FocusState private var focus: Bool
     @ObservedObject private var viewModel = ViewModel()
@@ -88,6 +88,6 @@ struct CreateAndEditShortlistView: View {
 
 struct CreateShortlistView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateAndEditShortlistView(isPresented: .constant(false), shortlists: .constant([]))
+        CreateShortlistView(isPresented: .constant(false), shortlists: .constant([]))
     }
 }

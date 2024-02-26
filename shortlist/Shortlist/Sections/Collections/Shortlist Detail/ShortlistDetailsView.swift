@@ -80,7 +80,7 @@ struct ShortlistDetailsView: View {
             }
         }
         Spacer()
-        ShortlistToolbar()
+        ShortlistToolbar(shortlist: viewModel.shortlist)
             .padding(.bottom)
             .navigationBarTitle(viewModel.shortlist.name)
             .navigationBarTitleDisplayMode(.inline)
