@@ -80,7 +80,7 @@ struct ShortlistDetailsView: View {
             }
         }
         Spacer()
-        ShortlistToolbar(shortlist: viewModel.shortlist)
+        ShortlistToolbar()
             .padding(.bottom)
             .navigationBarTitle(viewModel.shortlist.name)
             .navigationBarTitleDisplayMode(.inline)
@@ -98,6 +98,7 @@ struct ShortlistDetailsView: View {
                     viewModel.getAlbums(for: viewModel.shortlist)
                 }
             }
+            .environmentObject(viewModel)
     }
     
     struct MyDropDelegate: DropDelegate {

@@ -7,16 +7,11 @@
 
 import SwiftUI
 
-struct EditShortlistView: View {
-    struct Content {
-        let shortlistName: String
-        let shortlistYear: String
-    }
-    
+struct EditShortlistView: View {    
     @Binding var isPresented: Bool
     @FocusState private var focus: Bool
     @ObservedObject private var viewModel = ViewModel()
-    @Binding var shortlist: Shortlist
+    @EnvironmentObject var shortlistDetailsVM: ShortlistDetailsView.ViewModel
     
     @State var shortlistName: String
     @State var selectedYear: String
@@ -49,9 +44,16 @@ struct EditShortlistView: View {
                 Section {
                     Button(action: {
                         Task {
-                            viewModel.updateNewShortlist(shortlist: shortlist, updatedName: shortlistName, updatedYear: selectedYear, completion: { _ in
-                                self.isPresented = false
-                            })
+                            viewModel.updateNewShortlist(
+                                shortlist: shortlistDetailsVM.shortlist,
+                                updatedName: shortlistName,
+                                updatedYear: selectedYear,
+                                completion:
+                                    { shortlist in
+                                        shortlistDetailsVM.shortlist = shortlist
+                                        isPresented = false
+                                    }
+                            )
                         }
                     }, label: {
                         HStack {
@@ -93,7 +95,6 @@ struct EditShortlistView_Previews: PreviewProvider {
     static var previews: some View {
         EditShortlistView(
             isPresented: .constant(false),
-            shortlist: .constant(TestData.ShortLists.shortList),
             shortlistName: TestData.ShortLists.shortList.name,
             selectedYear: TestData.ShortLists.shortList.year)
     }

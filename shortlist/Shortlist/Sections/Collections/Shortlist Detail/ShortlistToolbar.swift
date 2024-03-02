@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ShortlistToolbar: View {
     @State private var isEditShortlistViewPresented = false
-    @State var shortlist: Shortlist
+    @EnvironmentObject var viewModel: ShortlistDetailsView.ViewModel
 
     var body: some View {
         HStack {
@@ -37,9 +37,9 @@ struct ShortlistToolbar: View {
             .sheet(isPresented: $isEditShortlistViewPresented) {
                 EditShortlistView(
                     isPresented: $isEditShortlistViewPresented,
-                    shortlist: $shortlist,
-                    shortlistName: shortlist.name,
-                    selectedYear: shortlist.year)
+                    shortlistName: viewModel.shortlist.name,
+                    selectedYear: viewModel.shortlist.year)
+                .environmentObject(viewModel)
                 .presentationDetents([.medium, .large])
             }
             Spacer()

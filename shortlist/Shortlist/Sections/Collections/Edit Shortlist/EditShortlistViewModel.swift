@@ -34,34 +34,14 @@ extension EditShortlistView {
                         DispatchQueue.main.async {
                             self.editShortlistError = saveError.localizedDescription
                         }
-                    } else if let savedRecord = savedRecord, let shortlist = Shortlist(with: savedRecord) {
-                        completion(shortlist)
+                    } else if 
+                        let savedRecord = savedRecord, 
+                        let savedShortlist = Shortlist(with: savedRecord)
+                    {
+                        let updatedShortlist = Shortlist(shortlist: savedShortlist, shortlistAlbums: shortlist.albums ?? [])
+                        completion(updatedShortlist)
                     }
                 }
-            }
-        }
-        
-        private func updateRecords(recordsToSave: [CKRecord]) async {
-            let modifyRecords = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
-            modifyRecords.savePolicy = CKModifyRecordsOperation.RecordSavePolicy.allKeys
-            modifyRecords.qualityOfService = QualityOfService.userInteractive
-            modifyRecords.modifyRecordsResultBlock = { result in
-                switch result {
-                case .success:
-                    print("dustin Updated")
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        self.editShortlistError = error.localizedDescription
-                    }
-                }
-            }
-            
-            CKContainer.default().publicCloudDatabase.add(modifyRecords)
-        }
-        
-        private func foundError(error: String) {
-            DispatchQueue.main.async {
-                self.editShortlistError = error
             }
         }
     }
