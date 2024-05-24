@@ -46,7 +46,15 @@ struct SearchMusicView: View {
             VStack {
                 SearchResultsList(albums: viewModel.albums)
                     .scrollDismissesKeyboard(.immediately)
-                    .navigationTitle("Add to {Name}")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            VStack {
+                                Text("Add to").font(.headline)
+                                Text("\(shortlist.name)").font(.subheadline)
+                            }
+                        }
+                    }
                     .navigationDestination(for: SearchMusicView.Route.self) { route in
                         switch route {
                         case .album(let album):

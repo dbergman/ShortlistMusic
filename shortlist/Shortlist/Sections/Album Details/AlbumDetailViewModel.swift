@@ -113,7 +113,7 @@ extension AlbumDetailView {
             record.setValue(shortlist.id, forKey: "shortlistId")
             
             do {
-                let savedRecord = try await CKContainer.default().publicCloudDatabase.save(record)
+                try await CKContainer.default().publicCloudDatabase.save(record)
                 
                 print("dustin saved \(album.title)")
                 

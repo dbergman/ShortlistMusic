@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1400"
+   LastUpgradeVersion = "1520"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -17,7 +17,7 @@
                BlueprintIdentifier = "8B685ACE290B791100F6AD7F"
                BuildableName = "Shortlist.app"
                BlueprintName = "Shortlist"
-               ReferencedContainer = "container:shortlist.xcodeproj">
+               ReferencedContainer = "container:Shortlist.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,7 +47,7 @@
             BlueprintIdentifier = "8B685ACE290B791100F6AD7F"
             BuildableName = "Shortlist.app"
             BlueprintName = "Shortlist"
-            ReferencedContainer = "container:shortlist.xcodeproj">
+            ReferencedContainer = "container:Shortlist.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -64,7 +64,7 @@
             BlueprintIdentifier = "8B685ACE290B791100F6AD7F"
             BuildableName = "Shortlist.app"
             BlueprintName = "Shortlist"
-            ReferencedContainer = "container:shortlist.xcodeproj">
+            ReferencedContainer = "container:Shortlist.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
