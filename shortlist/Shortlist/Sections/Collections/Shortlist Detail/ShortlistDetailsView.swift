@@ -88,14 +88,16 @@ struct ShortlistDetailsView: View {
                 .onTapGesture {
                     isPresented.toggle()
                 }.fullScreenCover(isPresented: $isPresented, onDismiss: {
-                    viewModel.getAlbums(for: viewModel.shortlist)
+                    Task {
+                        try await viewModel.getAlbums(for: viewModel.shortlist)
+                    }
                 }, content: {
                     SearchMusicView(isPresented: $isPresented, shortlist: viewModel.shortlist)
                 })
             )
             .onAppear() {
                 Task {
-                    viewModel.getAlbums(for: viewModel.shortlist)
+                    try await viewModel.getAlbums(for: viewModel.shortlist)
                 }
             }
             .environmentObject(viewModel)
@@ -111,7 +113,7 @@ struct ShortlistDetailsView: View {
             guard let shortlistAlbums = shortlistAlbums else { return true }
             
             Task {
-                await viewModel.updateShortlistAlbumRanking(sortedAlbums: shortlistAlbums)
+                try await viewModel.updateShortlistAlbumRanking(sortedAlbums: shortlistAlbums)
             }
             
             return true

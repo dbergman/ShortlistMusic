@@ -5,7 +5,6 @@
 //  Created by Dustin Bergman on 1/5/23.
 //
 
-import CloudKit
 import Foundation
 
 extension ShortlistCollectionsView {
