@@ -32,7 +32,7 @@ struct ShortlistCollectionsView: View {
                         .presentationDetents([.medium, .large])
                 }.onAppear() {
                     Task {
-                        try? viewModel.getShortlists()
+                        try? await viewModel.getShortlists()
                     }
                 }
         }
@@ -156,14 +156,14 @@ extension ShortlistCollectionsView {
         }
         
         private func delete(at offsets: IndexSet) {
-            guard
-                let index = offsets.first
-            else {
-                return
+            guard let index = offsets.first else { return }
+
+            let shortlist = viewModel.shortlists[index]
+
+            Task {
+                try? await viewModel.remove(shortlist: shortlist)
             }
             
-            let shortlist = viewModel.shortlists[index]
-            viewModel.remove(shortlist: shortlist)
         }
     }
 }

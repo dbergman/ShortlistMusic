@@ -20,6 +20,7 @@
 		8B1EEAF32918910D00D28E47 /* MusicPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1EEAF22918910D00D28E47 /* MusicPermission.swift */; };
 		8B330E3A2B2FAECA00EA07C0 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B330E392B2FAECA00EA07C0 /* TestData.swift */; };
 		8B5EB70E2986E82300AD9588 /* ShortlistAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */; };
+		8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */; };
 		8B685AD3290B791100F6AD7F /* ShortlistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD2290B791100F6AD7F /* ShortlistApp.swift */; };
 		8B685AD8290B791100F6AD7F /* Shortlist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD6290B791100F6AD7F /* Shortlist.xcdatamodeld */; };
 		8B685ADC290B791300F6AD7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B685ADB290B791300F6AD7F /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		8B1EEAF22918910D00D28E47 /* MusicPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPermission.swift; sourceTree = "<group>"; };
 		8B330E392B2FAECA00EA07C0 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistAlbum.swift; sourceTree = "<group>"; };
+		8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		8B685ACF290B791100F6AD7F /* Shortlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shortlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B685AD2290B791100F6AD7F /* ShortlistApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistApp.swift; sourceTree = "<group>"; };
 		8B685AD7290B791100F6AD7F /* Shortlist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shortlist.xcdatamodel; sourceTree = "<group>"; };
@@ -135,6 +137,14 @@
 			path = "Test Data";
 			sourceTree = "<group>";
 		};
+		8B5F2D132C016138008849A2 /* CloudKit Manager */ = {
+			isa = PBXGroup;
+			children = (
+				8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */,
+			);
+			path = "CloudKit Manager";
+			sourceTree = "<group>";
+		};
 		8B685AC6290B791100F6AD7F = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +169,7 @@
 				8BE7D4592965F02A0099EF4E /* Models */,
 				8B15AEAD29554AD6005CE9F6 /* Helpers */,
 				8BF43F86295F715C007946C6 /* MusicPermission */,
+				8B5F2D132C016138008849A2 /* CloudKit Manager */,
 				8B685AE6290B7ACF00F6AD7F /* Sections */,
 				8B330E382B2FAC1100EA07C0 /* Test Data */,
 				8B685AD2290B791100F6AD7F /* ShortlistApp.swift */,
@@ -352,6 +363,7 @@
 				8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */,
 				8B685AEA290B7B1400F6AD7F /* SearchMusicView.swift in Sources */,
 				8BC843EB297FA4B100FA6B78 /* ShortlistToolbar.swift in Sources */,
+				8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */,
 				8BF28669295CF32F00E80C53 /* CreateShortlistView.swift in Sources */,
 				8B15AEAF29554B10005CE9F6 /* Formatters+StandardFormatters.swift in Sources */,
 				8B15AEB7295A2CC7005CE9F6 /* AlbumDetailViewModel.swift in Sources */,
