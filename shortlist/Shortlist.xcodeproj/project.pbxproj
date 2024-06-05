@@ -21,6 +21,7 @@
 		8B330E3A2B2FAECA00EA07C0 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B330E392B2FAECA00EA07C0 /* TestData.swift */; };
 		8B5EB70E2986E82300AD9588 /* ShortlistAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */; };
 		8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */; };
+		8B5F2D182C10140E008849A2 /* UserErrorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */; };
 		8B685AD3290B791100F6AD7F /* ShortlistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD2290B791100F6AD7F /* ShortlistApp.swift */; };
 		8B685AD8290B791100F6AD7F /* Shortlist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD6290B791100F6AD7F /* Shortlist.xcdatamodeld */; };
 		8B685ADC290B791300F6AD7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B685ADB290B791300F6AD7F /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 		8B330E392B2FAECA00EA07C0 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistAlbum.swift; sourceTree = "<group>"; };
 		8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
+		8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserErrorFactory.swift; sourceTree = "<group>"; };
 		8B685ACF290B791100F6AD7F /* Shortlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shortlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B685AD2290B791100F6AD7F /* ShortlistApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistApp.swift; sourceTree = "<group>"; };
 		8B685AD7290B791100F6AD7F /* Shortlist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shortlist.xcdatamodel; sourceTree = "<group>"; };
@@ -104,9 +106,8 @@
 		8B15AEAD29554AD6005CE9F6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				8B15AEAE29554B10005CE9F6 /* Formatters+StandardFormatters.swift */,
-				8B15AEBA295BC6F8005CE9F6 /* MusicKit+Extension.swift */,
-				8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */,
+				8B5F2D162C1013D2008849A2 /* Extensions */,
+				8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -143,6 +144,16 @@
 				8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */,
 			);
 			path = "CloudKit Manager";
+			sourceTree = "<group>";
+		};
+		8B5F2D162C1013D2008849A2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8B15AEAE29554B10005CE9F6 /* Formatters+StandardFormatters.swift */,
+				8B15AEBA295BC6F8005CE9F6 /* MusicKit+Extension.swift */,
+				8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		8B685AC6290B791100F6AD7F = {
@@ -355,6 +366,7 @@
 				8BE7D45B2965F0520099EF4E /* Shortlist.swift in Sources */,
 				8B685AEC290B7B3300F6AD7F /* ShortlistCollectionsView.swift in Sources */,
 				8B15AEB129576581005CE9F6 /* SearchAlbumsView.swift in Sources */,
+				8B5F2D182C10140E008849A2 /* UserErrorFactory.swift in Sources */,
 				8B15AEBD295CC653005CE9F6 /* SearchMusicArtistCell.swift in Sources */,
 				8B1EEAF32918910D00D28E47 /* MusicPermission.swift in Sources */,
 				8BE7D45D2967AE210099EF4E /* ShortlistCollectionsViewModel.swift in Sources */,

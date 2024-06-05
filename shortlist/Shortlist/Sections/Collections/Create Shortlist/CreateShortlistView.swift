@@ -43,12 +43,15 @@ struct CreateShortlistView: View {
                 Section {
                     Button(action: {
                         Task {
-                            viewModel.addNewShortlist(name: shortlistName, year: selectedYear) { shortlist in
+                            do {
+                                let shortlist = try await viewModel.addNewShortlist(name: shortlistName, year: selectedYear)
+                                
                                 DispatchQueue.main.async {
                                     self.shortlists.append(shortlist)
+                                    self.isPresented = false
                                 }
-                                
-                                self.isPresented = false
+                            } catch {
+                                print("Failed to add shortlist: \(error.localizedDescription)")
                             }
                         }
                     }, label: {

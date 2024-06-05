@@ -16,6 +16,48 @@ class CloudKitManager {
     }()
 }
 
+// Create Shortlist
+extension CloudKitManager {
+    func addNewShortlist(name: String, year: String, completion: @escaping (Result<Shortlist, Error>) -> Void) {
+        getUserID { result in
+            switch result {
+            case .success:
+                let record = CKRecord(recordType: "Shortlists")
+                record.setValue(UUID().uuidString, forKey: "id")
+                record.setValue(name, forKey: "name")
+                record.setValue(year, forKey: "year")
+                
+                CKContainer.default().publicCloudDatabase.save(record) { savedRecord, error in
+                    if let error {
+                        completion(.failure(error))
+                    } else if let savedRecord = savedRecord, let shortlist = Shortlist(with: savedRecord) {
+                        completion(.success(shortlist))
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private func getUserID(completion: @escaping (Result<String, Error>) -> Void) {
+        CKContainer.default().fetchUserRecordID { recordID, error in
+            if let error {
+                completion(.failure(error))
+            } else if let userId = recordID?.recordName {
+                completion(.success(userId))
+            } else {
+                let unknownError = NSError(
+                    domain: "com.dus.shortlist",
+                    code: 0,
+                    userInfo: [NSLocalizedDescriptionKey: "Error finding User Record."]
+                )
+                completion(.failure(unknownError))
+            }
+        }
+    }
+}
+
 // Shortlist Collection Methods
 extension CloudKitManager {
     func getShortlists(completion: @escaping (Result<[Shortlist], Error>) -> Void) {
@@ -115,7 +157,7 @@ extension CloudKitManager {
     func updateAlbumRanking(
         for shortlist: Shortlist,
         sortedAlbums: [ShortlistAlbum],
-        completion: @escaping (Result<Void, Error>) -> Void)
+        completion: @escaping (Result<Shortlist, Error>) -> Void)
     {
         let albumRecordIds = sortedAlbums.map { $0.recordID }
         
@@ -127,10 +169,6 @@ extension CloudKitManager {
             }
             
             return sortedAlbumsWithRank
-        }
-        
-        Task {
-            let updatedShortlist = try await Shortlist(shortlist: shortlist, shortlistAlbums: sortedAlbumsWithRank.result.get())
         }
         
         let saveCompletion: ([CKRecord]) -> Void = { recordsToSave in
@@ -154,8 +192,12 @@ extension CloudKitManager {
                 }
                 
                 saveCompletion(recordsToSave)
-                completion(.success(()))
-                
+
+                Task {
+                    let updatedShortlist = try await Shortlist(shortlist: shortlist, shortlistAlbums: sortedAlbumsWithRank.result.get())
+                    completion(.success(updatedShortlist))
+                }
+ 
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -178,5 +220,4 @@ extension CloudKitManager {
         
         CKContainer.default().publicCloudDatabase.add(modifyRecords)
     }
-
 }

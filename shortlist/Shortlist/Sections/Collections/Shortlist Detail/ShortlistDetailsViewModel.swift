@@ -31,14 +31,14 @@ extension ShortlistDetailsView {
         }
         
         func updateShortlistAlbumRanking(sortedAlbums: [ShortlistAlbum]) async throws {
-            try await withCheckedThrowingContinuation { continuation in
+            self.shortlist = try await withCheckedThrowingContinuation { continuation in
                 CloudKitManager.shared.updateAlbumRanking(
                     for: shortlist,
                     sortedAlbums: sortedAlbums
                 ) { result in
                     switch result {
-                    case .success:
-                        continuation.resume()
+                    case .success(let shortlist):
+                        continuation.resume(returning: shortlist)
                         
                     case .failure(let error):
                         continuation.resume(throwing: error)
