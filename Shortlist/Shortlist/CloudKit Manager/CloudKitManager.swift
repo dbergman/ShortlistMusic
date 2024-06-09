@@ -58,6 +58,42 @@ extension CloudKitManager {
     }
 }
 
+// Edit Shortlist
+extension CloudKitManager {
+    func updateNewShortlist(
+        shortlist: Shortlist,
+        updatedName: String,
+        updatedYear: String,
+        completion: @escaping (Result<Shortlist, Error>) -> Void)
+    {
+        CKContainer.default().publicCloudDatabase.fetch(withRecordID: shortlist.recordID) { record, error in
+            guard 
+                let record = record
+            else {
+                completion(.failure(UserErrorFactory.makeError(.shortlistNotFound)))
+                return
+            }
+            
+            record["name"] = updatedName
+            record["year"] = updatedYear
+            
+            CKContainer.default().publicCloudDatabase.save(record) { savedRecord, saveError in
+                if let saveError {
+                    completion(.failure(UserErrorFactory.makeError(.shortlistNotFound)))
+                } else if
+                    let savedRecord = savedRecord,
+                    let savedShortlist = Shortlist(with: savedRecord)
+                {
+                    let updatedShortlist = Shortlist(shortlist: savedShortlist, shortlistAlbums: shortlist.albums ?? [])
+                    completion(.success(updatedShortlist))
+                } else {
+                    completion(.failure(UserErrorFactory.makeError(.shortlistNotFound)))
+                }
+            }
+        }
+    }
+}
+
 // Shortlist Collection Methods
 extension CloudKitManager {
     func getShortlists(completion: @escaping (Result<[Shortlist], Error>) -> Void) {

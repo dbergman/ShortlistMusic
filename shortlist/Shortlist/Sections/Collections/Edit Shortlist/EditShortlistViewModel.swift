@@ -13,36 +13,23 @@ extension EditShortlistView {
         typealias Completion = (Shortlist) -> Void
         @Published var editShortlistError = ""
         
-        func updateNewShortlist(shortlist: Shortlist, updatedName: String, updatedYear: String, completion: @escaping Completion) {
-            CKContainer.default().publicCloudDatabase.fetch(withRecordID: shortlist.recordID) { record, error in
-                guard let record = record else {
-                    if let error = error {
-                        DispatchQueue.main.async {
-                            self.editShortlistError = error.localizedDescription
+        func updateNewShortlist(shortlist: Shortlist, updatedName: String, updatedYear: String) async throws -> Shortlist  {
+            let shortlist = try await withCheckedThrowingContinuation { continuation in
+                CloudKitManager.shared.updateNewShortlist(
+                    shortlist: shortlist,
+                    updatedName: updatedName,
+                    updatedYear: updatedYear) { result in
+                        switch result {
+                        case .success(let shortlist):
+                            continuation.resume(returning: shortlist)
+                            
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
                         }
-                    } else {
-                        print("Shortlist record not found")
                     }
-                    return
-                }
-                
-                record["name"] = updatedName
-                record["year"] = updatedYear
-                
-                CKContainer.default().publicCloudDatabase.save(record) { savedRecord, saveError in
-                    if let saveError = saveError {
-                        DispatchQueue.main.async {
-                            self.editShortlistError = saveError.localizedDescription
-                        }
-                    } else if 
-                        let savedRecord = savedRecord, 
-                        let savedShortlist = Shortlist(with: savedRecord)
-                    {
-                        let updatedShortlist = Shortlist(shortlist: savedShortlist, shortlistAlbums: shortlist.albums ?? [])
-                        completion(updatedShortlist)
-                    }
-                }
             }
+            
+            return shortlist
         }
     }
 }

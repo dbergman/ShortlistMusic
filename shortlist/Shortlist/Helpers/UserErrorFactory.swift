@@ -10,6 +10,7 @@ import Foundation
 enum UserError: Int {
     case userNotFound
     case invalidUserID
+    case shortlistNotFound
     case unknown
 
     var localizedDescription: String {
@@ -18,6 +19,8 @@ enum UserError: Int {
             return "User not found"
         case .invalidUserID:
             return "Invalid user ID"
+        case .shortlistNotFound:
+            return "Shortlist not found"
         case .unknown:
             return "Unknown error occurred"
         }

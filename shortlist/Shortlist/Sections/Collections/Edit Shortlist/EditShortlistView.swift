@@ -44,16 +44,13 @@ struct EditShortlistView: View {
                 Section {
                     Button(action: {
                         Task {
-                            viewModel.updateNewShortlist(
+                            let shortlist = try await viewModel.updateNewShortlist(
                                 shortlist: shortlistDetailsVM.shortlist,
                                 updatedName: shortlistName,
-                                updatedYear: selectedYear,
-                                completion:
-                                    { shortlist in
-                                        shortlistDetailsVM.shortlist = shortlist
-                                        isPresented = false
-                                    }
-                            )
+                                updatedYear: selectedYear)
+                            
+                            shortlistDetailsVM.shortlist = shortlist
+                            isPresented = false
                         }
                     }, label: {
                         HStack {
