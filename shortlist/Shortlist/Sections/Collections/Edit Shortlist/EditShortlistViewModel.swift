@@ -5,7 +5,6 @@
 //  Created by Dustin Bergman on 2/24/24.
 //
 
-import CloudKit
 import Foundation
 
 extension EditShortlistView {

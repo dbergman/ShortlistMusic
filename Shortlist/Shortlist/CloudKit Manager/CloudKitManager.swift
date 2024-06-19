@@ -9,6 +9,12 @@ import CloudKit
 import Foundation
 
 class CloudKitManager {
+    enum AlbumAction {
+        case load
+        case remove(CKRecord.ID)
+        case add(CKRecord)
+    }
+
     static let shared: CloudKitManager = {
         let instance = CloudKitManager()
         
@@ -78,7 +84,7 @@ extension CloudKitManager {
             record["year"] = updatedYear
             
             CKContainer.default().publicCloudDatabase.save(record) { savedRecord, saveError in
-                if let saveError {
+                if saveError != nil {
                     completion(.failure(UserErrorFactory.makeError(.shortlistNotFound)))
                 } else if
                     let savedRecord = savedRecord,
@@ -237,6 +243,60 @@ extension CloudKitManager {
             case .failure(let error):
                 completion(.failure(error))
             }
+        }
+    }
+    
+    func updateShortlistAlbums(
+        shortlistID: String,
+        action: AlbumAction,
+        completion: @escaping (Result<[ShortlistAlbum], Error>) -> Void)
+    {
+        Task {
+            do {
+                try await handleAlbumAction(action: action)
+            } catch {
+                completion(.failure(error))
+            }
+        }
+
+        let predicate = NSPredicate(format: "shortlistId == %@", shortlistID)
+        let albumQuery = CKQuery(recordType: "Albums", predicate: predicate)
+        
+        CKContainer.default().publicCloudDatabase.fetch(withQuery: albumQuery) { albumRecords in
+            do {
+                let records = try albumRecords.get()
+                
+                let albums = records.matchResults
+                    .compactMap { _, result in try? result.get() }
+                    .compactMap { ShortlistAlbum(with: $0) }
+                
+                completion(.success(albums))
+                
+                print("dustin album count \(albums.count)")
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private func handleAlbumAction(action: AlbumAction) async throws {
+        switch action {
+        case .add(let record):
+            do {
+                try await CKContainer.default().publicCloudDatabase.save(record)
+            } catch {
+                throw error
+            }
+
+        case .remove(let recordID):
+            do {
+                try await CKContainer.default().publicCloudDatabase.deleteRecord(withID: recordID)
+            } catch {
+                throw error
+            }
+
+        default:
+            break
         }
     }
     

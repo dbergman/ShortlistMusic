@@ -38,14 +38,17 @@ extension AlbumDetailView {
                 trackDetails: theTracks)
             
             currentShortlistAlbums = await withCheckedContinuation { continuation in
-                updateShortlistAlbums(completion: { result in
+                CloudKitManager.shared.updateShortlistAlbums(
+                    shortlistID: shortlist.id,
+                    action: .load
+                ) { result in
                     switch result {
                     case .success(let albums):
                         continuation.resume(returning: albums)
                     case .failure(let error):
                         print("Error: \(error)")
                     }
-                })
+                }
             }
             
             DispatchQueue.main.async {
@@ -63,27 +66,6 @@ extension AlbumDetailView {
             
             if let album =  response?.items.first {
                 await loadTracks(for: album, recordID: shortListAlbum.recordID)
-            }
-        }
-        
-        private func updateShortlistAlbums(completion: @escaping (Result<[ShortlistAlbum], Error>) -> Void) {
-            let predicate = NSPredicate(format: "shortlistId == %@", shortlist.id)
-            let albumQuery = CKQuery(recordType: "Albums", predicate: predicate)
-            
-            CKContainer.default().publicCloudDatabase.fetch(withQuery: albumQuery) { albumRecords in
-                do {
-                    let records = try albumRecords.get()
-                    
-                    let albums = records.matchResults
-                        .compactMap { _, result in try? result.get() }
-                        .compactMap { ShortlistAlbum(with: $0) }
-                    
-                    completion(.success(albums))
-                    
-                    print("dustin album count \(albums.count)")
-                } catch {
-                    completion(.failure(error))
-                }
             }
         }
         
@@ -112,23 +94,20 @@ extension AlbumDetailView {
             record.setValue(album.upc, forKey: "upc")
             record.setValue(shortlist.id, forKey: "shortlistId")
             
-            do {
-                try await CKContainer.default().publicCloudDatabase.save(record)
-                
-                print("dustin saved \(album.title)")
-                
-                currentShortlistAlbums = await withCheckedContinuation { continuation in
-                    updateShortlistAlbums(completion: { result in
-                        switch result {
-                        case .success(let albums):
-                            continuation.resume(returning: albums)
-                        case .failure(let error):
-                            print("Error: \(error)")
-                        }
-                    })
+            print("dustin saved \(album.title)")
+            
+            currentShortlistAlbums = await withCheckedContinuation { continuation in
+                CloudKitManager.shared.updateShortlistAlbums(
+                    shortlistID: shortlist.id,
+                    action: .add(record)
+                ) { result in
+                    switch result {
+                    case .success(let albums):
+                        continuation.resume(returning: albums)
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
                 }
-            } catch {
-                print("Unable to save")
             }
         }
         
@@ -140,14 +119,17 @@ extension AlbumDetailView {
                 print("dustin delete \(deletedRecord)")
                 
                 currentShortlistAlbums = await withCheckedContinuation { continuation in
-                    updateShortlistAlbums(completion: { result in
+                    CloudKitManager.shared.updateShortlistAlbums(
+                        shortlistID: shortlist.id,
+                        action: .remove(recordID)
+                    ) { result in
                         switch result {
                         case .success(let albums):
                             continuation.resume(returning: albums)
                         case .failure(let error):
                             print("Error: \(error)")
                         }
-                    })
+                    }
                 }
                 
                 await updateShortlistAlbumRanking()
