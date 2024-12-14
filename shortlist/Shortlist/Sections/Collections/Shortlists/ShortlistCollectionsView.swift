@@ -49,7 +49,6 @@ extension ShortlistCollectionsView {
         var body: some View {
             if viewModel.isloading {
                 loadingPlaceholder()
-                //TestSwiftUI()
             } else {
                 List {
                     ForEach(viewModel.shortlists, id: \.self) { shortlist in
