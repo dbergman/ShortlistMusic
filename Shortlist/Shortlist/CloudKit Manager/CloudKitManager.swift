@@ -236,7 +236,7 @@ extension CloudKitManager {
                 saveCompletion(recordsToSave)
 
                 Task {
-                    let updatedShortlist = try await Shortlist(shortlist: shortlist, shortlistAlbums: sortedAlbumsWithRank.result.get())
+                    let updatedShortlist = await Shortlist(shortlist: shortlist, shortlistAlbums: sortedAlbumsWithRank.result.get())
                     completion(.success(updatedShortlist))
                 }
  
