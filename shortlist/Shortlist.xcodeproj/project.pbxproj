@@ -29,6 +29,7 @@
 		8B685AEA290B7B1400F6AD7F /* SearchMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AE9290B7B1400F6AD7F /* SearchMusicView.swift */; };
 		8B685AEC290B7B3300F6AD7F /* ShortlistCollectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AEB290B7B3300F6AD7F /* ShortlistCollectionsView.swift */; };
 		8B685AEE290B86C800F6AD7F /* ShortlistDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */; };
+		8BA85BE92D98B20C00F8E235 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 8BA85BE82D98B20C00F8E235 /* SkeletonView */; };
 		8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */; };
 		8BC843EB297FA4B100FA6B78 /* ShortlistToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EA297FA4B100FA6B78 /* ShortlistToolbar.swift */; };
 		8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */; };
@@ -88,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BA85BE92D98B20C00F8E235 /* SkeletonView in Frameworks */,
 				8B15AEAC29552021005CE9F6 /* MusicKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,6 +336,9 @@
 				Base,
 			);
 			mainGroup = 8B685AC6290B791100F6AD7F;
+			packageReferences = (
+				8BA85BE72D98B20C00F8E235 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+			);
 			productRefGroup = 8B685AD0290B791100F6AD7F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -622,6 +627,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8BA85BE72D98B20C00F8E235 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8BA85BE82D98B20C00F8E235 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BA85BE72D98B20C00F8E235 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8B685AD6290B791100F6AD7F /* Shortlist.xcdatamodeld */ = {
