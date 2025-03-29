@@ -10,6 +10,7 @@ import Foundation
 import MusicKit
 
 extension AlbumDetailView {
+    @MainActor
     class ViewModel: ObservableObject {
         @Published var album: Content?
         let shortlist: Shortlist
@@ -51,9 +52,7 @@ extension AlbumDetailView {
                 }
             }
             
-            DispatchQueue.main.async {
-                self.album = details
-            }
+            self.album = details
         }
         
         func getAlbum(shortListAlbum: ShortlistAlbum, shortlist: Shortlist) async {

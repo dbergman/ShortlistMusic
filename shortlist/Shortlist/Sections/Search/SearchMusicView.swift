@@ -77,7 +77,9 @@ struct SearchMusicView: View {
             }
         }
         .searchable(text: $searchTerm, prompt: "Search for Artist or Album")
-        .onChange(of: searchTerm, perform: requestUpdatedSearchResults)
+        .onChange(of: searchTerm) { _, newValue in
+            requestUpdatedSearchResults(for: newValue)
+        }
     }
 
     private func requestUpdatedSearchResults(for searchTerm: String) {
