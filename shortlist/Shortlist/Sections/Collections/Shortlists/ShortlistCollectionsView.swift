@@ -5,6 +5,7 @@
 //  Created by Dustin Bergman on 10/27/22.
 //
 
+import SkeletonUI
 import SwiftUI
 
 struct ShortlistCollectionsView: View {
@@ -14,7 +15,7 @@ struct ShortlistCollectionsView: View {
     var body: some View {
         NavigationStack {
             CollectionsView(viewModel: viewModel)
-                .navigationTitle("My ShortLists")
+                .navigationTitle("My Shortlists")
                 .task {
                     await MusicPermission.shared.requestMusicKitAuthorization()
                 }
@@ -22,7 +23,8 @@ struct ShortlistCollectionsView: View {
                     Button {
                         self.isPresented.toggle()
                     } label: {
-                        Image(systemName: "doc")
+                        Image(systemName: "plus.circle")
+                            .tint(.black)
                     }
                 }
                 .onBoardingSheet()
@@ -57,10 +59,6 @@ extension ShortlistCollectionsView {
                                 NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
                                     VStack {
                                         HStack {
-                                            Text(shortlist.name)
-                                            Spacer()
-                                        }
-                                        HStack {
                                             loadImage(from: shortlist, with: 0)
                                             
                                             VStack {
@@ -76,6 +74,10 @@ extension ShortlistCollectionsView {
                                                 }
                                             }
                                         }
+                                        HStack {
+                                            Text(shortlist.name)
+                                            Spacer()
+                                        }
                                     }
                                 }
                             }
@@ -88,6 +90,8 @@ extension ShortlistCollectionsView {
         
         @ViewBuilder
         private func loadImage(from shortlist: Shortlist?, with index: Int) -> some View {
+            let size: CGFloat = index == 0 ? 150 :70
+    
             if
                 let shortlistAlbums = shortlist?.albums,
                 shortlistAlbums.count > index,
@@ -95,7 +99,6 @@ extension ShortlistCollectionsView {
                 let url = URL(string: artworkURLString)
             {
                 AsyncImage(url: url) { image in
-                    let size: CGFloat = index == 0 ? 150 :70
                     image
                         .resizable()
                         .scaledToFill()
@@ -103,7 +106,18 @@ extension ShortlistCollectionsView {
                         .cornerRadius(10)
                         .clipped()
                 } placeholder: {
-                    placeHolderRect(with: index == 0 ? 150 :70)
+                    placeHolderRect(with: size)
+                }
+            } else {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.gray, lineWidth: 1)
+                        .frame(width: size, height: size)
+                    Image(systemName: "music.note.list")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: size * 0.3, height: size * 0.3)
+                        .foregroundColor(.gray)
                 }
             }
         }
@@ -115,12 +129,6 @@ extension ShortlistCollectionsView {
                     Section {
                         HStack {
                             VStack {
-                                HStack {
-                                    Text("Shortlist Name")
-                                    Spacer()
-                                    Text("year")
-                                        .padding(.trailing, 10)
-                                }
                                 HStack {
                                     placeHolderRect(with: 150)
                                     VStack {
@@ -135,6 +143,10 @@ extension ShortlistCollectionsView {
                                             }
                                         }
                                     }
+                                }
+                                HStack {
+                                    Text("Shortlist Name")
+                                    Spacer()
                                 }
                             }
                         }

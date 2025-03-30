@@ -33,6 +33,7 @@
 		8BC843EB297FA4B100FA6B78 /* ShortlistToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EA297FA4B100FA6B78 /* ShortlistToolbar.swift */; };
 		8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */; };
 		8BC843EF2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */; };
+		8BD097132D98BBAF005519F5 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD097122D98BBAF005519F5 /* SkeletonUI */; };
 		8BE7D451295FB38F0099EF4E /* MusicPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D450295FB38F0099EF4E /* MusicPermissionView.swift */; };
 		8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4542960DD870099EF4E /* PresentationCoordinator.swift */; };
 		8BE7D4582965EE870099EF4E /* CreateShortlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4572965EE870099EF4E /* CreateShortlistViewModel.swift */; };
@@ -89,6 +90,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B15AEAC29552021005CE9F6 /* MusicKit.framework in Frameworks */,
+				8BD097132D98BBAF005519F5 /* SkeletonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +336,9 @@
 				Base,
 			);
 			mainGroup = 8B685AC6290B791100F6AD7F;
+			packageReferences = (
+				8BD097112D98BBAF005519F5 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+			);
 			productRefGroup = 8B685AD0290B791100F6AD7F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -622,6 +627,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8BD097112D98BBAF005519F5 /* XCRemoteSwiftPackageReference "SkeletonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CSolanaM/SkeletonUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8BD097122D98BBAF005519F5 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BD097112D98BBAF005519F5 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8B685AD6290B791100F6AD7F /* Shortlist.xcdatamodeld */ = {
