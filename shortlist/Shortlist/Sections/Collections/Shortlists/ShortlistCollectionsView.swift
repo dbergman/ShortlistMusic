@@ -15,7 +15,13 @@ struct ShortlistCollectionsView: View {
     var body: some View {
         NavigationStack {
             CollectionsView(viewModel: viewModel)
-                .navigationTitle("My Shortlists")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text("My Shortlists")
+                            .font(Theme.shared.avenir(size: 20, weight: .bold))
+                    }
+                }
                 .task {
                     await MusicPermission.shared.requestMusicKitAuthorization()
                 }
@@ -52,15 +58,18 @@ extension ShortlistCollectionsView {
             if viewModel.isloading {
                 loadingPlaceholder()
             } else {
-                List {
-                    ForEach(viewModel.shortlists, id: \.self) { shortlist in
-                        Section {
-                            HStack {
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(viewModel.shortlists, id: \.self) { shortlist in
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(shortlist.name)
+                                    .font(Theme.shared.avenir(size: 20, weight: .bold))
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal)
                                 NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
-                                    VStack {
+                                    VStack(spacing: 12) {
                                         HStack {
                                             loadImage(from: shortlist, with: 0)
-                                            
                                             VStack {
                                                 Grid {
                                                     GridRow {
@@ -74,16 +83,18 @@ extension ShortlistCollectionsView {
                                                 }
                                             }
                                         }
-                                        HStack {
-                                            Text(shortlist.name)
-                                            Spacer()
-                                        }
                                     }
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(16)
+                                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                    .padding(.horizontal)
                                 }
                             }
+                            .padding(.horizontal, 10)
                         }
                     }
-                    .onDelete(perform: delete)
+                    .padding(.vertical)
                 }
             }
         }
@@ -91,7 +102,7 @@ extension ShortlistCollectionsView {
         @ViewBuilder
         private func loadImage(from shortlist: Shortlist?, with index: Int) -> some View {
             let size: CGFloat = index == 0 ? 150 :70
-    
+            
             if
                 let shortlistAlbums = shortlist?.albums,
                 shortlistAlbums.count > index,
@@ -124,34 +135,49 @@ extension ShortlistCollectionsView {
         
         @ViewBuilder
         private func loadingPlaceholder() -> some View {
-            List {
+            ScrollView {
                 ForEach(0..<3) { _ in
-                    Section {
-                        HStack {
-                            VStack {
-                                HStack {
-                                    placeHolderRect(with: 150)
-                                    VStack {
-                                        Grid {
-                                            GridRow {
-                                                placeHolderRect(with: 70)
-                                                placeHolderRect(with: 70)
-                                            }
-                                            GridRow {
-                                                placeHolderRect(with: 70)
-                                                placeHolderRect(with: 70)
+                    VStack(spacing: 16) {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("")
+                                    .skeleton(
+                                        with: true,
+                                        size: CGSize(width: 250, height: 25),
+                                        shape: .rectangle
+                                        
+                                        )
+                                    .cornerRadius(10)
+                                    .font(Theme.shared.avenir(size: 20, weight: .bold))
+                                    .fontWeight(.bold)
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 4)
+                                    VStack(spacing: 12) {
+                                        HStack {
+                                            placeHolderRect(with: 150)
+                                            VStack {
+                                                Grid {
+                                                    GridRow {
+                                                        placeHolderRect(with: 70)
+                                                        placeHolderRect(with: 70)
+                                                    }
+                                                    GridRow {
+                                                        placeHolderRect(with: 70)
+                                                        placeHolderRect(with: 70)
+                                                    }
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                HStack {
-                                    Text("Shortlist Name")
-                                    Spacer()
-                                }
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(16)
+                                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                    .padding(.horizontal)
                             }
-                        }
+                            .padding(.horizontal, 10)
+                        
                     }
-                    .redacted(reason: .placeholder)
+                    .padding(.vertical)
                 }
             }
         }
@@ -159,17 +185,21 @@ extension ShortlistCollectionsView {
         @ViewBuilder
         private func placeHolderRect(with size: CGFloat) -> some View {
             Rectangle()
+                .skeleton(
+                    with: true,
+                    size: CGSize(width: size, height: size),
+                    shape: .rectangle
+                )
                 .scaledToFit()
-                .foregroundColor(Color(red: 0.8, green: 0.8, blue: 0.8))
                 .cornerRadius(10)
                 .frame(width: size, height: size)
         }
         
         private func delete(at offsets: IndexSet) {
             guard let index = offsets.first else { return }
-
+            
             let shortlist = viewModel.shortlists[index]
-
+            
             Task {
                 try? await viewModel.remove(shortlist: shortlist)
             }

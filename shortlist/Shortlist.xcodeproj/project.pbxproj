@@ -34,6 +34,7 @@
 		8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */; };
 		8BC843EF2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */; };
 		8BD097132D98BBAF005519F5 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD097122D98BBAF005519F5 /* SkeletonUI */; };
+		8BD0974C2DA335D1005519F5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD0974B2DA335D1005519F5 /* Theme.swift */; };
 		8BE7D451295FB38F0099EF4E /* MusicPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D450295FB38F0099EF4E /* MusicPermissionView.swift */; };
 		8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4542960DD870099EF4E /* PresentationCoordinator.swift */; };
 		8BE7D4582965EE870099EF4E /* CreateShortlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4572965EE870099EF4E /* CreateShortlistViewModel.swift */; };
@@ -73,6 +74,7 @@
 		8BC843EA297FA4B100FA6B78 /* ShortlistToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistToolbar.swift; sourceTree = "<group>"; };
 		8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistDetailsViewModel.swift; sourceTree = "<group>"; };
+		8BD0974B2DA335D1005519F5 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8BE7D450295FB38F0099EF4E /* MusicPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPermissionView.swift; sourceTree = "<group>"; };
 		8BE7D4542960DD870099EF4E /* PresentationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationCoordinator.swift; sourceTree = "<group>"; };
 		8BE7D456296283570099EF4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				8BE7D456296283570099EF4E /* Info.plist */,
+				8BD0974A2DA335B3005519F5 /* Theme */,
 				8BE7D4592965F02A0099EF4E /* Models */,
 				8B15AEAD29554AD6005CE9F6 /* Helpers */,
 				8BF43F86295F715C007946C6 /* MusicPermission */,
@@ -234,6 +237,14 @@
 				8B15AEB9295AA9E4005CE9F6 /* Search Albums */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		8BD0974A2DA335B3005519F5 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				8BD0974B2DA335D1005519F5 /* Theme.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 		8BE7D4592965F02A0099EF4E /* Models */ = {
@@ -390,6 +401,7 @@
 				8B685AD3290B791100F6AD7F /* ShortlistApp.swift in Sources */,
 				8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */,
 				8B06B1D12B3953EE00260A8D /* TestSwiftUI.swift in Sources */,
+				8BD0974C2DA335D1005519F5 /* Theme.swift in Sources */,
 				8BFB12C52B8A9DE3005E3C35 /* EditShortlistViewModel.swift in Sources */,
 				8B685AD8290B791100F6AD7F /* Shortlist.xcdatamodeld in Sources */,
 				8B15AEBF295CC752005CE9F6 /* SearchMusicAlbumCell.swift in Sources */,

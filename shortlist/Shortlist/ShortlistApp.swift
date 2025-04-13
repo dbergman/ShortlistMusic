@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct ShortlistApp: App {
-
     var body: some Scene {
         WindowGroup {
             ShortlistCollectionsView()
