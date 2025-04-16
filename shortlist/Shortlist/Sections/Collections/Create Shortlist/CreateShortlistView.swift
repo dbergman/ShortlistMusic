@@ -64,10 +64,19 @@ struct CreateShortlistView: View {
                     .disabled(shortlistName.isEmpty || shortlistName.count < 5)
                 }
             }
-            .navigationTitle("New Shortlist")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button("Cancel") {
-                    isPresented = false
+                ToolbarItem(placement: .principal) {
+                    Text("My Shortlists")
+                        .font(Theme.shared.avenir(size: 20, weight: .bold))
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        isPresented = false
+                    }) {
+                        Image(systemName: "xmark.circle")
+                            .tint(.black)
+                    }
                 }
             }
         }
