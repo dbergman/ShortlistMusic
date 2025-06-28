@@ -101,7 +101,7 @@ extension ShortlistCollectionsView {
         
         @ViewBuilder
         private func loadImage(from shortlist: Shortlist?, with index: Int) -> some View {
-            let size: CGFloat = index == 0 ? 150 :70
+            let size = getImageSize(for: index)
             
             if
                 let shortlistAlbums = shortlist?.albums,
@@ -153,16 +153,16 @@ extension ShortlistCollectionsView {
                                     .padding(.vertical, 4)
                                     VStack(spacing: 12) {
                                         HStack {
-                                            placeHolderRect(with: 150)
+                                            placeHolderRect(with: getImageSize(for: 0))
                                             VStack {
                                                 Grid {
                                                     GridRow {
-                                                        placeHolderRect(with: 70)
-                                                        placeHolderRect(with: 70)
+                                                        placeHolderRect(with: getImageSize(for: 1))
+                                                        placeHolderRect(with: getImageSize(for: 2))
                                                     }
                                                     GridRow {
-                                                        placeHolderRect(with: 70)
-                                                        placeHolderRect(with: 70)
+                                                        placeHolderRect(with: getImageSize(for: 3))
+                                                        placeHolderRect(with: getImageSize(for: 4))
                                                     }
                                                 }
                                             }
@@ -204,6 +204,14 @@ extension ShortlistCollectionsView {
                 try? await viewModel.remove(shortlist: shortlist)
             }
             
+        }
+        
+        private func getImageSize(for index: Int) -> CGFloat {
+            let screenWidth = UIScreen.main.bounds.width
+            let imageWidth = 0.54545 * screenWidth - 54.55
+            let size: CGFloat = index == 0 ? imageWidth : (imageWidth - 10) / 2
+
+            return size
         }
     }
 }
