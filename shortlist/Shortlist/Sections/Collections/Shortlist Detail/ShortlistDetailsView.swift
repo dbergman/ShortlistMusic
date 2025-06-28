@@ -31,8 +31,8 @@ struct ShortlistDetailsView: View {
                     NavigationLink(
                         destination: AlbumDetailView(albumType: albumType, shortlist: viewModel.shortlist)
                     ){
-                        VStack {
-                            ZStack(alignment: .bottomLeading) {
+                        VStack(alignment: .leading) {
+                            ZStack(alignment: .topLeading) {
                                 AsyncImage(url: URL(string: album.artworkURLString)) { image in
                                     image
                                         .resizable()
@@ -41,26 +41,42 @@ struct ShortlistDetailsView: View {
                                 } placeholder: {
                                     ProgressView()
                                 }
+
                                 ZStack {
                                     Circle()
-                                        .foregroundColor(.blue)
-                                        .frame(width: 22, height: 22)
-                                    
+                                        .fill(Color.black.opacity(0.75))
+                                        .frame(width: 28, height: 28)
+                                        .overlay(
+                                            Circle()
+                                                .stroke(Color.white.opacity(0.8), lineWidth: 1.5)
+                                        )
+                                        .shadow(color: Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
+
                                     Text("\(album.rank)")
                                         .foregroundColor(.white)
-                                        .font(.system(size: 12, weight: .bold, design: .default))
+                                        .font(Theme.shared.avenir(size: 14, weight: .bold))
                                 }
-                                .padding(EdgeInsets(top: 0, leading: 8, bottom: 8, trailing: 0))
+                                .padding(6)
                             }
                             .padding(.bottom, 10)
                             
                             Text(album.title)
+                                .font(Theme.shared.avenir(size: 16, weight: .bold))
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(.black)
                                 .lineLimit(2)
                             Text(album.artist)
+                                .font(Theme.shared.avenir(size: 14, weight: .medium))
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(.black)
                                 .lineLimit(1)
-                            Spacer()
                         }
-                        .padding(EdgeInsets(top: 0, leading: 10, bottom: 20, trailing: 10))
+                        .frame(height: 230)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(16)
+                        .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                        .padding(EdgeInsets(top: 0, leading: 6, bottom: 10, trailing: 6))
                         .onDrag {
                             draggedAlbumId = album.id
                             return NSItemProvider(item: nil, typeIdentifier: album.id)
@@ -80,9 +96,12 @@ struct ShortlistDetailsView: View {
         }
         Spacer()
         ShortlistToolbar()
-            .padding(.bottom)
-            .navigationBarTitle(viewModel.shortlist.name)
-            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(viewModel.shortlist.name)
+                        .font(Theme.shared.avenir(size: 20, weight: .bold))
+                }
+            }
             .navigationBarItems(trailing: Image(systemName: "magnifyingglass")
                 .onTapGesture {
                     isPresented.toggle()
