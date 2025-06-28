@@ -12,16 +12,56 @@ struct MusicPermissionView: View {
     @Binding var musicAuthorizationStatus: MusicAuthorization.Status
 
     var body: some View {
-        VStack(alignment: .center) {
-            Text("Please grant Music Albums access to ")
-                + Text(Image(systemName: "applelogo")) + Text(" Music in Settings.")
-            Button("Enable AppleMusic") {
-                if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(settingsURL)
+            VStack(spacing: 20) {
+                // Music Icon and Title
+                HStack(spacing: 8) {
+                    Image(systemName: "music.note")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color.black)
+
+                    Text("ShortListMusic")
+                        .font(Theme.shared.avenir(size: 32, weight: .bold))
+                        .fontWeight(.bold)
+                    
+                    Image(systemName: "music.note")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color.black)
                 }
+
+                Text("Please grant ShortListMusic access to Apple Music in Settings.")
+                    .font(Theme.shared.avenir(size: 20, weight: .medium))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color.gray)
+
+                .font(Theme.shared.avenir(size: 20, weight: .medium))
+                .multilineTextAlignment(.center)
+                .foregroundColor(.gray)
+
+                Button(action: {
+                    if let url = URL(string: UIApplication.openSettingsURLString),
+                       UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url)
+                    }
+                }) {
+                    HStack {
+                        Image(systemName: "gearshape")
+                        Text("Go to Settings")
+                            .font(Theme.shared.avenir(size: 16, weight: .semibold))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.black)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                }
+                .padding(.top, 10)
             }
-        }.padding(75)
-    }
+            .padding()
+            .background(Color(.systemBackground))
+            .cornerRadius(16)
+            .shadow(radius: 4)
+            .padding()
+        }
 
     fileprivate struct SheetPresentationModifier: ViewModifier {
         @StateObject private var presentationCoordinator = PresentationCoordinator.shared
