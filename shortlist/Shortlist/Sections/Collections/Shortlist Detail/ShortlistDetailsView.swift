@@ -70,6 +70,7 @@ struct ShortlistDetailsView: View {
                                 .multilineTextAlignment(.leading)
                                 .foregroundColor(.black)
                                 .lineLimit(1)
+                            Spacer()
                         }
                         .frame(height: 230)
                         .padding()

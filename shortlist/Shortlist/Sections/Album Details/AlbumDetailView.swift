@@ -16,6 +16,7 @@ extension AlbumDetailView {
         let artworkURL: URL?
         let title: String
         let upc: String?
+        let releaseYear: String?
         var recordID: CKRecord.ID?
         let trackDetails: [TrackDetails]
 
@@ -41,27 +42,115 @@ extension AlbumDetailView {
         }
         
         var body: some View {
-            ScrollView(.vertical) {
-                VStack(alignment: .leading) {
-                    AsyncImage(url: viewModel.album?.artworkURL)
-                        .cornerRadius(8)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        AsyncImage(url: viewModel.album?.artworkURL) { phase in
+                            let side = UIScreen.main.bounds.width - 40
 
-                    Text(viewModel.album?.title ?? "")
-                        .font(.title)
-                        .bold()
-                    Text(viewModel.album?.artist ?? "")
-                        .font(.subheadline)
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(width: side, height: side)
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: side, height: side)
+                                    .clipped()
+                                    .cornerRadius(12)
+                                    .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: side, height: side)
+                                    .foregroundColor(.gray)
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+                        .padding([.leading, .trailing], 20)
 
-                    ForEach(viewModel.album?.trackDetails ?? []) { track in
-                        HStack {
-                            Text(track.title)
-                                .font(.headline)
-                            Spacer()
-                            Text(track.duration)
-                                .font(.subheadline)
+                        Text(viewModel.album?.releaseYear)
+                            .font(Theme.shared.avenir(size: 14, weight: .thin))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(20)
+                            .padding([.leading], 20)
+
+                        Text(viewModel.album?.title)
+                            .font(Theme.shared.avenir(size: 28, weight: .bold))
+                            .padding([.leading, .trailing], 20)
+
+                        Text(viewModel.album?.artist)
+                            .font(Theme.shared.avenir(size: 20, weight: .medium))
+                            .foregroundColor(.secondary)
+                            .padding([.leading, .trailing], 20)
+
+                        VStack(spacing: 16) {
+                            Button(action: {}) {
+                                Label("Listen on Apple Music", systemImage: "applelogo")
+                                    .font(Theme.shared.avenir(size: 14, weight: .medium))
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.black)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(12)
+                                    .padding([.leading, .trailing], 20)
+                            }
+
+                            Button(action: {}) {
+                                Label("Listen on Spotify", systemImage: "play.circle")
+                                    .font(Theme.shared.avenir(size: 14, weight: .medium))
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.green)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(12)
+                                    .padding([.leading, .trailing], 20)
+                            }
                         }
                     }
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Track List")
+                            .font(.headline)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(20)
+                            .padding([.leading, .trailing], 5)
+                        
+                        if let tracks = viewModel.album?.trackDetails {
+                            ForEach(Array(zip(tracks.indices, tracks)), id: \.1.id) { index, track in
+                                HStack {
+                                    Text("\(index + 1)")
+                                        .font(Theme.shared.avenir(size: 14, weight: .bold))
+                                        .foregroundColor(.white)
+                                        .frame(width: 28, height: 28)
+                                        .background(Circle().fill(Color.black))
+                                        .overlay(
+                                            Circle().stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                        )
+                                    Text(track.title)
+                                        .font(Theme.shared.avenir(size: 14, weight: .medium))
+                                    Spacer()
+                                    Text(track.duration)
+                                        .font(Theme.shared.avenir(size: 14, weight: .thin))
+                                }
+                                .padding([.leading, .trailing], 5)
+                            }
+                        }
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(16)
+                    .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
+                    .padding([.leading, .trailing], 20)
                 }
+                .padding()
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -128,34 +217,3 @@ struct AlbumDetailView: View {
         }
     }
 }
-
-//struct AlbumDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let recordID1 = CKRecord.ID(recordName: "uniqueRecordName1")
-//        let record1 = CKRecord(recordType: "Shortlists", recordID: recordID1)
-//        record1.setValue("Shortlist One", forKey: "name")
-//        record1.setValue("All", forKey: "year")
-//        let shortlist1 = Shortlist(with: record1)!
-//
-//        let album = AlbumDetailView.Content(
-//            id: "666",
-//            artist: "Panda Bear and Sonic Boom",
-//            artworkURL: URL(string: "https://is3-ssl.mzstatic.com/image/thumb/Music112/v4/07/89/c6/0789c6e0-5dad-404c-ac40-9603659dab77/887828051366.png/390x390bb.jpg"),
-//            title: "Reset",
-//            upc: "666",
-//            trackDetails: [
-//                AlbumDetailView.Content.TrackDetails(title: "Gettin' to the Point", duration: "2:30"),
-//                AlbumDetailView.Content.TrackDetails(title: "Go On", duration: "4:46"),
-//                AlbumDetailView.Content.TrackDetails(title: "Everyday", duration: "3:52"),
-//                AlbumDetailView.Content.TrackDetails(title: "Edge of the Edge", duration: "4:48"),
-//                AlbumDetailView.Content.TrackDetails(title: "In My Body", duration: "3:51"),
-//                AlbumDetailView.Content.TrackDetails(title: "Whirlpool", duration: "5:01"),
-//                AlbumDetailView.Content.TrackDetails(title: "Danger", duration: "5:38"),
-//                AlbumDetailView.Content.TrackDetails(title: "Livin' in the After", duration: "2:54"),
-//                AlbumDetailView.Content.TrackDetails(title: "Everything's Been Leading to This", duration:"5:08")
-//            ]
-//        )
-//
-//        return AlbumDetailView.AlbumView(album: album, shortlist: shortlist1)
-//    }
-//}

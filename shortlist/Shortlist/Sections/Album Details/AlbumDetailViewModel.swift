@@ -35,6 +35,7 @@ extension AlbumDetailView {
                 artworkURL: album.artwork?.url(width: Int(screenSize), height: Int(screenSize)),
                 title: album.title,
                 upc: album.upc,
+                releaseYear: album.releaseYear,
                 recordID: recordID,
                 trackDetails: theTracks)
             
