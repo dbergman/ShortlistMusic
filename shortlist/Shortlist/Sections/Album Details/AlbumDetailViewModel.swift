@@ -8,11 +8,13 @@
 import CloudKit
 import Foundation
 import MusicKit
+import UIKit
 
 extension AlbumDetailView {
     @MainActor
     class ViewModel: ObservableObject {
         @Published var album: Content?
+        @Published var isloading = true
         let shortlist: Shortlist
         private var currentShortlistAlbums: [ShortlistAlbum]?
         private let screenSize: CGFloat
@@ -36,8 +38,12 @@ extension AlbumDetailView {
                 title: album.title,
                 upc: album.upc,
                 releaseYear: album.releaseYear,
+                appleAlbumURL: album.url,
+                spotifyAlbumSearchDeeplink: URL(string: "spotify://search/\(album.title)"),
                 recordID: recordID,
                 trackDetails: theTracks)
+            
+            isloading = false
             
             currentShortlistAlbums = await withCheckedContinuation { continuation in
                 CloudKitManager.shared.updateShortlistAlbums(
@@ -178,6 +184,11 @@ extension AlbumDetailView {
         
         func isAlbumOnShortlist() async -> Bool {
             currentShortlistAlbums?.contains { $0.id == self.album?.id } == true
+        }
+        
+        func isSpotifyInstalled() -> Bool {
+            guard let url = URL(string: "spotify://") else { return false }
+            return UIApplication.shared.canOpenURL(url)
         }
     }
 }

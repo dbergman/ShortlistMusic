@@ -147,10 +147,9 @@ extension ShortlistCollectionsView {
                                         
                                         )
                                     .cornerRadius(10)
-                                    .font(Theme.shared.avenir(size: 20, weight: .bold))
-                                    .fontWeight(.bold)
                                     .padding(.horizontal)
                                     .padding(.vertical, 4)
+
                                     VStack(spacing: 12) {
                                         HStack {
                                             placeHolderRect(with: getImageSize(for: 0))

@@ -7,6 +7,7 @@
 
 import CloudKit
 import MusicKit
+import SkeletonUI
 import SwiftUI
 
 extension AlbumDetailView {
@@ -17,6 +18,8 @@ extension AlbumDetailView {
         let title: String
         let upc: String?
         let releaseYear: String?
+        let appleAlbumURL: URL?
+        let spotifyAlbumSearchDeeplink: URL?
         var recordID: CKRecord.ID?
         let trackDetails: [TrackDetails]
 
@@ -90,26 +93,46 @@ extension AlbumDetailView {
                             .padding([.leading, .trailing], 20)
 
                         VStack(spacing: 16) {
-                            Button(action: {}) {
+                            Button(action: {
+                                guard let albumURL = viewModel.album?.appleAlbumURL else { return }
+
+                                UIApplication.shared.open(albumURL)
+                            }) {
                                 Label("Listen on Apple Music", systemImage: "applelogo")
-                                    .font(Theme.shared.avenir(size: 14, weight: .medium))
+                                    .font(Theme.shared.avenir(size: 16, weight: .medium))
                                     .padding()
                                     .frame(maxWidth: .infinity)
                                     .background(Color.black)
                                     .foregroundColor(.white)
                                     .cornerRadius(12)
-                                    .padding([.leading, .trailing], 20)
                             }
+                            .padding(.horizontal, 20)
+                            
+                            if viewModel.isSpotifyInstalled() {
+                                Button(action: {
+                                    guard
+                                        let spotifyAlbumSearchDeeplinkURL = viewModel.album?.spotifyAlbumSearchDeeplink
+                                    else {
+                                        return
+                                    }
 
-                            Button(action: {}) {
-                                Label("Listen on Spotify", systemImage: "play.circle")
-                                    .font(Theme.shared.avenir(size: 14, weight: .medium))
+                                    UIApplication.shared.open(spotifyAlbumSearchDeeplinkURL)
+                                }) {
+                                    Label {
+                                        Text("Listen on Spotify")
+                                    } icon: {
+                                        Image("spotify")
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                    }
+                                    .font(Theme.shared.avenir(size: 16, weight: .medium))
                                     .padding()
                                     .frame(maxWidth: .infinity)
                                     .background(Color.green)
                                     .foregroundColor(.white)
                                     .cornerRadius(12)
-                                    .padding([.leading, .trailing], 20)
+                                }
+                                .padding(.horizontal, 20)
                             }
                         }
                     }
@@ -122,7 +145,6 @@ extension AlbumDetailView {
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(20)
                             .padding([.leading, .trailing], 5)
-                        
                         if let tracks = viewModel.album?.trackDetails {
                             ForEach(Array(zip(tracks.indices, tracks)), id: \.1.id) { index, track in
                                 HStack {
@@ -198,22 +220,100 @@ struct AlbumDetailView: View {
     }
     
     var body: some View {
-        ProgressView()
-            .task {
-                switch albumType {
-                case .musicKit(let album):
-                    await self.viewModel.loadTracks(for: album)
-                
-                case .shortlistAlbum(let shortlistAlbum):
-                    await self.viewModel.getAlbum(
-                        shortListAlbum: shortlistAlbum,
-                        shortlist: shortlist
-                    )
-                }
+        Group {
+            if viewModel.isloading {
+                loadingPlaceholder()
+            } else if let album = viewModel.album {
+                AlbumView(album: album, shortlist: shortlist, viewModel: viewModel)
             }
-            .opacity(viewModel.album == nil ? 1 : 0)
-        if let album = viewModel.album {
-            AlbumView(album: album, shortlist: shortlist, viewModel: viewModel)
+        }
+        .task {
+            switch albumType {
+            case .musicKit(let album):
+                await viewModel.loadTracks(for: album)
+            case .shortlistAlbum(let shortlistAlbum):
+                await viewModel.getAlbum(
+                    shortListAlbum: shortlistAlbum,
+                    shortlist: shortlist
+                )
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func loadingPlaceholder() -> some View {
+        ScrollView {
+            VStack(alignment: .leading) {
+                let placeHolderSize = UIScreen.main.bounds.size.width - 40
+                Rectangle()
+                    .skeleton(
+                        with: true,
+                        size: CGSize(width: placeHolderSize, height: placeHolderSize),
+                        shape: .rectangle
+                    )
+                    .scaledToFit()
+                    .cornerRadius(12)
+                    .frame(width: placeHolderSize, height: placeHolderSize)
+                    .padding(.bottom, 20)
+                
+                Text("")
+                    .skeleton(
+                        with: true,
+                        size: CGSize(width: 75, height: 25),
+                        shape: .rectangle
+                    )
+                    .padding(.bottom, 20)
+                
+                Text("")
+                    .skeleton(
+                        with: true,
+                        size: CGSize(width: placeHolderSize, height: 40),
+                        shape: .rectangle
+                    )
+                    .padding(.bottom, 20)
+                
+                Text("")
+                    .skeleton(
+                        with: true,
+                        size: CGSize(width: placeHolderSize, height: 40),
+                        shape: .rectangle
+                    )
+                    .padding(.bottom, 20)
+                
+                Text("")
+                    .skeleton(
+                        with: true,
+                        size: CGSize(width: placeHolderSize, height: 40),
+                        shape: .rectangle
+                    )
+                    .padding(.bottom, 20)
+                
+                Text("")
+                    .skeleton(
+                        with: true,
+                        size: CGSize(width: placeHolderSize, height: 40),
+                        shape: .rectangle
+                    )
+                    .padding(.bottom, 20)
+                
+                Text("")
+                    .skeleton(
+                        with: true,
+                        size: CGSize(width: placeHolderSize, height: 40),
+                        shape: .rectangle
+                    )
+                    .padding(.bottom, 20)
+                
+                Text("")
+                    .skeleton(
+                        with: true,
+                        size: CGSize(width: placeHolderSize, height: 40),
+                        shape: .rectangle
+                    )
+                    .padding(.bottom, 20)
+                
+                Spacer()
+            }
         }
     }
 }

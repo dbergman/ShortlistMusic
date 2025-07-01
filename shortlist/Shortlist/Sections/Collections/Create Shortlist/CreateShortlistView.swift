@@ -31,15 +31,20 @@ struct CreateShortlistView: View {
                                 Button("Done") {
                                     focus = false
                                 }
+                                .font(Theme.shared.avenir(size: 14, weight: .medium))
                                 Spacer()
                             }
                         }
                     Picker("Shortlist Year", selection: $selectedYear) {
                         ForEach(generateShortlistYears(), id: \.self) {
                             Text($0)
+                                .font(Theme.shared.avenir(size: 14, weight: .medium))
                         }
                     }
+                    .font(Theme.shared.avenir(size: 14, weight: .medium))
                 }
+                .font(Theme.shared.avenir(size: 14, weight: .medium))
+
                 Section {
                     Button(action: {
                         Task {
@@ -58,6 +63,7 @@ struct CreateShortlistView: View {
                         HStack {
                             Spacer()
                             Text("Create")
+                                .font(Theme.shared.avenir(size: 14, weight: .medium))
                             Spacer()
                         }
                     })
@@ -68,7 +74,7 @@ struct CreateShortlistView: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("My Shortlists")
-                        .font(Theme.shared.avenir(size: 20, weight: .bold))
+                        .font(Theme.shared.avenir(size: 20, weight: .medium))
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
