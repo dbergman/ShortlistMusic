@@ -10,37 +10,47 @@ import SwiftUI
 extension SearchMusicView {
     struct SearchMusicAlbumCell: View {
         let album: Content.Album
-        
+
         var body: some View {
-            HStack {
-                VStack {
-                    Spacer()
-                    AsyncImage(url: album.artworkURL)
-                        .cornerRadius(6)
-                        .frame(width: 60, height: 60)
-                    Spacer()
+            HStack(alignment: .top, spacing: 16) {
+                AsyncImage(url: album.artworkURL) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    Color.gray.opacity(0.2)
                 }
-                VStack(alignment: .leading) {
+                .frame(width: 120, height: 120)
+                .clipped()
+                .cornerRadius(12)
+                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+
+                VStack(alignment: .leading, spacing: 8) {
                     Text(album.name)
-                        .lineLimit(2)
+                        .font(Theme.shared.avenir(size: 20, weight: .bold))
                         .foregroundColor(.primary)
+                        .lineLimit(2)
+
                     if !album.artist.isEmpty {
                         Text(album.artist)
-                            .lineLimit(1)
+                            .font(Theme.shared.avenir(size: 14, weight: .medium))
                             .foregroundColor(.secondary)
-                            .padding(.top, -4.0)
+                            .lineLimit(1)
                     }
+
                     if !album.releaseYear.isEmpty {
                         Text(album.releaseYear)
-                            .lineLimit(1)
-                            .foregroundColor(.primary)
-                            .font(.body)
-                            .padding(.top, -2.0)
+                            .font(Theme.shared.avenir(size: 14, weight: .medium))
+                            .foregroundColor(.secondary)
                     }
                 }
+
+                Spacer()
             }
+            .padding(.vertical, 8)
         }
     }
+
 }
 
 struct Previews_SearchMusicAlbumCell_Previews: PreviewProvider {

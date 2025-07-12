@@ -14,14 +14,14 @@ struct CreateShortlistView: View {
     @State private var shortlistName = ""
     @State private var selectedYear = "All"
     @Binding var shortlists: [Shortlist]
-
+    
     var body: some View {
         NavigationStack {
             Form {
                 !viewModel.createShortlistError.isEmpty ? Section(header: Text("Error")) {
-                   Text("\(viewModel.createShortlistError)")
-                       .foregroundColor(.red)
-                       .animation(.easeIn)
+                    Text("\(viewModel.createShortlistError)")
+                        .foregroundColor(.red)
+                        .animation(.easeIn)
                 } : nil
                 Section(header: Text("Shortlist Details")) {
                     TextField("Shortlist Name", text: $shortlistName)
@@ -44,7 +44,7 @@ struct CreateShortlistView: View {
                     .font(Theme.shared.avenir(size: 14, weight: .medium))
                 }
                 .font(Theme.shared.avenir(size: 14, weight: .medium))
-
+                
                 Section {
                     Button(action: {
                         Task {
@@ -96,10 +96,10 @@ struct CreateShortlistView: View {
         
         repeat {
             guard let lastYear = years.last, let lastYearInt = Int(lastYear) else { continue }
-
+            
             years.append("\(lastYearInt - 1)")
         } while years.last != "1955"
-                    
+        
         return years
     }
 }

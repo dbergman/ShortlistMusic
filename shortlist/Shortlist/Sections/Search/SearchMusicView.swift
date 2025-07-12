@@ -45,14 +45,12 @@ struct SearchMusicView: View {
         NavigationStack {
             VStack {
                 SearchResultsList(albums: viewModel.albums)
-                    .scrollDismissesKeyboard(.immediately)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .principal) {
-                            VStack {
-                                Text("Add to").font(.headline)
-                                Text("\(shortlist.name)").font(.subheadline)
-                            }
+                            Text("Add to ShortList")
+                                .font(Theme.shared.avenir(size: 22, weight: .bold))
+                                .foregroundColor(.primary)
                         }
                     }
                     .navigationDestination(for: SearchMusicView.Route.self) { route in
@@ -73,15 +71,18 @@ struct SearchMusicView: View {
                         Button("Done") {
                             isPresented = false
                         }
+                        .font(Theme.shared.avenir(size: 16, weight: .medium))
+                        .foregroundColor(.primary)
                     }
             }
         }
-        .searchable(text: $searchTerm, prompt: "Search for Artist or Album")
+        .searchable(text: $searchTerm, prompt: "Search by Artist")
         .onChange(of: searchTerm) { _, newValue in
             requestUpdatedSearchResults(for: newValue)
         }
+        .tint(.primary)
     }
-
+    
     private func requestUpdatedSearchResults(for searchTerm: String) {
         Task {
             if searchTerm.isEmpty {
@@ -103,17 +104,44 @@ extension SearchMusicView {
 
         var body: some View {
             List {
-                Section("Albums") {
+                Section {
                     ForEach(albums) { album in
-                        NavigationLink(value: SearchMusicView.Route.album(album)) {
-                            SearchMusicView.SearchMusicAlbumCell(album: album)
+                        ZStack {
+                            NavigationLink(value: SearchMusicView.Route.album(album)) {
+                                EmptyView()
+                            }
+                            .opacity(0)
+
+                            HStack {
+                                SearchMusicView.SearchMusicAlbumCell(album: album)
+
+                                Spacer()
+
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                                    .imageScale(.small)
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(.systemBackground))
+                                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                            )
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
                         }
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
                     }
                 }
             }
+            .listStyle(.plain)
         }
     }
 }
+
+
 
 
 struct Previews_SearchMusicView_Previews: PreviewProvider {
@@ -127,11 +155,11 @@ struct Previews_SearchMusicView_Previews: PreviewProvider {
                 musicKitAlbum: nil
             ),
             SearchMusicView.Content.Album(
-                 name: "Full Circle (2005 Remaster)",
-                 artworkURL: URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music112/v4/ad/7c/9f/ad7c9f8c-1d43-2512-da06-0dcebbef60b0/0045778673902.png/60x60bb.jpg"),
-                 artist: "Pennywise",
-                 releaseYear: "1997",
-                 musicKitAlbum: nil
+                name: "Full Circle (2005 Remaster)",
+                artworkURL: URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Music112/v4/ad/7c/9f/ad7c9f8c-1d43-2512-da06-0dcebbef60b0/0045778673902.png/60x60bb.jpg"),
+                artist: "Pennywise",
+                releaseYear: "1997",
+                musicKitAlbum: nil
             ),
             SearchMusicView.Content.Album(
                 name: "Unknown Road (2005 Remaster)",

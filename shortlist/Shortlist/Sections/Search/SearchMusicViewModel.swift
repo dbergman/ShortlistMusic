@@ -32,7 +32,7 @@ extension SearchMusicView {
                 albums.append(
                     Content.Album(
                         name: album.title,
-                        artworkURL: album.artwork?.url(width: 60, height: 60),
+                        artworkURL: album.artwork?.url(width: 200, height: 200),
                         artist: album.artistName,
                         releaseYear: album.releaseYear,
                         musicKitAlbum: album

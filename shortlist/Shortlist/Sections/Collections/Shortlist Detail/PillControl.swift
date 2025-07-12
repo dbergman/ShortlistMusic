@@ -17,7 +17,7 @@ struct PillControl: View {
                 Image(systemName: "pencil")
                     .padding(12)
                     .background(Color(white: 0.9))
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .clipShape(Circle())
             }
 
@@ -25,7 +25,7 @@ struct PillControl: View {
                 Image(systemName: "square.and.arrow.up")
                     .padding(12)
                     .background(Color(white: 0.9))
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
                     .clipShape(Circle())
             }
         }

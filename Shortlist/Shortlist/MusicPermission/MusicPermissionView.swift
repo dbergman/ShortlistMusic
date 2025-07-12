@@ -17,7 +17,7 @@ struct MusicPermissionView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "music.note")
                         .font(.system(size: 20))
-                        .foregroundColor(Color.black)
+                        .foregroundColor(Color.primary)
 
                     Text("ShortListMusic")
                         .font(Theme.shared.avenir(size: 32, weight: .bold))
@@ -25,7 +25,7 @@ struct MusicPermissionView: View {
                     
                     Image(systemName: "music.note")
                         .font(.system(size: 20))
-                        .foregroundColor(Color.black)
+                        .foregroundColor(Color.primary)
                 }
 
                 Text("Please grant ShortListMusic access to Apple Music in Settings.")
@@ -50,7 +50,7 @@ struct MusicPermissionView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.black)
+                    .background(Color.primary)
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 }
