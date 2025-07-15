@@ -23,6 +23,7 @@ extension EditShortlistView {
                             continuation.resume(returning: shortlist)
                             
                         case .failure(let error):
+                            self.editShortlistError = error.localizedDescription
                             continuation.resume(throwing: error)
                         }
                     }

@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct ShortlistApp: App {
     init() {
-        UINavigationBar.appearance().tintColor = UIColor.systemOrange
     }
 
     var body: some Scene {

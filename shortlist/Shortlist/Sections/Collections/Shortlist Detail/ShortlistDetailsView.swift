@@ -12,6 +12,7 @@ struct ShortlistDetailsView: View {
     @State private var isPresented = false
     @State var draggedAlbumId: String?
     @ObservedObject private var viewModel: ViewModel
+    @State private var isEditShortlistViewPresented = false
     
     let layout = [
         GridItem(.flexible()),
@@ -99,9 +100,21 @@ struct ShortlistDetailsView: View {
             }
             
             PillControl(
-                onEdit: { print("Edit tapped") },
+                onEdit: {
+                    isEditShortlistViewPresented.toggle()
+                },
                 onShare: { print("Share tapped") }
             )
+            .sheet(isPresented: $isEditShortlistViewPresented) {
+                EditShortlistView(
+                    isPresented: $isEditShortlistViewPresented,
+                    shortlistName: viewModel.shortlist.name,
+                    selectedYear: viewModel.shortlist.year
+                )
+                .environmentObject(viewModel)
+                .presentationDetents([.medium, .large])
+            }
+            
         }
         .navigationTitle(viewModel.shortlist.name)
         .navigationBarTitleDisplayMode(.inline)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditShortlistView: View {    
+struct EditShortlistView: View {
     @Binding var isPresented: Bool
     @FocusState private var focus: Bool
     @ObservedObject private var viewModel = ViewModel()
@@ -19,53 +19,81 @@ struct EditShortlistView: View {
     var body: some View {
         NavigationStack {
             Form {
-                !viewModel.editShortlistError.isEmpty ? Section(header: Text("Error")) {
-                    Text("\(viewModel.editShortlistError)")
-                        .foregroundColor(.red)
-                        .animation(.easeIn)
-                } : nil
-                Section(header: Text("Shortlist Details")) {
-                    TextField("Shortlist Name", text:  $shortlistName)
-                        .focused($focus)
-                        .toolbar {
-                            ToolbarItemGroup(placement: .keyboard) {
-                                Button("Done") {
-                                    focus = false
+                !viewModel.editShortlistError.isEmpty ? Section(header: Text("Error")
+                    .font(Theme.shared.avenir(size: 14, weight: .semibold)))  {
+                        Text("\(viewModel.editShortlistError)")
+                            .font(Theme.shared.avenir(size: 14, weight: .medium))
+                            .foregroundColor(.red)
+                            .animation(.easeIn)
+                    } : nil
+                Section(header: Text("Shortlist Details")
+                    .font(Theme.shared.avenir(size: 18, weight: .bold))) {
+                        TextField("Shortlist Name", text:  $shortlistName)
+                            .focused($focus)
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Button("Done") {
+                                        focus = false
+                                    }
+                                    Spacer()
                                 }
-                                Spacer()
+                            }
+                        Picker("Shortlist Year", selection: $selectedYear) {
+                            ForEach(generateShortlistYears(), id: \.self) {
+                                Text($0)
                             }
                         }
-                    Picker("Shortlist Year", selection: $selectedYear) {
-                        ForEach(generateShortlistYears(), id: \.self) {
-                            Text($0)
-                        }
                     }
-                }
                 Section {
                     Button(action: {
-                        Task {
-                            let shortlist = try await viewModel.updateNewShortlist(
-                                shortlist: shortlistDetailsVM.shortlist,
-                                updatedName: shortlistName,
-                                updatedYear: selectedYear)
-                            
-                            shortlistDetailsVM.shortlist = shortlist
+                        let dismissSheet = {
                             isPresented = false
+                        }
+                        
+                        Task {
+                            do {
+                                let shortlist = try await viewModel.updateNewShortlist(
+                                    shortlist: shortlistDetailsVM.shortlist,
+                                    updatedName: shortlistName,
+                                    updatedYear: selectedYear
+                                )
+                                
+                                shortlistDetailsVM.shortlist = shortlist
+                                
+                                dismissSheet()
+                                
+                            } catch {
+                                //N/A
+                            }
                         }
                     }, label: {
                         HStack {
                             Spacer()
                             Text("Update")
+                                .font(Theme.shared.avenir(size: 16, weight: .bold))
+                                .foregroundColor(.primary)
                             Spacer()
                         }
                     })
                     .disabled(shortlistName.isEmpty || shortlistName.count < 5)
                 }
             }
-            .navigationTitle("Edit Shortlist")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button("Cancel") {
-                    isPresented = false
+                ToolbarItem(placement: .principal) {
+                    Text("Edit Shortlist")
+                        .font(Theme.shared.avenir(size: 20, weight: .bold))
+                        .foregroundColor(.primary)
+                }
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        isPresented = false
+                    }) {
+                        Text("Cancel")
+                            .font(Theme.shared.avenir(size: 16, weight: .regular))
+                            .foregroundColor(.primary)
+                    }
                 }
             }
         }
