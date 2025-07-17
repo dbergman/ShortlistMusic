@@ -5,6 +5,7 @@
 //  Created by Dustin Bergman on 10/27/22.
 //
 
+import MessageUI
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -13,7 +14,14 @@ struct ShortlistDetailsView: View {
     @State var draggedAlbumId: String?
     @ObservedObject private var viewModel: ViewModel
     @State private var isEditShortlistViewPresented = false
+    @State private var isShareOptionsPresented = false
     
+    @State private var isShowingMailView = false
+    @State private var mailSubject = ""
+    @State private var mailBody = ""
+    @State private var mailAttachment: Data?
+    @State private var isMailDataReady = false
+
     let layout = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -103,7 +111,9 @@ struct ShortlistDetailsView: View {
                 onEdit: {
                     isEditShortlistViewPresented.toggle()
                 },
-                onShare: { print("Share tapped") }
+                onShare: {
+                    isShareOptionsPresented.toggle()
+                }
             )
             .sheet(isPresented: $isEditShortlistViewPresented) {
                 EditShortlistView(
@@ -114,7 +124,33 @@ struct ShortlistDetailsView: View {
                 .environmentObject(viewModel)
                 .presentationDetents([.medium, .large])
             }
-            
+            .confirmationDialog("Share Shortlist", isPresented: $isShareOptionsPresented, titleVisibility: .visible) {
+                Button("Share Image to Instagram") {
+                    print("Instagram")
+                }
+                Button("Share via Email") {
+                    Task {
+                        await generateShortlistEmail()
+                    }
+                }
+                Button("Cancel", role: .cancel) {}
+            }
+        }
+        .sheet(isPresented: $isShowingMailView) {
+            MailView(
+                subject: mailSubject,
+                messageBody: mailBody,
+                isHTML: true,
+                attachment: mailAttachment,
+                attachmentMimeType: "image/jpeg",
+                attachmentFilename: "shortlist.jpg"
+            )
+        }
+        .onChange(of: isMailDataReady) {
+            if isMailDataReady && MFMailComposeViewController.canSendMail() {
+                isShowingMailView = true
+                isMailDataReady = false
+            }
         }
         .navigationTitle(viewModel.shortlist.name)
         .navigationBarTitleDisplayMode(.inline)
@@ -173,6 +209,81 @@ struct ShortlistDetailsView: View {
         
         func dropUpdated(info: DropInfo) -> DropProposal? {
             return DropProposal(operation: .move)
+        }
+    }
+}
+
+extension ShortlistDetailsView {
+    private func generateShortlistEmail() async {
+        guard let albums = viewModel.shortlist.albums else { return }
+
+        let emailBody = createShortlistEmailBody(
+            from: albums,
+            shortlistName: viewModel.shortlist.name,
+            year: viewModel.shortlist.year
+        )
+
+        let images = await loadImagesFromRemoteURLs()
+
+        let imageGridCreator = ImageGridCreator()
+        let gridImage = imageGridCreator.createSquareImageGrid(
+            from: images,
+            outputSize: CGSize(width: 1024, height: 1024)
+        )
+
+        mailSubject = "Shortlist: \(viewModel.shortlist.name)"
+        mailBody = emailBody
+        mailAttachment = gridImage?.jpegData(compressionQuality: 0.8)
+
+        isMailDataReady = true
+    }
+
+    private func createShortlistEmailBody(from albums: [ShortlistAlbum], shortlistName: String, year: String?) -> String {
+        let header = """
+        <h2>🎵 My Shortlist: \(shortlistName)\(year != nil ? " (\(year!))" : "")</h2>
+        <ul>
+        """
+        
+        let sortedAlbums = albums.sorted(by: { $0.rank < $1.rank })
+        
+        let items = sortedAlbums.map { album in
+            """
+            <li><strong>\(album.rank).</strong> \(album.title) – \(album.artist)</li>
+            """
+        }.joined(separator: "\n")
+        
+        let footer = "</ul>"
+        
+        return header + items + footer
+    }
+    
+    private func loadImagesFromRemoteURLs() async -> [UIImage] {
+        guard let albums = viewModel.shortlist.albums else { return [] }
+        
+        return await withTaskGroup(of: UIImage?.self) { group in
+            let artworkURLs: [URL] = albums
+                .sorted(by: { $0.rank < $1.rank })
+                .compactMap { URL(string: $0.artworkURLString) }
+            
+            for url in artworkURLs {
+                group.addTask {
+                    do {
+                        let (data, _) = try await URLSession.shared.data(from: url)
+                        return UIImage(data: data)
+                    } catch {
+                        print("⚠️ Failed to load image from: \(url) – \(error)")
+                        return nil
+                    }
+                }
+            }
+            
+            var images: [UIImage] = []
+            for await image in group {
+                if let img = image {
+                    images.append(img)
+                }
+            }
+            return images
         }
     }
 }

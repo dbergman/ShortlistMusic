@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B067D5E2E288BB8008028E4 /* ImageGridCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B067D5D2E288BB8008028E4 /* ImageGridCreator.swift */; };
+		8B067D602E289904008028E4 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B067D5F2E289904008028E4 /* MailView.swift */; };
 		8B06B1D12B3953EE00260A8D /* TestSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B06B1D02B3953EE00260A8D /* TestSwiftUI.swift */; };
 		8B15AEAC29552021005CE9F6 /* MusicKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B15AEAA2953F023005CE9F6 /* MusicKit.framework */; };
 		8B15AEAF29554B10005CE9F6 /* Formatters+StandardFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15AEAE29554B10005CE9F6 /* Formatters+StandardFormatters.swift */; };
@@ -31,7 +33,6 @@
 		8B685AEE290B86C800F6AD7F /* ShortlistDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */; };
 		8B84E2A82E19FD6D0018FB79 /* PillControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B84E2A72E19FD6D0018FB79 /* PillControl.swift */; };
 		8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */; };
-		8BC843EB297FA4B100FA6B78 /* ShortlistToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EA297FA4B100FA6B78 /* ShortlistToolbar.swift */; };
 		8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */; };
 		8BC843EF2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */; };
 		8BD097132D98BBAF005519F5 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD097122D98BBAF005519F5 /* SkeletonUI */; };
@@ -47,6 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B067D5D2E288BB8008028E4 /* ImageGridCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridCreator.swift; sourceTree = "<group>"; };
+		8B067D5F2E289904008028E4 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		8B06B1D02B3953EE00260A8D /* TestSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSwiftUI.swift; sourceTree = "<group>"; };
 		8B15AEAA2953F023005CE9F6 /* MusicKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MusicKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.0.sdk/System/Library/Frameworks/MusicKit.framework; sourceTree = DEVELOPER_DIR; };
 		8B15AEAE29554B10005CE9F6 /* Formatters+StandardFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatters+StandardFormatters.swift"; sourceTree = "<group>"; };
@@ -73,7 +76,6 @@
 		8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistDetailsView.swift; sourceTree = "<group>"; };
 		8B84E2A72E19FD6D0018FB79 /* PillControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillControl.swift; sourceTree = "<group>"; };
 		8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailView.swift; sourceTree = "<group>"; };
-		8BC843EA297FA4B100FA6B78 /* ShortlistToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistToolbar.swift; sourceTree = "<group>"; };
 		8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistDetailsViewModel.swift; sourceTree = "<group>"; };
 		8BD0974B2DA335D1005519F5 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -114,6 +116,8 @@
 			children = (
 				8B5F2D162C1013D2008849A2 /* Extensions */,
 				8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */,
+				8B067D5D2E288BB8008028E4 /* ImageGridCreator.swift */,
+				8B067D5F2E289904008028E4 /* MailView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -273,7 +277,6 @@
 				8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */,
 				8B84E2A72E19FD6D0018FB79 /* PillControl.swift */,
 				8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */,
-				8BC843EA297FA4B100FA6B78 /* ShortlistToolbar.swift */,
 			);
 			path = "Shortlist Detail";
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				8B685AEC290B7B3300F6AD7F /* ShortlistCollectionsView.swift in Sources */,
 				8B15AEB129576581005CE9F6 /* SearchAlbumsView.swift in Sources */,
 				8B5F2D182C10140E008849A2 /* UserErrorFactory.swift in Sources */,
+				8B067D5E2E288BB8008028E4 /* ImageGridCreator.swift in Sources */,
 				8B15AEBD295CC653005CE9F6 /* SearchMusicArtistCell.swift in Sources */,
 				8B1EEAF32918910D00D28E47 /* MusicPermission.swift in Sources */,
 				8BE7D45D2967AE210099EF4E /* ShortlistCollectionsViewModel.swift in Sources */,
@@ -393,7 +397,6 @@
 				8B5EB70E2986E82300AD9588 /* ShortlistAlbum.swift in Sources */,
 				8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */,
 				8B685AEA290B7B1400F6AD7F /* SearchMusicView.swift in Sources */,
-				8BC843EB297FA4B100FA6B78 /* ShortlistToolbar.swift in Sources */,
 				8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */,
 				8BF28669295CF32F00E80C53 /* CreateShortlistView.swift in Sources */,
 				8B15AEAF29554B10005CE9F6 /* Formatters+StandardFormatters.swift in Sources */,
@@ -402,6 +405,7 @@
 				8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */,
 				8BE7D451295FB38F0099EF4E /* MusicPermissionView.swift in Sources */,
 				8BFB12C32B8A9D82005E3C35 /* EditShortlistView.swift in Sources */,
+				8B067D602E289904008028E4 /* MailView.swift in Sources */,
 				8B685AD3290B791100F6AD7F /* ShortlistApp.swift in Sources */,
 				8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */,
 				8B06B1D12B3953EE00260A8D /* TestSwiftUI.swift in Sources */,
