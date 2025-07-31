@@ -5,7 +5,7 @@
 //  Created by Dustin Bergman on 1/29/23.
 //
 
-import Foundation
+import UIKit
 
 extension ShortlistDetailsView {
     @MainActor
@@ -45,6 +45,11 @@ extension ShortlistDetailsView {
                     }
                 }
             }
+        }
+        
+        func isInstagramInstalled() -> Bool {
+            guard let url = URL(string: "instagram://app") else { return false }
+            return UIApplication.shared.canOpenURL(url)
         }
     }
 }

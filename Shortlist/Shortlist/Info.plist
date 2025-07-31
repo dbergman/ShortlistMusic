@@ -8,7 +8,8 @@
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-   		<string>spotify</string>
+		<string>spotify</string>
+		<string>instagram</string>
 	</array>
 </dict>
 </plist>

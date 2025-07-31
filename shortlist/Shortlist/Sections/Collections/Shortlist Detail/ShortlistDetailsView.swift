@@ -21,7 +21,13 @@ struct ShortlistDetailsView: View {
     @State private var mailBody = ""
     @State private var mailAttachment: Data?
     @State private var isMailDataReady = false
-
+    
+    @State private var isShowingShareSheet = false
+    @State private var imageToShare: Image?
+    @State private var shortlistText: String = ""
+    
+    @State private var showClipboardAlert = false
+    
     let layout = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -125,9 +131,14 @@ struct ShortlistDetailsView: View {
                 .presentationDetents([.medium, .large])
             }
             .confirmationDialog("Share Shortlist", isPresented: $isShareOptionsPresented, titleVisibility: .visible) {
-                Button("Share Image to Instagram") {
-                    print("Instagram")
+                if viewModel.isInstagramInstalled() {
+                    Button("Share Image to Instagram") {
+                        Task {
+                            await generateShortlistInstagram()
+                        }
+                    }
                 }
+                
                 Button("Share via Email") {
                     Task {
                         await generateShortlistEmail()
@@ -146,12 +157,25 @@ struct ShortlistDetailsView: View {
                 attachmentFilename: "shortlist.jpg"
             )
         }
+        .sheet(isPresented: $isShowingShareSheet) {
+            let _ = print("dustin sheet imageToShare \(imageToShare)")
+            if let image = imageToShare {
+                ActivityView(activityItems: [image, shortlistText])
+            } else {
+                ActivityView(activityItems: [shortlistText])
+            }
+        }
         .onChange(of: isMailDataReady) {
             if isMailDataReady && MFMailComposeViewController.canSendMail() {
                 isShowingMailView = true
                 isMailDataReady = false
             }
         }
+//        .alert("Caption Copied!", isPresented: $showClipboardAlert) {
+//            Button("OK", role: .cancel) {}
+//        } message: {
+//            Text("The text has been copied to your clipboard. Paste it in Instagram when you share.")
+//        }
         .navigationTitle(viewModel.shortlist.name)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Image(systemName: "plus.magnifyingglass")
@@ -214,10 +238,10 @@ struct ShortlistDetailsView: View {
 }
 
 extension ShortlistDetailsView {
-    private func generateShortlistEmail() async {
+    private func generateShortlistInstagram() async {
         guard let albums = viewModel.shortlist.albums else { return }
 
-        let emailBody = createShortlistEmailBody(
+        let copyText = createShortlistPlainText(
             from: albums,
             shortlistName: viewModel.shortlist.name,
             year: viewModel.shortlist.year
@@ -226,18 +250,66 @@ extension ShortlistDetailsView {
         let images = await loadImagesFromRemoteURLs()
 
         let imageGridCreator = ImageGridCreator()
-        let gridImage = imageGridCreator.createSquareImageGrid(
+        let gridImage = await imageGridCreator.createSquareImageGrid(
             from: images,
             outputSize: CGSize(width: 1024, height: 1024)
         )
+        
+        let _ = print("dustin gridImage \(gridImage)")
 
+        guard let image = gridImage else {
+            print("⚠️ Failed to create image grid")
+            return
+        }
+        
+        let _ = print("dustin image \(image)")
+
+        // ✅ Clipboard first
+        UIPasteboard.general.string = copyText
+        shortlistText = copyText
+        
+        let _ = print("dustin before image \(image)")
+        imageToShare = Image(uiImage: image)
+        let _ = print("dustin after imageToShare \(imageToShare)")
+        let _ = print("dustin after image \(image)")
+
+        // ✅ Delay presentation by one frame to ensure imageToShare is updated
+        DispatchQueue.main.async {
+            let _ = print("dustin main before imageToShare \(imageToShare)")
+            isShowingShareSheet = true
+            let _ = print("dustin main after imageToShare \(imageToShare)")
+
+            let _ = print("dustin more after imageToShare \(imageToShare)")
+            showClipboardAlert = true
+            let _ = print("dustin more more after imageToShare \(imageToShare)")
+        }
+    }
+
+    
+    private func generateShortlistEmail() async {
+        guard let albums = viewModel.shortlist.albums else { return }
+        
+        let emailBody = createShortlistEmailBody(
+            from: albums,
+            shortlistName: viewModel.shortlist.name,
+            year: viewModel.shortlist.year
+        )
+        
+        let images = await loadImagesFromRemoteURLs()
+        
+        let imageGridCreator = ImageGridCreator()
+        let gridImage = await imageGridCreator.createSquareImageGrid(
+            from: images,
+            outputSize: CGSize(width: 1024, height: 1024)
+        )
+        
         mailSubject = "Shortlist: \(viewModel.shortlist.name)"
         mailBody = emailBody
         mailAttachment = gridImage?.jpegData(compressionQuality: 0.8)
-
+        
         isMailDataReady = true
     }
-
+    
     private func createShortlistEmailBody(from albums: [ShortlistAlbum], shortlistName: String, year: String?) -> String {
         let header = """
         <h2>🎵 My Shortlist: \(shortlistName)\(year != nil ? " (\(year!))" : "")</h2>
@@ -255,6 +327,15 @@ extension ShortlistDetailsView {
         let footer = "</ul>"
         
         return header + items + footer
+    }
+    
+    private func createShortlistPlainText(from albums: [ShortlistAlbum], shortlistName: String, year: String?) -> String {
+        let sortedAlbums = albums.sorted(by: { $0.rank < $1.rank })
+        
+        let header = "🎵 Shortlist: \(shortlistName)\(year != nil ? " (\(year!))" : "")"
+        let items = sortedAlbums.map { "\($0.rank). \($0.title) – \($0.artist)" }.joined(separator: "\n")
+        
+        return "\(header)\n\n\(items)"
     }
     
     private func loadImagesFromRemoteURLs() async -> [UIImage] {
