@@ -8,6 +8,22 @@
 import CloudKit
 import Foundation
 
+enum ShortlistOrdering: String, CaseIterable {
+    case yearAscending = "year_ascending"
+    case yearDescending = "year_descending"
+    case creationAscending = "creation_ascending"
+    case creationDescending = "creation_descending"
+    
+    var displayName: String {
+        switch self {
+        case .yearAscending: return "Order by year ascending"
+        case .yearDescending: return "Order by year descending"
+        case .creationAscending: return "Order by creation ascending"
+        case .creationDescending: return "Order by creation descending"
+        }
+    }
+}
+
 class CloudKitManager {
     enum AlbumAction {
         case load
@@ -102,7 +118,7 @@ extension CloudKitManager {
 
 // Shortlist Collection Methods
 extension CloudKitManager {
-    func getShortlists(completion: @escaping (Result<[Shortlist], Error>) -> Void) {
+    func getShortlists(ordering: ShortlistOrdering = .yearAscending, completion: @escaping (Result<[Shortlist], Error>) -> Void) {
         CKContainer.default().fetchUserRecordID { id, error in
             guard let recordName = id?.recordName else { return }
             
@@ -143,11 +159,32 @@ extension CloudKitManager {
                     
                     dispatchGroup.notify(queue: .main) {
                         shortlists = createdShortlists
-                        shortlists = createdShortlists.sorted { shortlist1, shortlist2 in
-                            if shortlist1.year != shortlist2.year {
-                                return shortlist1.year < shortlist2.year
-                            } else {
+                        
+                        // Apply the specified ordering
+                        switch ordering {
+                        case .yearAscending:
+                            shortlists = createdShortlists.sorted { shortlist1, shortlist2 in
+                                if shortlist1.year != shortlist2.year {
+                                    return shortlist1.year < shortlist2.year
+                                } else {
+                                    return shortlist1.createdTimestamp < shortlist2.createdTimestamp
+                                }
+                            }
+                        case .yearDescending:
+                            shortlists = createdShortlists.sorted { shortlist1, shortlist2 in
+                                if shortlist1.year != shortlist2.year {
+                                    return shortlist1.year > shortlist2.year
+                                } else {
+                                    return shortlist1.createdTimestamp > shortlist2.createdTimestamp
+                                }
+                            }
+                        case .creationAscending:
+                            shortlists = createdShortlists.sorted { shortlist1, shortlist2 in
                                 return shortlist1.createdTimestamp < shortlist2.createdTimestamp
+                            }
+                        case .creationDescending:
+                            shortlists = createdShortlists.sorted { shortlist1, shortlist2 in
+                                return shortlist1.createdTimestamp > shortlist2.createdTimestamp
                             }
                         }
                         

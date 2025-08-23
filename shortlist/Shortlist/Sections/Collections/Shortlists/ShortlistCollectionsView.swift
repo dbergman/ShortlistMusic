@@ -11,6 +11,7 @@ import SwiftUI
 struct ShortlistCollectionsView: View {
     @State var isPresented = false
     @State private var buttonOpacity: Double = 0
+    @State private var showingOrderOptions = false
     @ObservedObject private var viewModel = ViewModel()
     
     var body: some View {
@@ -23,7 +24,7 @@ struct ShortlistCollectionsView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
-                            print("Order shortlists button was tapped")
+                            showingOrderOptions = true
                         } label: {
                             Image(systemName: "arrow.up.arrow.down")
                         }
@@ -43,7 +44,35 @@ struct ShortlistCollectionsView: View {
                 .sheet(isPresented: $isPresented) {
                     CreateShortlistView(isPresented: $isPresented, shortlists: $viewModel.shortlists)
                         .presentationDetents([.medium, .large])
-                }.onAppear() {
+                }
+                .confirmationDialog("Order Shortlists", isPresented: $showingOrderOptions) {
+                    Button("Order by year ascending") {
+                        Task {
+                            try? await viewModel.getShortlists(ordering: .yearAscending)
+                        }
+                    }
+                    
+                    Button("Order by year descending") {
+                        Task {
+                            try? await viewModel.getShortlists(ordering: .yearDescending)
+                        }
+                    }
+                    
+                    Button("Order by creation ascending") {
+                        Task {
+                            try? await viewModel.getShortlists(ordering: .creationAscending)
+                        }
+                    }
+                    
+                    Button("Order by creation descending") {
+                        Task {
+                            try? await viewModel.getShortlists(ordering: .creationDescending)
+                        }
+                    }
+                    
+                    Button("Cancel", role: .cancel) { }
+                }
+                .onAppear() {
                     Task {
                         try? await viewModel.getShortlists()
                     }

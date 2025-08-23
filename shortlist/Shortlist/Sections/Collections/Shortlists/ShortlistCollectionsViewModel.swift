@@ -12,14 +12,16 @@ extension ShortlistCollectionsView {
     class ViewModel: ObservableObject {
         @Published var shortlists: [Shortlist] = []
         @Published var isloading = true
+        @Published var currentOrdering: ShortlistOrdering = .yearDescending
         
         init(shortlists: [Shortlist] = []) {
             self.shortlists = shortlists
         }
 
-        func getShortlists() async throws {
-             let shortlists = try await withCheckedThrowingContinuation { continuation in
-                CloudKitManager.shared.getShortlists { result in
+        func getShortlists(ordering: ShortlistOrdering? = nil) async throws {
+            let orderToUse = ordering ?? currentOrdering
+            let shortlists = try await withCheckedThrowingContinuation { continuation in
+                CloudKitManager.shared.getShortlists(ordering: orderToUse) { result in
                     switch result {
                     case .success(let shortlists):
                         continuation.resume(returning: shortlists)
@@ -32,11 +34,12 @@ extension ShortlistCollectionsView {
             
             isloading = false
             self.shortlists = shortlists
+            self.currentOrdering = orderToUse
         }
 
         func remove(shortlist: Shortlist) async throws {
             let shortlists = try await withCheckedThrowingContinuation { continuation in
-                CloudKitManager.shared.remove(shortlist: shortlist, completion: { result in
+                CloudKitManager.shared.remove(shortlist: shortlist) { result in
                    switch result {
                    case .success(let shortlists):
                        continuation.resume(returning: shortlists)
@@ -44,7 +47,7 @@ extension ShortlistCollectionsView {
                    case .failure(let error):
                        continuation.resume(throwing: error)
                    }
-               })
+               }
             }
 
             self.shortlists = shortlists            
