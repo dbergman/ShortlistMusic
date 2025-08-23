@@ -72,10 +72,19 @@ extension ShortlistCollectionsView {
                     VStack(spacing: 16) {
                         ForEach(viewModel.shortlists, id: \.self) { shortlist in
                             VStack(alignment: .leading, spacing: 6) {
-                                Text(shortlist.name)
-                                    .font(Theme.shared.avenir(size: 20, weight: .bold))
-                                    .fontWeight(.bold)
-                                    .padding(.horizontal)
+                                HStack {
+                                    Text(shortlist.name)
+                                        .font(Theme.shared.avenir(size: 20, weight: .bold))
+                                        .fontWeight(.bold)
+                                    Spacer()
+                                    
+                                    if shortlist.year != "All" {
+                                        Text(shortlist.year)
+                                            .font(Theme.shared.avenir(size: 14, weight: .medium))
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                .padding(.horizontal)
                                 NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
                                     VStack(spacing: 12) {
                                         HStack {
@@ -177,16 +186,26 @@ extension ShortlistCollectionsView {
                 ForEach(0..<3) { _ in
                     VStack(spacing: 16) {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text("")
-                                .skeleton(
-                                    with: true,
-                                    size: CGSize(width: 250, height: 25),
-                                    shape: .rectangle
-                                    
-                                )
-                                .cornerRadius(10)
-                                .padding(.horizontal)
-                                .padding(.vertical, 4)
+                            HStack {
+                                Text("")
+                                    .skeleton(
+                                        with: true,
+                                        size: CGSize(width: 250, height: 25),
+                                        shape: .rectangle
+                                        
+                                    )
+                                    .cornerRadius(10)
+                                Spacer()
+                                Text("")
+                                    .skeleton(
+                                        with: true,
+                                        size: CGSize(width: 60, height: 20),
+                                        shape: .rectangle
+                                    )
+                                    .cornerRadius(8)
+                            }
+                            .padding(.horizontal)
+                            .padding(.vertical, 4)
                             
                             VStack(spacing: 12) {
                                 HStack {
