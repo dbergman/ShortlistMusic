@@ -10,27 +10,33 @@ import SwiftUI
 
 struct ShortlistCollectionsView: View {
     @State var isPresented = false
+    @State private var buttonOpacity: Double = 0
     @ObservedObject private var viewModel = ViewModel()
     
     var body: some View {
         NavigationStack {
-            CollectionsView(viewModel: viewModel)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Text("My Shortlists")
-                            .font(Theme.shared.avenir(size: 20, weight: .bold))
-                    }
-                }
+            CollectionsView(viewModel: viewModel, isPresented: $isPresented, buttonOpacity: $buttonOpacity)
+                .navigationTitle("My ShortLists")
                 .task {
                     await MusicPermission.shared.requestMusicKitAuthorization()
                 }
                 .toolbar {
-                    Button {
-                        self.isPresented.toggle()
-                    } label: {
-                        Image(systemName: "plus.circle")
-                            .tint(.black)
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            print("Order shortlists button was tapped")
+                        } label: {
+                            Image(systemName: "arrow.up.arrow.down")
+                        }
+                        .tint(.primary)
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            print("Share shortlists button was tapped")
+                        } label: {
+                            Image(systemName: "square.and.arrow.up")
+                        }
+                        .tint(.primary)
                     }
                 }
                 .onBoardingSheet()
@@ -49,9 +55,13 @@ struct ShortlistCollectionsView: View {
 extension ShortlistCollectionsView {
     struct CollectionsView: View {
         @ObservedObject private var viewModel: ViewModel
+        @Binding var isPresented: Bool
+        @Binding var buttonOpacity: Double
         
-        init(viewModel: ViewModel) {
+        init(viewModel: ViewModel, isPresented: Binding<Bool>, buttonOpacity: Binding<Double>) {
             self.viewModel = viewModel
+            self._isPresented = isPresented
+            self._buttonOpacity = buttonOpacity
         }
         
         var body: some View {
@@ -96,6 +106,34 @@ extension ShortlistCollectionsView {
                     }
                     .padding(.vertical)
                 }
+                .overlay(
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Button {
+                                self.isPresented.toggle()
+                            } label: {
+                                HStack(spacing: 8) {
+                                    Text("Add a Shortlist")
+                                        .font(.system(size: 16, weight: .semibold))
+                                }
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 12)
+                                .background(Color.primary)
+                                .clipShape(Capsule())
+                                .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
+                            }
+                            .opacity(buttonOpacity)
+                            .padding(.bottom, 20)
+                        }
+                    }
+                )
+                .onAppear {
+                    withAnimation(.easeIn(duration: 0.6)) {
+                        buttonOpacity = 1
+                    }
+                }
             }
         }
         
@@ -138,42 +176,42 @@ extension ShortlistCollectionsView {
             ScrollView {
                 ForEach(0..<3) { _ in
                     VStack(spacing: 16) {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("")
-                                    .skeleton(
-                                        with: true,
-                                        size: CGSize(width: 250, height: 25),
-                                        shape: .rectangle
-                                        
-                                        )
-                                    .cornerRadius(10)
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 4)
-
-                                    VStack(spacing: 12) {
-                                        HStack {
-                                            placeHolderRect(with: getImageSize(for: 0))
-                                            VStack {
-                                                Grid {
-                                                    GridRow {
-                                                        placeHolderRect(with: getImageSize(for: 1))
-                                                        placeHolderRect(with: getImageSize(for: 2))
-                                                    }
-                                                    GridRow {
-                                                        placeHolderRect(with: getImageSize(for: 3))
-                                                        placeHolderRect(with: getImageSize(for: 4))
-                                                    }
-                                                }
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("")
+                                .skeleton(
+                                    with: true,
+                                    size: CGSize(width: 250, height: 25),
+                                    shape: .rectangle
+                                    
+                                )
+                                .cornerRadius(10)
+                                .padding(.horizontal)
+                                .padding(.vertical, 4)
+                            
+                            VStack(spacing: 12) {
+                                HStack {
+                                    placeHolderRect(with: getImageSize(for: 0))
+                                    VStack {
+                                        Grid {
+                                            GridRow {
+                                                placeHolderRect(with: getImageSize(for: 1))
+                                                placeHolderRect(with: getImageSize(for: 2))
+                                            }
+                                            GridRow {
+                                                placeHolderRect(with: getImageSize(for: 3))
+                                                placeHolderRect(with: getImageSize(for: 4))
                                             }
                                         }
                                     }
-                                    .padding()
-                                    .background(Color.white)
-                                    .cornerRadius(16)
-                                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
-                                    .padding(.horizontal)
+                                }
                             }
-                            .padding(.horizontal, 10)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(16)
+                            .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                            .padding(.horizontal)
+                        }
+                        .padding(.horizontal, 10)
                         
                     }
                     .padding(.vertical)
@@ -209,7 +247,7 @@ extension ShortlistCollectionsView {
             let screenWidth = UIScreen.main.bounds.width
             let imageWidth = 0.54545 * screenWidth - 54.55
             let size: CGFloat = index == 0 ? imageWidth : (imageWidth - 10) / 2
-
+            
             return size
         }
     }
@@ -222,7 +260,9 @@ struct ShortlistCollections_Previews: PreviewProvider {
         return ShortlistCollectionsView.CollectionsView(
             viewModel: ShortlistCollectionsView.ViewModel(
                 shortlists: [shortlist, shortlist, shortlist]
-            )
+            ),
+            isPresented: .constant(false),
+            buttonOpacity: .constant(0)
         )
     }
 }
