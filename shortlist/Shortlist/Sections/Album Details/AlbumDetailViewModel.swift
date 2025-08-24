@@ -13,8 +13,8 @@ import UIKit
 extension AlbumDetailView {
     @MainActor
     class ViewModel: ObservableObject {
-        @Published var album: Content?
-        @Published var isloading = true
+        @Published var album: Content? { didSet { print("🟢 ViewModel.album set ->", album?.title ?? "nil") } }
+        @Published var isloading = true { didSet { print("🟡 ViewModel.isloading ->", isloading) } }
         let shortlist: Shortlist
         private var currentShortlistAlbums: [ShortlistAlbum]?
         private let screenSize: CGFloat
@@ -23,14 +23,17 @@ extension AlbumDetailView {
             self.album = album
             self.shortlist = shortlist
             self.screenSize = screenSize
+            
+            print("🔧 ViewModel init - id:", ObjectIdentifier(self).hashValue)
         }
-        
+
         func loadTracks(for album: Album, recordID: CKRecord.ID? = nil) async {
             let detailedAlbum = try? await album.with([.artists, .tracks])
+
             guard let albumTracks = detailedAlbum?.tracks else { return }
-            
+
             let theTracks = albumTracks.map { Content.TrackDetails(title: $0.title, duration: $0.displayDuration) }
-            
+
             let details = Content(
                 id: album.id.rawValue,
                 artist: album.artistName,
@@ -41,10 +44,11 @@ extension AlbumDetailView {
                 appleAlbumURL: album.url,
                 spotifyAlbumSearchDeeplink: URL(string: "spotify://search/\(album.title)"),
                 recordID: recordID,
-                trackDetails: theTracks)
-            
-            isloading = false
-            
+                trackDetails: theTracks
+            )
+
+            self.album = details
+
             currentShortlistAlbums = await withCheckedContinuation { continuation in
                 CloudKitManager.shared.updateShortlistAlbums(
                     shortlistID: shortlist.id,
@@ -55,12 +59,14 @@ extension AlbumDetailView {
                         continuation.resume(returning: albums)
                     case .failure(let error):
                         print("Error: \(error)")
+                        continuation.resume(returning: nil)
                     }
                 }
             }
-            
-            self.album = details
+
+            isloading = false
         }
+
         
         func getAlbum(shortListAlbum: ShortlistAlbum, shortlist: Shortlist) async {
             let request = MusicCatalogResourceRequest<Album>(

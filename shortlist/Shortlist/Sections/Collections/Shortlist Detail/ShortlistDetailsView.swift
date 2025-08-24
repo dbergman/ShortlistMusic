@@ -15,6 +15,7 @@ struct ShortlistDetailsView: View {
     @ObservedObject private var viewModel: ViewModel
     @State private var isEditShortlistViewPresented = false
     @State private var isShareOptionsPresented = false
+    @Environment(\.dismiss) private var dismiss
     
     @State private var isShowingMailView = false
     @State private var mailSubject = ""
@@ -121,6 +122,7 @@ struct ShortlistDetailsView: View {
                     isShareOptionsPresented.toggle()
                 }
             )
+            .padding(.bottom, 20)
             .sheet(isPresented: $isEditShortlistViewPresented) {
                 EditShortlistView(
                     isPresented: $isEditShortlistViewPresented,
@@ -165,8 +167,8 @@ struct ShortlistDetailsView: View {
                 ActivityView(activityItems: [shortlistText])
             }
         }
-        .onChange(of: isMailDataReady) {
-            if isMailDataReady && MFMailComposeViewController.canSendMail() {
+        .onChange(of: isMailDataReady) { oldValue, newValue in
+            if newValue && MFMailComposeViewController.canSendMail() {
                 isShowingMailView = true
                 isMailDataReady = false
             }
@@ -178,17 +180,22 @@ struct ShortlistDetailsView: View {
 //        }
         .navigationTitle(viewModel.shortlist.name)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing: Image(systemName: "plus.magnifyingglass")
-            .onTapGesture {
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(
+            leading: CustomBarButton.backButton {
+                dismiss()
+            },
+            trailing: CustomBarButton(systemName: "plus.magnifyingglass") {
                 isPresented.toggle()
-            }.fullScreenCover(isPresented: $isPresented, onDismiss: {
-                Task {
-                    try await viewModel.getAlbums(for: viewModel.shortlist)
-                }
-            }, content: {
-                SearchMusicView(isPresented: $isPresented, shortlist: viewModel.shortlist)
-            })
+            }
         )
+        .fullScreenCover(isPresented: $isPresented, onDismiss: {
+            Task {
+                try await viewModel.getAlbums(for: viewModel.shortlist)
+            }
+        }, content: {
+            SearchMusicView(isPresented: $isPresented, shortlist: viewModel.shortlist)
+        })
         
         .onAppear() {
             Task {

@@ -176,7 +176,7 @@ extension AlbumDetailView {
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button(action: {
+                CustomBarButton(systemName: albumOnShortlist ? "minus.circle" : "plus.circle") {
                     Task {
                         if albumOnShortlist {
                             await viewModel.removeAlbumFromShortlist()
@@ -186,8 +186,6 @@ extension AlbumDetailView {
 
                         albumOnShortlist.toggle()
                     }
-                }) {
-                    Image(systemName: albumOnShortlist ? "minus.circle" : "plus.circle")
                 }
             }
             .onAppear {
@@ -207,16 +205,21 @@ struct AlbumDetailView: View {
 
     private var shortlist: Shortlist
     private var albumType: AlbumType
-    @ObservedObject private var viewModel: ViewModel
+    @StateObject private var viewModel: ViewModel
+    @Environment(\.dismiss) private var dismiss
+    
+    private var navigationTitle: String {
+        viewModel.album?.title ?? "Album"
+    }
 
     init(albumType: AlbumType, shortlist: Shortlist) {
         self.albumType = albumType
         self.shortlist = shortlist
-        self.viewModel = ViewModel(
+        self._viewModel = StateObject(wrappedValue: ViewModel(
             album: nil,
             shortlist: shortlist,
             screenSize: UIScreen.main.bounds.size.width
-        )
+        ))
     }
     
     var body: some View {
@@ -227,6 +230,12 @@ struct AlbumDetailView: View {
                 AlbumView(album: album, shortlist: shortlist, viewModel: viewModel)
             }
         }
+        .navigationTitle(navigationTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: CustomBarButton.backButton {
+            dismiss()
+        })
         .task {
             switch albumType {
             case .musicKit(let album):
