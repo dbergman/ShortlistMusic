@@ -184,7 +184,7 @@ struct ShortlistDetailsView: View {
             )
         }
         .overlay(
-            // Toast notification
+            // Toast notification positioned at bottom of navigation bar
             VStack {
                 if showToast {
                     HStack(spacing: 12) {
@@ -205,13 +205,13 @@ struct ShortlistDetailsView: View {
                     .cornerRadius(8)
                     .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
                     .padding(.horizontal, 20)
-                    .padding(.top, 60) // Below navigation bar
-                    .offset(y: showToast ? 0 : -100) // Start above screen
-                    .opacity(showToast ? 1 : 0)
-                    .animation(.spring(response: 0.6, dampingFraction: 0.8), value: showToast)
+                    .padding(.top, 8) // Just below navigation bar
+                    .transition(.move(edge: .top))
+                    .zIndex(999)
                 }
                 Spacer()
             }
+            .animation(.easeInOut(duration: 0.5), value: showToast)
         )
         .onChange(of: isMailDataReady) { oldValue, newValue in
             if newValue && MFMailComposeViewController.canSendMail() {
@@ -326,12 +326,21 @@ extension ShortlistDetailsView {
         
         // Save image to photos using simple approach
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        toastMessage = "Shortlist image saved to Photos! 📸"
-        toastType = .success
-        showToast = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            showToast = false
+        await MainActor.run {
+            toastMessage = "Shortlist image saved to Photos! 📸"
+            toastType = .success
+            
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                showToast = true
+            }
+            
+            // Auto-hide toast after 3 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    showToast = false
+                }
+            }
         }
     }
     
@@ -353,11 +362,16 @@ extension ShortlistDetailsView {
         await MainActor.run {
             toastMessage = "Shortlist text copied to clipboard! 📋"
             toastType = .success
-            showToast = true
+            
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                showToast = true
+            }
             
             // Auto-hide toast after 3 seconds
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                showToast = false
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    showToast = false
+                }
             }
             
             print("📋 Shortlist text copied to clipboard")
