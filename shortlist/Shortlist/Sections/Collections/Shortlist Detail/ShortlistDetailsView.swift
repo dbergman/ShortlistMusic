@@ -8,6 +8,7 @@
 import MessageUI
 import SwiftUI
 import UniformTypeIdentifiers
+import Photos
 
 struct ShortlistDetailsView: View {
     @State private var isPresented = false
@@ -23,11 +24,30 @@ struct ShortlistDetailsView: View {
     @State private var mailAttachment: Data?
     @State private var isMailDataReady = false
     
-    @State private var isShowingShareSheet = false
-    @State private var imageToShare: Image?
     @State private var shortlistText: String = ""
     
-    @State private var showClipboardAlert = false
+    @State private var showToast = false
+    @State private var toastMessage = ""
+    @State private var toastType: ToastType = .success
+    
+    enum ToastType {
+        case success
+        case error
+        
+        var backgroundColor: Color {
+            switch self {
+            case .success: return .green
+            case .error: return .red
+            }
+        }
+        
+        var icon: String {
+            switch self {
+            case .success: return "checkmark.circle.fill"
+            case .error: return "exclamationmark.circle.fill"
+            }
+        }
+    }
     
     let layout = [
         GridItem(.flexible()),
@@ -133,14 +153,18 @@ struct ShortlistDetailsView: View {
                 .presentationDetents([.medium, .large])
             }
             .confirmationDialog("Share Shortlist", isPresented: $isShareOptionsPresented, titleVisibility: .visible) {
-                if viewModel.isInstagramInstalled() {
-                    Button("Share Image to Instagram") {
-                        Task {
-                            await generateShortlistInstagram()
-                        }
+                Button("Save Image to Photos") {
+                    Task {
+                        await saveImageToPhotos()
                     }
                 }
                 
+                Button("Copy Shortlist Album text") {
+                    Task {
+                        await copyShortlistText()
+                    }
+                }
+
                 Button("Share via Email") {
                     Task {
                         await generateShortlistEmail()
@@ -159,25 +183,42 @@ struct ShortlistDetailsView: View {
                 attachmentFilename: "shortlist.jpg"
             )
         }
-        .sheet(isPresented: $isShowingShareSheet) {
-            let _ = print("dustin sheet imageToShare \(imageToShare)")
-            if let image = imageToShare {
-                ActivityView(activityItems: [image, shortlistText])
-            } else {
-                ActivityView(activityItems: [shortlistText])
+        .overlay(
+            // Toast notification
+            VStack {
+                if showToast {
+                    HStack(spacing: 12) {
+                        Image(systemName: toastType.icon)
+                            .foregroundColor(.white)
+                            .font(.system(size: 16, weight: .semibold))
+                        
+                        Text(toastMessage)
+                            .foregroundColor(.white)
+                            .font(.system(size: 14, weight: .medium))
+                            .multilineTextAlignment(.leading)
+                        
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(toastType.backgroundColor)
+                    .cornerRadius(8)
+                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                    .padding(.horizontal, 20)
+                    .padding(.top, 60) // Below navigation bar
+                    .offset(y: showToast ? 0 : -100) // Start above screen
+                    .opacity(showToast ? 1 : 0)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8), value: showToast)
+                }
+                Spacer()
             }
-        }
+        )
         .onChange(of: isMailDataReady) { oldValue, newValue in
             if newValue && MFMailComposeViewController.canSendMail() {
                 isShowingMailView = true
                 isMailDataReady = false
             }
         }
-//        .alert("Caption Copied!", isPresented: $showClipboardAlert) {
-//            Button("OK", role: .cancel) {}
-//        } message: {
-//            Text("The text has been copied to your clipboard. Paste it in Instagram when you share.")
-//        }
         .navigationTitle(viewModel.shortlist.name)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -245,54 +286,6 @@ struct ShortlistDetailsView: View {
 }
 
 extension ShortlistDetailsView {
-    private func generateShortlistInstagram() async {
-        guard let albums = viewModel.shortlist.albums else { return }
-
-        let copyText = createShortlistPlainText(
-            from: albums,
-            shortlistName: viewModel.shortlist.name,
-            year: viewModel.shortlist.year
-        )
-
-        let images = await loadImagesFromRemoteURLs()
-
-        let imageGridCreator = ImageGridCreator()
-        let gridImage = await imageGridCreator.createSquareImageGrid(
-            from: images,
-            outputSize: CGSize(width: 1024, height: 1024)
-        )
-        
-        let _ = print("dustin gridImage \(gridImage)")
-
-        guard let image = gridImage else {
-            print("⚠️ Failed to create image grid")
-            return
-        }
-        
-        let _ = print("dustin image \(image)")
-
-        // ✅ Clipboard first
-        UIPasteboard.general.string = copyText
-        shortlistText = copyText
-        
-        let _ = print("dustin before image \(image)")
-        imageToShare = Image(uiImage: image)
-        let _ = print("dustin after imageToShare \(imageToShare)")
-        let _ = print("dustin after image \(image)")
-
-        // ✅ Delay presentation by one frame to ensure imageToShare is updated
-        DispatchQueue.main.async {
-            let _ = print("dustin main before imageToShare \(imageToShare)")
-            isShowingShareSheet = true
-            let _ = print("dustin main after imageToShare \(imageToShare)")
-
-            let _ = print("dustin more after imageToShare \(imageToShare)")
-            showClipboardAlert = true
-            let _ = print("dustin more more after imageToShare \(imageToShare)")
-        }
-    }
-
-    
     private func generateShortlistEmail() async {
         guard let albums = viewModel.shortlist.albums else { return }
         
@@ -315,6 +308,60 @@ extension ShortlistDetailsView {
         mailAttachment = gridImage?.jpegData(compressionQuality: 0.8)
         
         isMailDataReady = true
+    }
+    
+    private func saveImageToPhotos() async {
+        let images = await loadImagesFromRemoteURLs()
+
+        let imageGridCreator = ImageGridCreator()
+        let gridImage = await imageGridCreator.createSquareImageGrid(
+            from: images,
+            outputSize: CGSize(width: 1024, height: 1024)
+        )
+        
+        guard let image = gridImage else {
+            print("⚠️ Failed to create image grid")
+            return
+        }
+        
+        // Save image to photos using simple approach
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        toastMessage = "Shortlist image saved to Photos! 📸"
+        toastType = .success
+        showToast = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            showToast = false
+        }
+    }
+    
+    private func copyShortlistText() async {
+        guard let albums = viewModel.shortlist.albums else { 
+            print("⚠️ No albums found")
+            return 
+        }
+
+        let copyText = createShortlistPlainText(
+            from: albums,
+            shortlistName: viewModel.shortlist.name,
+            year: viewModel.shortlist.year
+        )
+        
+        UIPasteboard.general.string = copyText
+        shortlistText = copyText
+        
+        await MainActor.run {
+            toastMessage = "Shortlist text copied to clipboard! 📋"
+            toastType = .success
+            showToast = true
+            
+            // Auto-hide toast after 3 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                showToast = false
+            }
+            
+            print("📋 Shortlist text copied to clipboard")
+        }
     }
     
     private func createShortlistEmailBody(from albums: [ShortlistAlbum], shortlistName: String, year: String?) -> String {

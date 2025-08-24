@@ -46,10 +46,5 @@ extension ShortlistDetailsView {
                 }
             }
         }
-        
-        func isInstagramInstalled() -> Bool {
-            guard let url = URL(string: "instagram://app") else { return false }
-            return UIApplication.shared.canOpenURL(url)
-        }
     }
 }
