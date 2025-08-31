@@ -9,6 +9,7 @@ import MessageUI
 import SwiftUI
 import UniformTypeIdentifiers
 import Photos
+import SkeletonUI
 
 struct ShortlistDetailsView: View {
     @State private var isPresented = false
@@ -28,26 +29,7 @@ struct ShortlistDetailsView: View {
     
     @State private var showToast = false
     @State private var toastMessage = ""
-    @State private var toastType: ToastType = .success
-    
-    enum ToastType {
-        case success
-        case error
-        
-        var backgroundColor: Color {
-            switch self {
-            case .success: return .green
-            case .error: return .red
-            }
-        }
-        
-        var icon: String {
-            switch self {
-            case .success: return "checkmark.circle.fill"
-            case .error: return "exclamationmark.circle.fill"
-            }
-        }
-    }
+    @State private var toastType: ToastView.ToastType = .success
     
     let layout = [
         GridItem(.flexible()),
@@ -189,33 +171,11 @@ struct ShortlistDetailsView: View {
         }
         .overlay(
             // Toast notification positioned at bottom of navigation bar
-            VStack {
-                if showToast {
-                    HStack(spacing: 12) {
-                        Image(systemName: toastType.icon)
-                            .foregroundColor(.white)
-                            .font(.system(size: 16, weight: .semibold))
-                        
-                        Text(toastMessage)
-                            .foregroundColor(.white)
-                            .font(.system(size: 14, weight: .medium))
-                            .multilineTextAlignment(.leading)
-                        
-                        Spacer()
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(toastType.backgroundColor)
-                    .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 8) // Just below navigation bar
-                    .transition(.move(edge: .top))
-                    .zIndex(999)
-                }
-                Spacer()
-            }
-                .animation(.easeInOut(duration: 0.5), value: showToast)
+            ToastOverlay(
+                showToast: $showToast,
+                toastMessage: $toastMessage,
+                toastType: $toastType
+            )
         )
         .onChange(of: isMailDataReady) { oldValue, newValue in
             if newValue && MFMailComposeViewController.canSendMail() {
@@ -243,6 +203,7 @@ struct ShortlistDetailsView: View {
         })
         
         .onAppear() {
+            viewModel.isLoading = true
             Task {
                 try await viewModel.getAlbums(for: viewModel.shortlist)
             }
@@ -399,7 +360,7 @@ extension ShortlistDetailsView {
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         
         await MainActor.run {
-            toastMessage = "Shortlist image saved to Photos! 📸"
+            toastMessage = "Shortlist image saved to Photos"
             toastType = .success
             
             withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
@@ -431,7 +392,7 @@ extension ShortlistDetailsView {
         shortlistText = copyText
         
         await MainActor.run {
-            toastMessage = "Shortlist text copied to clipboard! 📋"
+            toastMessage = "Shortlist text copied to clipboard"
             toastType = .success
             
             withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
@@ -445,7 +406,7 @@ extension ShortlistDetailsView {
                 }
             }
             
-            print("📋 Shortlist text copied to clipboard")
+            print("Shortlist text copied to clipboard")
         }
     }
     

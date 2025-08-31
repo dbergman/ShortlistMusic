@@ -15,6 +15,10 @@ extension AlbumDetailView {
     class ViewModel: ObservableObject {
         @Published var album: Content? { didSet { print("🟢 ViewModel.album set ->", album?.title ?? "nil") } }
         @Published var isloading = true { didSet { print("🟡 ViewModel.isloading ->", isloading) } }
+        @Published var showToast = false
+        @Published var toastMessage = ""
+        @Published var toastType: ToastView.ToastType = .success
+        
         let shortlist: Shortlist
         private var currentShortlistAlbums: [ShortlistAlbum]?
         private let screenSize: CGFloat
@@ -108,23 +112,47 @@ extension AlbumDetailView {
             
             print("dustin saved \(album.title)")
             
-            currentShortlistAlbums = await withCheckedContinuation { continuation in
-                CloudKitManager.shared.updateShortlistAlbums(
-                    shortlistID: shortlist.id,
-                    action: .add(record)
-                ) { result in
-                    switch result {
-                    case .success(let albums):
-                        continuation.resume(returning: albums)
-                    case .failure(let error):
-                        print("Error: \(error)")
+            do {
+                currentShortlistAlbums = await withCheckedContinuation { continuation in
+                    CloudKitManager.shared.updateShortlistAlbums(
+                        shortlistID: shortlist.id,
+                        action: .add(record)
+                    ) { result in
+                        switch result {
+                        case .success(let albums):
+                            continuation.resume(returning: albums)
+                        case .failure(let error):
+                            print("Error: \(error)")
+                            continuation.resume(returning: nil)
+                        }
                     }
+                }
+                
+                // Show success toast
+                toastMessage = "Added '\(album.title)' to shortlist"
+                toastType = .success
+                showToast = true
+                
+                // Auto-hide toast after 3 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.showToast = false
+                }
+                
+            } catch {
+                // Show error toast
+                toastMessage = "Failed to add album to shortlist"
+                toastType = .error
+                showToast = true
+                
+                // Auto-hide toast after 3 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.showToast = false
                 }
             }
         }
         
         func removeAlbumFromShortlist() async {
-            guard let recordID = album?.recordID else { return }
+            guard let recordID = album?.recordID, let albumTitle = album?.title else { return }
             
             do {
                 let deletedRecord = try await CKContainer.default().publicCloudDatabase.deleteRecord(withID: recordID)
@@ -140,13 +168,35 @@ extension AlbumDetailView {
                             continuation.resume(returning: albums)
                         case .failure(let error):
                             print("Error: \(error)")
+                            continuation.resume(returning: nil)
                         }
                     }
                 }
                 
                 await updateShortlistAlbumRanking()
+                
+                // Show success toast
+                toastMessage = "Removed '\(albumTitle)' from shortlist"
+                toastType = .success
+                showToast = true
+                
+                // Auto-hide toast after 3 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.showToast = false
+                }
+                
             } catch {
                 print("Unable to delete")
+                
+                // Show error toast
+                toastMessage = "Failed to remove album from shortlist"
+                toastType = .error
+                showToast = true
+                
+                // Auto-hide toast after 3 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.showToast = false
+                }
             }
         }
         

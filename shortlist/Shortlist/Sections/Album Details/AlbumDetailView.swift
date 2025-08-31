@@ -176,15 +176,17 @@ extension AlbumDetailView {
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                CustomBarButton(systemName: albumOnShortlist ? "minus.circle" : "plus.circle") {
-                    Task {
-                        if albumOnShortlist {
-                            await viewModel.removeAlbumFromShortlist()
-                        } else {
-                            await viewModel.addAlbumToShortlist()
-                        }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    CustomBarButton(systemName: albumOnShortlist ? "minus.circle" : "plus.circle") {
+                        Task {
+                            if albumOnShortlist {
+                                await viewModel.removeAlbumFromShortlist()
+                            } else {
+                                await viewModel.addAlbumToShortlist()
+                            }
 
-                        albumOnShortlist.toggle()
+                            albumOnShortlist.toggle()
+                        }
                     }
                 }
             }
@@ -247,6 +249,14 @@ struct AlbumDetailView: View {
                 )
             }
         }
+        .overlay(
+            // Toast overlay
+            ToastOverlay(
+                showToast: $viewModel.showToast,
+                toastMessage: $viewModel.toastMessage,
+                toastType: $viewModel.toastType
+            )
+        )
     }
     
     @ViewBuilder
