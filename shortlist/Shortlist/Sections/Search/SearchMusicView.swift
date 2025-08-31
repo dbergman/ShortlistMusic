@@ -103,40 +103,106 @@ extension SearchMusicView {
         }
 
         var body: some View {
-            List {
-                Section {
-                    ForEach(albums) { album in
-                        ZStack {
-                            NavigationLink(value: SearchMusicView.Route.album(album)) {
-                                EmptyView()
+            if albums.isEmpty {
+                emptyStateView()
+            } else {
+                List {
+                    Section {
+                        ForEach(albums) { album in
+                            ZStack {
+                                NavigationLink(value: SearchMusicView.Route.album(album)) {
+                                    EmptyView()
+                                }
+                                .opacity(0)
+
+                                HStack {
+                                    SearchMusicView.SearchMusicAlbumCell(album: album)
+
+                                    Spacer()
+
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.gray)
+                                        .imageScale(.small)
+                                }
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color(.systemBackground))
+                                        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                                )
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
                             }
-                            .opacity(0)
-
-                            HStack {
-                                SearchMusicView.SearchMusicAlbumCell(album: album)
-
-                                Spacer()
-
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
-                                    .imageScale(.small)
-                            }
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color(.systemBackground))
-                                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
-                            )
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
                         }
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
                     }
                 }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
+        }
+        
+        @ViewBuilder
+        private func emptyStateView() -> some View {
+            VStack(spacing: 24) {
+                Spacer()
+                
+                // Main message
+                VStack(spacing: 12) {
+                    Text("Search for Music")
+                        .font(Theme.shared.avenir(size: 24, weight: .bold))
+                        .foregroundColor(.primary)
+                        .multilineTextAlignment(.center)
+                    
+                    Text("Start typing an artist name above to discover albums and add them to your shortlist")
+                        .font(Theme.shared.avenir(size: 16, weight: .medium))
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .padding(.horizontal, 32)
+                }
+                
+                // Search tips
+                VStack(spacing: 16) {
+                    Text("Search Tips:")
+                        .font(Theme.shared.avenir(size: 14, weight: .semibold))
+                        .foregroundColor(.primary)
+                    
+                    VStack(spacing: 8) {
+                        HStack(spacing: 12) {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(.blue)
+                                .frame(width: 20)
+                            Text("Try artist names like 'The Beatles' or 'The Clash'")
+                                .font(Theme.shared.avenir(size: 14, weight: .regular))
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        HStack(spacing: 12) {
+                            Image(systemName: "music.note")
+                                .foregroundColor(.green)
+                                .frame(width: 20)
+                            Text("Browse albums and tap to add them to your shortlist")
+                                .font(Theme.shared.avenir(size: 14, weight: .regular))
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        HStack(spacing: 12) {
+                            Image(systemName: "heart.fill")
+                                .foregroundColor(.red)
+                                .frame(width: 20)
+                            Text("Discover new music and build your perfect collection")
+                                .font(Theme.shared.avenir(size: 14, weight: .regular))
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                .padding(.horizontal, 24)
+                
+                Spacer()
+            }
+            .padding()
         }
     }
 }
