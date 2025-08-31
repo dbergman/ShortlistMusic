@@ -75,13 +75,15 @@ extension AlbumDetailView {
                         }
                         .padding([.leading, .trailing], 20)
 
-                        Text(viewModel.album?.releaseYear)
-                            .font(Theme.shared.avenir(size: 14, weight: .thin))
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(20)
-                            .padding([.leading], 20)
+                        if let releaseYear = viewModel.album?.releaseYear, !releaseYear.isEmpty {
+                            Text(releaseYear)
+                                .font(Theme.shared.avenir(size: 14, weight: .thin))
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(Color.gray.opacity(0.2))
+                                .cornerRadius(20)
+                                .padding([.leading], 20)
+                        }
 
                         Text(viewModel.album?.title)
                             .font(Theme.shared.avenir(size: 28, weight: .bold))
