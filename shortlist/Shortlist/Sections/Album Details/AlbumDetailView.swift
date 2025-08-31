@@ -225,38 +225,67 @@ struct AlbumDetailView: View {
     }
     
     var body: some View {
-        Group {
-            if viewModel.isloading {
-                loadingPlaceholder()
-            } else if let album = viewModel.album {
-                AlbumView(album: album, shortlist: shortlist, viewModel: viewModel)
+        ZStack {
+            Group {
+                if viewModel.isloading {
+                    loadingPlaceholder()
+                } else if let album = viewModel.album {
+                    AlbumView(album: album, shortlist: shortlist, viewModel: viewModel)
+                }
             }
-        }
-        .navigationTitle(navigationTitle)
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: CustomBarButton.backButton {
-            dismiss()
-        })
-        .task {
-            switch albumType {
-            case .musicKit(let album):
-                await viewModel.loadTracks(for: album)
-            case .shortlistAlbum(let shortlistAlbum):
-                await viewModel.getAlbum(
-                    shortListAlbum: shortlistAlbum,
-                    shortlist: shortlist
+            .navigationTitle(navigationTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: CustomBarButton.backButton {
+                dismiss()
+            })
+            .task {
+                switch albumType {
+                case .musicKit(let album):
+                    await viewModel.loadTracks(for: album)
+                case .shortlistAlbum(let shortlistAlbum):
+                    await viewModel.getAlbum(
+                        shortListAlbum: shortlistAlbum,
+                        shortlist: shortlist
+                    )
+                }
+            }
+            .overlay(
+                // Toast overlay
+                ToastOverlay(
+                    showToast: $viewModel.showToast,
+                    toastMessage: $viewModel.toastMessage,
+                    toastType: $viewModel.toastType
                 )
+            )
+            
+            // Full-screen loading overlay
+            if viewModel.isAddingToShortlist || viewModel.isRemovingFromShortlist {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(true)
+                
+                VStack(spacing: 20) {
+                    SpinningRecordView(size: 80, color: viewModel.isAddingToShortlist ? .blue : .red)
+                    
+                    Text(viewModel.isAddingToShortlist ? "Adding to Shortlist..." : "Removing from Shortlist...")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                    
+                    Text("Please wait...")
+                        .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.8))
+                }
+                .padding(40)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.black.opacity(0.8))
+                        .shadow(color: .black.opacity(0.5), radius: 20, x: 0, y: 10)
+                )
+                .allowsHitTesting(false)
             }
         }
-        .overlay(
-            // Toast overlay
-            ToastOverlay(
-                showToast: $viewModel.showToast,
-                toastMessage: $viewModel.toastMessage,
-                toastType: $viewModel.toastType
-            )
-        )
     }
     
     @ViewBuilder

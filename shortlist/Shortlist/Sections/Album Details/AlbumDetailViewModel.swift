@@ -15,10 +15,11 @@ extension AlbumDetailView {
     class ViewModel: ObservableObject {
         @Published var album: Content? { didSet { print("🟢 ViewModel.album set ->", album?.title ?? "nil") } }
         @Published var isloading = true { didSet { print("🟡 ViewModel.isloading ->", isloading) } }
+        @Published var isAddingToShortlist = false
+        @Published var isRemovingFromShortlist = false
         @Published var showToast = false
         @Published var toastMessage = ""
         @Published var toastType: ToastView.ToastType = .success
-        
         let shortlist: Shortlist
         private var currentShortlistAlbums: [ShortlistAlbum]?
         private let screenSize: CGFloat
@@ -88,6 +89,8 @@ extension AlbumDetailView {
         func addAlbumToShortlist() async {
             guard let album = album else { return }
             
+            isAddingToShortlist = true
+            
             let record = CKRecord(recordType: "Albums")
             record.setValue(album.artist, forKey: "artist")
             if let artworkURLString = album.artworkURL?.absoluteString {
@@ -149,10 +152,14 @@ extension AlbumDetailView {
                     self.showToast = false
                 }
             }
+            
+            isAddingToShortlist = false
         }
         
         func removeAlbumFromShortlist() async {
             guard let recordID = album?.recordID, let albumTitle = album?.title else { return }
+            
+            isRemovingFromShortlist = true
             
             do {
                 let deletedRecord = try await CKContainer.default().publicCloudDatabase.deleteRecord(withID: recordID)
@@ -198,6 +205,8 @@ extension AlbumDetailView {
                     self.showToast = false
                 }
             }
+            
+            isRemovingFromShortlist = false
         }
         
         func updateShortlistAlbumRanking() async {

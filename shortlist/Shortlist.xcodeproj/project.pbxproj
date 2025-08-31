@@ -35,6 +35,7 @@
 		8B84E2A82E19FD6D0018FB79 /* PillControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B84E2A72E19FD6D0018FB79 /* PillControl.swift */; };
 		8B88B3532E5AAF68003E03AE /* CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */; };
 		8BA847D32E63CEA00079CEF3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA847D22E63CEA00079CEF3 /* ToastView.swift */; };
+		8BA847D52E63D95A0079CEF3 /* SpinningRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */; };
 		8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */; };
 		8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */; };
 		8BC843EF2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */; };
@@ -81,6 +82,7 @@
 		8B84E2A72E19FD6D0018FB79 /* PillControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillControl.swift; sourceTree = "<group>"; };
 		8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButton.swift; sourceTree = "<group>"; };
 		8BA847D22E63CEA00079CEF3 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningRecordView.swift; sourceTree = "<group>"; };
 		8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailView.swift; sourceTree = "<group>"; };
 		8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		8B15AEAD29554AD6005CE9F6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */,
 				8BA847D22E63CEA00079CEF3 /* ToastView.swift */,
 				8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */,
 				8B5F2D162C1013D2008849A2 /* Extensions */,
@@ -408,6 +411,7 @@
 				8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */,
 				8B88B3532E5AAF68003E03AE /* CustomBarButton.swift in Sources */,
 				8B685AEA290B7B1400F6AD7F /* SearchMusicView.swift in Sources */,
+				8BA847D52E63D95A0079CEF3 /* SpinningRecordView.swift in Sources */,
 				8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */,
 				8BF28669295CF32F00E80C53 /* CreateShortlistView.swift in Sources */,
 				8B15AEAF29554B10005CE9F6 /* Formatters+StandardFormatters.swift in Sources */,
