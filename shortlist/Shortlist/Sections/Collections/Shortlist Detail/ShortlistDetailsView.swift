@@ -61,77 +61,81 @@ struct ShortlistDetailsView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            ScrollView {
-                LazyVGrid(columns: layout) {
-                    ForEach(viewModel.shortlist.albums ?? [], id: \.self) { album in
-                        let albumType = AlbumDetailView.AlbumType.shortlistAlbum(album)
-                        NavigationLink(
-                            destination: AlbumDetailView(albumType: albumType, shortlist: viewModel.shortlist)
-                        ){
-                            VStack(alignment: .leading) {
-                                ZStack(alignment: .topLeading) {
-                                    AsyncImage(url: URL(string: album.artworkURLString)) { image in
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .cornerRadius(20)
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
-                                    
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color.black.opacity(0.75))
-                                            .frame(width: 28, height: 28)
-                                            .overlay(
-                                                Circle()
-                                                    .stroke(Color.white.opacity(0.8), lineWidth: 1.5)
-                                            )
-                                            .shadow(color: Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
+            if viewModel.isLoading {
+                loadingView()
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: layout) {
+                        ForEach(viewModel.shortlist.albums ?? [], id: \.self) { album in
+                            let albumType = AlbumDetailView.AlbumType.shortlistAlbum(album)
+                            NavigationLink(
+                                destination: AlbumDetailView(albumType: albumType, shortlist: viewModel.shortlist)
+                            ){
+                                VStack(alignment: .leading) {
+                                    ZStack(alignment: .topLeading) {
+                                        AsyncImage(url: URL(string: album.artworkURLString)) { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .cornerRadius(20)
+                                        } placeholder: {
+                                            ProgressView()
+                                        }
                                         
-                                        Text("\(album.rank)")
-                                            .foregroundColor(.white)
-                                            .font(Theme.shared.avenir(size: 14, weight: .bold))
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color.black.opacity(0.75))
+                                                .frame(width: 28, height: 28)
+                                                .overlay(
+                                                    Circle()
+                                                        .stroke(Color.white.opacity(0.8), lineWidth: 1.5)
+                                                )
+                                                .shadow(color: Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
+                                            
+                                            Text("\(album.rank)")
+                                                .foregroundColor(.white)
+                                                .font(Theme.shared.avenir(size: 14, weight: .bold))
+                                        }
+                                        .padding(6)
                                     }
-                                    .padding(6)
+                                    .padding(.bottom, 10)
+                                    
+                                    Text(album.title)
+                                        .font(Theme.shared.avenir(size: 16, weight: .bold))
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundColor(.primary)
+                                        .lineLimit(2)
+                                    Text(album.artist)
+                                        .font(Theme.shared.avenir(size: 14, weight: .medium))
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundColor(.primary)
+                                        .lineLimit(1)
+                                    Spacer()
                                 }
-                                .padding(.bottom, 10)
-                                
-                                Text(album.title)
-                                    .font(Theme.shared.avenir(size: 16, weight: .bold))
-                                    .multilineTextAlignment(.leading)
-                                    .foregroundColor(.primary)
-                                    .lineLimit(2)
-                                Text(album.artist)
-                                    .font(Theme.shared.avenir(size: 14, weight: .medium))
-                                    .multilineTextAlignment(.leading)
-                                    .foregroundColor(.primary)
-                                    .lineLimit(1)
-                                Spacer()
+                                .frame(height: 230)
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(16)
+                                .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                .padding(EdgeInsets(top: 0, leading: 6, bottom: 10, trailing: 6))
+                                .onDrag {
+                                    draggedAlbumId = album.id
+                                    return NSItemProvider(item: nil, typeIdentifier: album.id)
+                                }
                             }
-                            .frame(height: 230)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(16)
-                            .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
-                            .padding(EdgeInsets(top: 0, leading: 6, bottom: 10, trailing: 6))
-                            .onDrag {
-                                draggedAlbumId = album.id
-                                return NSItemProvider(item: nil, typeIdentifier: album.id)
-                            }
-                        }
-                        .onDrop(
-                            of: [UTType.text],
-                            delegate: MyDropDelegate(
-                                updatedAlbumId: album.id,
-                                shortlistAlbums: $viewModel.shortlist.albums,
-                                draggedItem: $draggedAlbumId,
-                                viewModel: viewModel
+                            .onDrop(
+                                of: [UTType.text],
+                                delegate: MyDropDelegate(
+                                    updatedAlbumId: album.id,
+                                    shortlistAlbums: $viewModel.shortlist.albums,
+                                    draggedItem: $draggedAlbumId,
+                                    viewModel: viewModel
+                                )
                             )
-                        )
+                        }
                     }
+                    .padding()
                 }
-                .padding()
             }
             
             PillControl(
@@ -164,7 +168,7 @@ struct ShortlistDetailsView: View {
                         await copyShortlistText()
                     }
                 }
-
+                
                 Button("Share via Email") {
                     Task {
                         await generateShortlistEmail()
@@ -211,7 +215,7 @@ struct ShortlistDetailsView: View {
                 }
                 Spacer()
             }
-            .animation(.easeInOut(duration: 0.5), value: showToast)
+                .animation(.easeInOut(duration: 0.5), value: showToast)
         )
         .onChange(of: isMailDataReady) { oldValue, newValue in
             if newValue && MFMailComposeViewController.canSendMail() {
@@ -244,6 +248,73 @@ struct ShortlistDetailsView: View {
             }
         }
         .environmentObject(viewModel)
+    }
+    
+    @ViewBuilder
+    private func loadingView() -> some View {
+        ScrollView {
+            LazyVGrid(columns: layout) {
+                ForEach(0..<6, id: \.self) { _ in
+                    VStack(alignment: .leading) {
+                        ZStack(alignment: .topLeading) {
+                            Rectangle()
+                                .skeleton(
+                                    with: true,
+                                    size: CGSize(width: 150, height: 150),
+                                    shape: .rectangle
+                                )
+                                .cornerRadius(20)
+                            
+                            ZStack {
+                                Circle()
+                                    .fill(Color.black.opacity(0.75))
+                                    .frame(width: 28, height: 28)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color.white.opacity(0.8), lineWidth: 1.5)
+                                    )
+                                    .shadow(color: Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
+                                
+                                Rectangle()
+                                    .skeleton(
+                                        with: true,
+                                        size: CGSize(width: 16, height: 16),
+                                        shape: .rectangle
+                                    )
+                                    .cornerRadius(8)
+                            }
+                            .padding(6)
+                        }
+                        .padding(.bottom, 10)
+                        
+                        Rectangle()
+                            .skeleton(
+                                with: true,
+                                size: CGSize(width: 120, height: 16),
+                                shape: .rectangle
+                            )
+                            .cornerRadius(4)
+                        
+                        Rectangle()
+                            .skeleton(
+                                with: true,
+                                size: CGSize(width: 100, height: 14),
+                                shape: .rectangle
+                            )
+                            .cornerRadius(4)
+                        
+                        Spacer()
+                    }
+                    .frame(height: 230)
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(16)
+                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                    .padding(EdgeInsets(top: 0, leading: 6, bottom: 10, trailing: 6))
+                }
+            }
+            .padding()
+        }
     }
     
     struct MyDropDelegate: DropDelegate {
@@ -312,7 +383,7 @@ extension ShortlistDetailsView {
     
     private func saveImageToPhotos() async {
         let images = await loadImagesFromRemoteURLs()
-
+        
         let imageGridCreator = ImageGridCreator()
         let gridImage = await imageGridCreator.createSquareImageGrid(
             from: images,
@@ -349,7 +420,7 @@ extension ShortlistDetailsView {
             print("⚠️ No albums found")
             return 
         }
-
+        
         let copyText = createShortlistPlainText(
             from: albums,
             shortlistName: viewModel.shortlist.name,
