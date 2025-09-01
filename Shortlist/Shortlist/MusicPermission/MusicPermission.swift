@@ -8,22 +8,5 @@
 import Foundation
 import MusicKit
 
-class MusicPermission: ObservableObject {
-    static let shared = MusicPermission()
-    @Published var musicPermissionAccepted = false
-    
-    func requestMusicKitAuthorization() async {
-        let status = await MusicAuthorization.request()
-
-        switch status {
-        case MusicAuthorization.Status.authorized:
-            musicPermissionAccepted = true
-        case MusicAuthorization.Status.restricted:
-            musicPermissionAccepted = false
-        case MusicAuthorization.Status.denied :
-            musicPermissionAccepted = false
-        default:
-            break
-        }
-    }
-}
+// This file is no longer needed as authorization is now handled by PresentationCoordinator
+// Keeping the file for reference but removing the unused class

@@ -38,8 +38,6 @@ extension AlbumDetailView {
         @ObservedObject private var viewModel: ViewModel
 
         init(album: Content, shortlist: Shortlist, viewModel: ViewModel) {
-            let _ = print("dustin AlbumView init")
-            
             self.viewModel = viewModel
             self.shortlist = shortlist
         }

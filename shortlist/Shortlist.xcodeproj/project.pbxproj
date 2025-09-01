@@ -125,11 +125,11 @@
 				8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */,
 				8BA847D22E63CEA00079CEF3 /* ToastView.swift */,
 				8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */,
-				8B5F2D162C1013D2008849A2 /* Extensions */,
 				8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */,
 				8B067D5D2E288BB8008028E4 /* ImageGridCreator.swift */,
 				8B067D612E29CC25008028E4 /* ActivityView.swift */,
 				8B067D5F2E289904008028E4 /* MailView.swift */,
+				8B5F2D162C1013D2008849A2 /* Extensions */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

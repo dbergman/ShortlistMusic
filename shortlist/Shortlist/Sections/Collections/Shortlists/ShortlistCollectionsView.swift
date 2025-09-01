@@ -18,9 +18,7 @@ struct ShortlistCollectionsView: View {
         NavigationStack {
             CollectionsView(viewModel: viewModel, isPresented: $isPresented, buttonOpacity: $buttonOpacity)
                 .navigationTitle("My ShortLists")
-                .task {
-                    await MusicPermission.shared.requestMusicKitAuthorization()
-                }
+
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {

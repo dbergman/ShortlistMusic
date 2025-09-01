@@ -223,8 +223,6 @@ extension AlbumDetailView {
             await withCheckedContinuation { continuation in
                 CKContainer.default().publicCloudDatabase.fetch(withRecordID: album.recordID) { recordToSave, _ in
                     if let recordToSave {
-                        print("dustin Updated theRank: \(updatedRank)")
-                        
                         recordToSave.setValue(updatedRank, forKey: "rank")
                         
                         let modifyRecords = CKModifyRecordsOperation(recordsToSave:[recordToSave], recordIDsToDelete: nil)
@@ -233,7 +231,7 @@ extension AlbumDetailView {
                         modifyRecords.modifyRecordsResultBlock = { result in
                             switch result {
                             case .success:
-                                print("dustin Updated \(album.title)")
+                                break
                             case .failure(let error):
                                 print(error)
                             }

@@ -344,8 +344,7 @@ extension CloudKitManager {
         modifyRecords.modifyRecordsResultBlock = { result in
             switch result {
             case .success:
-                print("dustin Updated")
-                // self.getAlbums(for: self.shortlist)
+                break
             case .failure(let error):
                 print(error)
             }
