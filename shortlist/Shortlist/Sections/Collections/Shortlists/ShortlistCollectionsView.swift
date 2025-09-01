@@ -7,11 +7,13 @@
 
 import SkeletonUI
 import SwiftUI
+import MessageUI
 
 struct ShortlistCollectionsView: View {
     @State var isPresented = false
     @State private var buttonOpacity: Double = 0
     @State private var showingOrderOptions = false
+    @State private var showingMailSheet = false
     @ObservedObject private var viewModel = ViewModel()
     @Environment(\.colorScheme) private var colorScheme
     
@@ -30,18 +32,56 @@ struct ShortlistCollectionsView: View {
                     }
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            print("Share shortlists button was tapped")
-                        } label: {
-                            Image(systemName: "square.and.arrow.up")
+                        if !viewModel.shortlists.isEmpty {
+                            Button {
+                                showingMailSheet = true
+                            } label: {
+                                Image(systemName: "square.and.arrow.up")
+                            }
+                            .tint(.primary)
                         }
-                        .tint(.primary)
                     }
                 }
                 .onBoardingSheet()
                 .sheet(isPresented: $isPresented) {
                     CreateShortlistView(isPresented: $isPresented, shortlists: $viewModel.shortlists)
                         .presentationDetents([.medium, .large])
+                }
+                .sheet(isPresented: $showingMailSheet) {
+                    if MFMailComposeViewController.canSendMail() {
+                        MailView(
+                            subject: "My Music Shortlists",
+                            messageBody: generateEmailContent(),
+                            isHTML: false,
+                            attachment: nil,
+                            attachmentMimeType: nil,
+                            attachmentFilename: nil
+                        )
+                    } else {
+                        // Fallback for when mail is not available
+                        VStack(spacing: 20) {
+                            Text("Email Not Available")
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            
+                            Text("Your device is not configured to send emails. You can copy the shortlist information to your clipboard instead.")
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.secondary)
+                            
+                            Button("Copy to Clipboard") {
+                                UIPasteboard.general.string = generatePlainTextContent()
+                                showingMailSheet = false
+                            }
+                            .buttonStyle(.borderedProminent)
+                            
+                            Button("Cancel") {
+                                showingMailSheet = false
+                            }
+                            .buttonStyle(.bordered)
+                        }
+                        .padding(40)
+                        .presentationDetents([.medium])
+                    }
                 }
                 .confirmationDialog("Order Shortlists", isPresented: $showingOrderOptions) {
                     Button("Order by year ascending") {
@@ -76,6 +116,54 @@ struct ShortlistCollectionsView: View {
                     }
                 }
         }
+    }
+    
+    private func generateEmailContent() -> String {
+        var content = "My Music Shortlists\n\n"
+        content += "Here are all my music shortlists and the albums they contain:\n\n"
+        
+        for shortlist in viewModel.shortlists {
+            content += "\(shortlist.name) (\(shortlist.year))\n"
+            content += String(repeating: "-", count: shortlist.name.count + shortlist.year.description.count + 3) + "\n"
+            
+            if let albums = shortlist.albums, !albums.isEmpty {
+                let sortedAlbums = albums.sorted { $0.rank < $1.rank }
+                
+                for album in sortedAlbums {
+                    content += "\(album.rank). \(album.title) - \(album.artist)\n"
+                }
+            } else {
+                content += "No albums in this shortlist yet\n"
+            }
+            
+            content += "\n"
+        }
+        
+        return content
+    }
+    
+    private func generatePlainTextContent() -> String {
+        var textContent = "My Music Shortlists\n\n"
+        textContent += "Here are all my music shortlists and the albums they contain:\n\n"
+        
+        for shortlist in viewModel.shortlists {
+            textContent += "\(shortlist.name) (\(shortlist.year))\n"
+            textContent += String(repeating: "-", count: shortlist.name.count + shortlist.year.description.count + 3) + "\n"
+            
+            if let albums = shortlist.albums, !albums.isEmpty {
+                let sortedAlbums = albums.sorted { $0.rank < $1.rank }
+                
+                for album in sortedAlbums {
+                    textContent += "\(album.rank). \(album.title) - \(album.artist)\n"
+                }
+            } else {
+                textContent += "No albums in this shortlist yet\n"
+            }
+            
+            textContent += "\n"
+        }
+        
+        return textContent
     }
 }
 
