@@ -81,7 +81,7 @@ struct CreateShortlistView: View {
                         isPresented = false
                     }) {
                         Image(systemName: "xmark.circle")
-                            .tint(.black)
+                            .tint(.primary)
                     }
                 }
             }

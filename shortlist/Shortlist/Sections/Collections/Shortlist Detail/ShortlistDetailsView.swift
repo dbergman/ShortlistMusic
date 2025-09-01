@@ -30,6 +30,7 @@ struct ShortlistDetailsView: View {
     @State private var showToast = false
     @State private var toastMessage = ""
     @State private var toastType: ToastView.ToastType = .success
+    @Environment(\.colorScheme) private var colorScheme
     
     let layout = [
         GridItem(.flexible()),

@@ -13,12 +13,12 @@ struct ShortlistCollectionsView: View {
     @State private var buttonOpacity: Double = 0
     @State private var showingOrderOptions = false
     @ObservedObject private var viewModel = ViewModel()
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         NavigationStack {
             CollectionsView(viewModel: viewModel, isPresented: $isPresented, buttonOpacity: $buttonOpacity)
                 .navigationTitle("My ShortLists")
-
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
@@ -84,6 +84,7 @@ extension ShortlistCollectionsView {
         @ObservedObject private var viewModel: ViewModel
         @Binding var isPresented: Bool
         @Binding var buttonOpacity: Double
+        @Environment(\.colorScheme) private var colorScheme
         
         init(viewModel: ViewModel, isPresented: Binding<Bool>, buttonOpacity: Binding<Double>) {
             self.viewModel = viewModel
@@ -103,6 +104,7 @@ extension ShortlistCollectionsView {
                                     Text(shortlist.name)
                                         .font(Theme.shared.avenir(size: 20, weight: .bold))
                                         .fontWeight(.bold)
+                                        .foregroundColor(.primary)
                                     Spacer()
                                     
                                     if shortlist.year != "All" {
@@ -131,9 +133,23 @@ extension ShortlistCollectionsView {
                                         }
                                     }
                                     .padding()
-                                    .background(Color.white)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .fill(Color(.systemBackground))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .stroke(Color(.separator), lineWidth: 0.5)
+                                            )
+                                    )
                                     .cornerRadius(16)
-                                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                    .shadow(
+                                        color: colorScheme == .dark ? 
+                                            Color.black.opacity(0.4) : 
+                                            Color.black.opacity(0.1),
+                                        radius: colorScheme == .dark ? 12 : 8,
+                                        x: 0,
+                                        y: colorScheme == .dark ? 6 : 4
+                                    )
                                     .padding(.horizontal)
                                 }
                             }
@@ -153,12 +169,26 @@ extension ShortlistCollectionsView {
                                     Text("Add a Shortlist")
                                         .font(.system(size: 16, weight: .semibold))
                                 }
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .dark ? .black : .white)
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 12)
-                                .background(Color.primary)
+                                .background(
+                                    Capsule()
+                                        .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.9))
+                                        .overlay(
+                                            Capsule()
+                                                .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
+                                        )
+                                        .shadow(
+                                            color: colorScheme == .dark ? 
+                                                Color.black.opacity(0.5) : 
+                                                Color.black.opacity(0.2),
+                                            radius: colorScheme == .dark ? 10 : 6,
+                                            x: 0,
+                                            y: colorScheme == .dark ? 4 : 2
+                                        )
+                                )
                                 .clipShape(Capsule())
-                                .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
                             }
                             .opacity(buttonOpacity)
                             .padding(.bottom, 20)
@@ -196,13 +226,13 @@ extension ShortlistCollectionsView {
             } else {
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray, lineWidth: 1)
+                        .stroke(Color(.separator), lineWidth: 1)
                         .frame(width: size, height: size)
                     Image(systemName: "music.note.list")
                         .resizable()
                         .scaledToFit()
                         .frame(width: size * 0.3, height: size * 0.3)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.secondary)
                 }
             }
         }
@@ -219,7 +249,6 @@ extension ShortlistCollectionsView {
                                         with: true,
                                         size: CGSize(width: 250, height: 25),
                                         shape: .rectangle
-                                        
                                     )
                                     .cornerRadius(10)
                                 Spacer()
@@ -252,13 +281,26 @@ extension ShortlistCollectionsView {
                                 }
                             }
                             .padding()
-                            .background(Color.white)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color(.systemBackground))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color(.separator), lineWidth: 0.5)
+                                    )
+                            )
                             .cornerRadius(16)
-                            .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                            .shadow(
+                                color: colorScheme == .dark ? 
+                                    Color.black.opacity(0.4) : 
+                                    Color.black.opacity(0.1),
+                                radius: colorScheme == .dark ? 12 : 8,
+                                x: 0,
+                                y: colorScheme == .dark ? 6 : 4
+                            )
                             .padding(.horizontal)
                         }
                         .padding(.horizontal, 10)
-                        
                     }
                     .padding(.vertical)
                 }
@@ -286,7 +328,6 @@ extension ShortlistCollectionsView {
             Task {
                 try? await viewModel.remove(shortlist: shortlist)
             }
-            
         }
         
         private func getImageSize(for index: Int) -> CGFloat {
@@ -310,5 +351,17 @@ struct ShortlistCollections_Previews: PreviewProvider {
             isPresented: .constant(false),
             buttonOpacity: .constant(0)
         )
+        .preferredColorScheme(.light)
+        .previewDisplayName("Light Mode")
+        
+        ShortlistCollectionsView.CollectionsView(
+            viewModel: ShortlistCollectionsView.ViewModel(
+                shortlists: [shortlist, shortlist, shortlist]
+            ),
+            isPresented: .constant(false),
+            buttonOpacity: .constant(0)
+        )
+        .preferredColorScheme(.dark)
+        .previewDisplayName("Dark Mode")
     }
 }
