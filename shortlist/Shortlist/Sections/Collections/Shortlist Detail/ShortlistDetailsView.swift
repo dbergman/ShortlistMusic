@@ -67,16 +67,16 @@ struct ShortlistDetailsView: View {
                                         
                                         ZStack {
                                             Circle()
-                                                .fill(Color.black.opacity(0.75))
+                                                .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.75))
                                                 .frame(width: 28, height: 28)
                                                 .overlay(
                                                     Circle()
-                                                        .stroke(Color.white.opacity(0.8), lineWidth: 1.5)
+                                                        .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1.5)
                                                 )
-                                                .shadow(color: Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
+                                                .shadow(color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
                                             
                                             Text("\(album.rank)")
-                                                .foregroundColor(.white)
+                                                .foregroundColor(colorScheme == .dark ? .black : .white)
                                                 .font(Theme.shared.avenir(size: 14, weight: .bold))
                                         }
                                         .padding(6)
@@ -97,9 +97,23 @@ struct ShortlistDetailsView: View {
                                 }
                                 .frame(height: 230)
                                 .padding()
-                                .background(Color.white)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(colorScheme == .dark ? Color(.secondarySystemBackground) : Color(.systemBackground))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(colorScheme == .dark ? Color(.tertiarySystemBackground) : Color(.separator), lineWidth: 1)
+                                        )
+                                )
                                 .cornerRadius(16)
-                                .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                .shadow(
+                                    color: colorScheme == .dark ? 
+                                        Color.black.opacity(0.6) : 
+                                        Color.black.opacity(0.15),
+                                    radius: colorScheme == .dark ? 16 : 10,
+                                    x: 0,
+                                    y: colorScheme == .dark ? 8 : 5
+                                )
                                 .padding(EdgeInsets(top: 0, leading: 6, bottom: 10, trailing: 6))
                                 .onDrag {
                                     draggedAlbumId = album.id
@@ -229,13 +243,13 @@ struct ShortlistDetailsView: View {
                             
                             ZStack {
                                 Circle()
-                                    .fill(Color.black.opacity(0.75))
+                                    .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.75))
                                     .frame(width: 28, height: 28)
                                     .overlay(
                                         Circle()
-                                            .stroke(Color.white.opacity(0.8), lineWidth: 1.5)
+                                            .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1.5)
                                     )
-                                    .shadow(color: Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
+                                    .shadow(color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
                                 
                                 Rectangle()
                                     .skeleton(
@@ -269,9 +283,23 @@ struct ShortlistDetailsView: View {
                     }
                     .frame(height: 230)
                     .padding()
-                    .background(Color.white)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(colorScheme == .dark ? Color(.secondarySystemBackground) : Color(.systemBackground))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(colorScheme == .dark ? Color(.tertiarySystemBackground) : Color(.separator), lineWidth: 1)
+                            )
+                    )
                     .cornerRadius(16)
-                    .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
+                    .shadow(
+                        color: colorScheme == .dark ? 
+                            Color.black.opacity(0.6) : 
+                            Color.black.opacity(0.15),
+                        radius: colorScheme == .dark ? 16 : 10,
+                        x: 0,
+                        y: colorScheme == .dark ? 8 : 5
+                    )
                     .padding(EdgeInsets(top: 0, leading: 6, bottom: 10, trailing: 6))
                 }
             }
@@ -472,6 +500,12 @@ extension ShortlistDetailsView {
 
 struct ShortlistDetails_Previews: PreviewProvider {
     static var previews: some View {
-        return ShortlistDetailsView(shortlist: TestData.ShortLists.shortList)
+        ShortlistDetailsView(shortlist: TestData.ShortLists.shortList)
+            .preferredColorScheme(.light)
+            .previewDisplayName("Light Mode")
+        
+        ShortlistDetailsView(shortlist: TestData.ShortLists.shortList)
+            .preferredColorScheme(.dark)
+            .previewDisplayName("Dark Mode")
     }
 }
