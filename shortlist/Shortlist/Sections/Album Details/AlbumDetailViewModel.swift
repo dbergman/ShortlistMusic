@@ -91,34 +91,13 @@ extension AlbumDetailView {
             
             isAddingToShortlist = true
             
-            let record = CKRecord(recordType: "Albums")
-            record.setValue(album.artist, forKey: "artist")
-            if let artworkURLString = album.artworkURL?.absoluteString {
-                record.setValue(artworkURLString, forKey: "artwork")
-            }
-            
-            let albumRank: Int
-            
-            if let count = currentShortlistAlbums?.count {
-                albumRank = count + 1
-            } else {
-                albumRank = 1
-            }
-            
-            print("dustin theRank: \(albumRank)")
-            
-            record.setValue(album.id, forKey: "id")
-            record.setValue(albumRank, forKey: "rank")
-            record.setValue(album.title, forKey: "title")
-            record.setValue(album.upc, forKey: "upc")
-            record.setValue(shortlist.id, forKey: "shortlistId")
-            
-            print("dustin saved \(album.title)")
+            let currentAlbumCount = currentShortlistAlbums?.count ?? 0
             
             currentShortlistAlbums = await withCheckedContinuation { continuation in
-                CloudKitManager.shared.updateShortlistAlbums(
-                    shortlistID: shortlist.id,
-                    action: .add(record)
+                CloudKitManager.shared.addAlbumToShortlist(
+                    album: album,
+                    shortlist: shortlist,
+                    currentAlbumCount: currentAlbumCount
                 ) { result in
                     switch result {
                     case .success(let albums):
@@ -161,25 +140,23 @@ extension AlbumDetailView {
             
             isRemovingFromShortlist = true
             
-            do {
-                let deletedRecord = try await CKContainer.default().publicCloudDatabase.deleteRecord(withID: recordID)
-                print("dustin delete \(deletedRecord)")
-                
-                currentShortlistAlbums = await withCheckedContinuation { continuation in
-                    CloudKitManager.shared.updateShortlistAlbums(
-                        shortlistID: shortlist.id,
-                        action: .remove(recordID)
-                    ) { result in
-                        switch result {
-                        case .success(let albums):
-                            continuation.resume(returning: albums)
-                        case .failure(let error):
-                            print("Error: \(error)")
-                            continuation.resume(returning: nil)
-                        }
+            currentShortlistAlbums = await withCheckedContinuation { continuation in
+                CloudKitManager.shared.removeAlbumFromShortlist(
+                    recordID: recordID,
+                    shortlist: shortlist
+                ) { result in
+                    switch result {
+                    case .success(let albums):
+                        continuation.resume(returning: albums)
+                    case .failure(let error):
+                        print("Error: \(error)")
+                        continuation.resume(returning: nil)
                     }
                 }
-                
+            }
+            
+            // Update ranking after successful removal
+            if currentShortlistAlbums != nil {
                 await updateShortlistAlbumRanking()
                 
                 // Show success toast
@@ -191,10 +168,7 @@ extension AlbumDetailView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.showToast = false
                 }
-                
-            } catch {
-                print("Unable to delete")
-                
+            } else {
                 // Show error toast
                 toastMessage = "Failed to remove album from shortlist"
                 toastType = .error
@@ -212,35 +186,15 @@ extension AlbumDetailView {
         func updateShortlistAlbumRanking() async {
             guard let currentShortlistAlbums = currentShortlistAlbums else { return }
             
-            for (index, album) in currentShortlistAlbums.enumerated() {
-                await buildAlbumRecord(from: album, updatedRank: index + 1)
-            }
-        }
-        
-        private func buildAlbumRecord(from shortlistAlbum: ShortlistAlbum?, updatedRank: Int) async {
-            guard let album = shortlistAlbum else { return }
-            
             await withCheckedContinuation { continuation in
-                CKContainer.default().publicCloudDatabase.fetch(withRecordID: album.recordID) { recordToSave, _ in
-                    if let recordToSave {
-                        recordToSave.setValue(updatedRank, forKey: "rank")
-                        
-                        let modifyRecords = CKModifyRecordsOperation(recordsToSave:[recordToSave], recordIDsToDelete: nil)
-                        modifyRecords.savePolicy = CKModifyRecordsOperation.RecordSavePolicy.allKeys
-                        modifyRecords.qualityOfService = QualityOfService.userInitiated
-                        modifyRecords.modifyRecordsResultBlock = { result in
-                            switch result {
-                            case .success:
-                                break
-                            case .failure(let error):
-                                print(error)
-                            }
-                            
-                            continuation.resume()
-                        }
-                        
-                        CKContainer.default().publicCloudDatabase.add(modifyRecords)
+                CloudKitManager.shared.updateAlbumRanking(albums: currentShortlistAlbums) { result in
+                    switch result {
+                    case .success:
+                        break
+                    case .failure(let error):
+                        print("Error updating album ranking: \(error)")
                     }
+                    continuation.resume()
                 }
             }
         }

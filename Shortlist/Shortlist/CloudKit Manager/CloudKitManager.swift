@@ -353,3 +353,100 @@ extension CloudKitManager {
         CKContainer.default().publicCloudDatabase.add(modifyRecords)
     }
 }
+
+// Album Detail Methods
+extension CloudKitManager {
+    func addAlbumToShortlist(
+        album: AlbumDetailView.Content,
+        shortlist: Shortlist,
+        currentAlbumCount: Int,
+        completion: @escaping (Result<[ShortlistAlbum], Error>) -> Void
+    ) {
+        let record = CKRecord(recordType: "Albums")
+        record.setValue(album.artist, forKey: "artist")
+        if let artworkURLString = album.artworkURL?.absoluteString {
+            record.setValue(artworkURLString, forKey: "artwork")
+        }
+        
+        let albumRank = currentAlbumCount + 1
+        record.setValue(album.id, forKey: "id")
+        record.setValue(albumRank, forKey: "rank")
+        record.setValue(album.title, forKey: "title")
+        record.setValue(album.upc, forKey: "upc")
+        record.setValue(shortlist.id, forKey: "shortlistId")
+        
+        CKContainer.default().publicCloudDatabase.save(record) { savedRecord, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                // Reload albums after successful save
+                self.updateShortlistAlbums(
+                    shortlistID: shortlist.id,
+                    action: .load
+                ) { result in
+                    completion(result)
+                }
+            }
+        }
+    }
+    
+    func removeAlbumFromShortlist(
+        recordID: CKRecord.ID,
+        shortlist: Shortlist,
+        completion: @escaping (Result<[ShortlistAlbum], Error>) -> Void
+    ) {
+        Task {
+            do {
+                _ = try await CKContainer.default().publicCloudDatabase.deleteRecord(withID: recordID)
+                
+                // Reload albums after successful deletion
+                self.updateShortlistAlbums(
+                    shortlistID: shortlist.id,
+                    action: .load
+                ) { result in
+                    completion(result)
+                }
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func updateAlbumRanking(
+        albums: [ShortlistAlbum],
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
+        let recordIDs = albums.map { $0.recordID }
+        
+        CKContainer.default().publicCloudDatabase.fetch(withRecordIDs: recordIDs) { result in
+            switch result {
+            case .success(let recordDict):
+                var recordsToSave = [CKRecord]()
+                
+                for (index, album) in albums.enumerated() {
+                    if case .success(let record) = recordDict[album.recordID] {
+                        record.setValue(index + 1, forKey: "rank")
+                        recordsToSave.append(record)
+                    }
+                }
+                
+                let modifyRecords = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
+                modifyRecords.savePolicy = CKModifyRecordsOperation.RecordSavePolicy.allKeys
+                modifyRecords.qualityOfService = QualityOfService.userInitiated
+                modifyRecords.modifyRecordsResultBlock = { result in
+                    switch result {
+                    case .success:
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+                
+                CKContainer.default().publicCloudDatabase.add(modifyRecords)
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+}
