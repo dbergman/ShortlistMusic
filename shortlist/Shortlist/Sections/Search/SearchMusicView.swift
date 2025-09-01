@@ -97,6 +97,7 @@ struct SearchMusicView: View {
 extension SearchMusicView {
     struct SearchResultsList: View {
         private let albums: [Content.Album]
+        @Environment(\.colorScheme) private var colorScheme
 
         init(albums: [Content.Album]) {
             self.albums = albums
@@ -121,14 +122,23 @@ extension SearchMusicView {
                                     Spacer()
 
                                     Image(systemName: "chevron.right")
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(colorScheme == .dark ? .white.opacity(0.6) : .gray)
                                         .imageScale(.small)
                                 }
                                 .padding()
                                 .background(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color(.systemBackground))
-                                        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                                        .fill(colorScheme == .dark ? Color(.secondarySystemBackground) : Color(.systemBackground))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(colorScheme == .dark ? Color(.tertiarySystemBackground) : Color(.separator), lineWidth: 1)
+                                        )
+                                        .shadow(
+                                            color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.black.opacity(0.1),
+                                            radius: colorScheme == .dark ? 6 : 4,
+                                            x: 0,
+                                            y: colorScheme == .dark ? 3 : 2
+                                        )
                                 )
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 10)
@@ -236,6 +246,14 @@ struct Previews_SearchMusicView_Previews: PreviewProvider {
             )
         ]
         
-        SearchMusicView.SearchResultsList(albums: albums)
+        Group {
+            SearchMusicView.SearchResultsList(albums: albums)
+                .preferredColorScheme(.light)
+                .previewDisplayName("Light Mode")
+            
+            SearchMusicView.SearchResultsList(albums: albums)
+                .preferredColorScheme(.dark)
+                .previewDisplayName("Dark Mode")
+        }
     }
 }
