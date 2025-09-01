@@ -344,24 +344,26 @@ struct ShortlistCollections_Previews: PreviewProvider {
     static var previews: some View {
         let shortlist = TestData.ShortLists.shortList
         
-        return ShortlistCollectionsView.CollectionsView(
-            viewModel: ShortlistCollectionsView.ViewModel(
-                shortlists: [shortlist, shortlist, shortlist]
-            ),
-            isPresented: .constant(false),
-            buttonOpacity: .constant(0)
-        )
-        .preferredColorScheme(.light)
-        .previewDisplayName("Light Mode")
-        
-        ShortlistCollectionsView.CollectionsView(
-            viewModel: ShortlistCollectionsView.ViewModel(
-                shortlists: [shortlist, shortlist, shortlist]
-            ),
-            isPresented: .constant(false),
-            buttonOpacity: .constant(0)
-        )
-        .preferredColorScheme(.dark)
-        .previewDisplayName("Dark Mode")
+        Group {
+            ShortlistCollectionsView.CollectionsView(
+                viewModel: ShortlistCollectionsView.ViewModel(
+                    shortlists: [shortlist, shortlist, shortlist]
+                ),
+                isPresented: .constant(false),
+                buttonOpacity: .constant(0)
+            )
+            .preferredColorScheme(.light)
+            .previewDisplayName("Light Mode")
+            
+            ShortlistCollectionsView.CollectionsView(
+                viewModel: ShortlistCollectionsView.ViewModel(
+                    shortlists: [shortlist, shortlist, shortlist]
+                ),
+                isPresented: .constant(false),
+                buttonOpacity: .constant(0)
+            )
+            .preferredColorScheme(.dark)
+            .previewDisplayName("Dark Mode")
+        }
     }
 }
