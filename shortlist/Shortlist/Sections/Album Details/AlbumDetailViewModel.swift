@@ -115,22 +115,23 @@ extension AlbumDetailView {
             
             print("dustin saved \(album.title)")
             
-            do {
-                currentShortlistAlbums = await withCheckedContinuation { continuation in
-                    CloudKitManager.shared.updateShortlistAlbums(
-                        shortlistID: shortlist.id,
-                        action: .add(record)
-                    ) { result in
-                        switch result {
-                        case .success(let albums):
-                            continuation.resume(returning: albums)
-                        case .failure(let error):
-                            print("Error: \(error)")
-                            continuation.resume(returning: nil)
-                        }
+            currentShortlistAlbums = await withCheckedContinuation { continuation in
+                CloudKitManager.shared.updateShortlistAlbums(
+                    shortlistID: shortlist.id,
+                    action: .add(record)
+                ) { result in
+                    switch result {
+                    case .success(let albums):
+                        continuation.resume(returning: albums)
+                    case .failure(let error):
+                        print("Error: \(error)")
+                        continuation.resume(returning: nil)
                     }
                 }
-                
+            }
+            
+            // Check if the operation was successful
+            if currentShortlistAlbums != nil {
                 // Show success toast
                 toastMessage = "Added '\(album.title)' to shortlist"
                 toastType = .success
@@ -140,8 +141,7 @@ extension AlbumDetailView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.showToast = false
                 }
-                
-            } catch {
+            } else {
                 // Show error toast
                 toastMessage = "Failed to add album to shortlist"
                 toastType = .error

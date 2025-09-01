@@ -36,6 +36,7 @@ extension AlbumDetailView {
         private var shortlist: Shortlist
         @State private var albumOnShortlist = false
         @ObservedObject private var viewModel: ViewModel
+        @Environment(\.colorScheme) private var colorScheme
 
         init(album: Content, shortlist: Shortlist, viewModel: ViewModel) {
             self.viewModel = viewModel
@@ -60,7 +61,14 @@ extension AlbumDetailView {
                                     .frame(width: side, height: side)
                                     .clipped()
                                     .cornerRadius(12)
-                                    .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+                                    .shadow(
+                                        color: colorScheme == .dark ? 
+                                            Color.black.opacity(0.5) : 
+                                            Color.black.opacity(0.2),
+                                        radius: colorScheme == .dark ? 12 : 8,
+                                        x: 0,
+                                        y: colorScheme == .dark ? 6 : 4
+                                    )
                             case .failure:
                                 Image(systemName: "photo")
                                     .resizable()
@@ -78,7 +86,7 @@ extension AlbumDetailView {
                                 .font(Theme.shared.avenir(size: 14, weight: .thin))
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 6)
-                                .background(Color.gray.opacity(0.2))
+                                .background(colorScheme == .dark ? Color(.tertiarySystemBackground) : Color.gray.opacity(0.2))
                                 .cornerRadius(20)
                                 .padding([.leading], 20)
                         }
@@ -102,8 +110,8 @@ extension AlbumDetailView {
                                     .font(Theme.shared.avenir(size: 16, weight: .medium))
                                     .padding()
                                     .frame(maxWidth: .infinity)
-                                    .background(Color.black)
-                                    .foregroundColor(.white)
+                                                                    .background(colorScheme == .dark ? Color.white : Color.black)
+                                .foregroundColor(colorScheme == .dark ? .black : .white)
                                     .cornerRadius(12)
                             }
                             .padding(.horizontal, 20)
@@ -128,7 +136,7 @@ extension AlbumDetailView {
                                     .font(Theme.shared.avenir(size: 16, weight: .medium))
                                     .padding()
                                     .frame(maxWidth: .infinity)
-                                    .background(Color.green)
+                                    .background(colorScheme == .dark ? Color.green.opacity(0.8) : Color.green)
                                     .foregroundColor(.white)
                                     .cornerRadius(12)
                                 }
@@ -142,7 +150,7 @@ extension AlbumDetailView {
                             .font(.headline)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
-                            .background(Color.gray.opacity(0.2))
+                            .background(colorScheme == .dark ? Color(.tertiarySystemBackground) : Color.gray.opacity(0.2))
                             .cornerRadius(20)
                             .padding([.leading, .trailing], 5)
                         if let tracks = viewModel.album?.trackDetails {
@@ -150,11 +158,11 @@ extension AlbumDetailView {
                                 HStack {
                                     Text("\(index + 1)")
                                         .font(Theme.shared.avenir(size: 14, weight: .bold))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(colorScheme == .dark ? .black : .white)
                                         .frame(width: 28, height: 28)
-                                        .background(Circle().fill(Color.black))
+                                        .background(Circle().fill(colorScheme == .dark ? Color.white : Color.black))
                                         .overlay(
-                                            Circle().stroke(Color.white.opacity(0.3), lineWidth: 1)
+                                            Circle().stroke(colorScheme == .dark ? Color.black.opacity(0.3) : Color.white.opacity(0.3), lineWidth: 1)
                                         )
                                     Text(track.title)
                                         .font(Theme.shared.avenir(size: 14, weight: .medium))
@@ -167,9 +175,23 @@ extension AlbumDetailView {
                         }
                     }
                     .padding()
-                    .background(Color.white)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(colorScheme == .dark ? Color(.secondarySystemBackground) : Color(.systemBackground))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color(.separator), lineWidth: 0.5)
+                            )
+                    )
                     .cornerRadius(16)
-                    .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
+                    .shadow(
+                        color: colorScheme == .dark ? 
+                            Color.black.opacity(0.3) : 
+                            Color.black.opacity(0.1),
+                        radius: colorScheme == .dark ? 15 : 10,
+                        x: 0,
+                        y: colorScheme == .dark ? 8 : 5
+                    )
                     .padding([.leading, .trailing], 20)
                 }
                 .padding()
@@ -209,6 +231,7 @@ struct AlbumDetailView: View {
     private var albumType: AlbumType
     @StateObject private var viewModel: ViewModel
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
     
     private var navigationTitle: String {
         viewModel.album?.title ?? "Album"
@@ -363,5 +386,27 @@ struct AlbumDetailView: View {
                 Spacer()
             }
         }
+    }
+}
+
+struct AlbumDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            AlbumDetailView(
+                albumType: .shortlistAlbum(TestData.ShortListAlbums.revolverShortListAlbum),
+                shortlist: TestData.ShortLists.shortList
+            )
+        }
+        .preferredColorScheme(.light)
+        .previewDisplayName("Light Mode")
+        
+        NavigationView {
+            AlbumDetailView(
+                albumType: .shortlistAlbum(TestData.ShortListAlbums.revolverShortListAlbum),
+                shortlist: TestData.ShortLists.shortList
+            )
+        }
+        .preferredColorScheme(.dark)
+        .previewDisplayName("Dark Mode")
     }
 }

@@ -51,7 +51,7 @@ class PresentationCoordinator: ObservableObject {
         
         authorizationTask = Task {
             // Check current status
-            let currentStatus = await MusicAuthorization.currentStatus
+            let currentStatus = MusicAuthorization.currentStatus
             
             // Update on main thread
             await MainActor.run {
