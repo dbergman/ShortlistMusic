@@ -14,36 +14,30 @@ struct MusicPermissionView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            // Music Icon and Title
-            HStack(spacing: 8) {
-                Image(systemName: "music.note")
-                    .font(.system(size: 20))
-                    .foregroundColor(Color.primary)
-
-                Text("ShortListMusic")
-                    .font(Theme.shared.avenir(size: 32, weight: .bold))
-                    .fontWeight(.bold)
-                
-                Image(systemName: "music.note")
-                    .font(.system(size: 20))
-                    .foregroundColor(Color.primary)
-            }
+            // Title
+            Text("ShortListMusic")
+                .font(Theme.shared.avenir(size: 32, weight: .bold))
+                .fontWeight(.bold)
 
             // Status-based message
             Group {
-                switch coordinator.musicAuthorizationStatus {
-                case .notDetermined:
+                if coordinator.musicAuthorizationStatus != .authorized && coordinator.iCloudStatus != .available {
+                    Text("ShortListMusic needs access to Apple Music and iCloud to work properly.")
+                        .font(Theme.shared.avenir(size: 20, weight: .medium))
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color.gray)
+                } else if coordinator.musicAuthorizationStatus != .authorized {
                     Text("ShortListMusic needs access to Apple Music to work properly.")
                         .font(Theme.shared.avenir(size: 20, weight: .medium))
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.gray)
-                case .denied, .restricted:
-                    Text("Please grant ShortListMusic access to Apple Music in Settings.")
+                } else if coordinator.iCloudStatus != .available {
+                    Text("ShortListMusic needs iCloud access to sync your shortlists.")
                         .font(Theme.shared.avenir(size: 20, weight: .medium))
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.gray)
-                default:
-                    Text("Checking Apple Music permissions...")
+                } else {
+                    Text("Checking permissions...")
                         .font(Theme.shared.avenir(size: 20, weight: .medium))
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color.gray)
@@ -52,7 +46,7 @@ struct MusicPermissionView: View {
 
             // Action buttons
             VStack(spacing: 12) {
-                // Request permission button (only show for notDetermined)
+                // Request permission button (only show for notDetermined music)
                 if coordinator.musicAuthorizationStatus == .notDetermined {
                     Button(action: {
                         isRequestingPermission = true
@@ -66,10 +60,8 @@ struct MusicPermissionView: View {
                                 ProgressView()
                                     .scaleEffect(0.8)
                                     .foregroundColor(.white)
-                            } else {
-                                Image(systemName: "music.note")
                             }
-                            Text(isRequestingPermission ? "Requesting..." : "Grant Access")
+                            Text(isRequestingPermission ? "Requesting..." : "Grant Music Access")
                                 .font(Theme.shared.avenir(size: 16, weight: .semibold))
                         }
                         .frame(maxWidth: .infinity)
@@ -81,8 +73,30 @@ struct MusicPermissionView: View {
                     }
                 }
                 
-                // Settings button (show for denied/restricted)
-                if coordinator.musicAuthorizationStatus == .denied || coordinator.musicAuthorizationStatus == .restricted {
+                // iCloud login button (show when iCloud is not available)
+                if coordinator.iCloudStatus != .available {
+                    Button(action: {
+                        if let url = URL(string: "App-prefs:APPLE_ID") {
+                            UIApplication.shared.open(url)
+                        } else if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "icloud")
+                            Text("Sign in to iCloud")
+                                .font(Theme.shared.avenir(size: 16, weight: .semibold))
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                    }
+                }
+                
+                // Settings button (show for denied/restricted music or iCloud issues)
+                if coordinator.musicAuthorizationStatus == .denied || coordinator.musicAuthorizationStatus == .restricted || coordinator.iCloudStatus == .unavailable {
                     Button(action: {
                         if let url = URL(string: UIApplication.openSettingsURLString),
                            UIApplication.shared.canOpenURL(url) {

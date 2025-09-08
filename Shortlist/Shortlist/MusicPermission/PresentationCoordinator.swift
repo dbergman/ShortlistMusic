@@ -15,6 +15,7 @@ class PresentationCoordinator: ObservableObject {
     
     @Published var isOnboardingViewPresented: Bool = false
     @Published var musicAuthorizationStatus: MusicAuthorization.Status = .notDetermined
+    @Published var iCloudStatus: iCloudAccountStatus = .couldNotDetermine
     
     private var authorizationTask: Task<Void, Never>?
     
@@ -51,12 +52,14 @@ class PresentationCoordinator: ObservableObject {
         
         authorizationTask = Task {
             // Check current status
-            let currentStatus = MusicAuthorization.currentStatus
+            let currentMusicStatus = MusicAuthorization.currentStatus
+            let currentiCloudStatus = await CloudKitManager.shared.checkiCloudStatus()
             
             // Update on main thread
             await MainActor.run {
-                self.musicAuthorizationStatus = currentStatus
-                self.isOnboardingViewPresented = (currentStatus != .authorized)
+                self.musicAuthorizationStatus = currentMusicStatus
+                self.iCloudStatus = currentiCloudStatus
+                self.isOnboardingViewPresented = (currentMusicStatus != .authorized) || (currentiCloudStatus != .available)
             }
         }
     }
@@ -67,12 +70,14 @@ class PresentationCoordinator: ObservableObject {
         
         authorizationTask = Task {
             // Request authorization
-            let newStatus = await MusicAuthorization.request()
+            let newMusicStatus = await MusicAuthorization.request()
+            let currentiCloudStatus = await CloudKitManager.shared.checkiCloudStatus()
             
             // Update on main thread
             await MainActor.run {
-                self.musicAuthorizationStatus = newStatus
-                self.isOnboardingViewPresented = (newStatus != .authorized)
+                self.musicAuthorizationStatus = newMusicStatus
+                self.iCloudStatus = currentiCloudStatus
+                self.isOnboardingViewPresented = (newMusicStatus != .authorized) || (currentiCloudStatus != .available)
             }
         }
     }

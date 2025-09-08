@@ -8,6 +8,12 @@
 import CloudKit
 import Foundation
 
+enum iCloudAccountStatus {
+    case available
+    case unavailable
+    case couldNotDetermine
+}
+
 enum ShortlistOrdering: String, CaseIterable {
     case yearAscending = "year_ascending"
     case yearDescending = "year_descending"
@@ -76,6 +82,22 @@ extension CloudKitManager {
                 )
                 completion(.failure(unknownError))
             }
+        }
+    }
+    
+    func checkiCloudStatus() async -> iCloudAccountStatus {
+        do {
+            let status = try await CKContainer.default().accountStatus()
+            switch status {
+            case .available:
+                return .available
+            case .noAccount, .restricted, .couldNotDetermine:
+                return .unavailable
+            @unknown default:
+                return .couldNotDetermine
+            }
+        } catch {
+            return .couldNotDetermine
         }
     }
 }
@@ -308,8 +330,6 @@ extension CloudKitManager {
                     .compactMap { ShortlistAlbum(with: $0) }
                 
                 completion(.success(albums))
-                
-                print("dustin album count \(albums.count)")
             } catch {
                 completion(.failure(error))
             }
