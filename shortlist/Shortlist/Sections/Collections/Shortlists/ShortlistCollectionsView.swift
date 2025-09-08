@@ -173,6 +173,8 @@ extension ShortlistCollectionsView {
         @Binding var isPresented: Bool
         @Binding var buttonOpacity: Double
         @Environment(\.colorScheme) private var colorScheme
+        @State private var selectedShortlist: Shortlist?
+        @State private var shortlistToDelete: Shortlist?
         
         init(viewModel: ViewModel, isPresented: Binding<Bool>, buttonOpacity: Binding<Double>) {
             self.viewModel = viewModel
@@ -184,9 +186,11 @@ extension ShortlistCollectionsView {
             if viewModel.isloading {
                 loadingPlaceholder()
             } else {
-                ScrollView {
-                    VStack(spacing: 16) {
-                        ForEach(viewModel.shortlists, id: \.self) { shortlist in
+                List {
+                    ForEach(viewModel.shortlists, id: \.self) { shortlist in
+                        Button(action: {
+                            selectedShortlist = shortlist
+                        }) {
                             VStack(alignment: .leading, spacing: 6) {
                                 HStack {
                                     Text(shortlist.name)
@@ -199,52 +203,94 @@ extension ShortlistCollectionsView {
                                         Text(shortlist.year)
                                             .font(Theme.shared.avenir(size: 14, weight: .medium))
                                             .foregroundColor(.secondary)
+                                            .padding(.leading, 5)
                                     }
                                 }
                                 .padding(.horizontal)
-                                NavigationLink(destination: ShortlistDetailsView(shortlist: shortlist)) {
-                                    VStack(spacing: 12) {
-                                        HStack {
-                                            loadImage(from: shortlist, with: 0)
-                                            VStack {
-                                                Grid {
-                                                    GridRow {
-                                                        loadImage(from: shortlist, with: 1)
-                                                        loadImage(from: shortlist, with: 2)
-                                                    }
-                                                    GridRow {
-                                                        loadImage(from: shortlist, with: 3)
-                                                        loadImage(from: shortlist, with: 4)
-                                                    }
+                                
+                                VStack(spacing: 12) {
+                                    HStack {
+                                        loadImage(from: shortlist, with: 0)
+                                        VStack {
+                                            Grid {
+                                                GridRow {
+                                                    loadImage(from: shortlist, with: 1)
+                                                    loadImage(from: shortlist, with: 2)
+                                                }
+                                                GridRow {
+                                                    loadImage(from: shortlist, with: 3)
+                                                    loadImage(from: shortlist, with: 4)
                                                 }
                                             }
                                         }
                                     }
-                                    .padding()
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 16)
-                                            .fill(Color(.systemBackground))
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .stroke(Color(.separator), lineWidth: 0.5)
-                                            )
-                                    )
-                                    .cornerRadius(16)
-                                    .shadow(
-                                        color: colorScheme == .dark ? 
-                                            Color.black.opacity(0.4) : 
-                                            Color.black.opacity(0.1),
-                                        radius: colorScheme == .dark ? 12 : 8,
-                                        x: 0,
-                                        y: colorScheme == .dark ? 6 : 4
-                                    )
-                                    .padding(.horizontal)
                                 }
+                                .padding()
+                                .background(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(Color(.systemBackground))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(Color(.separator), lineWidth: 0.5)
+                                        )
+                                )
+                                .cornerRadius(16)
+                                .shadow(
+                                    color: colorScheme == .dark ? 
+                                        Color.black.opacity(0.4) : 
+                                        Color.black.opacity(0.1),
+                                    radius: colorScheme == .dark ? 12 : 8,
+                                    x: 0,
+                                    y: colorScheme == .dark ? 6 : 4
+                                )
+                                .padding(.horizontal)
                             }
-                            .padding(.horizontal, 10)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .padding(.horizontal, 10)
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                shortlistToDelete = shortlist
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
                         }
                     }
-                    .padding(.vertical)
+                }
+                .listStyle(PlainListStyle())
+                .background(
+                    NavigationLink(
+                        destination: selectedShortlist.map { ShortlistDetailsView(shortlist: $0) },
+                        isActive: Binding(
+                            get: { selectedShortlist != nil },
+                            set: { if !$0 { selectedShortlist = nil } }
+                        )
+                    ) {
+                        EmptyView()
+                    }
+                    .hidden()
+                )
+                .confirmationDialog("Delete Shortlist", isPresented: Binding(
+                    get: { shortlistToDelete != nil },
+                    set: { if !$0 { shortlistToDelete = nil } }
+                )) {
+                    Button("Delete", role: .destructive) {
+                        if let shortlist = shortlistToDelete {
+                            Task {
+                                try? await viewModel.remove(shortlist: shortlist)
+                            }
+                        }
+                        shortlistToDelete = nil
+                    }
+                    Button("Cancel", role: .cancel) {
+                        shortlistToDelete = nil
+                    }
+                } message: {
+                    if let shortlist = shortlistToDelete {
+                        Text("Are you sure you want to delete '\(shortlist.name)'? This action cannot be undone.")
+                    }
                 }
                 .overlay(
                     VStack {
@@ -327,7 +373,7 @@ extension ShortlistCollectionsView {
         
         @ViewBuilder
         private func loadingPlaceholder() -> some View {
-            ScrollView {
+            List {
                 ForEach(0..<3) { _ in
                     VStack(spacing: 16) {
                         VStack(alignment: .leading, spacing: 6) {
@@ -390,9 +436,11 @@ extension ShortlistCollectionsView {
                         }
                         .padding(.horizontal, 10)
                     }
-                    .padding(.vertical)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                 }
             }
+            .listStyle(PlainListStyle())
         }
         
         @ViewBuilder
@@ -406,16 +454,6 @@ extension ShortlistCollectionsView {
                 .scaledToFit()
                 .cornerRadius(10)
                 .frame(width: size, height: size)
-        }
-        
-        private func delete(at offsets: IndexSet) {
-            guard let index = offsets.first else { return }
-            
-            let shortlist = viewModel.shortlists[index]
-            
-            Task {
-                try? await viewModel.remove(shortlist: shortlist)
-            }
         }
         
         private func getImageSize(for index: Int) -> CGFloat {
