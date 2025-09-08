@@ -13,23 +13,32 @@ extension EditShortlistView {
         @Published var editShortlistError = ""
         
         func updateNewShortlist(shortlist: Shortlist, updatedName: String, updatedYear: String) async throws -> Shortlist  {
-            let shortlist = try await withCheckedThrowingContinuation { continuation in
-                CloudKitManager.shared.updateNewShortlist(
-                    shortlist: shortlist,
-                    updatedName: updatedName,
-                    updatedYear: updatedYear) { result in
-                        switch result {
-                        case .success(let shortlist):
-                            continuation.resume(returning: shortlist)
-                            
-                        case .failure(let error):
-                            self.editShortlistError = error.localizedDescription
-                            continuation.resume(throwing: error)
+            do {
+                let updatedShortlist = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Shortlist, Error>) in
+                    CloudKitManager.shared.updateNewShortlist(
+                        shortlist: shortlist,
+                        updatedName: updatedName,
+                        updatedYear: updatedYear) { result in
+                            switch result {
+                            case .success(let shortlist):
+                                continuation.resume(returning: shortlist)
+                            case .failure(let error):
+                                continuation.resume(throwing: error)
+                            }
                         }
-                    }
+                }
+                
+                await MainActor.run {
+                    self.editShortlistError = ""
+                }
+                
+                return updatedShortlist
+            } catch {
+                await MainActor.run {
+                    self.editShortlistError = error.localizedDescription
+                }
+                throw error
             }
-            
-            return shortlist
         }
     }
 }

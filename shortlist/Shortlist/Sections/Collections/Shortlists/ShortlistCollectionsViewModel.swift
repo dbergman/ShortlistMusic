@@ -20,37 +20,51 @@ extension ShortlistCollectionsView {
 
         func getShortlists(ordering: ShortlistOrdering? = nil) async throws {
             let orderToUse = ordering ?? currentOrdering
-            let shortlists = try await withCheckedThrowingContinuation { continuation in
-                CloudKitManager.shared.getShortlists(ordering: orderToUse) { result in
-                    switch result {
-                    case .success(let shortlists):
-                        continuation.resume(returning: shortlists)
-
-                    case .failure(let error):
-                        continuation.resume(throwing: error)
+            
+            do {
+                let shortlists = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[Shortlist], Error>) in
+                    CloudKitManager.shared.getShortlists(ordering: orderToUse) { result in
+                        switch result {
+                        case .success(let shortlists):
+                            continuation.resume(returning: shortlists)
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
                     }
                 }
+                
+                await MainActor.run {
+                    self.isloading = false
+                    self.shortlists = shortlists
+                    self.currentOrdering = orderToUse
+                }
+            } catch {
+                await MainActor.run {
+                    self.isloading = false
+                }
+                throw error
             }
-            
-            isloading = false
-            self.shortlists = shortlists
-            self.currentOrdering = orderToUse
         }
 
         func remove(shortlist: Shortlist) async throws {
-            let shortlists = try await withCheckedThrowingContinuation { continuation in
-                CloudKitManager.shared.remove(shortlist: shortlist) { result in
-                   switch result {
-                   case .success(let shortlists):
-                       continuation.resume(returning: shortlists)
-
-                   case .failure(let error):
-                       continuation.resume(throwing: error)
-                   }
-               }
+            do {
+                let shortlists = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[Shortlist], Error>) in
+                    CloudKitManager.shared.remove(shortlist: shortlist) { result in
+                        switch result {
+                        case .success(let shortlists):
+                            continuation.resume(returning: shortlists)
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
+                    }
+                }
+                
+                await MainActor.run {
+                    self.shortlists = shortlists
+                }
+            } catch {
+                throw error
             }
-
-            self.shortlists = shortlists            
         }
     }
 }

@@ -13,8 +13,8 @@ import UIKit
 extension AlbumDetailView {
     @MainActor
     class ViewModel: ObservableObject {
-        @Published var album: Content? { didSet { print("🟢 ViewModel.album set ->", album?.title ?? "nil") } }
-        @Published var isloading = true { didSet { print("🟡 ViewModel.isloading ->", isloading) } }
+        @Published var album: Content?
+        @Published var isloading = true
         @Published var isAddingToShortlist = false
         @Published var isRemovingFromShortlist = false
         @Published var showToast = false
@@ -28,8 +28,6 @@ extension AlbumDetailView {
             self.album = album
             self.shortlist = shortlist
             self.screenSize = screenSize
-            
-            print("🔧 ViewModel init - id:", ObjectIdentifier(self).hashValue)
         }
 
         func loadTracks(for album: Album, recordID: CKRecord.ID? = nil) async {

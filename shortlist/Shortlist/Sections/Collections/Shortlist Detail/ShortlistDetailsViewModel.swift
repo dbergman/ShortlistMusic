@@ -18,35 +18,55 @@ extension ShortlistDetailsView {
         }
         
         func getAlbums(for shortlist: Shortlist) async throws {
-            isLoading = true
-            self.shortlist = try await withCheckedThrowingContinuation { continuation in
-                CloudKitManager.shared.getAlbums(for: shortlist, completion: { result in
-                    switch result {
-                    case .success(let shortlist):
-                        continuation.resume(returning: shortlist)
-                        
-                    case .failure(let error):
-                        continuation.resume(throwing: error)
-                    }
-                })
+            await MainActor.run {
+                isLoading = true
             }
-            isLoading = false
+            
+            do {
+                let updatedShortlist = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Shortlist, Error>) in
+                    CloudKitManager.shared.getAlbums(for: shortlist, completion: { result in
+                        switch result {
+                        case .success(let shortlist):
+                            continuation.resume(returning: shortlist)
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
+                    })
+                }
+                
+                await MainActor.run {
+                    self.shortlist = updatedShortlist
+                    self.isLoading = false
+                }
+            } catch {
+                await MainActor.run {
+                    self.isLoading = false
+                }
+                throw error
+            }
         }
         
         func updateShortlistAlbumRanking(sortedAlbums: [ShortlistAlbum]) async throws {
-            self.shortlist = try await withCheckedThrowingContinuation { continuation in
-                CloudKitManager.shared.updateAlbumRanking(
-                    for: shortlist,
-                    sortedAlbums: sortedAlbums
-                ) { result in
-                    switch result {
-                    case .success(let shortlist):
-                        continuation.resume(returning: shortlist)
-                        
-                    case .failure(let error):
-                        continuation.resume(throwing: error)
+            do {
+                let updatedShortlist = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Shortlist, Error>) in
+                    CloudKitManager.shared.updateAlbumRanking(
+                        for: shortlist,
+                        sortedAlbums: sortedAlbums
+                    ) { result in
+                        switch result {
+                        case .success(let shortlist):
+                            continuation.resume(returning: shortlist)
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
                     }
                 }
+                
+                await MainActor.run {
+                    self.shortlist = updatedShortlist
+                }
+            } catch {
+                throw error
             }
         }
     }

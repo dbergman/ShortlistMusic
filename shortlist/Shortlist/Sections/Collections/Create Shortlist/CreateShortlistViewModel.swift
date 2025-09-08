@@ -12,21 +12,30 @@ extension CreateShortlistView {
         @Published var createShortlistError = ""
 
         func addNewShortlist(name: String, year: String) async throws -> Shortlist {
-            let shortlist = try await withCheckedThrowingContinuation { continuation in
-                CloudKitManager.shared.addNewShortlist(
-                    name: name, year: year) { result in
-                        switch result {
-                        case .success(let shortlist):
-                            continuation.resume(returning: shortlist)
-                            
-                        case .failure(let error):
-                            continuation.resume(throwing: error)
-                            self.createShortlistError = "Error finding User Record."
+            do {
+                let shortlist = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Shortlist, Error>) in
+                    CloudKitManager.shared.addNewShortlist(
+                        name: name, year: year) { result in
+                            switch result {
+                            case .success(let shortlist):
+                                continuation.resume(returning: shortlist)
+                            case .failure(let error):
+                                continuation.resume(throwing: error)
+                            }
                         }
-                    }
+                }
+                
+                await MainActor.run {
+                    self.createShortlistError = ""
+                }
+                
+                return shortlist
+            } catch {
+                await MainActor.run {
+                    self.createShortlistError = "Error finding User Record."
+                }
+                throw error
             }
-            
-            return shortlist
         }
     }
 }
