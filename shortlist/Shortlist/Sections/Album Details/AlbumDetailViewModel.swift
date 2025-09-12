@@ -184,11 +184,20 @@ extension AlbumDetailView {
         func updateShortlistAlbumRanking() async {
             guard let currentShortlistAlbums = currentShortlistAlbums else { return }
             
+            // Sort albums by their current rank to maintain order
+            let sortedAlbums = currentShortlistAlbums.sorted { $0.rank < $1.rank }
+            
+            // Create new albums with proper sequential ranking (1, 2, 3, ...)
+            let reRankedAlbums = sortedAlbums.enumerated().map { index, album in
+                ShortlistAlbum(shortlistAlbum: album, rank: index + 1)
+            }
+            
             await withCheckedContinuation { continuation in
-                CloudKitManager.shared.updateAlbumRanking(albums: currentShortlistAlbums) { result in
+                CloudKitManager.shared.updateAlbumRanking(albums: reRankedAlbums) { result in
                     switch result {
                     case .success:
-                        break
+                        // Update the local albums array with the new rankings
+                        self.currentShortlistAlbums = reRankedAlbums
                     case .failure(let error):
                         print("Error updating album ranking: \(error)")
                     }
