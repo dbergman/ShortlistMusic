@@ -22,6 +22,8 @@
 		8B15AEBF295CC752005CE9F6 /* SearchMusicAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15AEBE295CC752005CE9F6 /* SearchMusicAlbumCell.swift */; };
 		8B1EEAF32918910D00D28E47 /* MusicPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1EEAF22918910D00D28E47 /* MusicPermission.swift */; };
 		8B330E3A2B2FAECA00EA07C0 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B330E392B2FAECA00EA07C0 /* TestData.swift */; };
+		8B3EA0532E7623840090DD13 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B3EA0522E7623840090DD13 /* Launch Screen.storyboard */; };
+		8B3EA0552E76250A0090DD13 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8B3EA0542E76250A0090DD13 /* SkeletonUI */; };
 		8B5EB70E2986E82300AD9588 /* ShortlistAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */; };
 		8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */; };
 		8B5F2D182C10140E008849A2 /* UserErrorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */; };
@@ -67,6 +69,7 @@
 		8B15AEBE295CC752005CE9F6 /* SearchMusicAlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicAlbumCell.swift; sourceTree = "<group>"; };
 		8B1EEAF22918910D00D28E47 /* MusicPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPermission.swift; sourceTree = "<group>"; };
 		8B330E392B2FAECA00EA07C0 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		8B3EA0522E7623840090DD13 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistAlbum.swift; sourceTree = "<group>"; };
 		8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserErrorFactory.swift; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B15AEAC29552021005CE9F6 /* MusicKit.framework in Frameworks */,
+				8B3EA0552E76250A0090DD13 /* SkeletonUI in Frameworks */,
 				8BD097132D98BBAF005519F5 /* SkeletonUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,6 +212,7 @@
 				8B330E382B2FAC1100EA07C0 /* Test Data */,
 				8B685AD2290B791100F6AD7F /* ShortlistApp.swift */,
 				8B685ADB290B791300F6AD7F /* Assets.xcassets */,
+				8B3EA0522E7623840090DD13 /* Launch Screen.storyboard */,
 				8B685ADD290B791300F6AD7F /* Shortlist.entitlements */,
 				8B685AD6290B791100F6AD7F /* Shortlist.xcdatamodeld */,
 				8B685ADE290B791300F6AD7F /* Preview Content */,
@@ -382,6 +387,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B3EA0532E7623840090DD13 /* Launch Screen.storyboard in Resources */,
 				8B685AE0290B791300F6AD7F /* Preview Assets.xcassets in Resources */,
 				8B685ADC290B791300F6AD7F /* Assets.xcassets in Resources */,
 			);
@@ -558,6 +564,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Shortlist/Shortlist.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
@@ -602,6 +609,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Shortlist/Shortlist.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
@@ -676,6 +684,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8B3EA0542E76250A0090DD13 /* SkeletonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BD097112D98BBAF005519F5 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
+			productName = SkeletonUI;
+		};
 		8BD097122D98BBAF005519F5 /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8BD097112D98BBAF005519F5 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
