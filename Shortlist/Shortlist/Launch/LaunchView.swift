@@ -44,16 +44,16 @@ struct LaunchView: View {
                     )
                     .rotationEffect(.degrees(rotationAngle))
                     .onAppear {
-                        // Delay start by 0.3 seconds, then spin continuously
+                        // Delay start by 0.3 seconds, then spin for exactly 2 cycles (2 seconds)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            withAnimation(.linear(duration: 2.0).repeatForever(autoreverses: false)) {
-                                rotationAngle = 360
+                            withAnimation(.linear(duration: 2.0)) {
+                                rotationAngle = 720 // 2 full rotations (360 * 2)
                             }
                         }
                     }
                 
                 // Shortlist Music text with animation
-                Text("Shortlist Music")
+                Text("ShortlistMusic")
                     .font(Theme.shared.avenir(size: 42, weight: .bold))
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 1)
