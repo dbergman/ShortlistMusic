@@ -43,10 +43,10 @@ struct LaunchView: View {
                     y: geometry.size.height / 2 - 85
                 )
                 .onAppear {
-                    // Start rotation after a short delay, complete exactly 2 rotations
+                    // Start rotation after a short delay, complete exactly 1 rotation
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        withAnimation(.linear(duration: 2.0)) {
-                            rotationAngle = 720 // 2 full rotations (360 * 2)
+                        withAnimation(.linear(duration: 1.0)) {
+                            rotationAngle = 360 // 1 full rotation
                         }
                     }
                 }
