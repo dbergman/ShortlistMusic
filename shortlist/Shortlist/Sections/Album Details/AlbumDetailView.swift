@@ -270,13 +270,17 @@ struct AlbumDetailView: View {
             .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: CustomBarButton.backButton {
-                if albumWasAdded && isInModalContext {
-                    isPresented = false
-                } else {
-                    dismiss()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    CustomBarButton.backButton {
+                        if albumWasAdded && isInModalContext {
+                            isPresented = false
+                        } else {
+                            dismiss()
+                        }
+                    }
                 }
-            })
+            }
             .task {
                 switch albumType {
                 case .musicKit(let album):

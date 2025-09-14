@@ -201,14 +201,18 @@ struct ShortlistDetailsView: View {
         .navigationTitle(viewModel.shortlist.name)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(
-            leading: CustomBarButton.backButton {
-                dismiss()
-            },
-            trailing: CustomBarButton(systemName: "plus.magnifyingglass") {
-                isPresented.toggle()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                CustomBarButton.backButton {
+                    dismiss()
+                }
             }
-        )
+            ToolbarItem(placement: .navigationBarTrailing) {
+                CustomBarButton(systemName: "plus.magnifyingglass") {
+                    isPresented.toggle()
+                }
+            }
+        }
         .fullScreenCover(isPresented: $isPresented, onDismiss: {
             Task {
                 try await viewModel.getAlbums(for: viewModel.shortlist)
