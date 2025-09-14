@@ -11,7 +11,8 @@ import SwiftUI
 struct ShortlistApp: App {
     var body: some Scene {
         WindowGroup {
-            ShortlistCollectionsView()
+            LaunchView()
+            //ShortlistCollectionsView()
         }
     }
 }

@@ -37,7 +37,7 @@
                             <constraint firstItem="oSg-d7-4jL" firstAttribute="centerX" secondItem="cbg-ww-6BI" secondAttribute="centerX" id="21e-ZU-bL3"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="-59" id="2Gq-9F-v0P"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="KCu-AX-c5X"/>
-                            <constraint firstItem="oSg-d7-4jL" firstAttribute="centerY" secondItem="cbg-ww-6BI" secondAttribute="centerY" id="V3F-X2-jDc"/>
+                            <constraint firstItem="oSg-d7-4jL" firstAttribute="centerY" secondItem="cbg-ww-6BI" secondAttribute="centerY" constant="15" id="V3F-X2-jDc"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="apx-fe-sTl"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="kTm-FF-LgD"/>
                             <constraint firstItem="oSg-d7-4jL" firstAttribute="width" secondItem="cbg-ww-6BI" secondAttribute="width" multiplier="0.87" id="RecordPlayer-Width"/>
