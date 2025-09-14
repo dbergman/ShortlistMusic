@@ -37,15 +37,15 @@
                             <constraint firstItem="oSg-d7-4jL" firstAttribute="centerX" secondItem="cbg-ww-6BI" secondAttribute="centerX" id="21e-ZU-bL3"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="-59" id="2Gq-9F-v0P"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="KCu-AX-c5X"/>
-                            <constraint firstItem="oSg-d7-4jL" firstAttribute="centerY" secondItem="cbg-ww-6BI" secondAttribute="centerY" constant="15" id="V3F-X2-jDc"/>
+                            <constraint firstItem="oSg-d7-4jL" firstAttribute="centerY" secondItem="cbg-ww-6BI" secondAttribute="centerY" constant="-85" id="V3F-X2-jDc"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="apx-fe-sTl"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="kTm-FF-LgD"/>
                             <constraint firstItem="oSg-d7-4jL" firstAttribute="width" secondItem="cbg-ww-6BI" secondAttribute="width" multiplier="0.87" id="RecordPlayer-Width"/>
                             <constraint firstItem="oSg-d7-4jL" firstAttribute="height" secondItem="oSg-d7-4jL" secondAttribute="width" multiplier="1" id="RecordPlayer-Height"/>
                             <constraint firstItem="HFJ-5s-cwL" firstAttribute="centerX" secondItem="oSg-d7-4jL" secondAttribute="centerX" id="RecordBars-CenterX"/>
                             <constraint firstItem="HFJ-5s-cwL" firstAttribute="centerY" secondItem="oSg-d7-4jL" secondAttribute="centerY" id="RecordBars-CenterY"/>
-                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="width" secondItem="oSg-d7-4jL" secondAttribute="width" multiplier="1" id="RecordBars-Width"/>
-                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="height" secondItem="oSg-d7-4jL" secondAttribute="height" multiplier="1" id="RecordBars-Height"/>
+                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="width" secondItem="oSg-d7-4jL" secondAttribute="width" multiplier="0.86" id="RecordBars-Width"/>
+                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="height" secondItem="oSg-d7-4jL" secondAttribute="height" multiplier="0.86" id="RecordBars-Height"/>
                         </constraints>
                     </view>
                 </viewController>

@@ -21,36 +21,35 @@ struct LaunchView: View {
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
                 
-                // RecordPlayer image centered relative to background
-                Image("RecordPlayer")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: geometry.size.width * 0.87)
-                    .frame(height: geometry.size.width * 0.87)
-                    .position(
-                        x: geometry.size.width / 2,
-                        y: geometry.size.height / 2 + 15
-                    )
-                
-                // RecordBars image layered on top of RecordPlayer with continuous spinning
-                Image("RecordBars")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: geometry.size.width * 0.87)
-                    .frame(height: geometry.size.width * 0.87)
-                    .position(
-                        x: geometry.size.width / 2,
-                        y: geometry.size.height / 2 + 15
-                    )
-                    .rotationEffect(.degrees(rotationAngle))
-                    .onAppear {
-                        // Delay start by 0.3 seconds, then spin for exactly 2 cycles (2 seconds)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            withAnimation(.linear(duration: 2.0)) {
-                                rotationAngle = 720 // 2 full rotations (360 * 2)
-                            }
+                // RecordPlayer and RecordBars grouped together
+                ZStack {
+                    // RecordPlayer image
+                    Image("RecordPlayer")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: geometry.size.width * 0.87)
+                        .frame(height: geometry.size.width * 0.87)
+                    
+                    // RecordBars image spinning inside RecordPlayer like a vinyl record
+                    Image("RecordBars")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: geometry.size.width * 0.75)
+                        .frame(height: geometry.size.width * 0.75)
+                        .rotationEffect(.degrees(rotationAngle), anchor: .center)
+                }
+                .position(
+                    x: geometry.size.width / 2,
+                    y: geometry.size.height / 2 - 85
+                )
+                .onAppear {
+                    // Start rotation after a short delay, complete exactly 2 rotations
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        withAnimation(.linear(duration: 2.0)) {
+                            rotationAngle = 720 // 2 full rotations (360 * 2)
                         }
                     }
+                }
                 
                 // Shortlist Music text with animation
                 Text("ShortlistMusic")
@@ -61,7 +60,7 @@ struct LaunchView: View {
                     .offset(y: textOffset)
                     .position(
                         x: geometry.size.width / 2,
-                        y: geometry.size.height / 2 + 15 + (geometry.size.width * 0.87) / 2 + 40
+                        y: geometry.size.height / 2 - 85 + (geometry.size.width * 0.87) / 2 + 40
                     )
                     .onAppear {
                         // Animate text appearance after a delay
