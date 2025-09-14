@@ -71,10 +71,12 @@ struct SearchAlbumsView: View {
     private let artist: Artist
     @StateObject private var viewModel = ViewModel()
     private let shortlist: Shortlist
+    @Binding var isPresented: Bool
     
-    init(artist: Artist, shortlist: Shortlist) {
+    init(artist: Artist, shortlist: Shortlist, isPresented: Binding<Bool>) {
         self.artist = artist
         self.shortlist = shortlist
+        self._isPresented = isPresented
     }
     
     var body: some View {
@@ -86,7 +88,7 @@ struct SearchAlbumsView: View {
         .navigationTitle(artist.name)
         .navigationDestination(for: Album.self) { album in
             let albumType = AlbumDetailView.AlbumType.musicKit(album)
-            AlbumDetailView(albumType: albumType, shortlist: shortlist)
+            AlbumDetailView(albumType: albumType, shortlist: shortlist, isPresented: $isPresented)
         }
     }
 }

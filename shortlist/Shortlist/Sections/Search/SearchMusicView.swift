@@ -58,12 +58,12 @@ struct SearchMusicView: View {
                         case .album(let album):
                             if let albumMK = album.musicKitAlbum {
                                 let albumType = AlbumDetailView.AlbumType.musicKit(albumMK)
-                                AlbumDetailView(albumType:  albumType, shortlist: shortlist)
+                                AlbumDetailView(albumType:  albumType, shortlist: shortlist, isPresented: $isPresented)
                             }
                             
                         case .artist(let artist):
                             if let artistMK = artist.musicKitArtist {
-                                SearchAlbumsView(artist: artistMK, shortlist: shortlist)
+                                SearchAlbumsView(artist: artistMK, shortlist: shortlist, isPresented: $isPresented)
                             }
                         }
                     }

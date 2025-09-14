@@ -17,7 +17,7 @@ struct ShortlistApp: App {
                 LaunchView()
                     .onAppear {
                         // Show launch screen for 2.3 seconds (0.3s delay + 2s animation), then transition to main app
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) {
                             withAnimation(.easeInOut(duration: 0.5)) {
                                 showLaunchScreen = false
                             }

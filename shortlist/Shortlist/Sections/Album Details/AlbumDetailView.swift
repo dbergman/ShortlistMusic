@@ -37,10 +37,14 @@ extension AlbumDetailView {
         @State private var albumOnShortlist = false
         @ObservedObject private var viewModel: ViewModel
         @Environment(\.colorScheme) private var colorScheme
+        @Binding var albumWasAdded: Bool
+        @Binding var isPresented: Bool
 
-        init(album: Content, shortlist: Shortlist, viewModel: ViewModel) {
+        init(album: Content, shortlist: Shortlist, viewModel: ViewModel, albumWasAdded: Binding<Bool>, isPresented: Binding<Bool>) {
             self.viewModel = viewModel
             self.shortlist = shortlist
+            self._albumWasAdded = albumWasAdded
+            self._isPresented = isPresented
         }
         
         var body: some View {
@@ -203,8 +207,10 @@ extension AlbumDetailView {
                         Task {
                             if albumOnShortlist {
                                 await viewModel.removeAlbumFromShortlist()
+                                albumWasAdded = false
                             } else {
                                 await viewModel.addAlbumToShortlist()
+                                albumWasAdded = true
                             }
 
                             albumOnShortlist.toggle()
@@ -232,14 +238,19 @@ struct AlbumDetailView: View {
     @StateObject private var viewModel: ViewModel
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
+    @State private var albumWasAdded = false
+    @Binding var isPresented: Bool
+    private var isInModalContext: Bool
     
     private var navigationTitle: String {
         viewModel.album?.title ?? "Album"
     }
 
-    init(albumType: AlbumType, shortlist: Shortlist) {
+    init(albumType: AlbumType, shortlist: Shortlist, isPresented: Binding<Bool>? = nil) {
         self.albumType = albumType
         self.shortlist = shortlist
+        self._isPresented = isPresented ?? .constant(false)
+        self.isInModalContext = isPresented != nil
         self._viewModel = StateObject(wrappedValue: ViewModel(
             album: nil,
             shortlist: shortlist,
@@ -253,14 +264,18 @@ struct AlbumDetailView: View {
                 if viewModel.isloading {
                     loadingPlaceholder()
                 } else if let album = viewModel.album {
-                    AlbumView(album: album, shortlist: shortlist, viewModel: viewModel)
+                    AlbumView(album: album, shortlist: shortlist, viewModel: viewModel, albumWasAdded: $albumWasAdded, isPresented: $isPresented)
                 }
             }
             .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: CustomBarButton.backButton {
-                dismiss()
+                if albumWasAdded && isInModalContext {
+                    isPresented = false
+                } else {
+                    dismiss()
+                }
             })
             .task {
                 switch albumType {
