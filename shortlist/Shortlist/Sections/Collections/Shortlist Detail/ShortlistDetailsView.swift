@@ -46,6 +46,62 @@ struct ShortlistDetailsView: View {
         ZStack(alignment: .bottom) {
             if viewModel.isLoading {
                 loadingView()
+            } else if (viewModel.shortlist.albums?.isEmpty ?? true) {
+                VStack(spacing: 16) {
+                    Spacer()
+
+                    Image(systemName: "square.stack.3d.up.slash")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 72, height: 72)
+                        .foregroundColor(.secondary)
+                        .accessibilityHidden(true)
+
+                    Text("No Albums Yet")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+
+                    Text("Add albums to this Shortlist to get started.")
+                        .font(.body)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 32)
+
+                    Button {
+                        isPresented.toggle()
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "plus.circle.fill")
+                            Text("Add Albums")
+                                .font(.system(size: 16, weight: .semibold))
+                        }
+                        .foregroundColor(colorScheme == .dark ? .black : .white)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 12)
+                        .background(
+                            Capsule()
+                                .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.9))
+                                .overlay(
+                                    Capsule()
+                                        .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
+                                )
+                                .shadow(
+                                    color: colorScheme == .dark ?
+                                        Color.black.opacity(0.5) :
+                                        Color.black.opacity(0.2),
+                                    radius: colorScheme == .dark ? 10 : 6,
+                                    x: 0,
+                                    y: colorScheme == .dark ? 4 : 2
+                                )
+                        )
+                        .clipShape(Capsule())
+                    }
+                    .padding(.top, 8)
+
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding()
             } else {
                 ScrollView {
                     LazyVGrid(columns: layout) {
@@ -64,7 +120,7 @@ struct ShortlistDetailsView: View {
                                         } placeholder: {
                                             ProgressView()
                                         }
-                                        
+
                                         ZStack {
                                             Circle()
                                                 .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.75))
@@ -74,7 +130,7 @@ struct ShortlistDetailsView: View {
                                                         .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1.5)
                                                 )
                                                 .shadow(color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
-                                            
+
                                             Text("\(album.rank)")
                                                 .foregroundColor(colorScheme == .dark ? .black : .white)
                                                 .font(Theme.shared.avenir(size: 14, weight: .bold))
@@ -82,7 +138,7 @@ struct ShortlistDetailsView: View {
                                         .padding(6)
                                     }
                                     .padding(.bottom, 10)
-                                    
+
                                     Text(album.title)
                                         .font(Theme.shared.avenir(size: 16, weight: .bold))
                                         .multilineTextAlignment(.leading)
@@ -513,3 +569,4 @@ struct ShortlistDetails_Previews: PreviewProvider {
             .previewDisplayName("Dark Mode")
     }
 }
+
