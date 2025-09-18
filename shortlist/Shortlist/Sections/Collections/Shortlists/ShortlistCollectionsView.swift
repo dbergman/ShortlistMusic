@@ -185,6 +185,67 @@ extension ShortlistCollectionsView {
         var body: some View {
             if viewModel.isloading {
                 loadingPlaceholder()
+            } else if viewModel.shortlists.isEmpty {
+                VStack(spacing: 16) {
+                    Spacer()
+
+                    Image(systemName: "music.note.list")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 72, height: 72)
+                        .foregroundColor(.secondary)
+                        .accessibilityHidden(true)
+
+                    Text("No Shortlists Yet")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+
+                    Text("Create your first Shortlist to start tracking your favorite albums.")
+                        .font(.body)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 32)
+
+                    Button {
+                        self.isPresented.toggle()
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "plus.circle.fill")
+                            Text("Add a Shortlist")
+                                .font(.system(size: 16, weight: .semibold))
+                        }
+                        .foregroundColor(colorScheme == .dark ? .black : .white)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 12)
+                        .background(
+                            Capsule()
+                                .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.9))
+                                .overlay(
+                                    Capsule()
+                                        .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
+                                )
+                                .shadow(
+                                    color: colorScheme == .dark ?
+                                        Color.black.opacity(0.5) :
+                                        Color.black.opacity(0.2),
+                                    radius: colorScheme == .dark ? 10 : 6,
+                                    x: 0,
+                                    y: colorScheme == .dark ? 4 : 2
+                                )
+                        )
+                        .clipShape(Capsule())
+                    }
+                    .padding(.top, 8)
+
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding()
+                .onAppear {
+                    withAnimation(.easeIn(duration: 0.6)) {
+                        buttonOpacity = 1
+                    }
+                }
             } else {
                 List {
                     ForEach(viewModel.shortlists, id: \.self) { shortlist in
@@ -493,3 +554,4 @@ struct ShortlistCollections_Previews: PreviewProvider {
         }
     }
 }
+
