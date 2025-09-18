@@ -110,7 +110,7 @@ extension AlbumDetailView {
             // Check if the operation was successful
             if currentShortlistAlbums != nil {
                 // Show success toast
-                toastMessage = "Added '\(album.title)' to shortlist"
+                toastMessage = "Added '\(album.title)' to '\(shortlist.name)'"
                 toastType = .success
                 showToast = true
                 
@@ -155,10 +155,11 @@ extension AlbumDetailView {
             
             // Update ranking after successful removal
             if currentShortlistAlbums != nil {
-                await updateShortlistAlbumRanking()
+                // Hide loading overlay first
+                isRemovingFromShortlist = false
                 
                 // Show success toast
-                toastMessage = "Removed '\(albumTitle)' from shortlist"
+                toastMessage = "Removed '\(albumTitle)' from '\(shortlist.name)'"
                 toastType = .success
                 showToast = true
                 
@@ -166,7 +167,13 @@ extension AlbumDetailView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.showToast = false
                 }
+                
+                // Update ranking in background (don't block toast display)
+                await updateShortlistAlbumRanking()
             } else {
+                // Hide loading overlay first
+                isRemovingFromShortlist = false
+                
                 // Show error toast
                 toastMessage = "Failed to remove album from shortlist"
                 toastType = .error
@@ -177,12 +184,13 @@ extension AlbumDetailView {
                     self.showToast = false
                 }
             }
-            
-            isRemovingFromShortlist = false
         }
         
         func updateShortlistAlbumRanking() async {
-            guard let currentShortlistAlbums = currentShortlistAlbums else { return }
+            guard let currentShortlistAlbums = currentShortlistAlbums else { 
+                print("No current shortlist albums to update ranking")
+                return 
+            }
             
             // Sort albums by their current rank to maintain order
             let sortedAlbums = currentShortlistAlbums.sorted { $0.rank < $1.rank }
@@ -198,6 +206,7 @@ extension AlbumDetailView {
                     case .success:
                         // Update the local albums array with the new rankings
                         self.currentShortlistAlbums = reRankedAlbums
+                        print("Successfully updated album ranking")
                     case .failure(let error):
                         print("Error updating album ranking: \(error)")
                     }

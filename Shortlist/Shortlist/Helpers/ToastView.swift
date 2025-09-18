@@ -11,6 +11,10 @@ struct ToastView: View {
     let message: String
     let type: ToastType
     let isVisible: Bool
+    let onDismiss: (() -> Void)?
+    
+    @State private var dragOffset: CGFloat = 0
+    @State private var isDragging = false
     
     enum ToastType {
         case success
@@ -52,9 +56,37 @@ struct ToastView: View {
             .shadow(color: Color.black.opacity(0.2), radius: 8, x: 0, y: 4)
             .padding(.horizontal, 20)
             .padding(.top, 8)
+            .offset(y: dragOffset)
+            .opacity(isDragging ? max(0.3, 1 - abs(dragOffset) / 100.0) : 1)
             .transition(.move(edge: .top))
             .zIndex(999)
+            .animation(.easeInOut(duration: 0.3), value: isDragging)
             .animation(.easeInOut(duration: 0.5), value: isVisible)
+            .onTapGesture {
+                onDismiss?()
+            }
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        isDragging = true
+                        // Only allow upward swipes
+                        if value.translation.height < 0 {
+                            dragOffset = value.translation.height
+                        }
+                    }
+                    .onEnded { value in
+                        isDragging = false
+                        // Dismiss if swiped up more than 50 points
+                        if value.translation.height < -50 {
+                            onDismiss?()
+                        } else {
+                            // Snap back to original position
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                dragOffset = 0
+                            }
+                        }
+                    }
+            )
         }
     }
 }
@@ -69,7 +101,12 @@ struct ToastOverlay: View {
             ToastView(
                 message: toastMessage,
                 type: toastType,
-                isVisible: showToast
+                isVisible: showToast,
+                onDismiss: {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        showToast = false
+                    }
+                }
             )
             Spacer()
         }
@@ -86,7 +123,8 @@ struct ToastOverlay_Previews: PreviewProvider {
                 ToastView(
                     message: "Success message here!",
                     type: .success,
-                    isVisible: true
+                    isVisible: true,
+                    onDismiss: { print("Toast dismissed!") }
                 )
                 Spacer()
             }
