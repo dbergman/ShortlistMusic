@@ -13,7 +13,7 @@ struct CreateShortlistView: View {
     @ObservedObject private var viewModel = ViewModel()
     @State private var shortlistName = ""
     @State private var selectedYear = "All"
-    @Binding var shortlists: [Shortlist]
+    @ObservedObject var collectionsViewModel: ShortlistCollectionsView.ViewModel
     
     var body: some View {
         NavigationStack {
@@ -52,7 +52,7 @@ struct CreateShortlistView: View {
                                 let shortlist = try await viewModel.addNewShortlist(name: shortlistName, year: selectedYear)
                                 
                                 DispatchQueue.main.async {
-                                    self.shortlists.append(shortlist)
+                                    self.collectionsViewModel.addShortlist(shortlist)
                                     self.isPresented = false
                                 }
                             } catch {
@@ -106,6 +106,9 @@ struct CreateShortlistView: View {
 
 struct CreateShortlistView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateShortlistView(isPresented: .constant(false), shortlists: .constant([]))
+        CreateShortlistView(
+            isPresented: .constant(false), 
+            collectionsViewModel: ShortlistCollectionsView.ViewModel()
+        )
     }
 }

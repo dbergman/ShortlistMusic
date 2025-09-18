@@ -12,10 +12,15 @@ extension ShortlistCollectionsView {
     class ViewModel: ObservableObject {
         @Published var shortlists: [Shortlist] = []
         @Published var isloading = true
-        @Published var currentOrdering: ShortlistOrdering = .yearDescending
+        @Published var currentOrdering: ShortlistOrdering {
+            didSet {
+                UserDefaultsManager.shared.shortlistSortOrder = currentOrdering
+            }
+        }
         
         init(shortlists: [Shortlist] = []) {
             self.shortlists = shortlists
+            self.currentOrdering = UserDefaultsManager.shared.shortlistSortOrder
         }
 
         func getShortlists(ordering: ShortlistOrdering? = nil) async throws {
@@ -64,6 +69,41 @@ extension ShortlistCollectionsView {
                 }
             } catch {
                 throw error
+            }
+        }
+        
+        func addShortlist(_ shortlist: Shortlist) {
+            var updatedShortlists = shortlists
+            updatedShortlists.append(shortlist)
+            self.shortlists = sortShortlists(updatedShortlists, by: currentOrdering)
+        }
+        
+        private func sortShortlists(_ shortlists: [Shortlist], by ordering: ShortlistOrdering) -> [Shortlist] {
+            switch ordering {
+            case .yearAscending:
+                return shortlists.sorted { shortlist1, shortlist2 in
+                    if shortlist1.year != shortlist2.year {
+                        return shortlist1.year < shortlist2.year
+                    } else {
+                        return shortlist1.createdTimestamp < shortlist2.createdTimestamp
+                    }
+                }
+            case .yearDescending:
+                return shortlists.sorted { shortlist1, shortlist2 in
+                    if shortlist1.year != shortlist2.year {
+                        return shortlist1.year > shortlist2.year
+                    } else {
+                        return shortlist1.createdTimestamp > shortlist2.createdTimestamp
+                    }
+                }
+            case .creationAscending:
+                return shortlists.sorted { shortlist1, shortlist2 in
+                    return shortlist1.createdTimestamp < shortlist2.createdTimestamp
+                }
+            case .creationDescending:
+                return shortlists.sorted { shortlist1, shortlist2 in
+                    return shortlist1.createdTimestamp > shortlist2.createdTimestamp
+                }
             }
         }
     }

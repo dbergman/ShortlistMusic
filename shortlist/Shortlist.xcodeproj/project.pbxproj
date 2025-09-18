@@ -27,6 +27,7 @@
 		8B5EB70E2986E82300AD9588 /* ShortlistAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */; };
 		8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */; };
 		8B5F2D182C10140E008849A2 /* UserErrorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */; };
+		2C07DA8863C24E80B7CD6091 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C07DA8763C24E80B7CD6090 /* UserDefaultsManager.swift */; };
 		8B685AD3290B791100F6AD7F /* ShortlistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD2290B791100F6AD7F /* ShortlistApp.swift */; };
 		8B685AD8290B791100F6AD7F /* Shortlist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD6290B791100F6AD7F /* Shortlist.xcdatamodeld */; };
 		8B685ADC290B791300F6AD7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B685ADB290B791300F6AD7F /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistAlbum.swift; sourceTree = "<group>"; };
 		8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitManager.swift; sourceTree = "<group>"; };
 		8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserErrorFactory.swift; sourceTree = "<group>"; };
+		2C07DA8763C24E80B7CD6090 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		8B685ACF290B791100F6AD7F /* Shortlist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shortlist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B685AD2290B791100F6AD7F /* ShortlistApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistApp.swift; sourceTree = "<group>"; };
 		8B685AD7290B791100F6AD7F /* Shortlist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shortlist.xcdatamodel; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				8BA847D22E63CEA00079CEF3 /* ToastView.swift */,
 				8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */,
 				8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */,
+				2C07DA8763C24E80B7CD6090 /* UserDefaultsManager.swift */,
 				8B067D5D2E288BB8008028E4 /* ImageGridCreator.swift */,
 				8B067D612E29CC25008028E4 /* ActivityView.swift */,
 				8B067D5F2E289904008028E4 /* MailView.swift */,
@@ -418,6 +421,7 @@
 				8B685AEC290B7B3300F6AD7F /* ShortlistCollectionsView.swift in Sources */,
 				8B15AEB129576581005CE9F6 /* SearchAlbumsView.swift in Sources */,
 				8B5F2D182C10140E008849A2 /* UserErrorFactory.swift in Sources */,
+				2C07DA8863C24E80B7CD6091 /* UserDefaultsManager.swift in Sources */,
 				8B067D5E2E288BB8008028E4 /* ImageGridCreator.swift in Sources */,
 				8B15AEBD295CC653005CE9F6 /* SearchMusicArtistCell.swift in Sources */,
 				8B1EEAF32918910D00D28E47 /* MusicPermission.swift in Sources */,

@@ -44,7 +44,7 @@ struct ShortlistCollectionsView: View {
                 }
                 .onBoardingSheet()
                 .sheet(isPresented: $isPresented) {
-                    CreateShortlistView(isPresented: $isPresented, shortlists: $viewModel.shortlists)
+                    CreateShortlistView(isPresented: $isPresented, collectionsViewModel: viewModel)
                         .presentationDetents([.medium, .large])
                 }
                 .sheet(isPresented: $showingMailSheet) {
@@ -83,32 +83,17 @@ struct ShortlistCollectionsView: View {
                         .presentationDetents([.medium])
                     }
                 }
-                .confirmationDialog("Order Shortlists", isPresented: $showingOrderOptions) {
-                    Button("Order by year ascending") {
-                        Task {
-                            try? await viewModel.getShortlists(ordering: .yearAscending)
+                .sheet(isPresented: $showingOrderOptions) {
+                    SortOrderSelectionView(
+                        currentOrdering: viewModel.currentOrdering,
+                        onOrderingSelected: { ordering in
+                            Task {
+                                try? await viewModel.getShortlists(ordering: ordering)
+                            }
+                            showingOrderOptions = false
                         }
-                    }
-                    
-                    Button("Order by year descending") {
-                        Task {
-                            try? await viewModel.getShortlists(ordering: .yearDescending)
-                        }
-                    }
-                    
-                    Button("Order by creation ascending") {
-                        Task {
-                            try? await viewModel.getShortlists(ordering: .creationAscending)
-                        }
-                    }
-                    
-                    Button("Order by creation descending") {
-                        Task {
-                            try? await viewModel.getShortlists(ordering: .creationDescending)
-                        }
-                    }
-                    
-                    Button("Cancel", role: .cancel) { }
+                    )
+                    .presentationDetents([.medium])
                 }
                 .onAppear() {
                     Task {
@@ -527,6 +512,45 @@ extension ShortlistCollectionsView {
     }
 }
 
+struct SortOrderSelectionView: View {
+    let currentOrdering: ShortlistOrdering
+    let onOrderingSelected: (ShortlistOrdering) -> Void
+    
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(ShortlistOrdering.allCases, id: \.self) { ordering in
+                    Button(action: {
+                        onOrderingSelected(ordering)
+                    }) {
+                        HStack {
+                            Text(ordering.displayName)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            if currentOrdering == ordering {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.blue)
+                                    .fontWeight(.semibold)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
+            }
+            .navigationTitle("Sort Shortlists")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        onOrderingSelected(currentOrdering)
+                    }
+                }
+            }
+        }
+    }
+}
+
 struct ShortlistCollections_Previews: PreviewProvider {
     static var previews: some View {
         let shortlist = TestData.ShortLists.shortList
@@ -551,6 +575,12 @@ struct ShortlistCollections_Previews: PreviewProvider {
             )
             .preferredColorScheme(.dark)
             .previewDisplayName("Dark Mode")
+            
+            SortOrderSelectionView(
+                currentOrdering: .yearDescending,
+                onOrderingSelected: { _ in }
+            )
+            .previewDisplayName("Sort Order Selection")
         }
     }
 }
