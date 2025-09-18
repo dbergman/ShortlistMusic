@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,27 +25,29 @@
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RecordPlayer" translatesAutoresizingMaskIntoConstraints="NO" id="oSg-d7-4jL">
-                                <rect key="frame" x="26" y="255.33333333333334" width="341.33333333333331" height="341.33333333333326"/>
+                                <rect key="frame" x="25.666666666666657" y="170" width="341.66666666666674" height="342"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" secondItem="oSg-d7-4jL" secondAttribute="width" id="RecordPlayer-Height"/>
+                                </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RecordBars" translatesAutoresizingMaskIntoConstraints="NO" id="HFJ-5s-cwL">
-                                <rect key="frame" x="16" y="266" width="361" height="320"/>
+                                <rect key="frame" x="49.333333333333343" y="194" width="294.33333333333326" height="294"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="oSg-d7-4jL" firstAttribute="centerX" secondItem="cbg-ww-6BI" secondAttribute="centerX" id="21e-ZU-bL3"/>
-                            <constraint firstItem="cbg-ww-6BI" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="-59" id="2Gq-9F-v0P"/>
+                            <constraint firstItem="cbg-ww-6BI" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="-118" id="2Gq-9F-v0P"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="KCu-AX-c5X"/>
+                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="centerX" secondItem="oSg-d7-4jL" secondAttribute="centerX" id="RecordBars-CenterX"/>
+                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="centerY" secondItem="oSg-d7-4jL" secondAttribute="centerY" id="RecordBars-CenterY"/>
+                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="height" secondItem="oSg-d7-4jL" secondAttribute="height" multiplier="0.86" id="RecordBars-Height"/>
+                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="width" secondItem="oSg-d7-4jL" secondAttribute="width" multiplier="0.86" id="RecordBars-Width"/>
+                            <constraint firstItem="oSg-d7-4jL" firstAttribute="width" secondItem="cbg-ww-6BI" secondAttribute="width" multiplier="0.87" id="RecordPlayer-Width"/>
                             <constraint firstItem="oSg-d7-4jL" firstAttribute="centerY" secondItem="cbg-ww-6BI" secondAttribute="centerY" constant="-85" id="V3F-X2-jDc"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="apx-fe-sTl"/>
                             <constraint firstItem="cbg-ww-6BI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="kTm-FF-LgD"/>
-                            <constraint firstItem="oSg-d7-4jL" firstAttribute="width" secondItem="cbg-ww-6BI" secondAttribute="width" multiplier="0.87" id="RecordPlayer-Width"/>
-                            <constraint firstItem="oSg-d7-4jL" firstAttribute="height" secondItem="oSg-d7-4jL" secondAttribute="width" multiplier="1" id="RecordPlayer-Height"/>
-                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="centerX" secondItem="oSg-d7-4jL" secondAttribute="centerX" id="RecordBars-CenterX"/>
-                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="centerY" secondItem="oSg-d7-4jL" secondAttribute="centerY" id="RecordBars-CenterY"/>
-                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="width" secondItem="oSg-d7-4jL" secondAttribute="width" multiplier="0.86" id="RecordBars-Width"/>
-                            <constraint firstItem="HFJ-5s-cwL" firstAttribute="height" secondItem="oSg-d7-4jL" secondAttribute="height" multiplier="0.86" id="RecordBars-Height"/>
                         </constraints>
                     </view>
                 </viewController>
