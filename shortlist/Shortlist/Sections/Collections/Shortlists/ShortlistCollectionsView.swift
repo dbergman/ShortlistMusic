@@ -306,18 +306,14 @@ extension ShortlistCollectionsView {
                     }
                 }
                 .listStyle(PlainListStyle())
-                .background(
-                    NavigationLink(
-                        destination: selectedShortlist.map { ShortlistDetailsView(shortlist: $0) },
-                        isActive: Binding(
-                            get: { selectedShortlist != nil },
-                            set: { if !$0 { selectedShortlist = nil } }
-                        )
-                    ) {
-                        EmptyView()
+                .navigationDestination(isPresented: Binding(
+                    get: { selectedShortlist != nil },
+                    set: { if !$0 { selectedShortlist = nil } }
+                )) {
+                    if let shortlist = selectedShortlist {
+                        ShortlistDetailsView(shortlist: shortlist)
                     }
-                    .hidden()
-                )
+                }
                 .confirmationDialog("Delete Shortlist", isPresented: Binding(
                     get: { shortlistToDelete != nil },
                     set: { if !$0 { shortlistToDelete = nil } }
