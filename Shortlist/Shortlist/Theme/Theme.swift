@@ -28,10 +28,6 @@ class Theme {
         Color("TextColor")
     }
 
-    var accent: Color {
-        Color("AccentColor")
-    }
-
     // MARK: - Fonts
     func avenir(size: CGFloat, weight: Font.Weight = .regular) -> Font {
         switch weight {

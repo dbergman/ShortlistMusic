@@ -18,16 +18,16 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="cbg-ww-6BI">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                 <constraints>
-                                    <constraint firstAttribute="top" secondItem="cbg-ww-6BI" secondAttribute="top" id="0aH-1z-8QZ"/>
-                                    <constraint firstAttribute="leading" secondItem="cbg-ww-6BI" secondAttribute="leading" id="1aH-1z-8QZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="cbg-ww-6BI" secondAttribute="trailing" id="2aH-1z-8QZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="cbg-ww-6BI" secondAttribute="bottom" id="3aH-1z-8QZ"/>
+                                    <constraint firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="0aH-1z-8QZ"/>
+                                    <constraint firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="1aH-1z-8QZ"/>
+                                    <constraint firstItem="Ze5-6b-2t3" firstAttribute="trailing" secondItem="cbg-ww-6BI" secondAttribute="trailing" id="2aH-1z-8QZ"/>
+                                    <constraint firstItem="Ze5-6b-2t3" firstAttribute="bottom" secondItem="cbg-ww-6BI" secondAttribute="bottom" id="3aH-1z-8QZ"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RecordPlayer" translatesAutoresizingMaskIntoConstraints="NO" id="oSg-d7-4jL">
                                 <rect key="frame" x="25.666666666666657" y="170" width="341.66666666666674" height="342"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" secondItem="oSg-d7-4jL" secondAttribute="width" id="RecordPlayer-Height"/>
+                                    <constraint firstAttribute="height" secondItem="oSg-d7-4jL" secondAttribute="width" multiplier="1:1" id="RecordPlayer-Height"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RecordBars" translatesAutoresizingMaskIntoConstraints="NO" id="HFJ-5s-cwL">

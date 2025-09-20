@@ -93,6 +93,8 @@ extension CloudKitManager {
                 return .available
             case .noAccount, .restricted, .couldNotDetermine:
                 return .unavailable
+            case .temporarilyUnavailable:
+                return .couldNotDetermine
             @unknown default:
                 return .couldNotDetermine
             }
