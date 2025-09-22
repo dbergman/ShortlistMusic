@@ -256,13 +256,7 @@ struct ShortlistDetailsView: View {
         }
         .navigationTitle(viewModel.shortlist.name)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                CustomBarButton.backButton {
-                    dismiss()
-                }
-            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 CustomBarButton(systemName: "plus.magnifyingglass") {
                     isPresented.toggle()
