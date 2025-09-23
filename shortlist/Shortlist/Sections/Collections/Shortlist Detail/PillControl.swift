@@ -19,13 +19,13 @@ struct PillControl: View {
                     .padding(12)
                     .background(
                         Circle()
-                            .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.9))
+                            .fill(.ultraThinMaterial)
                             .overlay(
                                 Circle()
-                                    .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
+                                    .stroke(.quaternary, lineWidth: 0.5)
                             )
                     )
-                    .foregroundColor(colorScheme == .dark ? .black : .white)
+                    .foregroundColor(.primary)
                     .clipShape(Circle())
             }
 
@@ -34,33 +34,25 @@ struct PillControl: View {
                     .padding(12)
                     .background(
                         Circle()
-                            .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.9))
+                            .fill(.ultraThinMaterial)
                             .overlay(
                                 Circle()
-                                    .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
+                                    .stroke(.quaternary, lineWidth: 0.5)
                             )
                     )
-                    .foregroundColor(colorScheme == .dark ? .black : .white)
+                    .foregroundColor(.primary)
                     .clipShape(Circle())
             }
         }
         .padding(12)
         .background(
             Capsule()
-                .fill(colorScheme == .dark ? Color(.secondarySystemBackground) : Color(.systemBackground))
+                .fill(.ultraThinMaterial)
                 .overlay(
                     Capsule()
-                        .stroke(colorScheme == .dark ? Color(.tertiarySystemBackground) : Color(.separator), lineWidth: 1)
+                        .stroke(.quaternary, lineWidth: 0.5)
                 )
         )
         .clipShape(Capsule())
-        .shadow(
-            color: colorScheme == .dark ? 
-                Color.black.opacity(0.6) : 
-                Color.black.opacity(0.15),
-            radius: colorScheme == .dark ? 12 : 8,
-            x: 0,
-            y: colorScheme == .dark ? 6 : 4
-        )
     }
 }

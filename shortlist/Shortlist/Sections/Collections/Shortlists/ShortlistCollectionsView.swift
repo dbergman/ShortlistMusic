@@ -199,23 +199,15 @@ extension ShortlistCollectionsView {
                             Text("Add a Shortlist")
                                 .font(.system(size: 16, weight: .semibold))
                         }
-                        .foregroundColor(colorScheme == .dark ? .black : .white)
+                        .foregroundColor(.primary)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 12)
                         .background(
                             Capsule()
-                                .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.9))
+                                .fill(.ultraThinMaterial)
                                 .overlay(
                                     Capsule()
-                                        .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
-                                )
-                                .shadow(
-                                    color: colorScheme == .dark ?
-                                        Color.black.opacity(0.5) :
-                                        Color.black.opacity(0.2),
-                                    radius: colorScheme == .dark ? 10 : 6,
-                                    x: 0,
-                                    y: colorScheme == .dark ? 4 : 2
+                                        .stroke(.quaternary, lineWidth: 0.5)
                                 )
                         )
                         .clipShape(Capsule())
@@ -345,23 +337,15 @@ extension ShortlistCollectionsView {
                                     Text("Add a Shortlist")
                                         .font(.system(size: 16, weight: .semibold))
                                 }
-                                .foregroundColor(colorScheme == .dark ? .black : .white)
+                                .foregroundColor(.primary)
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 12)
                                 .background(
                                     Capsule()
-                                        .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.9))
+                                        .fill(.ultraThinMaterial)
                                         .overlay(
                                             Capsule()
-                                                .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
-                                        )
-                                        .shadow(
-                                            color: colorScheme == .dark ? 
-                                                Color.black.opacity(0.5) : 
-                                                Color.black.opacity(0.2),
-                                            radius: colorScheme == .dark ? 10 : 6,
-                                            x: 0,
-                                            y: colorScheme == .dark ? 4 : 2
+                                                .stroke(.quaternary, lineWidth: 0.5)
                                         )
                                 )
                                 .clipShape(Capsule())
