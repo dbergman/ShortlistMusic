@@ -42,6 +42,16 @@ class CloudKitManager {
         
         return instance
     }()
+    
+    // Get the appropriate CloudKit container based on app configuration
+    private var container: CKContainer {
+        if AppConfiguration.shared.isTestVersion {
+            // For dev version, use a specific container identifier
+            return CKContainer(identifier: AppConfiguration.shared.cloudKitContainerIdentifier)
+        } else {
+            return CKContainer.default()
+        }
+    }
 }
 
 // Create Shortlist
@@ -55,7 +65,7 @@ extension CloudKitManager {
                 record.setValue(name, forKey: "name")
                 record.setValue(year, forKey: "year")
                 
-                CKContainer.default().publicCloudDatabase.save(record) { savedRecord, error in
+                self.container.publicCloudDatabase.save(record) { savedRecord, error in
                     if let error {
                         completion(.failure(error))
                     } else if let savedRecord = savedRecord, let shortlist = Shortlist(with: savedRecord) {
@@ -69,7 +79,7 @@ extension CloudKitManager {
     }
     
     private func getUserID(completion: @escaping (Result<String, Error>) -> Void) {
-        CKContainer.default().fetchUserRecordID { recordID, error in
+        self.container.fetchUserRecordID { recordID, error in
             if let error {
                 completion(.failure(error))
             } else if let userId = recordID?.recordName {
@@ -87,7 +97,7 @@ extension CloudKitManager {
     
     func checkiCloudStatus() async -> iCloudAccountStatus {
         do {
-            let status = try await CKContainer.default().accountStatus()
+            let status = try await self.container.accountStatus()
             switch status {
             case .available:
                 return .available
@@ -112,7 +122,7 @@ extension CloudKitManager {
         updatedYear: String,
         completion: @escaping (Result<Shortlist, Error>) -> Void)
     {
-        CKContainer.default().publicCloudDatabase.fetch(withRecordID: shortlist.recordID) { record, error in
+        self.container.publicCloudDatabase.fetch(withRecordID: shortlist.recordID) { record, error in
             guard 
                 let record = record
             else {
@@ -123,7 +133,7 @@ extension CloudKitManager {
             record["name"] = updatedName
             record["year"] = updatedYear
             
-            CKContainer.default().publicCloudDatabase.save(record) { savedRecord, saveError in
+            self.container.publicCloudDatabase.save(record) { savedRecord, saveError in
                 if saveError != nil {
                     completion(.failure(UserErrorFactory.makeError(.shortlistNotFound)))
                 } else if
@@ -143,7 +153,7 @@ extension CloudKitManager {
 // Shortlist Collection Methods
 extension CloudKitManager {
     func getShortlists(ordering: ShortlistOrdering = .yearAscending, completion: @escaping (Result<[Shortlist], Error>) -> Void) {
-        CKContainer.default().fetchUserRecordID { id, error in
+        self.container.fetchUserRecordID { id, error in
             guard let recordName = id?.recordName else { return }
             
             let dispatchGroup = DispatchGroup()
@@ -152,7 +162,7 @@ extension CloudKitManager {
             let shortlistPredicate = NSPredicate(format: "creatorUserRecordID = %@", CKRecord.ID(recordName: recordName))
             let shortlistQuery = CKQuery(recordType: "Shortlists", predicate: shortlistPredicate)
             
-            CKContainer.default().publicCloudDatabase.fetch(withQuery: shortlistQuery) { shortlistRecords in
+            self.container.publicCloudDatabase.fetch(withQuery: shortlistQuery) { shortlistRecords in
                 do {
                     let records = try shortlistRecords.get()
                     var shortlists = records.matchResults
@@ -165,7 +175,7 @@ extension CloudKitManager {
                         albumQuery.sortDescriptors = [NSSortDescriptor(key: "rank", ascending: true)]
                         dispatchGroup.enter()
                         
-                        CKContainer.default().publicCloudDatabase.fetch(withQuery: albumQuery) { albumRecords in
+                        self.container.publicCloudDatabase.fetch(withQuery: albumQuery) { albumRecords in
                             do {
                                 let records = try albumRecords.get()
                                 
@@ -224,7 +234,7 @@ extension CloudKitManager {
     }
     
     func remove(shortlist: Shortlist, completion: @escaping (Result<[Shortlist], Error>) -> Void) {
-        CKContainer.default().publicCloudDatabase.delete(withRecordID: shortlist.recordID) { _, error in
+        self.container.publicCloudDatabase.delete(withRecordID: shortlist.recordID) { _, error in
             if let error {
                 completion(.failure(error))
             } else {
@@ -241,7 +251,7 @@ extension CloudKitManager {
         let query = CKQuery(recordType: "Albums", predicate: predicate)
         query.sortDescriptors = [NSSortDescriptor(key: "rank", ascending: true)]
         
-        CKContainer.default().publicCloudDatabase.fetch(withQuery: query) { results in
+        self.container.publicCloudDatabase.fetch(withQuery: query) { results in
             do {
                 let records = try results.get()
                 
@@ -280,7 +290,7 @@ extension CloudKitManager {
             }
         }
         
-        CKContainer.default().publicCloudDatabase.fetch(withRecordIDs: albumRecordIds) { result in
+        self.container.publicCloudDatabase.fetch(withRecordIDs: albumRecordIds) { result in
             var recordsToSave = [CKRecord]()
             
             switch result {
@@ -323,7 +333,7 @@ extension CloudKitManager {
         let predicate = NSPredicate(format: "shortlistId == %@", shortlistID)
         let albumQuery = CKQuery(recordType: "Albums", predicate: predicate)
         
-        CKContainer.default().publicCloudDatabase.fetch(withQuery: albumQuery) { albumRecords in
+        self.container.publicCloudDatabase.fetch(withQuery: albumQuery) { albumRecords in
             do {
                 let records = try albumRecords.get()
                 
@@ -342,14 +352,14 @@ extension CloudKitManager {
         switch action {
         case .add(let record):
             do {
-                try await CKContainer.default().publicCloudDatabase.save(record)
+                try await self.container.publicCloudDatabase.save(record)
             } catch {
                 throw error
             }
 
         case .remove(let recordID):
             do {
-                try await CKContainer.default().publicCloudDatabase.deleteRecord(withID: recordID)
+                try await self.container.publicCloudDatabase.deleteRecord(withID: recordID)
             } catch {
                 throw error
             }
@@ -372,7 +382,7 @@ extension CloudKitManager {
             }
         }
         
-        CKContainer.default().publicCloudDatabase.add(modifyRecords)
+        self.container.publicCloudDatabase.add(modifyRecords)
     }
 }
 
@@ -397,7 +407,7 @@ extension CloudKitManager {
         record.setValue(album.upc, forKey: "upc")
         record.setValue(shortlist.id, forKey: "shortlistId")
         
-        CKContainer.default().publicCloudDatabase.save(record) { savedRecord, error in
+        self.container.publicCloudDatabase.save(record) { savedRecord, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -419,7 +429,7 @@ extension CloudKitManager {
     ) {
         Task {
             do {
-                _ = try await CKContainer.default().publicCloudDatabase.deleteRecord(withID: recordID)
+                _ = try await self.container.publicCloudDatabase.deleteRecord(withID: recordID)
                 
                 // Reload albums after successful deletion
                 self.updateShortlistAlbums(
@@ -440,7 +450,7 @@ extension CloudKitManager {
     ) {
         let recordIDs = albums.map { $0.recordID }
         
-        CKContainer.default().publicCloudDatabase.fetch(withRecordIDs: recordIDs) { result in
+        self.container.publicCloudDatabase.fetch(withRecordIDs: recordIDs) { result in
             switch result {
             case .success(let recordDict):
                 var recordsToSave = [CKRecord]()
@@ -464,7 +474,7 @@ extension CloudKitManager {
                     }
                 }
                 
-                CKContainer.default().publicCloudDatabase.add(modifyRecords)
+                self.container.publicCloudDatabase.add(modifyRecords)
                 
             case .failure(let error):
                 completion(.failure(error))
