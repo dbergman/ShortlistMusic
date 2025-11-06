@@ -13,19 +13,32 @@ class Theme {
 
     // MARK: - Colors
     var primary: Color {
-        Color("PrimaryColor")
+        // Use named color from assets with fallback for widget/extensions
+        if let color = UIColor(named: "PrimaryColor") {
+            return Color(color)
+        }
+        return Color.blue
     }
 
     var secondary: Color {
-        Color("SecondaryColor")
+        if let color = UIColor(named: "SecondaryColor") {
+            return Color(color)
+        }
+        return Color.gray.opacity(0.3)
     }
 
     var background: Color {
-        Color("BackgroundColor")
+        if let color = UIColor(named: "BackgroundColor") {
+            return Color(color)
+        }
+        return Color(.systemBackground)
     }
 
     var text: Color {
-        Color("TextColor")
+        if let color = UIColor(named: "TextColor") {
+            return Color(color)
+        }
+        return Color(.label)
     }
 
     // MARK: - Fonts

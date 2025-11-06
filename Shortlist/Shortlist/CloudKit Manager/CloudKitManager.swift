@@ -44,7 +44,7 @@ class CloudKitManager {
     }()
     
     // Get the appropriate CloudKit container based on app configuration
-    private var container: CKContainer {
+    var container: CKContainer {
         if AppConfiguration.shared.isTestVersion {
             // For dev version, use a specific container identifier
             return CKContainer(identifier: AppConfiguration.shared.cloudKitContainerIdentifier)
