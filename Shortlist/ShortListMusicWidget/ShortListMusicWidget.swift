@@ -38,7 +38,16 @@ struct ShortListMusicWidgetEntryView: View {
             }
         }
         .containerBackground(for: .widget) {
-            Color(.systemBackground)
+            GeometryReader { geometry in
+                let widgetSize = geometry.size
+                let resizedImage = WidgetDataHelper.resizeBackgroundImageForWidget(
+                    UIImage(named: "Background") ?? UIImage(),
+                    targetSize: widgetSize
+                )
+                Image(uiImage: resizedImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            }
         }
     }
 }
