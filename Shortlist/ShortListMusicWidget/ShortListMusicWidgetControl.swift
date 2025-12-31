@@ -17,12 +17,9 @@ struct ShortListMusicWidgetControl: ControlWidget {
             kind: Self.kind,
             provider: Provider()
         ) { value in
-            ControlWidgetToggle(
-                "Start Timer",
-                isOn: value.isRunning,
-                action: StartTimerIntent(value.name)
-            ) { isRunning in
-                Label(isRunning ? "On" : "Off", systemImage: "timer")
+            // TODO: Implement control widget UI
+            ControlWidgetButton(action: StartTimerIntent(value.name)) {
+                Label("Placeholder", systemImage: "timer")
             }
         }
         .displayName("Timer")

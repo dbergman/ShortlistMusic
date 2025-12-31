@@ -28,9 +28,7 @@
 		8B5EB70E2986E82300AD9588 /* ShortlistAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */; };
 		8B5EB70F2986E82300AD9589 /* ShortlistAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */; };
 		8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */; };
-		8B5F2D162C0161C5008849A3 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */; };
 		8B5F2D182C10140E008849A2 /* UserErrorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */; };
-		8B5F2D192C10140E008849A3 /* UserErrorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */; };
 		8B685AD3290B791100F6AD7F /* ShortlistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD2290B791100F6AD7F /* ShortlistApp.swift */; };
 		8B685AD8290B791100F6AD7F /* Shortlist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD6290B791100F6AD7F /* Shortlist.xcdatamodeld */; };
 		8B685ADC290B791300F6AD7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B685ADB290B791300F6AD7F /* Assets.xcassets */; };
@@ -39,7 +37,6 @@
 		8B685AEC290B7B3300F6AD7F /* ShortlistCollectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AEB290B7B3300F6AD7F /* ShortlistCollectionsView.swift */; };
 		8B685AEE290B86C800F6AD7F /* ShortlistDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */; };
 		8B81E3392E90AADB00008120 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81E3382E90AADB00008120 /* AppConfiguration.swift */; };
-		8B81E33C2E90AADB00008122 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81E3382E90AADB00008120 /* AppConfiguration.swift */; };
 		8B81E33B2E90B16C00008120 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8B81E33A2E90B16C00008120 /* SkeletonUI */; };
 		8B81E3632E96073F00008120 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81E3622E96073F00008120 /* WidgetKit.framework */; };
 		8B81E3652E96073F00008120 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81E3642E96073F00008120 /* SwiftUI.framework */; };
@@ -49,7 +46,6 @@
 		8BA847D32E63CEA00079CEF3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA847D22E63CEA00079CEF3 /* ToastView.swift */; };
 		8BA847D52E63D95A0079CEF3 /* SpinningRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */; };
 		8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */; };
-		8BAC960529537BC0000FD9D0 /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */; };
 		8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */; };
 		8BC843EF2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */; };
 		8BD097132D98BBAF005519F5 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD097122D98BBAF005519F5 /* SkeletonUI */; };

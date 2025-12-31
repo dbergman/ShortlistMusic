@@ -22,36 +22,30 @@ struct ShortListMusicWidgetAttributes: ActivityAttributes {
 struct ShortListMusicWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: ShortListMusicWidgetAttributes.self) { context in
-            // Lock screen/banner UI goes here
-            VStack {
-                Text("Hello \(context.state.emoji)")
-            }
-            .activityBackgroundTint(Color.cyan)
-            .activitySystemActionForegroundColor(Color.black)
-
+            // TODO: Implement lock screen/banner UI
+            EmptyView()
         } dynamicIsland: { context in
             DynamicIsland {
-                // Expanded UI goes here.  Compose the expanded UI through
-                // various regions, like leading/trailing/center/bottom
+                // TODO: Implement expanded UI regions
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("Leading")
+                    EmptyView()
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("Trailing")
+                    EmptyView()
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Bottom \(context.state.emoji)")
-                    // more content
+                    EmptyView()
                 }
             } compactLeading: {
-                Text("L")
+                // TODO: Implement compact leading UI
+                EmptyView()
             } compactTrailing: {
-                Text("T \(context.state.emoji)")
+                // TODO: Implement compact trailing UI
+                EmptyView()
             } minimal: {
-                Text(context.state.emoji)
+                // TODO: Implement minimal UI
+                EmptyView()
             }
-            .widgetURL(URL(string: "http://www.apple.com"))
-            .keylineTint(Color.red)
         }
     }
 }
