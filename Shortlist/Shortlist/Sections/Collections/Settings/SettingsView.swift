@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 enum MusicService: String, CaseIterable {
     case spotify = "Spotify"
@@ -34,12 +35,24 @@ struct SettingsView: View {
     }
     
     @ViewBuilder
-    private func serviceIcon(for service: MusicService, size: CGFloat = 16) -> some View {
+    private func serviceIcon(for service: MusicService, size: CGFloat = 20) -> some View {
         if service == .spotify {
-            Image(service.iconName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: size, height: size)
+            // Pre-render Spotify image at fixed size to prevent it from expanding
+            if let originalImage = UIImage(named: "spotify") {
+                let renderer = UIGraphicsImageRenderer(size: CGSize(width: size, height: size))
+                let resizedImage = renderer.image { context in
+                    originalImage.draw(in: CGRect(origin: .zero, size: CGSize(width: size, height: size)))
+                }
+                Image(uiImage: resizedImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size, height: size)
+            } else {
+                Image("spotify")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size, height: size)
+            }
         } else {
             Image(systemName: service.iconName)
                 .font(.system(size: size))
@@ -53,7 +66,7 @@ struct SettingsView: View {
                 Section {
                     // Music Service Selection for Widgets
                     HStack {
-                        Text("Widget Music Service")
+                        Text("Music Service")
                             .foregroundColor(.primary)
                         Spacer()
                         Menu {
@@ -61,18 +74,21 @@ struct SettingsView: View {
                                 Button {
                                     selectedMusicService = service.rawValue
                                 } label: {
-                                    HStack(spacing: 6) {
+                                    HStack(spacing: 8) {
                                         serviceIcon(for: service)
                                         Text(service.displayName)
                                     }
                                 }
                             }
                         } label: {
-                            HStack(spacing: 6) {
+                            HStack(spacing: 8) {
                                 serviceIcon(for: currentMusicService)
-                                Text(currentMusicService.displayName)
-                                    .foregroundColor(.primary)
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(.secondary)
                             }
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 4)
                         }
                     }
                 } header: {
