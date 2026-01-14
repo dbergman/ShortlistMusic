@@ -60,22 +60,14 @@ struct ShortListMusicWidgetProvider: TimelineProvider {
                 return
             }
             
-            // TEMPORARILY DISABLED: Image preloading to test if UIImage storage is causing archival issues
             // Preload images before creating entry
-            // WidgetDataHelper.preloadImages(for: albums) { images in
-            //     let entry = SimpleEntry(date: currentDate, albums: albums, albumImages: images)
-            //     // Update every hour
-            //     let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate) ?? currentDate.addingTimeInterval(3600)
-            //     let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-            //     completion(timeline)
-            // }
-            
-            // Create entry without images
-            let entry = SimpleEntry(date: currentDate, albums: albums, albumImages: [:])
-            // Update every hour
-            let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate) ?? currentDate.addingTimeInterval(3600)
-            let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-            completion(timeline)
+            WidgetDataHelper.preloadImages(for: albums) { images in
+                let entry = SimpleEntry(date: currentDate, albums: albums, albumImages: images)
+                // Update every hour
+                let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate) ?? currentDate.addingTimeInterval(3600)
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
+            }
         }
     }
 }

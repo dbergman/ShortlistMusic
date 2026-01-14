@@ -16,7 +16,9 @@ struct ShortListLogoBadge: View {
     var kerning: CGFloat = 1.0
     
     var body: some View {
+        // Ensure logo is properly sized to avoid widget size limit issues
         ShortListLogo(size: logoSize)
+            .frame(width: logoSize, height: logoSize)
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, verticalPadding)
             .background {

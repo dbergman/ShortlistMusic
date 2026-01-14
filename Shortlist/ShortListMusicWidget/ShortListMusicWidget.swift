@@ -59,7 +59,173 @@ struct SmallWidgetView: View {
     let image: UIImage?
     
     var body: some View {
-        Text("Hello, World!")
+        GeometryReader { geometry in
+            ZStack {
+                VStack(spacing: 8) {
+                    Spacer()
+                    
+                    // Album artwork - square with rounded corners
+                    Group {
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                        } else if let album = album, !album.artworkURLString.isEmpty {
+                            // Resize URL for widget-appropriate size and load
+                            let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 200)
+                            if let url = URL(string: resizedURL) {
+                                AsyncImage(url: url) { phase in
+                                    switch phase {
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .scaledToFill()
+                                    case .failure, .empty:
+                                        Rectangle()
+                                            .fill(Color.gray.opacity(0.3))
+                                            .overlay(
+                                                Image(systemName: "music.note")
+                                                    .font(.system(size: 30))
+                                                    .foregroundColor(.gray)
+                                            )
+                                    @unknown default:
+                                        Rectangle()
+                                            .fill(Color.gray.opacity(0.3))
+                                    }
+                                }
+                            } else {
+                                Rectangle()
+                                    .fill(Color.gray.opacity(0.3))
+                                    .overlay(
+                                        Image(systemName: "music.note")
+                                            .font(.system(size: 30))
+                                            .foregroundColor(.gray)
+                                    )
+                            }
+                        } else {
+                            // Placeholder if no image or album
+                            Rectangle()
+                                .fill(Color.gray.opacity(0.3))
+                                .overlay(
+                                    Image(systemName: "music.note")
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.gray)
+                                )
+                        }
+                    }
+                    .frame(width: geometry.size.width * 0.6)
+                    .aspectRatio(1, contentMode: .fit)
+                    .clipped()
+                    .cornerRadius(6)
+                    
+                    // Album title and artist below artwork
+                    VStack(alignment: .center, spacing: 2) {
+                        if let album = album {
+                            Text(album.title)
+                                .font(Theme.shared.avenir(size: 13, weight: .bold))
+                                .foregroundColor(.primary)
+                                .lineLimit(1)
+                            
+                            Text(album.artist)
+                                .font(Theme.shared.avenir(size: 11, weight: .bold))
+                                .foregroundColor(.primary)
+                                .lineLimit(1)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 8)
+                    
+                    Spacer()
+                }
+            }
+            .overlay(alignment: .topTrailing) {
+                // Logo in top right corner - positioned as close to corner as possible
+                ShortListLogo(size: 30)
+                    .padding(.top, -12) // Negative padding to push closer to top edge
+                    .padding(.trailing, -12) // Negative padding to push closer to right edge
+            }
+        }
+    }
+}
+
+// MARK: - Reusable Album Cell View
+
+struct AlbumCellView: View {
+    let album: ShortlistAlbum
+    let image: UIImage?
+    let imageSize: CGFloat
+    
+    var body: some View {
+        VStack(spacing: 6) {
+            // Album artwork - square with rounded corners
+            Group {
+                if let image = image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                } else if !album.artworkURLString.isEmpty {
+                    // Resize URL for widget-appropriate size and load
+                    let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 200)
+                    if let url = URL(string: resizedURL) {
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            case .failure, .empty:
+                                Rectangle()
+                                    .fill(Color.gray.opacity(0.3))
+                                    .overlay(
+                                        Image(systemName: "music.note")
+                                            .font(.system(size: imageSize * 0.3))
+                                            .foregroundColor(.gray)
+                                    )
+                            @unknown default:
+                                Rectangle()
+                                    .fill(Color.gray.opacity(0.3))
+                            }
+                        }
+                    } else {
+                        Rectangle()
+                            .fill(Color.gray.opacity(0.3))
+                            .overlay(
+                                Image(systemName: "music.note")
+                                    .font(.system(size: imageSize * 0.3))
+                                    .foregroundColor(.gray)
+                            )
+                    }
+                } else {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .overlay(
+                            Image(systemName: "music.note")
+                                .font(.system(size: imageSize * 0.3))
+                                .foregroundColor(.gray)
+                        )
+                }
+            }
+            .frame(width: imageSize, height: imageSize)
+            .aspectRatio(1, contentMode: .fit)
+            .clipped()
+            .cornerRadius(6)
+            
+            // Album title and artist
+            VStack(alignment: .center, spacing: 1) {
+                Text(album.title)
+                    .font(Theme.shared.avenir(size: 13, weight: .bold))
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
+                    .multilineTextAlignment(.center)
+                
+                Text(album.artist)
+                    .font(Theme.shared.avenir(size: 11, weight: .bold))
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
+            }
+            .frame(maxWidth: imageSize)
+            .padding(.horizontal, 2)
+        }
     }
 }
 
@@ -67,8 +233,34 @@ struct MediumWidgetView: View {
     let albums: [ShortlistAlbum]
     let albumImages: [String: UIImage]
     
+    private var displayAlbums: [ShortlistAlbum] {
+        Array(albums.prefix(3))
+    }
+    
     var body: some View {
-        Text("Hello, World!")
+        GeometryReader { geometry in
+            ZStack {
+                HStack(spacing: 10) {
+                    ForEach(displayAlbums) { album in
+                        AlbumCellView(
+                            album: album,
+                            image: albumImages[album.id],
+                            imageSize: min((geometry.size.width - 48) / 3, geometry.size.height * 0.65)
+                        )
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.top, 8)
+                .padding(.bottom, 4)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .overlay(alignment: .topTrailing) {
+                // Logo in top right corner
+                ShortListLogo(size: 30)
+                    .padding(.top, -12)
+                    .padding(.trailing, -12)
+            }
+        }
     }
 }
 
@@ -81,7 +273,43 @@ struct LargeWidgetView: View {
     }
     
     var body: some View {
-        Text("Hello, World!")
+        GeometryReader { geometry in
+            ZStack {
+                VStack(spacing: 12) {
+                    // Top row - 3 albums
+                    HStack(spacing: 10) {
+                        ForEach(Array(displayAlbums.prefix(3))) { album in
+                            AlbumCellView(
+                                album: album,
+                                image: albumImages[album.id],
+                                imageSize: min((geometry.size.width - 48) / 3, (geometry.size.height - 40) / 2)
+                            )
+                        }
+                    }
+                    
+                    // Bottom row - 3 albums
+                    HStack(spacing: 10) {
+                        ForEach(Array(displayAlbums.suffix(3))) { album in
+                            AlbumCellView(
+                                album: album,
+                                image: albumImages[album.id],
+                                imageSize: min((geometry.size.width - 48) / 3, (geometry.size.height - 40) / 2)
+                            )
+                        }
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.top, 8)
+                .padding(.bottom, 4)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .overlay(alignment: .topTrailing) {
+                // Logo in top right corner
+                ShortListLogo(size: 30)
+                    .padding(.top, -12)
+                    .padding(.trailing, -12)
+            }
+        }
     }
 }
 
