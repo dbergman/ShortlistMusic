@@ -407,6 +407,11 @@ extension CloudKitManager {
         record.setValue(album.upc, forKey: "upc")
         record.setValue(shortlist.id, forKey: "shortlistId")
         
+        // Store Apple Music URL from MusicKit for deep-linking
+        if let appleAlbumURL = album.appleAlbumURL?.absoluteString {
+            record.setValue(appleAlbumURL, forKey: "appleAlbumURL")
+        }
+        
         self.container.publicCloudDatabase.save(record) { savedRecord, error in
             if let error = error {
                 completion(.failure(error))

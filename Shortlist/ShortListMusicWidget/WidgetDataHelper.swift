@@ -11,6 +11,16 @@ import os
 
 let logger = Logger(subsystem: "com.dus.shortList.dev.ShortListMusicWidgetExtension", category: "Widget")
 
+enum WidgetMusicService: String {
+    case spotify = "Spotify"
+    case appleMusic = "Apple Music"
+    
+    static var current: WidgetMusicService {
+        let rawValue = UserDefaults.standard.string(forKey: "widgetMusicService") ?? WidgetMusicService.spotify.rawValue
+        return WidgetMusicService(rawValue: rawValue) ?? .spotify
+    }
+}
+
 /// Helper methods for retrieving and processing widget data
 struct WidgetDataHelper {
     
@@ -202,6 +212,46 @@ struct WidgetDataHelper {
         
         image.draw(in: CGRect(origin: .zero, size: constrainedSize))
         return UIGraphicsGetImageFromCurrentImageContext() ?? image
+    }
+    
+    // MARK: - Deep Linking
+    
+    /// Generates a deep-link URL for an album based on the user's preferred music service
+    /// - Parameter album: The album to generate a deep-link for
+    /// - Returns: URL to open the album in the selected music service, or nil if unable to generate
+    static func deepLinkURL(for album: ShortlistAlbum) -> URL? {
+        let musicService = WidgetMusicService.current
+        
+        switch musicService {
+        case .spotify:
+            // Spotify deep-link format: spotify://search/{album title} {artist}
+            let searchQuery = "\(album.title) \(album.artist)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "\(album.title)"
+            return URL(string: "spotify://search/\(searchQuery)")
+            
+        case .appleMusic:
+            // For Apple Music, use the stored MusicKit album URL if available
+            if let appleAlbumURLString = album.appleAlbumURL, let appleURL = URL(string: appleAlbumURLString) {
+                return appleURL
+            }
+            // Fallback: try to use the album ID if available
+            if !album.id.isEmpty && album.id != "preview-1" && album.id != "preview-2" {
+                // Try direct album link: music://album/{id}
+                if let albumURL = URL(string: "music://album/\(album.id)") {
+                    return albumURL
+                }
+                // Fallback to web URL
+                if let webURL = URL(string: "https://music.apple.com/album/\(album.id)") {
+                    return webURL
+                }
+            }
+            // Last resort: use search
+            let searchQuery = "\(album.title) \(album.artist)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "\(album.title)"
+            // Try music:// URL scheme first, fallback to https://music.apple.com
+            if let musicURL = URL(string: "music://search?term=\(searchQuery)") {
+                return musicURL
+            }
+            return URL(string: "https://music.apple.com/search?term=\(searchQuery)")
+        }
     }
 }
 

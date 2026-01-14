@@ -61,11 +61,29 @@ struct SmallWidgetView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                VStack(spacing: 8) {
-                    Spacer()
-                    
-                    // Album artwork - square with rounded corners
-                    Group {
+                if let album = album, let deepLinkURL = WidgetDataHelper.deepLinkURL(for: album) {
+                    Link(destination: deepLinkURL) {
+                        SmallWidgetContentView(album: album, image: image, geometry: geometry)
+                    }
+                } else {
+                    SmallWidgetContentView(album: album, image: image, geometry: geometry)
+                }
+            }
+        }
+    }
+}
+
+struct SmallWidgetContentView: View {
+    let album: ShortlistAlbum?
+    let image: UIImage?
+    let geometry: GeometryProxy
+    
+    var body: some View {
+        VStack(spacing: 8) {
+            Spacer()
+            
+            // Album artwork - square with rounded corners
+            Group {
                         if let image = image {
                             Image(uiImage: image)
                                 .resizable()
@@ -137,20 +155,34 @@ struct SmallWidgetView: View {
                     
                     Spacer()
                 }
-            }
-            .overlay(alignment: .topTrailing) {
-                // Logo in top right corner - positioned as close to corner as possible
-                ShortListLogo(size: 30)
-                    .padding(.top, -12) // Negative padding to push closer to top edge
-                    .padding(.trailing, -12) // Negative padding to push closer to right edge
-            }
-        }
+                .overlay(alignment: .topTrailing) {
+                    // Logo in top right corner - positioned as close to corner as possible
+                    ShortListLogo(size: 30)
+                        .padding(.top, -12) // Negative padding to push closer to top edge
+                        .padding(.trailing, -12) // Negative padding to push closer to right edge
+                }
     }
 }
 
 // MARK: - Reusable Album Cell View
 
 struct AlbumCellView: View {
+    let album: ShortlistAlbum
+    let image: UIImage?
+    let imageSize: CGFloat
+    
+    var body: some View {
+        if let deepLinkURL = WidgetDataHelper.deepLinkURL(for: album) {
+            Link(destination: deepLinkURL) {
+                AlbumCellContentView(album: album, image: image, imageSize: imageSize)
+            }
+        } else {
+            AlbumCellContentView(album: album, image: image, imageSize: imageSize)
+        }
+    }
+}
+
+struct AlbumCellContentView: View {
     let album: ShortlistAlbum
     let image: UIImage?
     let imageSize: CGFloat
@@ -339,16 +371,17 @@ extension ShortlistAlbum {
         rank: 1,
         shortlistId: "preview-shortlist",
         upc: nil,
+        appleAlbumURL: nil,
         recordID: CKRecord.ID(recordName: "preview-1")
     )
     
     static let previewAlbums: [ShortlistAlbum] = [
-        ShortlistAlbum(id: "preview-1", title: "Abbey Road", artist: "The Beatles", artworkURLString: "https://via.placeholder.com/300x300", rank: 1, shortlistId: "preview-shortlist", upc: nil, recordID: CKRecord.ID(recordName: "preview-1")),
-        ShortlistAlbum(id: "preview-2", title: "Dark Side of the Moon", artist: "Pink Floyd", artworkURLString: "https://via.placeholder.com/300x300", rank: 2, shortlistId: "preview-shortlist", upc: nil, recordID: CKRecord.ID(recordName: "preview-2")),
-        ShortlistAlbum(id: "preview-3", title: "Rumours", artist: "Fleetwood Mac", artworkURLString: "https://via.placeholder.com/300x300", rank: 3, shortlistId: "preview-shortlist", upc: nil, recordID: CKRecord.ID(recordName: "preview-3")),
-        ShortlistAlbum(id: "preview-4", title: "Hotel California", artist: "Eagles", artworkURLString: "https://via.placeholder.com/300x300", rank: 4, shortlistId: "preview-shortlist", upc: nil, recordID: CKRecord.ID(recordName: "preview-4")),
-        ShortlistAlbum(id: "preview-5", title: "The Wall", artist: "Pink Floyd", artworkURLString: "https://via.placeholder.com/300x300", rank: 5, shortlistId: "preview-shortlist", upc: nil, recordID: CKRecord.ID(recordName: "preview-5")),
-        ShortlistAlbum(id: "preview-6", title: "Led Zeppelin IV", artist: "Led Zeppelin", artworkURLString: "https://via.placeholder.com/300x300", rank: 6, shortlistId: "preview-shortlist", upc: nil, recordID: CKRecord.ID(recordName: "preview-6"))
+        ShortlistAlbum(id: "preview-1", title: "Abbey Road", artist: "The Beatles", artworkURLString: "https://via.placeholder.com/300x300", rank: 1, shortlistId: "preview-shortlist", upc: nil, appleAlbumURL: nil, recordID: CKRecord.ID(recordName: "preview-1")),
+        ShortlistAlbum(id: "preview-2", title: "Dark Side of the Moon", artist: "Pink Floyd", artworkURLString: "https://via.placeholder.com/300x300", rank: 2, shortlistId: "preview-shortlist", upc: nil, appleAlbumURL: nil, recordID: CKRecord.ID(recordName: "preview-2")),
+        ShortlistAlbum(id: "preview-3", title: "Rumours", artist: "Fleetwood Mac", artworkURLString: "https://via.placeholder.com/300x300", rank: 3, shortlistId: "preview-shortlist", upc: nil, appleAlbumURL: nil, recordID: CKRecord.ID(recordName: "preview-3")),
+        ShortlistAlbum(id: "preview-4", title: "Hotel California", artist: "Eagles", artworkURLString: "https://via.placeholder.com/300x300", rank: 4, shortlistId: "preview-shortlist", upc: nil, appleAlbumURL: nil, recordID: CKRecord.ID(recordName: "preview-4")),
+        ShortlistAlbum(id: "preview-5", title: "The Wall", artist: "Pink Floyd", artworkURLString: "https://via.placeholder.com/300x300", rank: 5, shortlistId: "preview-shortlist", upc: nil, appleAlbumURL: nil, recordID: CKRecord.ID(recordName: "preview-5")),
+        ShortlistAlbum(id: "preview-6", title: "Led Zeppelin IV", artist: "Led Zeppelin", artworkURLString: "https://via.placeholder.com/300x300", rank: 6, shortlistId: "preview-shortlist", upc: nil, appleAlbumURL: nil, recordID: CKRecord.ID(recordName: "preview-6"))
     ]
 }
 
