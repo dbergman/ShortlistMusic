@@ -64,7 +64,6 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 Section {
-                    // Music Service Selection for Widgets
                     HStack {
                         Text("Music Service")
                             .foregroundColor(.primary)
@@ -72,9 +71,6 @@ struct SettingsView: View {
                         Menu {
                             ForEach(MusicService.allCases, id: \.rawValue) { service in
                                 Button {
-                                    // Persist the user's selection to UserDefaults
-                                    // @AppStorage automatically persists, but we also set UserDefaults directly
-                                    // to ensure it's available to the widget extension immediately
                                     selectedMusicService = service.rawValue
                                     UserDefaults.standard.set(service.rawValue, forKey: "widgetMusicService")
                                 } label: {

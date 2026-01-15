@@ -39,56 +39,57 @@ struct ShortlistApp: App {
                     }
                 }
                 
-                // Loading indicator overlay for MusicKit lookup
                 if isLookingUpMusicKit {
-                    Color.black.opacity(0.3)
-                        .ignoresSafeArea()
-                        .allowsHitTesting(true)
-                    
-                    VStack(spacing: 20) {
-                        SpinningRecordView(size: 80, color: .blue)
-                        
-                        Text("Opening Apple Music...")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.center)
-                        
-                        Text("Please wait...")
-                            .font(.subheadline)
-                            .foregroundColor(.white.opacity(0.8))
-                    }
-                    .padding(40)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.black.opacity(0.8))
-                            .shadow(color: .black.opacity(0.5), radius: 20, x: 0, y: 10)
-                    )
-                    .allowsHitTesting(false)
+                    MusicKitLoadingOverlay()
                 }
             }
         }
     }
     
-    /// Handles URLs from widgets - checks UserDefaults fresh and opens the correct music service
     private func handleWidgetURL(_ url: URL) async {
-        // Check if this is our custom widget URL scheme
         guard url.scheme == "shortlist", url.host == "album" else {
-            // If it's already a music service URL, forward it directly
-            let urlString = url.absoluteString
-            if urlString.hasPrefix("spotify://") || urlString.hasPrefix("music://") || urlString.contains("music.apple.com") {
-                if UIApplication.shared.canOpenURL(url) {
-                    await MainActor.run {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    }
-                }
-            }
+            forwardMusicServiceURL(url)
             return
         }
         
-        // Parse album information from URL query parameters
+        guard let albumInfo = parseAlbumInfo(from: url) else { return }
+        
+        let musicService = getCurrentMusicService()
+        let musicServiceURL = await generateMusicServiceURL(
+            for: albumInfo,
+            service: musicService
+        )
+        
+        if let musicURL = musicServiceURL, UIApplication.shared.canOpenURL(musicURL) {
+            await MainActor.run {
+                UIApplication.shared.open(musicURL, options: [:], completionHandler: nil)
+            }
+        }
+    }
+    
+    private func forwardMusicServiceURL(_ url: URL) {
+        let urlString = url.absoluteString
+        guard urlString.hasPrefix("spotify://") || urlString.hasPrefix("music://") || urlString.contains("music.apple.com"),
+              UIApplication.shared.canOpenURL(url) else {
+            return
+        }
+        
+        Task { @MainActor in
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    private struct AlbumInfo {
+        let title: String
+        let artist: String
+        let id: String?
+        let appleAlbumURL: String?
+    }
+    
+    private func parseAlbumInfo(from url: URL) -> AlbumInfo? {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
               let queryItems = components.queryItems else {
-            return
+            return nil
         }
         
         var title: String?
@@ -98,93 +99,79 @@ struct ShortlistApp: App {
         
         for item in queryItems {
             switch item.name {
-            case "title":
-                title = item.value
-            case "artist":
-                artist = item.value
-            case "id":
-                albumId = item.value
-            case "appleAlbumURL":
-                appleAlbumURL = item.value
-            default:
-                break
+            case "title": title = item.value
+            case "artist": artist = item.value
+            case "id": albumId = item.value
+            case "appleAlbumURL": appleAlbumURL = item.value
+            default: break
             }
         }
         
         guard let albumTitle = title, let albumArtist = artist else {
-            return
+            return nil
         }
         
-        // Check UserDefaults FRESH every time to get current music service preference
-        let musicServiceRawValue = UserDefaults.standard.string(forKey: "widgetMusicService") ?? "Spotify"
-        let musicService = musicServiceRawValue == "Apple Music" ? "Apple Music" : "Spotify"
-        
-        // Generate the correct music service URL based on current preference
-        let musicServiceURL: URL?
-        
-        if musicService == "Apple Music" {
-            // Show loading indicator for Apple Music lookup
-            await MainActor.run {
-                isLookingUpMusicKit = true
-            }
-            
-            // Use defer to ensure loading indicator is always hidden
-            defer {
-                Task { @MainActor in
-                    isLookingUpMusicKit = false
-                }
-            }
-            
-            // For Apple Music, try to get the album URL from MusicKit using the album ID
-            if let id = albumId, !id.isEmpty, id != "preview-1", id != "preview-2" {
-                // Query MusicKit for the album by ID
-                do {
-                    let request = MusicCatalogResourceRequest<Album>(
-                        matching: \.id,
-                        memberOf: [MusicItemID(stringLiteral: id)]
-                    )
-                    let response = try await request.response()
-                    
-                    // Get the Apple Music URL from the album if found
-                    if let album = response.items.first, let albumURL = album.url {
-                        musicServiceURL = albumURL
-                    } else {
-                        // Fallback to stored URL if MusicKit doesn't provide one
-                        if let appleURLString = appleAlbumURL, let appleURL = URL(string: appleURLString) {
-                            musicServiceURL = appleURL
-                        } else {
-                            // Fallback to direct album link
-                            musicServiceURL = URL(string: "music://album/\(id)") ?? URL(string: "https://music.apple.com/album/\(id)")
-                        }
-                    }
-                } catch {
-                    // If MusicKit query fails, fall back to stored URL or direct link
-                    if let appleURLString = appleAlbumURL, let appleURL = URL(string: appleURLString) {
-                        musicServiceURL = appleURL
-                    } else {
-                        musicServiceURL = URL(string: "music://album/\(id)") ?? URL(string: "https://music.apple.com/album/\(id)")
-                    }
-                }
-            } else if let appleURLString = appleAlbumURL, let appleURL = URL(string: appleURLString) {
-                // Use stored URL if no ID available
-                musicServiceURL = appleURL
-            } else {
-                // Last resort: use search
-                let searchQuery = "\(albumTitle) \(albumArtist)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? albumTitle
-                musicServiceURL = URL(string: "music://search?term=\(searchQuery)") ?? URL(string: "https://music.apple.com/search?term=\(searchQuery)")
-            }
+        return AlbumInfo(
+            title: albumTitle,
+            artist: albumArtist,
+            id: albumId,
+            appleAlbumURL: appleAlbumURL
+        )
+    }
+    
+    private func getCurrentMusicService() -> String {
+        let rawValue = UserDefaults.standard.string(forKey: "widgetMusicService") ?? "Spotify"
+        return rawValue == "Apple Music" ? "Apple Music" : "Spotify"
+    }
+    
+    private func generateMusicServiceURL(for albumInfo: AlbumInfo, service: String) async -> URL? {
+        if service == "Apple Music" {
+            return await generateAppleMusicURL(for: albumInfo)
         } else {
-            // Spotify - no loading indicator needed
-            let searchQuery = "\(albumTitle) \(albumArtist)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? albumTitle
-            musicServiceURL = URL(string: "spotify://search/\(searchQuery)")
+            return generateSpotifyURL(for: albumInfo)
+        }
+    }
+    
+    private func generateAppleMusicURL(for albumInfo: AlbumInfo) async -> URL? {
+        await MainActor.run { isLookingUpMusicKit = true }
+        defer {
+            Task { @MainActor in isLookingUpMusicKit = false }
         }
         
-        // Open the music service URL immediately
-        if let musicURL = musicServiceURL, UIApplication.shared.canOpenURL(musicURL) {
-            await MainActor.run {
-                UIApplication.shared.open(musicURL, options: [:], completionHandler: nil)
+        if let id = albumInfo.id, !id.isEmpty, !id.hasPrefix("preview-") {
+            if let url = await queryMusicKitForAlbum(id: id) {
+                return url
             }
         }
+        
+        if let appleURLString = albumInfo.appleAlbumURL, let url = URL(string: appleURLString) {
+            return url
+        }
+        
+        if let id = albumInfo.id, !id.isEmpty {
+            return URL(string: "music://album/\(id)") ?? URL(string: "https://music.apple.com/album/\(id)")
+        }
+        
+        let searchQuery = "\(albumInfo.title) \(albumInfo.artist)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? albumInfo.title
+        return URL(string: "music://search?term=\(searchQuery)") ?? URL(string: "https://music.apple.com/search?term=\(searchQuery)")
+    }
+    
+    private func queryMusicKitForAlbum(id: String) async -> URL? {
+        do {
+            let request = MusicCatalogResourceRequest<Album>(
+                matching: \.id,
+                memberOf: [MusicItemID(stringLiteral: id)]
+            )
+            let response = try await request.response()
+            return response.items.first?.url
+        } catch {
+            return nil
+        }
+    }
+    
+    private func generateSpotifyURL(for albumInfo: AlbumInfo) -> URL? {
+        let searchQuery = "\(albumInfo.title) \(albumInfo.artist)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? albumInfo.title
+        return URL(string: "spotify://search/\(searchQuery)")
     }
 }
 

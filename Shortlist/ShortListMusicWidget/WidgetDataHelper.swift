@@ -11,18 +11,6 @@ import os
 
 let logger = Logger(subsystem: "com.dus.shortList.dev.ShortListMusicWidgetExtension", category: "Widget")
 
-enum WidgetMusicService: String {
-    case spotify = "Spotify"
-    case appleMusic = "Apple Music"
-    
-    static var current: WidgetMusicService {
-        // Read the current value from UserDefaults
-        // UserDefaults.standard is automatically shared between app and widget extension
-        let rawValue = UserDefaults.standard.string(forKey: "widgetMusicService") ?? WidgetMusicService.spotify.rawValue
-        return WidgetMusicService(rawValue: rawValue) ?? .spotify
-    }
-}
-
 /// Helper methods for retrieving and processing widget data
 struct WidgetDataHelper {
     
@@ -218,22 +206,16 @@ struct WidgetDataHelper {
     
     // MARK: - Deep Linking
     
-    /// Generates a deep-link URL for an album that routes through the app
-    /// The app will check UserDefaults fresh and generate the correct music service URL
-    /// - Parameter album: The album to generate a deep-link for
-    /// - Returns: URL using custom scheme that routes through the app
     static func deepLinkURL(for album: ShortlistAlbum) -> URL? {
-        // Use custom URL scheme to route through the app
-        // The app will check UserDefaults fresh and generate the correct music service URL
         var components = URLComponents()
         components.scheme = "shortlist"
         components.host = "album"
         
-        // Encode album information as query parameters
-        var queryItems: [URLQueryItem] = []
-        queryItems.append(URLQueryItem(name: "title", value: album.title))
-        queryItems.append(URLQueryItem(name: "artist", value: album.artist))
-        queryItems.append(URLQueryItem(name: "id", value: album.id))
+        var queryItems = [
+            URLQueryItem(name: "title", value: album.title),
+            URLQueryItem(name: "artist", value: album.artist),
+            URLQueryItem(name: "id", value: album.id)
+        ]
         
         if let appleAlbumURL = album.appleAlbumURL {
             queryItems.append(URLQueryItem(name: "appleAlbumURL", value: appleAlbumURL))
