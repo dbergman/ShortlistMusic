@@ -72,7 +72,11 @@ struct SettingsView: View {
                         Menu {
                             ForEach(MusicService.allCases, id: \.rawValue) { service in
                                 Button {
+                                    // Persist the user's selection to UserDefaults
+                                    // @AppStorage automatically persists, but we also set UserDefaults directly
+                                    // to ensure it's available to the widget extension immediately
                                     selectedMusicService = service.rawValue
+                                    UserDefaults.standard.set(service.rawValue, forKey: "widgetMusicService")
                                 } label: {
                                     HStack(spacing: 8) {
                                         serviceIcon(for: service)
