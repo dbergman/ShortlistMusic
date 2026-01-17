@@ -524,30 +524,36 @@ extension ShortlistDetailsView {
     private func loadImagesFromRemoteURLs() async -> [UIImage] {
         guard let albums = viewModel.shortlist.albums else { return [] }
         
-        return await withTaskGroup(of: UIImage?.self) { group in
-            let artworkURLs: [URL] = albums
-                .sorted(by: { $0.rank < $1.rank })
-                .compactMap { URL(string: $0.artworkURLString) }
+        return await withTaskGroup(of: (Int, UIImage?).self) { group in
+            let sortedAlbums = albums.sorted(by: { $0.rank < $1.rank })
+            let artworkURLs: [(Int, URL)] = sortedAlbums
+                .enumerated()
+                .compactMap { index, album in
+                    guard let url = URL(string: album.artworkURLString) else { return nil }
+                    return (index, url)
+                }
             
-            for url in artworkURLs {
+            for (index, url) in artworkURLs {
                 group.addTask {
                     do {
                         let (data, _) = try await URLSession.shared.data(from: url)
-                        return UIImage(data: data)
+                        return (index, UIImage(data: data))
                     } catch {
                         print("⚠️ Failed to load image from: \(url) – \(error)")
-                        return nil
+                        return (index, nil)
                     }
                 }
             }
             
-            var images: [UIImage] = []
-            for await image in group {
+            var imageDict: [Int: UIImage] = [:]
+            for await (index, image) in group {
                 if let img = image {
-                    images.append(img)
+                    imageDict[index] = img
                 }
             }
-            return images
+            
+            // Reconstruct array in correct order
+            return artworkURLs.compactMap { index, _ in imageDict[index] }
         }
     }
 }
