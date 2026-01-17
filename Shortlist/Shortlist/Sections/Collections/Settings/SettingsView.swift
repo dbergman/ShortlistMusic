@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import MessageUI
 
 enum MusicService: String, CaseIterable {
     case spotify = "Spotify"
@@ -29,9 +30,24 @@ enum MusicService: String, CaseIterable {
 struct SettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage("widgetMusicService") private var selectedMusicService: String = MusicService.spotify.rawValue
+    @State private var showingContactMail = false
     
     private var currentMusicService: MusicService {
         MusicService(rawValue: selectedMusicService) ?? .spotify
+    }
+    
+    private var appVersion: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+        return "\(version) (\(build))"
+    }
+    
+    private var contactEmailSubject: String {
+        "ShortlistAPP \(appVersion)"
+    }
+    
+    private var contactEmailBody: String {
+        "Dear Mr. Shortlst.\n\n"
     }
     
     @ViewBuilder
@@ -103,22 +119,63 @@ struct SettingsView: View {
                         Text("Version")
                             .foregroundColor(.primary)
                         Spacer()
-                        Text("4.1.0")
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    HStack {
-                        Text("Build")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Text("2")
+                        Text(appVersion)
                             .foregroundColor(.secondary)
                     }
                 } header: {
                     Text("App Information")
                 }
+                
+                Section {
+                    Button {
+                        if MFMailComposeViewController.canSendMail() {
+                            showingContactMail = true
+                        }
+                    } label: {
+                        HStack {
+                            Text("Contact Me")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                } header: {
+                    Text("Support")
+                } footer: {
+                    Text("Have a feature request or question? Send us an email!")
+                }
             }
             .navigationTitle("Settings")
+            .sheet(isPresented: $showingContactMail) {
+                if MFMailComposeViewController.canSendMail() {
+                    MailView(
+                        recipients: ["shortlistapp01@gmail.com"],
+                        subject: contactEmailSubject,
+                        messageBody: contactEmailBody,
+                        isHTML: false
+                    )
+                } else {
+                    // Fallback for when mail is not available
+                    VStack(spacing: 20) {
+                        Text("Email Not Available")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        
+                        Text("Your device is not configured to send emails. Please configure Mail in Settings or contact us at shortlistapp01@gmail.com")
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.secondary)
+                        
+                        Button("OK") {
+                            showingContactMail = false
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .padding(40)
+                    .presentationDetents([.medium])
+                }
+            }
         }
     }
 }

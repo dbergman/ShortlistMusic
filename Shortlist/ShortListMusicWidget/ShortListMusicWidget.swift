@@ -26,15 +26,30 @@ struct ShortListMusicWidgetEntryView: View {
 
     var body: some View {
         Group {
-            switch family {
-            case .systemSmall:
-                SmallWidgetView(album: entry.albums.first, image: entry.albums.first != nil ? entry.albumImages[entry.albums.first!.id] : nil)
-            case .systemMedium:
-                MediumWidgetView(albums: entry.albums, albumImages: entry.albumImages)
-            case .systemLarge:
-                LargeWidgetView(albums: entry.albums, albumImages: entry.albumImages)
-            default:
-                SmallWidgetView(album: entry.albums.first, image: entry.albums.first != nil ? entry.albumImages[entry.albums.first!.id] : nil)
+            if entry.albums.isEmpty {
+                // Show empty state when no albums available
+                switch family {
+                case .systemSmall:
+                    EmptySmallWidgetView()
+                case .systemMedium:
+                    EmptyMediumWidgetView()
+                case .systemLarge:
+                    EmptyLargeWidgetView()
+                default:
+                    EmptySmallWidgetView()
+                }
+            } else {
+                // Show albums when available
+                switch family {
+                case .systemSmall:
+                    SmallWidgetView(album: entry.albums.first, image: entry.albums.first != nil ? entry.albumImages[entry.albums.first!.id] : nil)
+                case .systemMedium:
+                    MediumWidgetView(albums: entry.albums, albumImages: entry.albumImages)
+                case .systemLarge:
+                    LargeWidgetView(albums: entry.albums, albumImages: entry.albumImages)
+                default:
+                    SmallWidgetView(album: entry.albums.first, image: entry.albums.first != nil ? entry.albumImages[entry.albums.first!.id] : nil)
+                }
             }
         }
         .containerBackground(for: .widget) {
@@ -49,6 +64,119 @@ struct ShortListMusicWidgetEntryView: View {
                     .aspectRatio(contentMode: .fill)
             }
         }
+    }
+}
+
+// MARK: - Empty State Views
+
+struct EmptySmallWidgetView: View {
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                VStack(spacing: 12) {
+                    Spacer()
+                    
+                    Image(systemName: "music.note.list")
+                        .font(.system(size: 40))
+                        .foregroundColor(.secondary)
+                    
+                    VStack(spacing: 4) {
+                        Text("No Shortlists")
+                            .font(Theme.shared.avenir(size: 14, weight: .bold))
+                            .foregroundColor(.primary)
+                        
+                        Text("Tap to create one")
+                            .font(Theme.shared.avenir(size: 11, weight: .regular))
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding()
+            }
+            .overlay(alignment: .topTrailing) {
+                ShortListLogo(size: 30)
+                    .padding(.top, -12)
+                    .padding(.trailing, -12)
+            }
+        }
+        .widgetURL(WidgetDataHelper.openAppURL())
+    }
+}
+
+struct EmptyMediumWidgetView: View {
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                VStack(spacing: 12) {
+                    Spacer()
+                    
+                    Image(systemName: "music.note.list")
+                        .font(.system(size: 50))
+                        .foregroundColor(.secondary)
+                    
+                    VStack(spacing: 4) {
+                        Text("No Shortlists Yet")
+                            .font(Theme.shared.avenir(size: 16, weight: .bold))
+                            .foregroundColor(.primary)
+                        
+                        Text("Create a shortlist to see albums here")
+                            .font(Theme.shared.avenir(size: 12, weight: .regular))
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(.horizontal, 16)
+                    
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .overlay(alignment: .topTrailing) {
+                ShortListLogo(size: 30)
+                    .padding(.top, -12)
+                    .padding(.trailing, -12)
+            }
+        }
+        .widgetURL(WidgetDataHelper.openAppURL())
+    }
+}
+
+struct EmptyLargeWidgetView: View {
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                VStack(spacing: 16) {
+                    Spacer()
+                    
+                    Image(systemName: "music.note.list")
+                        .font(.system(size: 60))
+                        .foregroundColor(.secondary)
+                    
+                    VStack(spacing: 6) {
+                        Text("No Shortlists Yet")
+                            .font(Theme.shared.avenir(size: 18, weight: .bold))
+                            .foregroundColor(.primary)
+                        
+                        Text("Create a shortlist and add albums to see them here")
+                            .font(Theme.shared.avenir(size: 13, weight: .regular))
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                    }
+                    .padding(.horizontal, 20)
+                    
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .overlay(alignment: .topTrailing) {
+                ShortListLogo(size: 30)
+                    .padding(.top, -12)
+                    .padding(.trailing, -12)
+            }
+        }
+        .widgetURL(WidgetDataHelper.openAppURL())
     }
 }
 
@@ -89,8 +217,8 @@ struct SmallWidgetContentView: View {
                                 .resizable()
                                 .scaledToFill()
                         } else if let album = album, !album.artworkURLString.isEmpty {
-                            // Resize URL for widget-appropriate size and load
-                            let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 200)
+                            // Resize URL for high quality widget display
+                            let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 400)
                             if let url = URL(string: resizedURL) {
                                 AsyncImage(url: url) { phase in
                                     switch phase {
@@ -196,8 +324,8 @@ struct AlbumCellContentView: View {
                         .resizable()
                         .scaledToFill()
                 } else if !album.artworkURLString.isEmpty {
-                    // Resize URL for widget-appropriate size and load
-                    let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 200)
+                    // Resize URL for high quality widget display
+                    let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 400)
                     if let url = URL(string: resizedURL) {
                         AsyncImage(url: url) { phase in
                             switch phase {
@@ -277,7 +405,7 @@ struct MediumWidgetView: View {
                         AlbumCellView(
                             album: album,
                             image: albumImages[album.id],
-                            imageSize: min((geometry.size.width - 48) / 3, geometry.size.height * 0.65)
+                            imageSize: min((geometry.size.width - 48) / CGFloat(max(displayAlbums.count, 1)), geometry.size.height * 0.65)
                         )
                     }
                 }
@@ -293,6 +421,7 @@ struct MediumWidgetView: View {
                     .padding(.trailing, -12)
             }
         }
+        .widgetURL(WidgetDataHelper.openAppURL())
     }
 }
 
@@ -308,7 +437,7 @@ struct LargeWidgetView: View {
         GeometryReader { geometry in
             ZStack {
                 VStack(spacing: 12) {
-                    // Top row - 3 albums
+                    // Top row - first 3 albums (or fewer if not enough)
                     HStack(spacing: 10) {
                         ForEach(Array(displayAlbums.prefix(3))) { album in
                             AlbumCellView(
@@ -319,14 +448,16 @@ struct LargeWidgetView: View {
                         }
                     }
                     
-                    // Bottom row - 3 albums
-                    HStack(spacing: 10) {
-                        ForEach(Array(displayAlbums.suffix(3))) { album in
-                            AlbumCellView(
-                                album: album,
-                                image: albumImages[album.id],
-                                imageSize: min((geometry.size.width - 48) / 3, (geometry.size.height - 40) / 2)
-                            )
+                    // Bottom row - remaining albums (if any)
+                    if displayAlbums.count > 3 {
+                        HStack(spacing: 10) {
+                            ForEach(Array(displayAlbums.suffix(displayAlbums.count - 3))) { album in
+                                AlbumCellView(
+                                    album: album,
+                                    image: albumImages[album.id],
+                                    imageSize: min((geometry.size.width - 48) / 3, (geometry.size.height - 40) / 2)
+                                )
+                            }
                         }
                     }
                 }
@@ -342,6 +473,7 @@ struct LargeWidgetView: View {
                     .padding(.trailing, -12)
             }
         }
+        .widgetURL(WidgetDataHelper.openAppURL())
     }
 }
 

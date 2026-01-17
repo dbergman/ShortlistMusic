@@ -47,7 +47,19 @@ struct ShortlistApp: App {
     }
     
     private func handleWidgetURL(_ url: URL) async {
-        guard url.scheme == "shortlist", url.host == "album" else {
+        guard url.scheme == "shortlist" else {
+            forwardMusicServiceURL(url)
+            return
+        }
+        
+        // Handle "shortlist://open" - just open the app (already open, but this allows widget tap to work)
+        if url.host == "open" {
+            // App is already open, no action needed
+            return
+        }
+        
+        // Handle "shortlist://album" - open album in music service
+        guard url.host == "album" else {
             forwardMusicServiceURL(url)
             return
         }

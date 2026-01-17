@@ -64,7 +64,7 @@ struct WidgetDataHelper {
     // MARK: - Image Preloading
     
     /// Preloads album artwork images for widget display
-    /// Images are requested at 60x60 pixels directly from Apple Music CDN to avoid resizing
+    /// Images are requested at 400x400 pixels directly from Apple Music CDN for high quality display
     /// - Parameters:
     ///   - albums: Array of albums to preload images for
     ///   - completion: Completion handler with dictionary of album ID to UIImage
@@ -81,8 +81,8 @@ struct WidgetDataHelper {
                 continue
             }
             
-            // Resize URL to request 60x60 image directly from Apple Music CDN
-            let resizedURLString = resizeArtworkURL(album.artworkURLString, size: 60)
+            // Resize URL to request 400x400 image directly from Apple Music CDN for high quality
+            let resizedURLString = resizeArtworkURL(album.artworkURLString, size: 400)
             guard let url = URL(string: resizedURLString),
                   (url.scheme == "https" || url.scheme == "http") else {
                 logger.debug("Widget: Skipping invalid artwork URL for \(album.title): \(album.artworkURLString)")
@@ -104,7 +104,7 @@ struct WidgetDataHelper {
                     return
                 }
                 
-                // Image is already 60x60 from CDN, just cache it
+                // Image is already 400x400 from CDN, cache it for high quality display
                 lock.lock()
                 images[album.id] = image
                 lock.unlock()
@@ -146,9 +146,9 @@ struct WidgetDataHelper {
     /// Apple Music URLs support size parameters: /SIZExSIZEbb.jpg
     /// - Parameters:
     ///   - urlString: The original artwork URL string
-    ///   - size: Desired size in pixels (default 60)
+    ///   - size: Desired size in pixels (default 400 for high quality)
     /// - Returns: Modified URL string with requested size, or original if not Apple Music URL
-    static func resizeArtworkURL(_ urlString: String, size: Int = 60) -> String {
+    static func resizeArtworkURL(_ urlString: String, size: Int = 400) -> String {
         guard urlString.contains("mzstatic.com") else {
             // Return original URL if not from Apple Music CDN
             return urlString
@@ -223,6 +223,11 @@ struct WidgetDataHelper {
         
         components.queryItems = queryItems
         return components.url
+    }
+    
+    /// Creates a URL to open the Shortlist app
+    static func openAppURL() -> URL? {
+        return URL(string: "shortlist://open")
     }
 }
 
