@@ -122,10 +122,46 @@ extension CloudKitManager {
         updatedYear: String,
         completion: @escaping (Result<Shortlist, Error>) -> Void)
     {
+        updateNewShortlistWithRetry(
+            shortlist: shortlist,
+            updatedName: updatedName,
+            updatedYear: updatedYear,
+            retryCount: 0,
+            maxRetries: 3,
+            completion: completion
+        )
+    }
+    
+    private func updateNewShortlistWithRetry(
+        shortlist: Shortlist,
+        updatedName: String,
+        updatedYear: String,
+        retryCount: Int,
+        maxRetries: Int,
+        completion: @escaping (Result<Shortlist, Error>) -> Void)
+    {
         self.container.publicCloudDatabase.fetch(withRecordID: shortlist.recordID) { record, error in
-            guard 
-                let record = record
-            else {
+            // Handle fetch errors with retry logic
+            if let fetchError = error {
+                if let ckError = fetchError as? CKError, self.shouldRetry(ckError: ckError, retryCount: retryCount, maxRetries: maxRetries) {
+                    let delay = self.calculateRetryDelay(retryCount: retryCount)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                        self.updateNewShortlistWithRetry(
+                            shortlist: shortlist,
+                            updatedName: updatedName,
+                            updatedYear: updatedYear,
+                            retryCount: retryCount + 1,
+                            maxRetries: maxRetries,
+                            completion: completion
+                        )
+                    }
+                    return
+                }
+                completion(.failure(fetchError))
+                return
+            }
+            
+            guard let record = record else {
                 completion(.failure(UserErrorFactory.makeError(.shortlistNotFound)))
                 return
             }
@@ -134,19 +170,57 @@ extension CloudKitManager {
             record["year"] = updatedYear
             
             self.container.publicCloudDatabase.save(record) { savedRecord, saveError in
-                if saveError != nil {
-                    completion(.failure(UserErrorFactory.makeError(.shortlistNotFound)))
-                } else if
-                    let savedRecord = savedRecord,
-                    let savedShortlist = Shortlist(with: savedRecord)
-                {
-                    let updatedShortlist = Shortlist(shortlist: savedShortlist, shortlistAlbums: shortlist.albums ?? [])
-                    completion(.success(updatedShortlist))
-                } else {
-                    completion(.failure(UserErrorFactory.makeError(.shortlistNotFound)))
+                // Handle save errors with retry logic
+                if let saveError = saveError {
+                    if let ckError = saveError as? CKError, self.shouldRetry(ckError: ckError, retryCount: retryCount, maxRetries: maxRetries) {
+                        let delay = self.calculateRetryDelay(retryCount: retryCount)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                            self.updateNewShortlistWithRetry(
+                                shortlist: shortlist,
+                                updatedName: updatedName,
+                                updatedYear: updatedYear,
+                                retryCount: retryCount + 1,
+                                maxRetries: maxRetries,
+                                completion: completion
+                            )
+                        }
+                        return
+                    }
+                    completion(.failure(saveError))
+                    return
                 }
+                
+                guard let savedRecord = savedRecord,
+                      let savedShortlist = Shortlist(with: savedRecord) else {
+                    completion(.failure(UserErrorFactory.makeError(.shortlistNotFound)))
+                    return
+                }
+                
+                let updatedShortlist = Shortlist(shortlist: savedShortlist, shortlistAlbums: shortlist.albums ?? [])
+                completion(.success(updatedShortlist))
             }
         }
+    }
+    
+    private func shouldRetry(ckError: CKError, retryCount: Int, maxRetries: Int) -> Bool {
+        guard retryCount < maxRetries else { return false }
+        
+        // Retry on transient errors
+        switch ckError.code {
+        case .networkUnavailable, .networkFailure, .serviceUnavailable,
+             .requestRateLimited, .zoneBusy, .operationCancelled:
+            return true
+        case .serverResponseLost, .unknownItem:
+            // These might be transient, retry once
+            return retryCount < 1
+        default:
+            return false
+        }
+    }
+    
+    private func calculateRetryDelay(retryCount: Int) -> TimeInterval {
+        // Exponential backoff: 0.5s, 1s, 2s
+        return min(0.5 * pow(2.0, Double(retryCount)), 2.0)
     }
 }
 

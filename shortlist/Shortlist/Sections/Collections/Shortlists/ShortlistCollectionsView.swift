@@ -14,6 +14,7 @@ struct ShortlistCollectionsView: View {
     @State private var buttonOpacity: Double = 0
     @State private var showingOrderOptions = false
     @State private var showingMailSheet = false
+    @State private var showingSettings = false
     @ObservedObject private var viewModel = ViewModel()
     @Environment(\.colorScheme) private var colorScheme
     
@@ -32,11 +33,20 @@ struct ShortlistCollectionsView: View {
                     }
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        if !viewModel.shortlists.isEmpty {
+                        HStack(spacing: 16) {
+                            if !viewModel.shortlists.isEmpty {
+                                Button {
+                                    showingMailSheet = true
+                                } label: {
+                                    Image(systemName: "square.and.arrow.up")
+                                }
+                                .tint(.primary)
+                            }
+                            
                             Button {
-                                showingMailSheet = true
+                                showingSettings = true
                             } label: {
-                                Image(systemName: "square.and.arrow.up")
+                                Image(systemName: "gearshape")
                             }
                             .tint(.primary)
                         }
@@ -94,6 +104,9 @@ struct ShortlistCollectionsView: View {
                         }
                     )
                     .presentationDetents([.medium])
+                }
+                .sheet(isPresented: $showingSettings) {
+                    SettingsView()
                 }
                 .onAppear() {
                     Task {

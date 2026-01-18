@@ -9,13 +9,13 @@ import SwiftUI
 
 struct PillControl: View {
     var onEdit: () -> Void
-    var onShare: () -> Void
+    var onSearch: () -> Void
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         HStack(spacing: 16) {
-            Button(action: onEdit) {
-                Image(systemName: "pencil")
+            Button(action: onSearch) {
+                Image(systemName: "plus.magnifyingglass")
                     .padding(12)
                     .background(
                         Circle()
@@ -29,8 +29,8 @@ struct PillControl: View {
                     .clipShape(Circle())
             }
 
-            Button(action: onShare) {
-                Image(systemName: "square.and.arrow.up")
+            Button(action: onEdit) {
+                Image(systemName: "pencil")
                     .padding(12)
                     .background(
                         Circle()

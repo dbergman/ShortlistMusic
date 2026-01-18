@@ -16,7 +16,6 @@ struct ShortlistDetailsView: View {
     @State var draggedAlbumId: String?
     @ObservedObject private var viewModel: ViewModel
     @State private var isEditShortlistViewPresented = false
-    @State private var isShareOptionsPresented = false
     @Environment(\.dismiss) private var dismiss
     
     @State private var isShowingMailView = false
@@ -44,194 +43,16 @@ struct ShortlistDetailsView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            if viewModel.isLoading {
-                loadingView()
-            } else if (viewModel.shortlist.albums?.isEmpty ?? true) {
-                VStack(spacing: 16) {
-                    Spacer()
-
-                    Image(systemName: "square.stack.3d.up.slash")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 72, height: 72)
-                        .foregroundColor(.secondary)
-                        .accessibilityHidden(true)
-
-                    Text("No Albums Yet")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-
-                    Text("Add albums to this Shortlist to get started.")
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(.secondary)
-                        .padding(.horizontal, 32)
-
-                    Button {
-                        isPresented.toggle()
-                    } label: {
-                        HStack(spacing: 8) {
-                            Image(systemName: "plus.circle.fill")
-                            Text("Add Albums")
-                                .font(.system(size: 16, weight: .semibold))
-                        }
-                        .foregroundColor(colorScheme == .dark ? .black : .white)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 12)
-                        .background(
-                            Capsule()
-                                .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.9))
-                                .overlay(
-                                    Capsule()
-                                        .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
-                                )
-                                .shadow(
-                                    color: colorScheme == .dark ?
-                                        Color.black.opacity(0.5) :
-                                        Color.black.opacity(0.2),
-                                    radius: colorScheme == .dark ? 10 : 6,
-                                    x: 0,
-                                    y: colorScheme == .dark ? 4 : 2
-                                )
-                        )
-                        .clipShape(Capsule())
-                    }
-                    .padding(.top, 8)
-
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .padding()
-            } else {
-                ScrollView {
-                    LazyVGrid(columns: layout) {
-                        ForEach(viewModel.shortlist.albums ?? [], id: \.self) { album in
-                            NavigationLink {
-                                // Lazy destination - only created when tapped
-                                AlbumDetailView(
-                                    albumType: .shortlistAlbum(album),
-                                    shortlist: viewModel.shortlist
-                                )
-                            } label: {
-                                VStack(alignment: .leading) {
-                                    ZStack(alignment: .topLeading) {
-                                        AsyncImage(url: URL(string: album.artworkURLString)) { image in
-                                            image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .cornerRadius(20)
-                                        } placeholder: {
-                                            ProgressView()
-                                        }
-
-                                        ZStack {
-                                            Circle()
-                                                .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.75))
-                                                .frame(width: 28, height: 28)
-                                                .overlay(
-                                                    Circle()
-                                                        .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1.5)
-                                                )
-                                                .shadow(color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
-
-                                            Text("\(album.rank)")
-                                                .foregroundColor(colorScheme == .dark ? .black : .white)
-                                                .font(Theme.shared.avenir(size: 14, weight: .bold))
-                                        }
-                                        .padding(6)
-                                    }
-                                    .padding(.bottom, 10)
-
-                                    Text(album.title)
-                                        .font(Theme.shared.avenir(size: 16, weight: .bold))
-                                        .multilineTextAlignment(.leading)
-                                        .foregroundColor(.primary)
-                                        .lineLimit(2)
-                                    Text(album.artist)
-                                        .font(Theme.shared.avenir(size: 14, weight: .medium))
-                                        .multilineTextAlignment(.leading)
-                                        .foregroundColor(.primary)
-                                        .lineLimit(1)
-                                    Spacer()
-                                }
-                                .frame(height: 230)
-                                .padding()
-                                .background(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .fill(colorScheme == .dark ? Color(.secondarySystemBackground) : Color(.systemBackground))
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 16)
-                                                .stroke(colorScheme == .dark ? Color(.tertiarySystemBackground) : Color(.separator), lineWidth: 1)
-                                        )
-                                )
-                                .cornerRadius(16)
-                                .shadow(
-                                    color: colorScheme == .dark ? 
-                                        Color.black.opacity(0.6) : 
-                                        Color.black.opacity(0.15),
-                                    radius: colorScheme == .dark ? 16 : 10,
-                                    x: 0,
-                                    y: colorScheme == .dark ? 8 : 5
-                                )
-                                .padding(EdgeInsets(top: 0, leading: 6, bottom: 10, trailing: 6))
-                                .onDrag {
-                                    draggedAlbumId = album.id
-                                    return NSItemProvider(item: nil, typeIdentifier: album.id)
-                                }
-                            }
-                            .onDrop(
-                                of: [UTType.text],
-                                delegate: MyDropDelegate(
-                                    updatedAlbumId: album.id,
-                                    shortlistAlbums: $viewModel.shortlist.albums,
-                                    draggedItem: $draggedAlbumId,
-                                    viewModel: viewModel
-                                )
-                            )
-                        }
-                    }
-                    .padding()
-                }
-            }
-            
-            PillControl(
-                onEdit: {
-                    isEditShortlistViewPresented.toggle()
-                },
-                onShare: {
-                    isShareOptionsPresented.toggle()
-                }
+            mainContent
+        }
+        .sheet(isPresented: $isEditShortlistViewPresented) {
+            EditShortlistView(
+                isPresented: $isEditShortlistViewPresented,
+                shortlistName: viewModel.shortlist.name,
+                selectedYear: viewModel.shortlist.year
             )
-            .padding(.bottom, 20)
-            .sheet(isPresented: $isEditShortlistViewPresented) {
-                EditShortlistView(
-                    isPresented: $isEditShortlistViewPresented,
-                    shortlistName: viewModel.shortlist.name,
-                    selectedYear: viewModel.shortlist.year
-                )
-                .environmentObject(viewModel)
-                .presentationDetents([.medium, .large])
-            }
-            .confirmationDialog("Share Shortlist", isPresented: $isShareOptionsPresented, titleVisibility: .visible) {
-                Button("Save Image to Photos") {
-                    Task {
-                        await saveImageToPhotos()
-                    }
-                }
-                
-                Button("Copy Shortlist Album text") {
-                    Task {
-                        await copyShortlistText()
-                    }
-                }
-                
-                Button("Share via Email") {
-                    Task {
-                        await generateShortlistEmail()
-                    }
-                }
-                Button("Cancel", role: .cancel) {}
-            }
+            .environmentObject(viewModel)
+            .presentationDetents([.medium, .large])
         }
         .sheet(isPresented: $isShowingMailView) {
             MailView(
@@ -261,9 +82,34 @@ struct ShortlistDetailsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                CustomBarButton(systemName: "plus.magnifyingglass") {
-                    isPresented.toggle()
+                Menu {
+                    Button {
+                        Task {
+                            await saveImageToPhotos()
+                        }
+                    } label: {
+                        Label("Save Image to Photos", systemImage: "photo")
+                    }
+                    
+                    Button {
+                        Task {
+                            await copyShortlistText()
+                        }
+                    } label: {
+                        Label("Copy Shortlist Album text", systemImage: "doc.on.doc")
+                    }
+                    
+                    Button {
+                        Task {
+                            await generateShortlistEmail()
+                        }
+                    } label: {
+                        Label("Share via Email", systemImage: "envelope")
+                    }
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
                 }
+                .tint(.primary)
             }
         }
         .fullScreenCover(isPresented: $isPresented, onDismiss: {
@@ -273,7 +119,6 @@ struct ShortlistDetailsView: View {
         }, content: {
             SearchMusicView(isPresented: $isPresented, shortlist: viewModel.shortlist)
         })
-        
         .onAppear() {
             viewModel.isLoading = true
             Task {
@@ -282,6 +127,196 @@ struct ShortlistDetailsView: View {
         }
         .environmentObject(viewModel)
     }
+    
+    @ViewBuilder
+    private var mainContent: some View {
+        if viewModel.isLoading {
+            loadingView()
+        } else if (viewModel.shortlist.albums?.isEmpty ?? true) {
+            emptyStateView
+        } else {
+            albumsGridView
+        }
+    }
+    
+    @ViewBuilder
+    private var emptyStateView: some View {
+        VStack(spacing: 16) {
+            Spacer()
+
+            Image(systemName: "square.stack.3d.up.slash")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 72, height: 72)
+                .foregroundColor(.secondary)
+                .accessibilityHidden(true)
+
+            Text("No Albums Yet")
+                .font(.title2)
+                .fontWeight(.semibold)
+
+            Text("Add albums to this Shortlist to get started.")
+                .font(.body)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.secondary)
+                .padding(.horizontal, 32)
+
+            Button {
+                isPresented.toggle()
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "plus.circle.fill")
+                    Text("Add Albums")
+                        .font(.system(size: 16, weight: .semibold))
+                }
+                .foregroundColor(colorScheme == .dark ? .black : .white)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                .background(emptyStateButtonBackground)
+                .clipShape(Capsule())
+            }
+            .padding(.top, 8)
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+    }
+    
+    private var emptyStateButtonBackground: some View {
+        Capsule()
+            .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.9))
+            .overlay(
+                Capsule()
+                    .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
+            )
+            .shadow(
+                color: colorScheme == .dark ?
+                    Color.black.opacity(0.5) :
+                    Color.black.opacity(0.2),
+                radius: colorScheme == .dark ? 10 : 6,
+                x: 0,
+                y: colorScheme == .dark ? 4 : 2
+            )
+    }
+    
+    @ViewBuilder
+    private var albumsGridView: some View {
+        ZStack(alignment: .bottom) {
+            ScrollView {
+                LazyVGrid(columns: layout) {
+                    ForEach(viewModel.shortlist.albums ?? [], id: \.self) { album in
+                        albumCardView(for: album)
+                    }
+                        }
+                        .padding()
+                        .padding(.bottom, 100)
+            }
+            
+            bottomControlsView
+        }
+    }
+    
+    @ViewBuilder
+    private func albumCardView(for album: ShortlistAlbum) -> some View {
+        NavigationLink {
+            AlbumDetailView(
+                albumType: .shortlistAlbum(album),
+                shortlist: viewModel.shortlist
+            )
+        } label: {
+            VStack(alignment: .leading) {
+                ZStack(alignment: .topLeading) {
+                    AsyncImage(url: URL(string: album.artworkURLString)) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(20)
+                    } placeholder: {
+                        ProgressView()
+                    }
+
+                    ZStack {
+                        Circle()
+                            .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.75))
+                            .frame(width: 28, height: 28)
+                            .overlay(
+                                Circle()
+                                    .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1.5)
+                            )
+                            .shadow(color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
+
+                        Text("\(album.rank)")
+                            .foregroundColor(colorScheme == .dark ? .black : .white)
+                            .font(Theme.shared.avenir(size: 14, weight: .bold))
+                    }
+                    .padding(6)
+                }
+                .padding(.bottom, 10)
+
+                Text(album.title)
+                    .font(Theme.shared.avenir(size: 16, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(.primary)
+                    .lineLimit(2)
+                Text(album.artist)
+                    .font(Theme.shared.avenir(size: 14, weight: .medium))
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(.primary)
+                    .lineLimit(1)
+                Spacer()
+            }
+            .frame(height: 230)
+            .padding()
+            .background(albumCardBackground)
+            .cornerRadius(16)
+            .shadow(
+                color: colorScheme == .dark ? 
+                    Color.black.opacity(0.6) : 
+                    Color.black.opacity(0.15),
+                radius: colorScheme == .dark ? 16 : 10,
+                x: 0,
+                y: colorScheme == .dark ? 8 : 5
+            )
+            .padding(EdgeInsets(top: 0, leading: 6, bottom: 10, trailing: 6))
+            .onDrag {
+                draggedAlbumId = album.id
+                return NSItemProvider(item: nil, typeIdentifier: album.id)
+            }
+        }
+        .onDrop(
+            of: [UTType.text],
+            delegate: MyDropDelegate(
+                updatedAlbumId: album.id,
+                shortlistAlbums: $viewModel.shortlist.albums,
+                draggedItem: $draggedAlbumId,
+                viewModel: viewModel
+            )
+        )
+    }
+    
+    private var albumCardBackground: some View {
+        RoundedRectangle(cornerRadius: 16)
+            .fill(colorScheme == .dark ? Color(.secondarySystemBackground) : Color(.systemBackground))
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(colorScheme == .dark ? Color(.tertiarySystemBackground) : Color(.separator), lineWidth: 1)
+            )
+    }
+    
+    @ViewBuilder
+    private var bottomControlsView: some View {
+        PillControl(
+            onEdit: {
+                isEditShortlistViewPresented.toggle()
+            },
+            onSearch: {
+                isPresented.toggle()
+            }
+        )
+        .padding(.bottom, 20)
+    }
+    
     
     @ViewBuilder
     private func loadingView() -> some View {

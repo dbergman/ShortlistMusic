@@ -29,7 +29,7 @@ struct ShortlistApp: App {
                                 }
                             }
                     } else {
-                        MainTabView()
+                        ShortlistCollectionsView()
                     }
                 }
                 .onOpenURL { url in
@@ -187,20 +187,3 @@ struct ShortlistApp: App {
     }
 }
 
-struct MainTabView: View {
-    var body: some View {
-        TabView {
-            ShortlistCollectionsView()
-                .tabItem {
-                    Image(systemName: "music.note.list")
-                }
-            
-            SettingsView()
-                .tabItem {
-                    Image(systemName: "gearshape")
-                }
-        }
-        .toolbarBackground(.ultraThinMaterial, for: .tabBar)
-        .toolbarBackground(.visible, for: .tabBar)
-    }
-}

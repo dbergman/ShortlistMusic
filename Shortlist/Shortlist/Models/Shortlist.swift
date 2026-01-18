@@ -47,4 +47,19 @@ extension Shortlist {
         recordID = shortlist.recordID
         createdTimestamp = shortlist.createdTimestamp
     }
+    
+    // Initializer for updating name and year while preserving other properties
+    init(updating shortlist: Shortlist, name: String, year: String) {
+        self.id = shortlist.id
+        self.name = name
+        self.year = year
+        self.recordID = shortlist.recordID
+        self.createdTimestamp = shortlist.createdTimestamp
+        self.albums = shortlist.albums
+    }
+    
+    // Helper method for optimistic updates
+    func updating(name: String, year: String) -> Shortlist {
+        return Shortlist(updating: self, name: name, year: year)
+    }
 }
