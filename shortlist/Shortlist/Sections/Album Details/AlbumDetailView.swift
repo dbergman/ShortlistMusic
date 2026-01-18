@@ -203,7 +203,7 @@ extension AlbumDetailView {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    CustomBarButton(systemName: albumOnShortlist ? "minus.circle" : "plus.circle") {
+                    CustomBarButton(systemName: albumOnShortlist ? "trash" : "plus.circle") {
                         Task {
                             if albumOnShortlist {
                                 await viewModel.removeAlbumFromShortlist()

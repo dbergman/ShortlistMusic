@@ -106,10 +106,13 @@ struct ShortlistDetailsView: View {
                 ScrollView {
                     LazyVGrid(columns: layout) {
                         ForEach(viewModel.shortlist.albums ?? [], id: \.self) { album in
-                            let albumType = AlbumDetailView.AlbumType.shortlistAlbum(album)
-                            NavigationLink(
-                                destination: AlbumDetailView(albumType: albumType, shortlist: viewModel.shortlist)
-                            ){
+                            NavigationLink {
+                                // Lazy destination - only created when tapped
+                                AlbumDetailView(
+                                    albumType: .shortlistAlbum(album),
+                                    shortlist: viewModel.shortlist
+                                )
+                            } label: {
                                 VStack(alignment: .leading) {
                                     ZStack(alignment: .topLeading) {
                                         AsyncImage(url: URL(string: album.artworkURLString)) { image in
