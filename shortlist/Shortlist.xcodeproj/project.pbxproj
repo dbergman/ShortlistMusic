@@ -65,6 +65,8 @@
 		8BFCEAAD2F188FC2007043AB /* MusicKitLoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFCEAAC2F188FC2007043AB /* MusicKitLoadingOverlay.swift */; };
 		8BFCEACA2F1DD56A007043AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BFCEAC92F1DD56A007043AB /* GoogleService-Info.plist */; };
 		8BFCEACB2F1DD0BF007043AB /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFCEACC2F1DD0BF007043AB /* AnalyticsManager.swift */; };
+		8BFCEB2F2F1DE022007043AB /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFCEAC92F1DD0BF007043AB /* FirebaseAnalytics */; };
+		8BFCEB302F1DE022007043AB /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFCEACA2F1DD0BF007043AB /* FirebaseCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +170,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BFCEB302F1DE022007043AB /* FirebaseCore in Frameworks */,
+				8BFCEB2F2F1DE022007043AB /* FirebaseAnalytics in Frameworks */,
 				8B15AEAC29552021005CE9F6 /* MusicKit.framework in Frameworks */,
 				8B81E33B2E90B16C00008120 /* SkeletonUI in Frameworks */,
 				8B3EA0552E76250A0090DD13 /* SkeletonUI in Frameworks */,
@@ -751,7 +755,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Shortlist/Shortlist.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 666;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Shortlist/Preview Content\"";
 				ENABLE_APP_SANDBOX = YES;
@@ -776,7 +780,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
-				MARKETING_VERSION = 4.1.0;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dus.shortList.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -797,7 +801,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Shortlist/Shortlist.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 666;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Shortlist/Preview Content\"";
 				ENABLE_APP_SANDBOX = YES;
@@ -822,7 +826,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
-				MARKETING_VERSION = 4.1.0;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dus.shortList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
