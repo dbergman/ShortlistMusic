@@ -8,11 +8,24 @@
 import SwiftUI
 import UIKit
 import MusicKit
+import FirebaseCore
 
 @main
 struct ShortlistApp: App {
     @State private var showLaunchScreen = true
     @State private var isLookingUpMusicKit = false
+    
+    init() {
+        // Initialize Firebase
+        FirebaseApp.configure()
+        
+        #if DEBUG
+        // Enable debug mode for Firebase Analytics during development
+        // This allows you to see events in real-time in Firebase Console
+        // Remove this in production or wrap in DEBUG flag
+        print("🔥 Firebase initialized successfully")
+        #endif
+    }
     
     var body: some Scene {
         WindowGroup {
@@ -54,7 +67,8 @@ struct ShortlistApp: App {
         
         // Handle "shortlist://open" - just open the app (already open, but this allows widget tap to work)
         if url.host == "open" {
-            // App is already open, no action needed
+            // Log widget tap analytics
+            AnalyticsManager.shared.logWidgetTapped(widgetType: "shortlist_widget")
             return
         }
         
@@ -66,6 +80,9 @@ struct ShortlistApp: App {
         
         guard let albumInfo = parseAlbumInfo(from: url) else { return }
         
+        // Log widget tap analytics
+        AnalyticsManager.shared.logWidgetTapped(widgetType: "album_widget")
+        
         let musicService = getCurrentMusicService()
         let musicServiceURL = await generateMusicServiceURL(
             for: albumInfo,
@@ -73,6 +90,13 @@ struct ShortlistApp: App {
         )
         
         if let musicURL = musicServiceURL, UIApplication.shared.canOpenURL(musicURL) {
+            // Log album opened in service
+            AnalyticsManager.shared.logAlbumOpenedInService(
+                albumTitle: albumInfo.title,
+                artist: albumInfo.artist,
+                service: musicService.lowercased().replacingOccurrences(of: " ", with: "_")
+            )
+            
             await MainActor.run {
                 UIApplication.shared.open(musicURL, options: [:], completionHandler: nil)
             }

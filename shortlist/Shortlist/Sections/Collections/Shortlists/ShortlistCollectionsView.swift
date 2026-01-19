@@ -109,6 +109,12 @@ struct ShortlistCollectionsView: View {
                     SettingsView()
                 }
                 .onAppear() {
+                    // Log screen view analytics
+                    AnalyticsManager.shared.logScreenView(
+                        screenName: "Shortlists",
+                        screenClass: "ShortlistCollectionsView"
+                    )
+                    
                     Task {
                         try? await viewModel.getShortlists()
                     }

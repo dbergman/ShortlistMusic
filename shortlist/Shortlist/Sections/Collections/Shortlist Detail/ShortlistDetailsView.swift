@@ -120,6 +120,16 @@ struct ShortlistDetailsView: View {
             SearchMusicView(isPresented: $isPresented, shortlist: viewModel.shortlist)
         })
         .onAppear() {
+            // Log screen view and shortlist viewed analytics
+            AnalyticsManager.shared.logScreenView(
+                screenName: "Shortlist Detail",
+                screenClass: "ShortlistDetailsView"
+            )
+            AnalyticsManager.shared.logShortlistViewed(
+                shortlistId: viewModel.shortlist.id,
+                shortlistName: viewModel.shortlist.name
+            )
+            
             viewModel.isLoading = true
             Task {
                 try await viewModel.getAlbums(for: viewModel.shortlist)
@@ -460,6 +470,12 @@ extension ShortlistDetailsView {
         mailBody = emailBody
         mailAttachment = gridImage?.jpegData(compressionQuality: 0.8)
         
+        // Log analytics for sharing
+        AnalyticsManager.shared.logShortlistShared(
+            shortlistId: viewModel.shortlist.id,
+            method: "email"
+        )
+        
         isMailDataReady = true
     }
     
@@ -479,6 +495,12 @@ extension ShortlistDetailsView {
         
         // Save image to photos using simple approach
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        
+        // Log analytics for sharing
+        AnalyticsManager.shared.logShortlistShared(
+            shortlistId: viewModel.shortlist.id,
+            method: "save_image"
+        )
         
         await MainActor.run {
             toastMessage = "Shortlist image saved to Photos"
@@ -511,6 +533,12 @@ extension ShortlistDetailsView {
         
         UIPasteboard.general.string = copyText
         shortlistText = copyText
+        
+        // Log analytics for sharing
+        AnalyticsManager.shared.logShortlistShared(
+            shortlistId: viewModel.shortlist.id,
+            method: "copy_text"
+        )
         
         await MainActor.run {
             toastMessage = "Shortlist text copied to clipboard"

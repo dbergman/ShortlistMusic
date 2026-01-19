@@ -13,6 +13,9 @@ extension SearchAlbumsView {
         @Published var artistAlbums: [Content]?
         
         func loadAlbums(for artist: Artist, size: CGFloat) async {
+            // Log analytics for artist search
+            AnalyticsManager.shared.logArtistSearch(searchTerm: artist.name)
+            
             let artistWithDetails = try? await artist.with([.albums])
             
             guard let discography = artistWithDetails?.albums else { return }

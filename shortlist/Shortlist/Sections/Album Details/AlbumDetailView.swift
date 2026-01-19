@@ -106,7 +106,16 @@ extension AlbumDetailView {
 
                         VStack(spacing: 16) {
                             Button(action: {
-                                guard let albumURL = viewModel.album?.appleAlbumURL else { return }
+                                guard let albumURL = viewModel.album?.appleAlbumURL,
+                                      let albumTitle = viewModel.album?.title,
+                                      let artist = viewModel.album?.artist else { return }
+
+                                // Log analytics for opening in service
+                                AnalyticsManager.shared.logAlbumOpenedInService(
+                                    albumTitle: albumTitle,
+                                    artist: artist,
+                                    service: "apple_music"
+                                )
 
                                 UIApplication.shared.open(albumURL)
                             }) {
@@ -123,10 +132,19 @@ extension AlbumDetailView {
                             if viewModel.isSpotifyInstalled() {
                                 Button(action: {
                                     guard
-                                        let spotifyAlbumSearchDeeplinkURL = viewModel.album?.spotifyAlbumSearchDeeplink
+                                        let spotifyAlbumSearchDeeplinkURL = viewModel.album?.spotifyAlbumSearchDeeplink,
+                                        let albumTitle = viewModel.album?.title,
+                                        let artist = viewModel.album?.artist
                                     else {
                                         return
                                     }
+
+                                    // Log analytics for opening in service
+                                    AnalyticsManager.shared.logAlbumOpenedInService(
+                                        albumTitle: albumTitle,
+                                        artist: artist,
+                                        service: "spotify"
+                                    )
 
                                     UIApplication.shared.open(spotifyAlbumSearchDeeplinkURL)
                                 }) {

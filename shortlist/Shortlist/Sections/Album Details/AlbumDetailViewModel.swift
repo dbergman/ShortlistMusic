@@ -49,6 +49,16 @@ extension AlbumDetailView {
             self.album = basicDetails
             isloading = false
             
+            // Log analytics for album viewed
+            AnalyticsManager.shared.logAlbumViewed(
+                albumTitle: album.title,
+                artist: album.artistName
+            )
+            AnalyticsManager.shared.logScreenView(
+                screenName: "Album Detail",
+                screenClass: "AlbumDetailView"
+            )
+            
             // Load tracks and CloudKit albums in parallel (non-blocking)
             async let detailedAlbumTask = album.with([.artists, .tracks])
             async let cloudKitAlbumsTask = loadShortlistAlbums()
@@ -116,6 +126,16 @@ extension AlbumDetailView {
             self.album = basicDetails
             isloading = false
             
+            // Log analytics for album viewed
+            AnalyticsManager.shared.logAlbumViewed(
+                albumTitle: shortListAlbum.title,
+                artist: shortListAlbum.artist
+            )
+            AnalyticsManager.shared.logScreenView(
+                screenName: "Album Detail",
+                screenClass: "AlbumDetailView"
+            )
+            
             // Load full album details in background
             let request = MusicCatalogResourceRequest<Album>(
                 matching: \.id,
@@ -159,6 +179,13 @@ extension AlbumDetailView {
             
             // Check if the operation was successful
             if currentShortlistAlbums != nil {
+                // Log analytics for album added
+                AnalyticsManager.shared.logAlbumAdded(
+                    albumTitle: album.title,
+                    artist: album.artist,
+                    shortlistId: shortlist.id
+                )
+                
                 // Show success toast
                 toastMessage = "Added '\(album.title)' to '\(shortlist.name)'"
                 toastType = .success
@@ -210,6 +237,15 @@ extension AlbumDetailView {
             
             // Update ranking after successful removal
             if currentShortlistAlbums != nil {
+                // Log analytics for album removed
+                if let artist = album?.artist {
+                    AnalyticsManager.shared.logAlbumRemoved(
+                        albumTitle: albumTitle,
+                        artist: artist,
+                        shortlistId: shortlist.id
+                    )
+                }
+                
                 // Hide loading overlay first
                 isRemovingFromShortlist = false
                 

@@ -63,6 +63,8 @@
 		8BFB12C32B8A9D82005E3C35 /* EditShortlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB12C22B8A9D82005E3C35 /* EditShortlistView.swift */; };
 		8BFB12C52B8A9DE3005E3C35 /* EditShortlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB12C42B8A9DE3005E3C35 /* EditShortlistViewModel.swift */; };
 		8BFCEAAD2F188FC2007043AB /* MusicKitLoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFCEAAC2F188FC2007043AB /* MusicKitLoadingOverlay.swift */; };
+		8BFCEACA2F1DD56A007043AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BFCEAC92F1DD56A007043AB /* GoogleService-Info.plist */; };
+		8BFCEACB2F1DD0BF007043AB /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFCEACC2F1DD0BF007043AB /* AnalyticsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +145,8 @@
 		8BFB12C22B8A9D82005E3C35 /* EditShortlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShortlistView.swift; sourceTree = "<group>"; };
 		8BFB12C42B8A9DE3005E3C35 /* EditShortlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShortlistViewModel.swift; sourceTree = "<group>"; };
 		8BFCEAAC2F188FC2007043AB /* MusicKitLoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKitLoadingOverlay.swift; sourceTree = "<group>"; };
+		8BFCEAC92F1DD56A007043AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8BFCEACC2F1DD0BF007043AB /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -276,7 +280,9 @@
 		8B685AD1290B791100F6AD7F /* Shortlist */ = {
 			isa = PBXGroup;
 			children = (
+				8BFCEAC92F1DD56A007043AB /* GoogleService-Info.plist */,
 				8BE7D456296283570099EF4E /* Info.plist */,
+				8BFCEAC72F1DCFEE007043AB /* Analytics */,
 				8BE61DA62E76377400A375F3 /* Launch */,
 				8BD0974A2DA335B3005519F5 /* Theme */,
 				8BE7D4592965F02A0099EF4E /* Models */,
@@ -427,6 +433,14 @@
 			path = "Edit Shortlist";
 			sourceTree = "<group>";
 		};
+		8BFCEAC72F1DCFEE007043AB /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				8BFCEACC2F1DD0BF007043AB /* AnalyticsManager.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -445,6 +459,10 @@
 				8B81E3752E96074100008120 /* PBXTargetDependency */,
 			);
 			name = Shortlist;
+			packageProductDependencies = (
+				8BFCEAC92F1DD0BF007043AB /* FirebaseAnalytics */,
+				8BFCEACA2F1DD0BF007043AB /* FirebaseCore */,
+			);
 			productName = shortlist;
 			productReference = 8B685ACF290B791100F6AD7F /* Shortlist.app */;
 			productType = "com.apple.product-type.application";
@@ -500,6 +518,7 @@
 			mainGroup = 8B685AC6290B791100F6AD7F;
 			packageReferences = (
 				8BD097112D98BBAF005519F5 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+				8BFCEAC82F1DD0BF007043AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 8B685AD0290B791100F6AD7F /* Products */;
 			projectDirPath = "";
@@ -517,6 +536,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3EA0532E7623840090DD13 /* Launch Screen.storyboard in Resources */,
+				8BFCEACA2F1DD56A007043AB /* GoogleService-Info.plist in Resources */,
 				8B685AE0290B791300F6AD7F /* Preview Assets.xcassets in Resources */,
 				8B685ADC290B791300F6AD7F /* Assets.xcassets in Resources */,
 			);
@@ -579,6 +599,7 @@
 				8B685AEE290B86C800F6AD7F /* ShortlistDetailsView.swift in Sources */,
 				8B15AEBB295BC6F8005CE9F6 /* MusicKit+Extension.swift in Sources */,
 				8B15AEB5295A2851005CE9F6 /* SearchMusicViewModel.swift in Sources */,
+				8BFCEACB2F1DD0BF007043AB /* AnalyticsManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -925,6 +946,14 @@
 				minimumVersion = 2.0.2;
 			};
 		};
+		8BFCEAC82F1DD0BF007043AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.8.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -942,6 +971,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8BD097112D98BBAF005519F5 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
 			productName = SkeletonUI;
+		};
+		8BFCEAC92F1DD0BF007043AB /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BFCEAC82F1DD0BF007043AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		8BFCEACA2F1DD0BF007043AB /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BFCEAC82F1DD0BF007043AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 

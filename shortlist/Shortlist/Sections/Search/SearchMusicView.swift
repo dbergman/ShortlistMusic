@@ -144,6 +144,13 @@ struct SearchMusicView: View {
             }
         }
         .searchable(text: $searchTerm, prompt: "Search by Artist")
+        .onAppear {
+            // Log screen view analytics
+            AnalyticsManager.shared.logScreenView(
+                screenName: "Search Music",
+                screenClass: "SearchMusicView"
+            )
+        }
         .onChange(of: searchTerm) { _, newValue in
             requestUpdatedSearchResults(for: newValue)
         }

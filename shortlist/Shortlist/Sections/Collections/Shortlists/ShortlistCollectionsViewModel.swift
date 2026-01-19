@@ -67,6 +67,9 @@ extension ShortlistCollectionsView {
                 await MainActor.run {
                     self.shortlists = shortlists
                 }
+                
+                // Log analytics for shortlist deletion
+                AnalyticsManager.shared.logShortlistDeleted(shortlistId: shortlist.id)
             } catch {
                 throw error
             }

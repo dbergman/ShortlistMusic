@@ -29,6 +29,13 @@ extension CreateShortlistView {
                     self.createShortlistError = ""
                 }
                 
+                // Log analytics for shortlist creation
+                let yearInt = Int(year) ?? 0
+                AnalyticsManager.shared.logShortlistCreated(
+                    shortlistName: name,
+                    year: yearInt
+                )
+                
                 return shortlist
             } catch {
                 await MainActor.run {

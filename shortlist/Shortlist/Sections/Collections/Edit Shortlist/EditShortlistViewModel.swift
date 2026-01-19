@@ -47,6 +47,9 @@ extension EditShortlistView {
                         self.editShortlistError = ""
                     }
                     
+                    // Log analytics for shortlist edit
+                    AnalyticsManager.shared.logShortlistEdited(shortlistId: shortlist.id)
+                    
                     return updatedShortlist
                 } catch {
                     await MainActor.run {
