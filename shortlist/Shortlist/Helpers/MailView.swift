@@ -12,12 +12,31 @@ import MessageUI
 struct MailView: UIViewControllerRepresentable {
     @Environment(\.dismiss) var dismiss
 
+    let recipients: [String]?
     let subject: String
     let messageBody: String
     let isHTML: Bool
     let attachment: Data?
     let attachmentMimeType: String?
     let attachmentFilename: String?
+    
+    init(
+        recipients: [String]? = nil,
+        subject: String,
+        messageBody: String,
+        isHTML: Bool = false,
+        attachment: Data? = nil,
+        attachmentMimeType: String? = nil,
+        attachmentFilename: String? = nil
+    ) {
+        self.recipients = recipients
+        self.subject = subject
+        self.messageBody = messageBody
+        self.isHTML = isHTML
+        self.attachment = attachment
+        self.attachmentMimeType = attachmentMimeType
+        self.attachmentFilename = attachmentFilename
+    }
 
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
         var parent: MailView
@@ -43,6 +62,11 @@ struct MailView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> MFMailComposeViewController {
         let vc = MFMailComposeViewController()
+        
+        if let recipients = recipients {
+            vc.setToRecipients(recipients)
+        }
+        
         vc.setSubject(subject)
         vc.setMessageBody(messageBody, isHTML: isHTML)
         vc.mailComposeDelegate = context.coordinator

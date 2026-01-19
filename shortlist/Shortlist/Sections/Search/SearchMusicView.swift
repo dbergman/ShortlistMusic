@@ -39,12 +39,79 @@ struct SearchMusicView: View {
     @Binding var isPresented: Bool
     @StateObject private var viewModel = ViewModel()
     @State private var searchTerm = ""
+    @State private var filterByYear = true
+    @State private var selectedYears: Set<String> = []
+    @State private var showingYearPicker = false
     let shortlist: Shortlist
+    
+    private var filteredAlbums: [Content.Album] {
+        if shouldShowSpecificYearFilter && filterByYear {
+            // Filter by shortlist's specific year
+            return viewModel.albums.filter { $0.releaseYear == shortlist.year }
+        } else if shouldShowYearPickerFilter && !selectedYears.isEmpty {
+            // Filter by selected years from popup
+            return viewModel.albums.filter { selectedYears.contains($0.releaseYear) }
+        } else {
+            return viewModel.albums
+        }
+    }
+    
+    private var shouldShowSpecificYearFilter: Bool {
+        !shortlist.year.isEmpty && shortlist.year != "All"
+    }
+    
+    private var shouldShowYearPickerFilter: Bool {
+        shortlist.year.isEmpty || shortlist.year == "All"
+    }
+    
+    private var availableYears: [String] {
+        let currentYear = Calendar.current.component(.year, from: Date())
+        var years: [String] = []
+        years.append("\(currentYear)")
+        
+        repeat {
+            guard let lastYear = years.last, let lastYearInt = Int(lastYear) else { continue }
+            years.append("\(lastYearInt - 1)")
+        } while years.last != "1955"
+        
+        return years
+    }
     
     var body: some View {
         NavigationStack {
             VStack {
-                SearchResultsList(albums: viewModel.albums, searchTerm: searchTerm)
+                if shouldShowSpecificYearFilter {
+                    HStack {
+                        Toggle(isOn: $filterByYear) {
+                            Text("Filter by \(shortlist.year)")
+                                .font(Theme.shared.avenir(size: 16, weight: .medium))
+                                .foregroundColor(.primary)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 12)
+                    }
+                    .background(Color(.secondarySystemBackground))
+                } else if shouldShowYearPickerFilter {
+                    HStack {
+                        Button {
+                            showingYearPicker = true
+                        } label: {
+                            HStack {
+                                Image(systemName: selectedYears.isEmpty ? "line.3.horizontal.decrease" : "line.3.horizontal.decrease.circle.fill")
+                                    .foregroundColor(selectedYears.isEmpty ? .primary : .blue)
+                                Text(selectedYears.isEmpty ? "Filter by Year" : "\(selectedYears.count) year\(selectedYears.count == 1 ? "" : "s") selected")
+                                    .font(Theme.shared.avenir(size: 16, weight: .medium))
+                                    .foregroundColor(.primary)
+                                Spacer()
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 12)
+                        }
+                    }
+                    .background(Color(.secondarySystemBackground))
+                }
+                
+                SearchResultsList(albums: filteredAlbums, searchTerm: searchTerm)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .principal) {
@@ -77,8 +144,18 @@ struct SearchMusicView: View {
             }
         }
         .searchable(text: $searchTerm, prompt: "Search by Artist")
+        .onAppear {
+            // Log screen view analytics
+            AnalyticsManager.shared.logScreenView(
+                screenName: "Search Music",
+                screenClass: "SearchMusicView"
+            )
+        }
         .onChange(of: searchTerm) { _, newValue in
             requestUpdatedSearchResults(for: newValue)
+        }
+        .sheet(isPresented: $showingYearPicker) {
+            YearPickerView(selectedYears: $selectedYears, availableYears: availableYears)
         }
         .tint(.primary)
     }
@@ -89,6 +166,65 @@ struct SearchMusicView: View {
                 self.viewModel.resetResults()
             } else {
                 await viewModel.performSearch(for: searchTerm)
+            }
+        }
+    }
+}
+
+extension SearchMusicView {
+    struct YearPickerView: View {
+        @Binding var selectedYears: Set<String>
+        let availableYears: [String]
+        @Environment(\.dismiss) private var dismiss
+        @Environment(\.colorScheme) private var colorScheme
+        
+        var body: some View {
+            NavigationStack {
+                List {
+                    ForEach(availableYears, id: \.self) { year in
+                        Button {
+                            if selectedYears.contains(year) {
+                                selectedYears.remove(year)
+                            } else {
+                                selectedYears.insert(year)
+                            }
+                        } label: {
+                            HStack {
+                                Text(year)
+                                    .font(Theme.shared.avenir(size: 16, weight: .medium))
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                if selectedYears.contains(year) {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.blue)
+                                        .fontWeight(.semibold)
+                                }
+                            }
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+                .navigationTitle("Filter by Year")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Clear") {
+                            selectedYears.removeAll()
+                        }
+                        .font(Theme.shared.avenir(size: 16, weight: .medium))
+                        .foregroundColor(.blue)
+                        .disabled(selectedYears.isEmpty)
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Done") {
+                            dismiss()
+                        }
+                        .font(Theme.shared.avenir(size: 16, weight: .medium))
+                        .foregroundColor(.primary)
+                    }
+                }
             }
         }
     }

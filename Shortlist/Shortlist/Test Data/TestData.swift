@@ -39,6 +39,7 @@ struct TestData {
                 rank: 1,
                 shortlistId: "uniqueShortlistID",
                 upc: "00602567705499",
+                appleAlbumURL: nil,
                 recordID: CKRecord.ID(recordName: "uniqueAlbumRecordName")
             )
         }()
@@ -52,6 +53,7 @@ struct TestData {
                 rank: 2,
                 shortlistId: "uniqueShortlistID",
                 upc: "00602567725428",
+                appleAlbumURL: nil,
                 recordID: CKRecord.ID(recordName: "uniqueAlbumRecordName")
             )
         }()
@@ -65,6 +67,7 @@ struct TestData {
                 rank: 3,
                 shortlistId: "uniqueShortlistID",
                 upc: "00602577087097",
+                appleAlbumURL: nil,
                 recordID: CKRecord.ID(recordName: "uniqueAlbumRecordName")
             )
         }()
@@ -78,6 +81,7 @@ struct TestData {
                 rank: 4,
                 shortlistId: "uniqueShortlistID",
                 upc: "00602567713449",
+                appleAlbumURL: nil,
                 recordID: CKRecord.ID(recordName: "uniqueAlbumRecordName")
             )
         }()
@@ -91,6 +95,7 @@ struct TestData {
                 rank: 5,
                 shortlistId: "uniqueShortlistID",
                 upc: "00602567705475",
+                appleAlbumURL: nil,
                 recordID: CKRecord.ID(recordName: "uniqueAlbumRecordName")
             )
         }()
@@ -104,6 +109,7 @@ struct TestData {
                 rank: 6,
                 shortlistId: "uniqueShortlistID",
                 upc: "00602567705437",
+                appleAlbumURL: nil,
                 recordID: CKRecord.ID(recordName: "uniqueAlbumRecordName")
             )
         }()

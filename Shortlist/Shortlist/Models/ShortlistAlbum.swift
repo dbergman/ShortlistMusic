@@ -16,6 +16,7 @@ struct ShortlistAlbum: Hashable, Identifiable {
     let rank: Int
     let shortlistId: String
     let upc: String?
+    let appleAlbumURL: String?
     var recordID: CKRecord.ID
 }
 
@@ -39,6 +40,7 @@ extension ShortlistAlbum {
         self.rank = rank
         self.shortlistId = shortlistId
         self.upc = record["upc"] as? String
+        self.appleAlbumURL = record["appleAlbumURL"] as? String
         recordID = record.recordID
     }
     
@@ -50,6 +52,7 @@ extension ShortlistAlbum {
         self.rank = rank
         self.shortlistId = shortlistAlbum.shortlistId
         self.upc = shortlistAlbum.upc
+        self.appleAlbumURL = shortlistAlbum.appleAlbumURL
         recordID = shortlistAlbum.recordID
     }
 }

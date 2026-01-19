@@ -21,6 +21,20 @@
                ReferencedContainer = "container:Shortlist.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8B81E3602E96073F00008120"
+               BuildableName = "ShortListMusicWidgetExtension.appex"
+               BlueprintName = "ShortListMusicWidgetExtension"
+               ReferencedContainer = "container:Shortlist.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

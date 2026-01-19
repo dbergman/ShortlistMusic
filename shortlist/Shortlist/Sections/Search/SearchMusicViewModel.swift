@@ -13,6 +13,10 @@ extension SearchMusicView {
         @Published var albums: [Content.Album] = []
 
         func performSearch(for searchTerm: String) async {
+            // Log analytics for search
+            AnalyticsManager.shared.logSearch(searchTerm: searchTerm)
+            AnalyticsManager.shared.logAlbumSearch(searchTerm: searchTerm)
+            
             var searchRequest = MusicCatalogSearchRequest(term: searchTerm, types: [MusicKit.Album.self])
             searchRequest.limit = 25
             let searchResponse = try? await searchRequest.response()

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,6 +26,7 @@
 		8B3EA0532E7623840090DD13 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B3EA0522E7623840090DD13 /* Launch Screen.storyboard */; };
 		8B3EA0552E76250A0090DD13 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8B3EA0542E76250A0090DD13 /* SkeletonUI */; };
 		8B5EB70E2986E82300AD9588 /* ShortlistAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */; };
+		8B5EB70F2986E82300AD9589 /* ShortlistAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */; };
 		8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D142C0161C5008849A2 /* CloudKitManager.swift */; };
 		8B5F2D182C10140E008849A2 /* UserErrorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */; };
 		8B685AD3290B791100F6AD7F /* ShortlistApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AD2290B791100F6AD7F /* ShortlistApp.swift */; };
@@ -37,8 +38,12 @@
 		8B685AEE290B86C800F6AD7F /* ShortlistDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */; };
 		8B81E3392E90AADB00008120 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B81E3382E90AADB00008120 /* AppConfiguration.swift */; };
 		8B81E33B2E90B16C00008120 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8B81E33A2E90B16C00008120 /* SkeletonUI */; };
+		8B81E3632E96073F00008120 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81E3622E96073F00008120 /* WidgetKit.framework */; };
+		8B81E3652E96073F00008120 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B81E3642E96073F00008120 /* SwiftUI.framework */; };
+		8B81E3762E96074100008120 /* ShortListMusicWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8B81E3612E96073F00008120 /* ShortListMusicWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8B84E2A82E19FD6D0018FB79 /* PillControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B84E2A72E19FD6D0018FB79 /* PillControl.swift */; };
 		8B88B3532E5AAF68003E03AE /* CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */; };
+		8B8E12342E9ABCDE00008120 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8E12332E9ABCDE00008120 /* SettingsView.swift */; };
 		8BA847D32E63CEA00079CEF3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA847D22E63CEA00079CEF3 /* ToastView.swift */; };
 		8BA847D52E63D95A0079CEF3 /* SpinningRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */; };
 		8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */; };
@@ -46,16 +51,45 @@
 		8BC843EF2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */; };
 		8BD097132D98BBAF005519F5 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD097122D98BBAF005519F5 /* SkeletonUI */; };
 		8BD0974C2DA335D1005519F5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD0974B2DA335D1005519F5 /* Theme.swift */; };
+		8BD0974D2DA335D1005519F6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD0974B2DA335D1005519F5 /* Theme.swift */; };
 		8BE61DA82E7637A200A375F3 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE61DA72E7637A200A375F3 /* LaunchView.swift */; };
 		8BE7D451295FB38F0099EF4E /* MusicPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D450295FB38F0099EF4E /* MusicPermissionView.swift */; };
 		8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4542960DD870099EF4E /* PresentationCoordinator.swift */; };
 		8BE7D4582965EE870099EF4E /* CreateShortlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4572965EE870099EF4E /* CreateShortlistViewModel.swift */; };
 		8BE7D45B2965F0520099EF4E /* Shortlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D45A2965F0520099EF4E /* Shortlist.swift */; };
+		8BE7D45C2965F0520099EF4F /* Shortlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D45A2965F0520099EF4E /* Shortlist.swift */; };
 		8BE7D45D2967AE210099EF4E /* ShortlistCollectionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D45C2967AE210099EF4E /* ShortlistCollectionsViewModel.swift */; };
 		8BF28669295CF32F00E80C53 /* CreateShortlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF28668295CF32F00E80C53 /* CreateShortlistView.swift */; };
 		8BFB12C32B8A9D82005E3C35 /* EditShortlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB12C22B8A9D82005E3C35 /* EditShortlistView.swift */; };
 		8BFB12C52B8A9DE3005E3C35 /* EditShortlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFB12C42B8A9DE3005E3C35 /* EditShortlistViewModel.swift */; };
+		8BFCEAAD2F188FC2007043AB /* MusicKitLoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFCEAAC2F188FC2007043AB /* MusicKitLoadingOverlay.swift */; };
+		8BFCEACA2F1DD56A007043AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BFCEAC92F1DD56A007043AB /* GoogleService-Info.plist */; };
+		8BFCEACB2F1DD0BF007043AB /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFCEACC2F1DD0BF007043AB /* AnalyticsManager.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8B81E3742E96074100008120 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B685AC7290B791100F6AD7F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B81E3602E96073F00008120;
+			remoteInfo = ShortListMusicWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8B81E3772E96074100008120 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8B81E3762E96074100008120 /* ShortListMusicWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2C07DA8763C24E80B7CD6090 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -88,8 +122,12 @@
 		8B685AEB290B7B3300F6AD7F /* ShortlistCollectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistCollectionsView.swift; sourceTree = "<group>"; };
 		8B685AED290B86C800F6AD7F /* ShortlistDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistDetailsView.swift; sourceTree = "<group>"; };
 		8B81E3382E90AADB00008120 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		8B81E3612E96073F00008120 /* ShortListMusicWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShortListMusicWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B81E3622E96073F00008120 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		8B81E3642E96073F00008120 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		8B84E2A72E19FD6D0018FB79 /* PillControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillControl.swift; sourceTree = "<group>"; };
 		8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButton.swift; sourceTree = "<group>"; };
+		8B8E12332E9ABCDE00008120 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8BA847D22E63CEA00079CEF3 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningRecordView.swift; sourceTree = "<group>"; };
 		8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailView.swift; sourceTree = "<group>"; };
@@ -106,7 +144,24 @@
 		8BF28668295CF32F00E80C53 /* CreateShortlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShortlistView.swift; sourceTree = "<group>"; };
 		8BFB12C22B8A9D82005E3C35 /* EditShortlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShortlistView.swift; sourceTree = "<group>"; };
 		8BFB12C42B8A9DE3005E3C35 /* EditShortlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShortlistViewModel.swift; sourceTree = "<group>"; };
+		8BFCEAAC2F188FC2007043AB /* MusicKitLoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicKitLoadingOverlay.swift; sourceTree = "<group>"; };
+		8BFCEAC92F1DD56A007043AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8BFCEACC2F1DD0BF007043AB /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8B81E37A2E96074100008120 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8B81E3602E96073F00008120 /* ShortListMusicWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		8B81E3662E96073F00008120 /* ShortListMusicWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (8B81E37A2E96074100008120 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = ShortListMusicWidget; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		8B685ACC290B791100F6AD7F /* Frameworks */ = {
@@ -120,6 +175,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B81E35E2E96073F00008120 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B81E3652E96073F00008120 /* SwiftUI.framework in Frameworks */,
+				8B81E3632E96073F00008120 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -127,6 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				8B15AEAA2953F023005CE9F6 /* MusicKit.framework */,
+				8B81E3622E96073F00008120 /* WidgetKit.framework */,
+				8B81E3642E96073F00008120 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -134,6 +200,7 @@
 		8B15AEAD29554AD6005CE9F6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8BFCEAAC2F188FC2007043AB /* MusicKitLoadingOverlay.swift */,
 				8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */,
 				8BA847D22E63CEA00079CEF3 /* ToastView.swift */,
 				8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */,
@@ -195,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				8B685AD1290B791100F6AD7F /* Shortlist */,
+				8B81E3662E96073F00008120 /* ShortListMusicWidget */,
 				8B685AD0290B791100F6AD7F /* Products */,
 				8B15AEA92953F023005CE9F6 /* Frameworks */,
 			);
@@ -204,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				8B685ACF290B791100F6AD7F /* Shortlist.app */,
+				8B81E3612E96073F00008120 /* ShortListMusicWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -211,7 +280,9 @@
 		8B685AD1290B791100F6AD7F /* Shortlist */ = {
 			isa = PBXGroup;
 			children = (
+				8BFCEAC92F1DD56A007043AB /* GoogleService-Info.plist */,
 				8BE7D456296283570099EF4E /* Info.plist */,
+				8BFCEAC72F1DCFEE007043AB /* Analytics */,
 				8BE61DA62E76377400A375F3 /* Launch */,
 				8BD0974A2DA335B3005519F5 /* Theme */,
 				8BE7D4592965F02A0099EF4E /* Models */,
@@ -254,6 +325,7 @@
 				8BF43F85295F6778007946C6 /* Create Shortlist */,
 				8BF28667295CF2CF00E80C53 /* Shortlist Detail */,
 				8BF28666295CF2BF00E80C53 /* Shortlists */,
+				8B8E12372E9ABCDE00008120 /* Settings */,
 				8B81E3372E90AAC000008120 /* App */,
 			);
 			path = Collections;
@@ -278,6 +350,14 @@
 				8B685AD2290B791100F6AD7F /* ShortlistApp.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		8B8E12372E9ABCDE00008120 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8B8E12332E9ABCDE00008120 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		8BD0974A2DA335B3005519F5 /* Theme */ = {
@@ -353,6 +433,14 @@
 			path = "Edit Shortlist";
 			sourceTree = "<group>";
 		};
+		8BFCEAC72F1DCFEE007043AB /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				8BFCEACC2F1DD0BF007043AB /* AnalyticsManager.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -363,15 +451,43 @@
 				8B685ACB290B791100F6AD7F /* Sources */,
 				8B685ACC290B791100F6AD7F /* Frameworks */,
 				8B685ACD290B791100F6AD7F /* Resources */,
+				8B81E3772E96074100008120 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8B81E3752E96074100008120 /* PBXTargetDependency */,
+			);
+			name = Shortlist;
+			packageProductDependencies = (
+				8BFCEAC92F1DD0BF007043AB /* FirebaseAnalytics */,
+				8BFCEACA2F1DD0BF007043AB /* FirebaseCore */,
+			);
+			productName = shortlist;
+			productReference = 8B685ACF290B791100F6AD7F /* Shortlist.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8B81E3602E96073F00008120 /* ShortListMusicWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B81E37B2E96074100008120 /* Build configuration list for PBXNativeTarget "ShortListMusicWidgetExtension" */;
+			buildPhases = (
+				8B81E35D2E96073F00008120 /* Sources */,
+				8B81E35E2E96073F00008120 /* Frameworks */,
+				8B81E35F2E96073F00008120 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Shortlist;
-			productName = shortlist;
-			productReference = 8B685ACF290B791100F6AD7F /* Shortlist.app */;
-			productType = "com.apple.product-type.application";
+			fileSystemSynchronizedGroups = (
+				8B81E3662E96073F00008120 /* ShortListMusicWidget */,
+			);
+			name = ShortListMusicWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = ShortListMusicWidgetExtension;
+			productReference = 8B81E3612E96073F00008120 /* ShortListMusicWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -380,11 +496,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1400;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					8B685ACE290B791100F6AD7F = {
 						CreatedOnToolsVersion = 14.0.1;
+					};
+					8B81E3602E96073F00008120 = {
+						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
@@ -399,12 +518,14 @@
 			mainGroup = 8B685AC6290B791100F6AD7F;
 			packageReferences = (
 				8BD097112D98BBAF005519F5 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
+				8BFCEAC82F1DD0BF007043AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 8B685AD0290B791100F6AD7F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				8B685ACE290B791100F6AD7F /* Shortlist */,
+				8B81E3602E96073F00008120 /* ShortListMusicWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -415,8 +536,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3EA0532E7623840090DD13 /* Launch Screen.storyboard in Resources */,
+				8BFCEACA2F1DD56A007043AB /* GoogleService-Info.plist in Resources */,
 				8B685AE0290B791300F6AD7F /* Preview Assets.xcassets in Resources */,
 				8B685ADC290B791300F6AD7F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B81E35F2E96073F00008120 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +559,7 @@
 				8B330E3A2B2FAECA00EA07C0 /* TestData.swift in Sources */,
 				8BE7D4582965EE870099EF4E /* CreateShortlistViewModel.swift in Sources */,
 				8B15AEB32957671C005CE9F6 /* SearchAlbumsViewModel.swift in Sources */,
+				8BFCEAAD2F188FC2007043AB /* MusicKitLoadingOverlay.swift in Sources */,
 				8BE7D45B2965F0520099EF4E /* Shortlist.swift in Sources */,
 				8B685AEC290B7B3300F6AD7F /* ShortlistCollectionsView.swift in Sources */,
 				8B15AEB129576581005CE9F6 /* SearchAlbumsView.swift in Sources */,
@@ -463,16 +593,35 @@
 				8B06B1D12B3953EE00260A8D /* TestSwiftUI.swift in Sources */,
 				8BD0974C2DA335D1005519F5 /* Theme.swift in Sources */,
 				8BFB12C52B8A9DE3005E3C35 /* EditShortlistViewModel.swift in Sources */,
+				8B8E12342E9ABCDE00008120 /* SettingsView.swift in Sources */,
 				8B685AD8290B791100F6AD7F /* Shortlist.xcdatamodeld in Sources */,
 				8B15AEBF295CC752005CE9F6 /* SearchMusicAlbumCell.swift in Sources */,
 				8B685AEE290B86C800F6AD7F /* ShortlistDetailsView.swift in Sources */,
 				8B15AEBB295BC6F8005CE9F6 /* MusicKit+Extension.swift in Sources */,
 				8B15AEB5295A2851005CE9F6 /* SearchMusicViewModel.swift in Sources */,
-				8B81E3362E90A22100008120 /* ZoomableImageView.swift in Sources */,
+				8BFCEACB2F1DD0BF007043AB /* AnalyticsManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B81E35D2E96073F00008120 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BE7D45C2965F0520099EF4F /* Shortlist.swift in Sources */,
+				8B5EB70F2986E82300AD9589 /* ShortlistAlbum.swift in Sources */,
+				8BD0974D2DA335D1005519F6 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8B81E3752E96074100008120 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8B81E3602E96073F00008120 /* ShortListMusicWidgetExtension */;
+			targetProxy = 8B81E3742E96074100008120 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8B685AE1290B791300F6AD7F /* Debug */ = {
@@ -623,7 +772,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
@@ -669,7 +818,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
@@ -683,6 +832,76 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		8B81E3782E96074100008120 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ShortListMusicWidget/ShortListMusicWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShortListMusicWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShortListMusicWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dus.shortList.dev.ShortListMusicWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8B81E3792E96074100008120 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ShortListMusicWidget/ShortListMusicWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShortListMusicWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShortListMusicWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dus.shortList.ShortListMusicWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -707,6 +926,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		8B81E37B2E96074100008120 /* Build configuration list for PBXNativeTarget "ShortListMusicWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B81E3782E96074100008120 /* Debug */,
+				8B81E3792E96074100008120 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -716,6 +944,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.0.2;
+			};
+		};
+		8BFCEAC82F1DD0BF007043AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.8.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -735,6 +971,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8BD097112D98BBAF005519F5 /* XCRemoteSwiftPackageReference "SkeletonUI" */;
 			productName = SkeletonUI;
+		};
+		8BFCEAC92F1DD0BF007043AB /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BFCEAC82F1DD0BF007043AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		8BFCEACA2F1DD0BF007043AB /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BFCEAC82F1DD0BF007043AB /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 

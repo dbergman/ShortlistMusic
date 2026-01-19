@@ -31,13 +31,8 @@ extension AlbumDetailView {
         }
 
         func loadTracks(for album: Album, recordID: CKRecord.ID? = nil) async {
-            let detailedAlbum = try? await album.with([.artists, .tracks])
-
-            guard let albumTracks = detailedAlbum?.tracks else { return }
-
-            let theTracks = albumTracks.map { Content.TrackDetails(title: $0.title, duration: $0.displayDuration) }
-
-            let details = Content(
+            // First, create basic album content with available data (fast)
+            let basicDetails = Content(
                 id: album.id.rawValue,
                 artist: album.artistName,
                 artworkURL: album.artwork?.url(width: Int(screenSize), height: Int(screenSize)),
@@ -47,12 +42,55 @@ extension AlbumDetailView {
                 appleAlbumURL: album.url,
                 spotifyAlbumSearchDeeplink: URL(string: "spotify://search/\(album.title)"),
                 recordID: recordID,
-                trackDetails: theTracks
+                trackDetails: [] // Will be populated below
             )
-
-            self.album = details
-
-            currentShortlistAlbums = await withCheckedContinuation { continuation in
+            
+            // Show basic album info immediately
+            self.album = basicDetails
+            isloading = false
+            
+            // Log analytics for album viewed
+            AnalyticsManager.shared.logAlbumViewed(
+                albumTitle: album.title,
+                artist: album.artistName
+            )
+            AnalyticsManager.shared.logScreenView(
+                screenName: "Album Detail",
+                screenClass: "AlbumDetailView"
+            )
+            
+            // Load tracks and CloudKit albums in parallel (non-blocking)
+            async let detailedAlbumTask = album.with([.artists, .tracks])
+            async let cloudKitAlbumsTask = loadShortlistAlbums()
+            
+            // Wait for tracks (needed for display)
+            if let detailedAlbum = try? await detailedAlbumTask,
+               let albumTracks = detailedAlbum.tracks {
+                let theTracks = albumTracks.map { Content.TrackDetails(title: $0.title, duration: $0.displayDuration) }
+                
+                // Update with track details
+                let updatedDetails = Content(
+                    id: basicDetails.id,
+                    artist: basicDetails.artist,
+                    artworkURL: basicDetails.artworkURL,
+                    title: basicDetails.title,
+                    upc: basicDetails.upc,
+                    releaseYear: basicDetails.releaseYear,
+                    appleAlbumURL: basicDetails.appleAlbumURL,
+                    spotifyAlbumSearchDeeplink: basicDetails.spotifyAlbumSearchDeeplink,
+                    recordID: basicDetails.recordID,
+                    trackDetails: theTracks
+                )
+                
+                self.album = updatedDetails
+            }
+            
+            // CloudKit albums loaded in background (for add/remove functionality)
+            currentShortlistAlbums = await cloudKitAlbumsTask
+        }
+        
+        private func loadShortlistAlbums() async -> [ShortlistAlbum]? {
+            return await withCheckedContinuation { continuation in
                 CloudKitManager.shared.updateShortlistAlbums(
                     shortlistID: shortlist.id,
                     action: .load
@@ -66,12 +104,39 @@ extension AlbumDetailView {
                     }
                 }
             }
-
-            isloading = false
         }
 
         
         func getAlbum(shortListAlbum: ShortlistAlbum, shortlist: Shortlist) async {
+            // Create basic content immediately from ShortlistAlbum data (fast)
+            let basicDetails = Content(
+                id: shortListAlbum.id,
+                artist: shortListAlbum.artist,
+                artworkURL: URL(string: shortListAlbum.artworkURLString),
+                title: shortListAlbum.title,
+                upc: nil,
+                releaseYear: nil,
+                appleAlbumURL: nil,
+                spotifyAlbumSearchDeeplink: URL(string: "spotify://search/\(shortListAlbum.title)"),
+                recordID: shortListAlbum.recordID,
+                trackDetails: []
+            )
+            
+            // Show basic album info immediately
+            self.album = basicDetails
+            isloading = false
+            
+            // Log analytics for album viewed
+            AnalyticsManager.shared.logAlbumViewed(
+                albumTitle: shortListAlbum.title,
+                artist: shortListAlbum.artist
+            )
+            AnalyticsManager.shared.logScreenView(
+                screenName: "Album Detail",
+                screenClass: "AlbumDetailView"
+            )
+            
+            // Load full album details in background
             let request = MusicCatalogResourceRequest<Album>(
                 matching: \.id,
                 memberOf: [MusicItemID(stringLiteral: shortListAlbum.id)]
@@ -79,7 +144,7 @@ extension AlbumDetailView {
             
             let response = try? await request.response()
             
-            if let album =  response?.items.first {
+            if let album = response?.items.first {
                 await loadTracks(for: album, recordID: shortListAlbum.recordID)
             }
         }
@@ -88,6 +153,11 @@ extension AlbumDetailView {
             guard let album = album else { return }
             
             isAddingToShortlist = true
+            
+            // Ensure we have current albums loaded
+            if currentShortlistAlbums == nil {
+                currentShortlistAlbums = await loadShortlistAlbums()
+            }
             
             let currentAlbumCount = currentShortlistAlbums?.count ?? 0
             
@@ -109,6 +179,13 @@ extension AlbumDetailView {
             
             // Check if the operation was successful
             if currentShortlistAlbums != nil {
+                // Log analytics for album added
+                AnalyticsManager.shared.logAlbumAdded(
+                    albumTitle: album.title,
+                    artist: album.artist,
+                    shortlistId: shortlist.id
+                )
+                
                 // Show success toast
                 toastMessage = "Added '\(album.title)' to '\(shortlist.name)'"
                 toastType = .success
@@ -138,6 +215,11 @@ extension AlbumDetailView {
             
             isRemovingFromShortlist = true
             
+            // Ensure we have current albums loaded
+            if currentShortlistAlbums == nil {
+                currentShortlistAlbums = await loadShortlistAlbums()
+            }
+            
             currentShortlistAlbums = await withCheckedContinuation { continuation in
                 CloudKitManager.shared.removeAlbumFromShortlist(
                     recordID: recordID,
@@ -155,6 +237,15 @@ extension AlbumDetailView {
             
             // Update ranking after successful removal
             if currentShortlistAlbums != nil {
+                // Log analytics for album removed
+                if let artist = album?.artist {
+                    AnalyticsManager.shared.logAlbumRemoved(
+                        albumTitle: albumTitle,
+                        artist: artist,
+                        shortlistId: shortlist.id
+                    )
+                }
+                
                 // Hide loading overlay first
                 isRemovingFromShortlist = false
                 
@@ -216,7 +307,11 @@ extension AlbumDetailView {
         }
         
         func isAlbumOnShortlist() async -> Bool {
-            currentShortlistAlbums?.contains { $0.id == self.album?.id } == true
+            // Load albums if not already loaded
+            if currentShortlistAlbums == nil {
+                currentShortlistAlbums = await loadShortlistAlbums()
+            }
+            return currentShortlistAlbums?.contains { $0.id == self.album?.id } == true
         }
         
         func isSpotifyInstalled() -> Bool {
