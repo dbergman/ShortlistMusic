@@ -59,9 +59,39 @@ struct ShortListMusicWidgetEntryView: View {
                     UIImage(named: "Background") ?? UIImage(),
                     targetSize: widgetSize
                 )
-                Image(uiImage: resizedImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+                let logoSize = min(widgetSize.width, widgetSize.height) * 0.95
+                let logoTargetSize = CGSize(width: logoSize, height: logoSize)
+                let logoImage = UIImage(named: "BackgroundLogo")
+                let resizedLogoImage = logoImage != nil ? WidgetDataHelper.resizeBackgroundImageForWidget(
+                    logoImage!,
+                    targetSize: logoTargetSize
+                ) : nil
+                
+                ZStack {
+                    Image(uiImage: resizedImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: widgetSize.width, height: widgetSize.height)
+                    
+                    // Background logo - centered, 95% size, 15% opacity
+                    if let resizedLogoImage = resizedLogoImage {
+                        Image(uiImage: resizedLogoImage)
+                            .renderingMode(.original)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: logoSize, height: logoSize)
+                            .opacity(0.3)
+                    } else {
+                        // Fallback to string-based image name
+                        Image("BackgroundLogo")
+                            .renderingMode(.original)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: logoSize, height: logoSize)
+                            .opacity(0.3)
+                    }
+                }
+                .frame(width: widgetSize.width, height: widgetSize.height)
             }
         }
     }
@@ -95,11 +125,6 @@ struct EmptySmallWidgetView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding()
             }
-            .overlay(alignment: .topTrailing) {
-                ShortListLogo(size: 30)
-                    .padding(.top, -12)
-                    .padding(.trailing, -12)
-            }
         }
         .widgetURL(WidgetDataHelper.openAppURL())
     }
@@ -131,11 +156,6 @@ struct EmptyMediumWidgetView: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            .overlay(alignment: .topTrailing) {
-                ShortListLogo(size: 30)
-                    .padding(.top, -12)
-                    .padding(.trailing, -12)
             }
         }
         .widgetURL(WidgetDataHelper.openAppURL())
@@ -169,11 +189,6 @@ struct EmptyLargeWidgetView: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            .overlay(alignment: .topTrailing) {
-                ShortListLogo(size: 30)
-                    .padding(.top, -12)
-                    .padding(.trailing, -12)
             }
         }
         .widgetURL(WidgetDataHelper.openAppURL())
@@ -282,12 +297,6 @@ struct SmallWidgetContentView: View {
                     .padding(.horizontal, 8)
                     
                     Spacer()
-                }
-                .overlay(alignment: .topTrailing) {
-                    // Logo in top right corner - positioned as close to corner as possible
-                    ShortListLogo(size: 30)
-                        .padding(.top, -12) // Negative padding to push closer to top edge
-                        .padding(.trailing, -12) // Negative padding to push closer to right edge
                 }
     }
 }
@@ -414,12 +423,6 @@ struct MediumWidgetView: View {
                 .padding(.bottom, 4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .overlay(alignment: .topTrailing) {
-                // Logo in top right corner
-                ShortListLogo(size: 30)
-                    .padding(.top, -12)
-                    .padding(.trailing, -12)
-            }
         }
         .widgetURL(WidgetDataHelper.openAppURL())
     }
@@ -465,12 +468,6 @@ struct LargeWidgetView: View {
                 .padding(.top, 8)
                 .padding(.bottom, 4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            .overlay(alignment: .topTrailing) {
-                // Logo in top right corner
-                ShortListLogo(size: 30)
-                    .padding(.top, -12)
-                    .padding(.trailing, -12)
             }
         }
         .widgetURL(WidgetDataHelper.openAppURL())
