@@ -12,7 +12,5 @@ import SwiftUI
 struct ShortListMusicWidgetBundle: WidgetBundle {
     var body: some Widget {
         ShortListMusicWidget()
-        ShortListMusicWidgetControl()
-        ShortListMusicWidgetLiveActivity()
     }
 }
