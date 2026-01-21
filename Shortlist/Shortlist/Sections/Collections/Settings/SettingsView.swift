@@ -47,7 +47,7 @@ struct SettingsView: View {
     }
     
     private var contactEmailBody: String {
-        "Dear Mr. Shortlst.\n\n"
+        "Dear Mr. Shortlist.\n\n"
     }
     
     @ViewBuilder

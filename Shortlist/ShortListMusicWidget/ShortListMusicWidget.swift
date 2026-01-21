@@ -10,15 +10,11 @@ import SwiftUI
 import CloudKit
 import UIKit
 
-// MARK: - Widget Entry
-
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let albums: [ShortlistAlbum]
-    let albumImages: [String: UIImage] // Cache of downloaded images keyed by album ID
+    let albumImages: [String: UIImage]
 }
-
-// MARK: - Widget View
 
 struct ShortListMusicWidgetEntryView: View {
     var entry: ShortListMusicWidgetProvider.Entry
@@ -27,77 +23,81 @@ struct ShortListMusicWidgetEntryView: View {
     var body: some View {
         Group {
             if entry.albums.isEmpty {
-                // Show empty state when no albums available
-                switch family {
-                case .systemSmall:
-                    EmptySmallWidgetView()
-                case .systemMedium:
-                    EmptyMediumWidgetView()
-                case .systemLarge:
-                    EmptyLargeWidgetView()
-                default:
-                    EmptySmallWidgetView()
-                }
+                emptyView
             } else {
-                // Show albums when available
-                switch family {
-                case .systemSmall:
-                    SmallWidgetView(album: entry.albums.first, image: entry.albums.first != nil ? entry.albumImages[entry.albums.first!.id] : nil)
-                case .systemMedium:
-                    MediumWidgetView(albums: entry.albums, albumImages: entry.albumImages)
-                case .systemLarge:
-                    LargeWidgetView(albums: entry.albums, albumImages: entry.albumImages)
-                default:
-                    SmallWidgetView(album: entry.albums.first, image: entry.albums.first != nil ? entry.albumImages[entry.albums.first!.id] : nil)
-                }
+                contentView
             }
         }
         .containerBackground(for: .widget) {
-            GeometryReader { geometry in
-                let widgetSize = geometry.size
-                let resizedImage = WidgetDataHelper.resizeBackgroundImageForWidget(
-                    UIImage(named: "Background") ?? UIImage(),
-                    targetSize: widgetSize
-                )
-                let logoSize = min(widgetSize.width, widgetSize.height) * 0.95
-                let logoTargetSize = CGSize(width: logoSize, height: logoSize)
-                let logoImage = UIImage(named: "BackgroundLogo")
-                let resizedLogoImage = logoImage != nil ? WidgetDataHelper.resizeBackgroundImageForWidget(
-                    logoImage!,
-                    targetSize: logoTargetSize
-                ) : nil
+            backgroundView
+        }
+    }
+    
+    @ViewBuilder
+    private var emptyView: some View {
+        switch family {
+        case .systemSmall: EmptySmallWidgetView()
+        case .systemMedium: EmptyMediumWidgetView()
+        case .systemLarge: EmptyLargeWidgetView()
+        default: EmptySmallWidgetView()
+        }
+    }
+    
+    @ViewBuilder
+    private var contentView: some View {
+        switch family {
+        case .systemSmall:
+            SmallWidgetView(
+                album: entry.albums.first,
+                image: entry.albums.first.flatMap { entry.albumImages[$0.id] }
+            )
+        case .systemMedium:
+            MediumWidgetView(albums: entry.albums, albumImages: entry.albumImages)
+        case .systemLarge:
+            LargeWidgetView(albums: entry.albums, albumImages: entry.albumImages)
+        default:
+            SmallWidgetView(
+                album: entry.albums.first,
+                image: entry.albums.first.flatMap { entry.albumImages[$0.id] }
+            )
+        }
+    }
+    
+    private var backgroundView: some View {
+        GeometryReader { geometry in
+            let widgetSize = geometry.size
+            let resizedImage = WidgetDataHelper.resizeBackgroundImageForWidget(
+                UIImage(named: "Background") ?? UIImage(),
+                targetSize: widgetSize
+            )
+            let logoSize = min(widgetSize.width, widgetSize.height) * 0.95
+            
+            ZStack {
+                Image(uiImage: resizedImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: widgetSize.width, height: widgetSize.height)
                 
-                ZStack {
-                    Image(uiImage: resizedImage)
+                if let logoImage = UIImage(named: "BackgroundLogo") {
+                    Image(uiImage: WidgetDataHelper.resizeBackgroundImageForWidget(logoImage, targetSize: CGSize(width: logoSize, height: logoSize)))
+                        .renderingMode(.original)
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: widgetSize.width, height: widgetSize.height)
-                    
-                    // Background logo - centered, 95% size, 15% opacity
-                    if let resizedLogoImage = resizedLogoImage {
-                        Image(uiImage: resizedLogoImage)
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: logoSize, height: logoSize)
-                            .opacity(0.3)
-                    } else {
-                        // Fallback to string-based image name
-                        Image("BackgroundLogo")
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: logoSize, height: logoSize)
-                            .opacity(0.3)
-                    }
+                        .scaledToFit()
+                        .frame(width: logoSize, height: logoSize)
+                        .opacity(0.3)
+                } else {
+                    Image("BackgroundLogo")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: logoSize, height: logoSize)
+                        .opacity(0.3)
                 }
-                .frame(width: widgetSize.width, height: widgetSize.height)
             }
+            .frame(width: widgetSize.width, height: widgetSize.height)
         }
     }
 }
-
-// MARK: - Empty State Views
 
 struct EmptySmallWidgetView: View {
     var body: some View {
@@ -195,8 +195,6 @@ struct EmptyLargeWidgetView: View {
     }
 }
 
-// MARK: - Widget Size Views
-
 struct SmallWidgetView: View {
     let album: ShortlistAlbum?
     let image: UIImage?
@@ -225,62 +223,37 @@ struct SmallWidgetContentView: View {
         VStack(spacing: 8) {
             Spacer()
             
-            // Album artwork - square with rounded corners
             Group {
-                        if let image = image {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFill()
-                        } else if let album = album, !album.artworkURLString.isEmpty {
-                            // Resize URL for high quality widget display
-                            let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 400)
-                            if let url = URL(string: resizedURL) {
-                                AsyncImage(url: url) { phase in
-                                    switch phase {
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .scaledToFill()
-                                    case .failure, .empty:
-                                        Rectangle()
-                                            .fill(Color.gray.opacity(0.3))
-                                            .overlay(
-                                                Image(systemName: "music.note")
-                                                    .font(.system(size: 30))
-                                                    .foregroundColor(.gray)
-                                            )
-                                    @unknown default:
-                                        Rectangle()
-                                            .fill(Color.gray.opacity(0.3))
-                                    }
-                                }
-                            } else {
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
-                                    .overlay(
-                                        Image(systemName: "music.note")
-                                            .font(.system(size: 30))
-                                            .foregroundColor(.gray)
-                                    )
+                if let image = image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                } else if let album = album, !album.artworkURLString.isEmpty {
+                    let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 400)
+                    if let url = URL(string: resizedURL) {
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image.resizable().scaledToFill()
+                            case .failure, .empty:
+                                placeholderImage(size: 30)
+                            @unknown default:
+                                Rectangle().fill(Color.gray.opacity(0.3))
                             }
-                        } else {
-                            // Placeholder if no image or album
-                            Rectangle()
-                                .fill(Color.gray.opacity(0.3))
-                                .overlay(
-                                    Image(systemName: "music.note")
-                                        .font(.system(size: 30))
-                                        .foregroundColor(.gray)
-                                )
                         }
+                    } else {
+                        placeholderImage(size: 30)
                     }
-                    .frame(width: geometry.size.width * 0.6)
-                    .aspectRatio(1, contentMode: .fit)
-                    .clipped()
-                    .cornerRadius(6)
-                    
-                    // Album title and artist below artwork
-                    VStack(alignment: .center, spacing: 2) {
+                } else {
+                    placeholderImage(size: 30)
+                }
+            }
+            .frame(width: geometry.size.width * 0.6)
+            .aspectRatio(1, contentMode: .fit)
+            .clipped()
+            .cornerRadius(6)
+            
+            VStack(alignment: .center, spacing: 2) {
                         if let album = album {
                             Text(album.title)
                                 .font(Theme.shared.avenir(size: 13, weight: .bold))
@@ -292,16 +265,25 @@ struct SmallWidgetContentView: View {
                                 .foregroundColor(.primary)
                                 .lineLimit(1)
                         }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 8)
-                    
-                    Spacer()
-                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 8)
+            
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    private func placeholderImage(size: CGFloat) -> some View {
+        Rectangle()
+            .fill(Color.gray.opacity(0.3))
+            .overlay(
+                Image(systemName: "music.note")
+                    .font(.system(size: size))
+                    .foregroundColor(.gray)
+            )
     }
 }
-
-// MARK: - Reusable Album Cell View
 
 struct AlbumCellView: View {
     let album: ShortlistAlbum
@@ -326,52 +308,29 @@ struct AlbumCellContentView: View {
     
     var body: some View {
         VStack(spacing: 6) {
-            // Album artwork - square with rounded corners
             Group {
                 if let image = image {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
                 } else if !album.artworkURLString.isEmpty {
-                    // Resize URL for high quality widget display
                     let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 400)
                     if let url = URL(string: resizedURL) {
                         AsyncImage(url: url) { phase in
                             switch phase {
                             case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
+                                image.resizable().scaledToFill()
                             case .failure, .empty:
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
-                                    .overlay(
-                                        Image(systemName: "music.note")
-                                            .font(.system(size: imageSize * 0.3))
-                                            .foregroundColor(.gray)
-                                    )
+                                placeholderImage
                             @unknown default:
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
+                                Rectangle().fill(Color.gray.opacity(0.3))
                             }
                         }
                     } else {
-                        Rectangle()
-                            .fill(Color.gray.opacity(0.3))
-                            .overlay(
-                                Image(systemName: "music.note")
-                                    .font(.system(size: imageSize * 0.3))
-                                    .foregroundColor(.gray)
-                            )
+                        placeholderImage
                     }
                 } else {
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.3))
-                        .overlay(
-                            Image(systemName: "music.note")
-                                .font(.system(size: imageSize * 0.3))
-                                .foregroundColor(.gray)
-                        )
+                    placeholderImage
                 }
             }
             .frame(width: imageSize, height: imageSize)
@@ -379,7 +338,6 @@ struct AlbumCellContentView: View {
             .clipped()
             .cornerRadius(6)
             
-            // Album title and artist
             VStack(alignment: .center, spacing: 1) {
                 Text(album.title)
                     .font(Theme.shared.avenir(size: 13, weight: .bold))
@@ -395,6 +353,16 @@ struct AlbumCellContentView: View {
             .frame(maxWidth: imageSize)
             .padding(.horizontal, 2)
         }
+    }
+    
+    private var placeholderImage: some View {
+        Rectangle()
+            .fill(Color.gray.opacity(0.3))
+            .overlay(
+                Image(systemName: "music.note")
+                    .font(.system(size: imageSize * 0.3))
+                    .foregroundColor(.gray)
+            )
     }
 }
 
@@ -438,43 +406,31 @@ struct LargeWidgetView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                VStack(spacing: 12) {
-                    // Top row - first 3 albums (or fewer if not enough)
-                    HStack(spacing: 10) {
-                        ForEach(Array(displayAlbums.prefix(3))) { album in
-                            AlbumCellView(
-                                album: album,
-                                image: albumImages[album.id],
-                                imageSize: min((geometry.size.width - 48) / 3, (geometry.size.height - 40) / 2)
-                            )
-                        }
+            let imageSize = min((geometry.size.width - 48) / 3, (geometry.size.height - 40) / 2)
+            
+            VStack(spacing: 12) {
+                HStack(spacing: 10) {
+                    ForEach(Array(displayAlbums.prefix(3))) { album in
+                        AlbumCellView(album: album, image: albumImages[album.id], imageSize: imageSize)
                     }
-                    
-                    // Bottom row - remaining albums (if any)
-                    if displayAlbums.count > 3 {
-                        HStack(spacing: 10) {
-                            ForEach(Array(displayAlbums.suffix(displayAlbums.count - 3))) { album in
-                                AlbumCellView(
-                                    album: album,
-                                    image: albumImages[album.id],
-                                    imageSize: min((geometry.size.width - 48) / 3, (geometry.size.height - 40) / 2)
-                                )
-                            }
+                }
+                
+                if displayAlbums.count > 3 {
+                    HStack(spacing: 10) {
+                        ForEach(Array(displayAlbums.suffix(displayAlbums.count - 3))) { album in
+                            AlbumCellView(album: album, image: albumImages[album.id], imageSize: imageSize)
                         }
                     }
                 }
-                .padding(.horizontal, 12)
-                .padding(.top, 8)
-                .padding(.bottom, 4)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .padding(.horizontal, 12)
+            .padding(.top, 8)
+            .padding(.bottom, 4)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .widgetURL(WidgetDataHelper.openAppURL())
     }
 }
-
-// MARK: - Widget Configuration
 
 struct ShortListMusicWidget: Widget {
     let kind: String = "ShortListMusicWidget"
@@ -488,8 +444,6 @@ struct ShortListMusicWidget: Widget {
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
 }
-
-// MARK: - Preview Data
 
 extension ShortlistAlbum {
     static let preview = ShortlistAlbum(
