@@ -29,6 +29,7 @@ struct ShortlistDetailsView: View {
     @State private var showToast = false
     @State private var toastMessage = ""
     @State private var toastType: ToastView.ToastType = .success
+    @State private var hasAppeared = false
     @Environment(\.colorScheme) private var colorScheme
     
     let layout = [
@@ -120,19 +121,26 @@ struct ShortlistDetailsView: View {
             SearchMusicView(isPresented: $isPresented, shortlist: viewModel.shortlist)
         })
         .onAppear() {
-            // Log screen view and shortlist viewed analytics
-            AnalyticsManager.shared.logScreenView(
-                screenName: "Shortlist Detail",
-                screenClass: "ShortlistDetailsView"
-            )
-            AnalyticsManager.shared.logShortlistViewed(
-                shortlistId: viewModel.shortlist.id,
-                shortlistName: viewModel.shortlist.name
-            )
-            
-            viewModel.isLoading = true
+            // Always refresh albums when view appears, but only show loading on first appearance
             Task {
-                try await viewModel.getAlbums(for: viewModel.shortlist)
+                if !hasAppeared {
+                    // First appearance - log analytics and show loading
+                    AnalyticsManager.shared.logScreenView(
+                        screenName: "Shortlist Detail",
+                        screenClass: "ShortlistDetailsView"
+                    )
+                    AnalyticsManager.shared.logShortlistViewed(
+                        shortlistId: viewModel.shortlist.id,
+                        shortlistName: viewModel.shortlist.name
+                    )
+                    
+                    viewModel.isLoading = true
+                    hasAppeared = true
+                    try await viewModel.getAlbums(for: viewModel.shortlist)
+                } else {
+                    // Subsequent appearances - silent refresh without showing loading state
+                    try? await viewModel.getAlbumsSilently(for: viewModel.shortlist)
+                }
             }
         }
         .environmentObject(viewModel)
@@ -276,7 +284,7 @@ struct ShortlistDetailsView: View {
                     .lineLimit(1)
                 Spacer()
             }
-            .frame(height: 230)
+            .frame(height: 200)
             .padding()
             .background(albumCardBackground)
             .cornerRadius(16)
@@ -383,7 +391,7 @@ struct ShortlistDetailsView: View {
                         
                         Spacer()
                     }
-                    .frame(height: 230)
+                    .frame(height: 200)
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 16)

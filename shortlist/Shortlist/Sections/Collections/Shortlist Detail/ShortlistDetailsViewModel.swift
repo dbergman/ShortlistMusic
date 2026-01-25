@@ -46,6 +46,29 @@ extension ShortlistDetailsView {
             }
         }
         
+        func getAlbumsSilently(for shortlist: Shortlist) async throws {
+            // Refresh albums without showing loading state
+            do {
+                let updatedShortlist = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Shortlist, Error>) in
+                    CloudKitManager.shared.getAlbums(for: shortlist, completion: { result in
+                        switch result {
+                        case .success(let shortlist):
+                            continuation.resume(returning: shortlist)
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
+                    })
+                }
+                
+                await MainActor.run {
+                    self.shortlist = updatedShortlist
+                }
+            } catch {
+                // Silently handle errors - don't show loading state
+                throw error
+            }
+        }
+        
         func updateShortlistAlbumRanking(sortedAlbums: [ShortlistAlbum]) async throws {
             do {
                 let updatedShortlist = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Shortlist, Error>) in
