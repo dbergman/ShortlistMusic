@@ -178,7 +178,15 @@ extension AlbumDetailView {
             }
             
             // Check if the operation was successful
-            if currentShortlistAlbums != nil {
+            if let updatedAlbums = currentShortlistAlbums {
+                // Find the newly added album and update the recordID
+                if let addedAlbum = updatedAlbums.first(where: { $0.id == album.id }),
+                   var currentAlbum = self.album {
+                    // Update the album's recordID so it can be removed later
+                    currentAlbum.recordID = addedAlbum.recordID
+                    self.album = currentAlbum
+                }
+                
                 // Log analytics for album added
                 AnalyticsManager.shared.logAlbumAdded(
                     albumTitle: album.title,
@@ -237,6 +245,12 @@ extension AlbumDetailView {
             
             // Update ranking after successful removal
             if currentShortlistAlbums != nil {
+                // Clear the recordID since the album is no longer on the shortlist
+                if var currentAlbum = self.album {
+                    currentAlbum.recordID = nil
+                    self.album = currentAlbum
+                }
+                
                 // Log analytics for album removed
                 if let artist = album?.artist {
                     AnalyticsManager.shared.logAlbumRemoved(

@@ -188,7 +188,8 @@ extension AlbumDetailView {
                                 await viewModel.addAlbumToShortlist()
                                 albumWasAdded = true
                             }
-                            albumOnShortlist.toggle()
+                            // Refresh the actual state after the operation
+                            albumOnShortlist = await viewModel.isAlbumOnShortlist()
                         }
                     }
                 }
