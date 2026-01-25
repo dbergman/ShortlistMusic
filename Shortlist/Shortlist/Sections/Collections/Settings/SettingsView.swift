@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 import MessageUI
+import StoreKit
 
 enum MusicService: String, CaseIterable {
     case spotify = "Spotify"
@@ -142,6 +143,25 @@ struct SettingsView: View {
                 
                 Section {
                     Button {
+                        AnalyticsManager.shared.logEvent("review_button_tapped", parameters: [
+                            "screen": "settings",
+                            "button_name": "rate_app"
+                        ])
+                        ReviewPromptHelper.requestReview()
+                    } label: {
+                        HStack {
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                            Text("Rate App")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    
+                    Button {
                         if MFMailComposeViewController.canSendMail() {
                             showingContactMail = true
                         }
@@ -158,7 +178,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Support")
                 } footer: {
-                    Text("Have a feature request or question? Send us an email!")
+                    Text("Have a feature request or question? Send me an email!")
                 }
             }
             .navigationTitle("Settings")
@@ -184,7 +204,7 @@ struct SettingsView: View {
                             .font(.title2)
                             .fontWeight(.semibold)
                         
-                        Text("Your device is not configured to send emails. Please configure Mail in Settings or contact us at shortlistapp01@gmail.com")
+                        Text("Your device is not configured to send emails. Please configure Mail in Settings or contact me at shortlistapp01@gmail.com")
                             .multilineTextAlignment(.center)
                             .foregroundColor(.secondary)
                         

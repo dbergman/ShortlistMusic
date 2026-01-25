@@ -22,6 +22,7 @@
 		8B15AEBD295CC653005CE9F6 /* SearchMusicArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15AEBC295CC653005CE9F6 /* SearchMusicArtistCell.swift */; };
 		8B15AEBF295CC752005CE9F6 /* SearchMusicAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B15AEBE295CC752005CE9F6 /* SearchMusicAlbumCell.swift */; };
 		8B1EEAF32918910D00D28E47 /* MusicPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1EEAF22918910D00D28E47 /* MusicPermission.swift */; };
+		8B2FB90A2F259F9F007ED30A /* ReviewPromptHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2FB9092F259F9F007ED30A /* ReviewPromptHelper.swift */; };
 		8B330E3A2B2FAECA00EA07C0 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B330E392B2FAECA00EA07C0 /* TestData.swift */; };
 		8B3EA0532E7623840090DD13 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B3EA0522E7623840090DD13 /* Launch Screen.storyboard */; };
 		8B3EA0552E76250A0090DD13 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8B3EA0542E76250A0090DD13 /* SkeletonUI */; };
@@ -110,6 +111,7 @@
 		8B15AEBC295CC653005CE9F6 /* SearchMusicArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicArtistCell.swift; sourceTree = "<group>"; };
 		8B15AEBE295CC752005CE9F6 /* SearchMusicAlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMusicAlbumCell.swift; sourceTree = "<group>"; };
 		8B1EEAF22918910D00D28E47 /* MusicPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPermission.swift; sourceTree = "<group>"; };
+		8B2FB9092F259F9F007ED30A /* ReviewPromptHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptHelper.swift; sourceTree = "<group>"; };
 		8B330E392B2FAECA00EA07C0 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		8B3EA0522E7623840090DD13 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		8B5EB70D2986E82300AD9588 /* ShortlistAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistAlbum.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		8B15AEAD29554AD6005CE9F6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8B2FB9092F259F9F007ED30A /* ReviewPromptHelper.swift */,
 				8BDA48EA2F259CDB0086A0AB /* AppAvailabilityHelper.swift */,
 				8BFCEAAC2F188FC2007043AB /* MusicKitLoadingOverlay.swift */,
 				8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */,
@@ -584,6 +587,7 @@
 				8B88B3532E5AAF68003E03AE /* CustomBarButton.swift in Sources */,
 				8B685AEA290B7B1400F6AD7F /* SearchMusicView.swift in Sources */,
 				8BA847D52E63D95A0079CEF3 /* SpinningRecordView.swift in Sources */,
+				8B2FB90A2F259F9F007ED30A /* ReviewPromptHelper.swift in Sources */,
 				8B5F2D152C0161C5008849A2 /* CloudKitManager.swift in Sources */,
 				8BF28669295CF32F00E80C53 /* CreateShortlistView.swift in Sources */,
 				8B15AEAF29554B10005CE9F6 /* Formatters+StandardFormatters.swift in Sources */,
