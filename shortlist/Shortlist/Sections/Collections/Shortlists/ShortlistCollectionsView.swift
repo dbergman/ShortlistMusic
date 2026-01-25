@@ -187,9 +187,10 @@ extension ShortlistCollectionsView {
         }
         
         var body: some View {
-            if viewModel.isloading {
-                loadingPlaceholder()
-            } else if viewModel.shortlists.isEmpty {
+            GeometryReader { geometry in
+                if viewModel.isloading {
+                    loadingPlaceholder(screenWidth: geometry.size.width)
+                } else if viewModel.shortlists.isEmpty {
                 VStack(spacing: 16) {
                     Spacer()
 
@@ -267,16 +268,16 @@ extension ShortlistCollectionsView {
                                 
                                 VStack(spacing: 12) {
                                     HStack {
-                                        loadImage(from: shortlist, with: 0)
+                                        loadImage(from: shortlist, with: 0, screenWidth: geometry.size.width)
                                         VStack {
                                             Grid {
                                                 GridRow {
-                                                    loadImage(from: shortlist, with: 1)
-                                                    loadImage(from: shortlist, with: 2)
+                                                    loadImage(from: shortlist, with: 1, screenWidth: geometry.size.width)
+                                                    loadImage(from: shortlist, with: 2, screenWidth: geometry.size.width)
                                                 }
                                                 GridRow {
-                                                    loadImage(from: shortlist, with: 3)
-                                                    loadImage(from: shortlist, with: 4)
+                                                    loadImage(from: shortlist, with: 3, screenWidth: geometry.size.width)
+                                                    loadImage(from: shortlist, with: 4, screenWidth: geometry.size.width)
                                                 }
                                             }
                                         }
@@ -380,11 +381,12 @@ extension ShortlistCollectionsView {
                     }
                 }
             }
+            }
         }
         
         @ViewBuilder
-        private func loadImage(from shortlist: Shortlist?, with index: Int) -> some View {
-            let size = getImageSize(for: index)
+        private func loadImage(from shortlist: Shortlist?, with index: Int, screenWidth: CGFloat) -> some View {
+            let size = getImageSize(for: index, screenWidth: screenWidth)
             
             if
                 let shortlistAlbums = shortlist?.albums,
@@ -417,7 +419,7 @@ extension ShortlistCollectionsView {
         }
         
         @ViewBuilder
-        private func loadingPlaceholder() -> some View {
+        private func loadingPlaceholder(screenWidth: CGFloat) -> some View {
             List {
                 ForEach(0..<3) { _ in
                     VStack(spacing: 16) {
@@ -444,16 +446,16 @@ extension ShortlistCollectionsView {
                             
                             VStack(spacing: 12) {
                                 HStack {
-                                    placeHolderRect(with: getImageSize(for: 0))
+                                    placeHolderRect(with: getImageSize(for: 0, screenWidth: screenWidth))
                                     VStack {
                                         Grid {
                                             GridRow {
-                                                placeHolderRect(with: getImageSize(for: 1))
-                                                placeHolderRect(with: getImageSize(for: 2))
+                                                placeHolderRect(with: getImageSize(for: 1, screenWidth: screenWidth))
+                                                placeHolderRect(with: getImageSize(for: 2, screenWidth: screenWidth))
                                             }
                                             GridRow {
-                                                placeHolderRect(with: getImageSize(for: 3))
-                                                placeHolderRect(with: getImageSize(for: 4))
+                                                placeHolderRect(with: getImageSize(for: 3, screenWidth: screenWidth))
+                                                placeHolderRect(with: getImageSize(for: 4, screenWidth: screenWidth))
                                             }
                                         }
                                     }
@@ -501,10 +503,10 @@ extension ShortlistCollectionsView {
                 .frame(width: size, height: size)
         }
         
-        private func getImageSize(for index: Int) -> CGFloat {
-            let screenWidth = UIScreen.main.bounds.width
-            let imageWidth = 0.54545 * screenWidth - 54.55
-            let size: CGFloat = index == 0 ? imageWidth : (imageWidth - 10) / 2
+        private func getImageSize(for index: Int, screenWidth: CGFloat) -> CGFloat {
+            guard screenWidth > 0 else { return 100 } // Fallback for invalid geometry
+            let imageWidth = max(0.54545 * screenWidth - 54.55, 100)
+            let size: CGFloat = index == 0 ? imageWidth : max((imageWidth - 10) / 2, 50)
             
             return size
         }

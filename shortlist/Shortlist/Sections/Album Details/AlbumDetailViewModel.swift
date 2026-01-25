@@ -22,9 +22,9 @@ extension AlbumDetailView {
         @Published var toastType: ToastView.ToastType = .success
         let shortlist: Shortlist
         private var currentShortlistAlbums: [ShortlistAlbum]?
-        private let screenSize: CGFloat
+        @Published var screenSize: CGFloat
         
-        init(album: Content?, shortlist: Shortlist, screenSize: CGFloat) {
+        init(album: Content?, shortlist: Shortlist, screenSize: CGFloat = 400) {
             self.album = album
             self.shortlist = shortlist
             self.screenSize = screenSize

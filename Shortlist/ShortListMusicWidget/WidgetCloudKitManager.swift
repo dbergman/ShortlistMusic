@@ -53,7 +53,7 @@ class WidgetCloudKitManager {
             self.container.fetchUserRecordID { [weak self] userRecordID, error in
                 guard let self = self else { return }
                 
-                if let error = error {
+                if error != nil {
                     self.notifyCompletions(result: .success([]))
                     return
                 }

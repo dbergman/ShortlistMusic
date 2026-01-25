@@ -70,7 +70,7 @@ struct WidgetDataHelper {
         case .systemSmall: return 1
         case .systemMedium: return 3
         case .systemLarge: return 6
-        @unknown default: return 1
+        default: return 1
         }
     }
     
