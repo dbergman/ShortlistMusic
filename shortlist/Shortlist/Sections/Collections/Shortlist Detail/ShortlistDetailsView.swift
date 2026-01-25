@@ -244,32 +244,43 @@ struct ShortlistDetailsView: View {
             )
         } label: {
             VStack(alignment: .leading) {
-                ZStack(alignment: .topLeading) {
-                    AsyncImage(url: URL(string: album.artworkURLString)) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .cornerRadius(20)
-                    } placeholder: {
-                        ProgressView()
+                ZStack {
+                    HStack {
+                        Spacer()
+                        AsyncImage(url: URL(string: album.artworkURLString)) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .cornerRadius(20)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        Spacer()
                     }
-
-                    ZStack {
-                        Circle()
-                            .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.75))
-                            .frame(width: 28, height: 28)
-                            .overlay(
+                    
+                    VStack {
+                        HStack {
+                            ZStack {
                                 Circle()
-                                    .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1.5)
-                            )
-                            .shadow(color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
+                                    .fill(colorScheme == .dark ? Color.white.opacity(0.9) : Color.black.opacity(0.75))
+                                    .frame(width: 28, height: 28)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1.5)
+                                    )
+                                    .shadow(color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.black.opacity(0.4), radius: 3, x: 0, y: 2)
 
-                        Text("\(album.rank)")
-                            .foregroundColor(colorScheme == .dark ? .black : .white)
-                            .font(Theme.shared.avenir(size: 14, weight: .bold))
+                                Text("\(album.rank)")
+                                    .foregroundColor(colorScheme == .dark ? .black : .white)
+                                    .font(Theme.shared.avenir(size: 14, weight: .bold))
+                            }
+                            .padding(6)
+                            Spacer()
+                        }
+                        Spacer()
                     }
-                    .padding(6)
                 }
+                .frame(height: 150)
                 .padding(.bottom, 10)
 
                 Text(album.title)
