@@ -29,11 +29,25 @@ enum MusicService: String, CaseIterable {
 
 struct SettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.dismiss) private var dismiss
     @AppStorage("widgetMusicService") private var selectedMusicService: String = MusicService.spotify.rawValue
     @State private var showingContactMail = false
     
+    private var availableMusicServices: [MusicService] {
+        var services = MusicService.allCases
+        if !AppAvailabilityHelper.isSpotifyInstalled() {
+            services = services.filter { $0 != .spotify }
+        }
+        return services
+    }
+    
     private var currentMusicService: MusicService {
-        MusicService(rawValue: selectedMusicService) ?? .spotify
+        let service = MusicService(rawValue: selectedMusicService) ?? .spotify
+        // If Spotify is selected but not installed, fall back to Apple Music
+        if service == .spotify && !AppAvailabilityHelper.isSpotifyInstalled() {
+            return .appleMusic
+        }
+        return service
     }
     
     private var appVersion: String {
@@ -85,7 +99,7 @@ struct SettingsView: View {
                             .foregroundColor(.primary)
                         Spacer()
                         Menu {
-                            ForEach(MusicService.allCases, id: \.rawValue) { service in
+                            ForEach(availableMusicServices, id: \.rawValue) { service in
                                 Button {
                                     selectedMusicService = service.rawValue
                                     UserDefaults.standard.set(service.rawValue, forKey: "widgetMusicService")
@@ -148,6 +162,13 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    CustomBarButton(systemName: "xmark") {
+                        dismiss()
+                    }
+                }
+            }
             .sheet(isPresented: $showingContactMail) {
                 if MFMailComposeViewController.canSendMail() {
                     MailView(
@@ -175,6 +196,13 @@ struct SettingsView: View {
                     .padding(40)
                     .presentationDetents([.medium])
                 }
+            }
+        }
+        .onAppear {
+            // If Spotify is selected but not installed, switch to Apple Music
+            if selectedMusicService == MusicService.spotify.rawValue && !AppAvailabilityHelper.isSpotifyInstalled() {
+                selectedMusicService = MusicService.appleMusic.rawValue
+                UserDefaults.standard.set(MusicService.appleMusic.rawValue, forKey: "widgetMusicService")
             }
         }
     }

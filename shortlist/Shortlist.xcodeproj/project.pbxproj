@@ -52,6 +52,7 @@
 		8BD097132D98BBAF005519F5 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD097122D98BBAF005519F5 /* SkeletonUI */; };
 		8BD0974C2DA335D1005519F5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD0974B2DA335D1005519F5 /* Theme.swift */; };
 		8BD0974D2DA335D1005519F6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD0974B2DA335D1005519F5 /* Theme.swift */; };
+		8BDA48EB2F259CDB0086A0AB /* AppAvailabilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA48EA2F259CDB0086A0AB /* AppAvailabilityHelper.swift */; };
 		8BE61DA82E7637A200A375F3 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE61DA72E7637A200A375F3 /* LaunchView.swift */; };
 		8BE7D451295FB38F0099EF4E /* MusicPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D450295FB38F0099EF4E /* MusicPermissionView.swift */; };
 		8BE7D4552960DD870099EF4E /* PresentationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE7D4542960DD870099EF4E /* PresentationCoordinator.swift */; };
@@ -136,6 +137,7 @@
 		8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistDetailsViewModel.swift; sourceTree = "<group>"; };
 		8BD0974B2DA335D1005519F5 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		8BDA48EA2F259CDB0086A0AB /* AppAvailabilityHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAvailabilityHelper.swift; sourceTree = "<group>"; };
 		8BE61DA72E7637A200A375F3 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		8BE7D450295FB38F0099EF4E /* MusicPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPermissionView.swift; sourceTree = "<group>"; };
 		8BE7D4542960DD870099EF4E /* PresentationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationCoordinator.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 		8B15AEAD29554AD6005CE9F6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8BDA48EA2F259CDB0086A0AB /* AppAvailabilityHelper.swift */,
 				8BFCEAAC2F188FC2007043AB /* MusicKitLoadingOverlay.swift */,
 				8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */,
 				8BA847D22E63CEA00079CEF3 /* ToastView.swift */,
@@ -587,6 +590,7 @@
 				8B067D622E29CC25008028E4 /* ActivityView.swift in Sources */,
 				8B84E2A82E19FD6D0018FB79 /* PillControl.swift in Sources */,
 				8B15AEB7295A2CC7005CE9F6 /* AlbumDetailViewModel.swift in Sources */,
+				8BDA48EB2F259CDB0086A0AB /* AppAvailabilityHelper.swift in Sources */,
 				8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */,
 				8BE7D451295FB38F0099EF4E /* MusicPermissionView.swift in Sources */,
 				8BFB12C32B8A9D82005E3C35 /* EditShortlistView.swift in Sources */,

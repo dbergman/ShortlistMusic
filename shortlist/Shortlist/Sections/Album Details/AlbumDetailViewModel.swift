@@ -315,8 +315,7 @@ extension AlbumDetailView {
         }
         
         func isSpotifyInstalled() -> Bool {
-            guard let url = URL(string: "spotify://") else { return false }
-            return UIApplication.shared.canOpenURL(url)
+            return AppAvailabilityHelper.isSpotifyInstalled()
         }
     }
 }

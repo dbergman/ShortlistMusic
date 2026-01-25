@@ -42,6 +42,7 @@ struct SearchMusicView: View {
     @State private var filterByYear = true
     @State private var selectedYears: Set<String> = []
     @State private var showingYearPicker = false
+    @Environment(\.colorScheme) private var colorScheme
     let shortlist: Shortlist
     
     private var filteredAlbums: [Content.Album] {
@@ -87,6 +88,7 @@ struct SearchMusicView: View {
                                 .font(Theme.shared.avenir(size: 16, weight: .medium))
                                 .foregroundColor(.primary)
                         }
+                        .tint(.blue)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 12)
                     }
