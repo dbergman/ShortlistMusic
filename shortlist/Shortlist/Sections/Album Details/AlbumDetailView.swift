@@ -9,6 +9,7 @@ import CloudKit
 import MusicKit
 import SkeletonUI
 import SwiftUI
+import UIKit
 
 extension AlbumDetailView {
     struct Content {
@@ -44,6 +45,8 @@ extension AlbumDetailView {
 extension AlbumDetailView {
     struct AlbumArtworkView: View {
         let artworkURL: URL?
+        let artworkNamespace: Namespace.ID?
+        let artworkID: String?
         @Environment(\.colorScheme) private var colorScheme
         
         var body: some View {
@@ -83,6 +86,35 @@ extension AlbumDetailView {
                 Spacer()
                     .frame(width: Layout.horizontalPadding)
             }
+        }
+    }
+}
+
+// MARK: - Navigation Transition Modifier
+struct NavigationTransitionModifier: ViewModifier {
+    let artworkNamespace: Namespace.ID?
+    let artworkID: String?
+    
+    func body(content: Content) -> some View {
+        if let namespace = artworkNamespace,
+           let id = artworkID {
+            content
+                .navigationTransition(.zoom(sourceID: id, in: namespace))
+        } else {
+            content
+        }
+    }
+}
+
+
+// MARK: - View Extension Helper
+extension View {
+    @ViewBuilder
+    func applyIf<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
         }
     }
 }
@@ -154,6 +186,7 @@ extension AlbumDetailView {
     struct AlbumView: View {
         private var shortlist: Shortlist
         @State private var albumOnShortlist = false
+        @State private var blockInteractiveDismiss = true
         @ObservedObject private var viewModel: ViewModel
         @Environment(\.colorScheme) private var colorScheme
         @Binding var albumWasAdded: Bool
@@ -198,13 +231,32 @@ extension AlbumDetailView {
                 Task {
                     albumOnShortlist = await viewModel.isAlbumOnShortlist()
                 }
+                // Block interactive dismiss gesture for 1 second to prevent image disappearing bug
+                blockInteractiveDismiss = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    blockInteractiveDismiss = false
+                }
             }
         }
         
         // MARK: - Album Header Section
         private var albumHeaderSection: some View {
             VStack(alignment: .leading, spacing: Layout.contentSpacing) {
-                AlbumArtworkView(artworkURL: viewModel.album?.artworkURL)
+                AlbumArtworkView(
+                    artworkURL: viewModel.album?.artworkURL,
+                    artworkNamespace: viewModel.artworkNamespace,
+                    artworkID: viewModel.artworkID
+                )
+                .overlay {
+                    if blockInteractiveDismiss {
+                        Color.clear
+                            .contentShape(Rectangle())
+                            .highPriorityGesture(
+                                DragGesture(minimumDistance: 0)
+                                    .onChanged { _ in }
+                            )
+                    }
+                }
                 
                 if let releaseYear = viewModel.album?.releaseYear, !releaseYear.isEmpty {
                     Text(releaseYear)
@@ -315,14 +367,16 @@ struct AlbumDetailView: View {
         viewModel.album?.title ?? "Album"
     }
 
-    init(albumType: AlbumType, shortlist: Shortlist, isPresented: Binding<Bool>? = nil) {
+    init(albumType: AlbumType, shortlist: Shortlist, isPresented: Binding<Bool>? = nil, artworkNamespace: Namespace.ID? = nil, artworkID: String? = nil) {
         self.albumType = albumType
         self.shortlist = shortlist
         self._isPresented = isPresented ?? .constant(false)
         self.isInModalContext = isPresented != nil
         self._viewModel = StateObject(wrappedValue: ViewModel(
             album: nil,
-            shortlist: shortlist
+            shortlist: shortlist,
+            artworkNamespace: artworkNamespace,
+            artworkID: artworkID
         ))
     }
     
@@ -355,6 +409,10 @@ struct AlbumDetailView: View {
             .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
+            .modifier(NavigationTransitionModifier(
+                artworkNamespace: viewModel.artworkNamespace,
+                artworkID: viewModel.artworkID
+            ))
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     CustomBarButton.backButton {

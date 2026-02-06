@@ -31,6 +31,7 @@ struct ShortlistDetailsView: View {
     @State private var toastType: ToastView.ToastType = .success
     @State private var hasAppeared = false
     @Environment(\.colorScheme) private var colorScheme
+    @Namespace private var albumArtworkNamespace
     
     let layout = [
         GridItem(.flexible()),
@@ -240,7 +241,9 @@ struct ShortlistDetailsView: View {
         NavigationLink {
             AlbumDetailView(
                 albumType: .shortlistAlbum(album),
-                shortlist: viewModel.shortlist
+                shortlist: viewModel.shortlist,
+                artworkNamespace: albumArtworkNamespace,
+                artworkID: album.id
             )
         } label: {
             VStack(alignment: .leading) {
@@ -252,6 +255,10 @@ struct ShortlistDetailsView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .cornerRadius(20)
+                                .modifier(FluidTransitionModifier(
+                                    id: album.id,
+                                    namespace: albumArtworkNamespace
+                                ))
                         } placeholder: {
                             ProgressView()
                         }
@@ -579,8 +586,9 @@ extension ShortlistDetailsView {
     }
     
     private func createShortlistEmailBody(from albums: [ShortlistAlbum], shortlistName: String, year: String?) -> String {
+        let yearSuffix = year.map { " (\($0))" } ?? ""
         let header = """
-        <h2>🎵 My Shortlist: \(shortlistName)\(year != nil ? " (\(year!))" : "")</h2>
+        <h2>🎵 My Shortlist: \(shortlistName)\(yearSuffix)</h2>
         <ul>
         """
         
@@ -600,7 +608,8 @@ extension ShortlistDetailsView {
     private func createShortlistPlainText(from albums: [ShortlistAlbum], shortlistName: String, year: String?) -> String {
         let sortedAlbums = albums.sorted(by: { $0.rank < $1.rank })
         
-        let header = "🎵 Shortlist: \(shortlistName)\(year != nil ? " (\(year!))" : "")"
+        let yearSuffix = year.map { " (\($0))" } ?? ""
+        let header = "🎵 Shortlist: \(shortlistName)\(yearSuffix)"
         let items = sortedAlbums.map { "\($0.rank). \($0.title) – \($0.artist)" }.joined(separator: "\n")
         
         return "\(header)\n\n\(items)"
@@ -640,6 +649,17 @@ extension ShortlistDetailsView {
             // Reconstruct array in correct order
             return artworkURLs.compactMap { index, _ in imageDict[index] }
         }
+    }
+}
+
+// MARK: - Fluid Transition Modifier
+struct FluidTransitionModifier: ViewModifier {
+    let id: String
+    let namespace: Namespace.ID
+    
+    func body(content: Content) -> some View {
+        content
+            .matchedTransitionSource(id: id, in: namespace)
     }
 }
 

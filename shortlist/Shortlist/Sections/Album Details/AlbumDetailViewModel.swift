@@ -8,6 +8,7 @@
 import CloudKit
 import Foundation
 import MusicKit
+import SwiftUI
 import UIKit
 
 extension AlbumDetailView {
@@ -23,11 +24,15 @@ extension AlbumDetailView {
         let shortlist: Shortlist
         private var currentShortlistAlbums: [ShortlistAlbum]?
         @Published var screenSize: CGFloat
+        let artworkNamespace: Namespace.ID?
+        let artworkID: String?
         
-        init(album: Content?, shortlist: Shortlist, screenSize: CGFloat = 400) {
+        init(album: Content?, shortlist: Shortlist, screenSize: CGFloat = 400, artworkNamespace: Namespace.ID? = nil, artworkID: String? = nil) {
             self.album = album
             self.shortlist = shortlist
             self.screenSize = screenSize
+            self.artworkNamespace = artworkNamespace
+            self.artworkID = artworkID
         }
 
         func loadTracks(for album: Album, recordID: CKRecord.ID? = nil) async {
