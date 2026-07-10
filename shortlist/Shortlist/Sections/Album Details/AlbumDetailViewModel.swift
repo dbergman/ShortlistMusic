@@ -175,8 +175,7 @@ extension AlbumDetailView {
                     switch result {
                     case .success(let albums):
                         continuation.resume(returning: albums)
-                    case .failure(let error):
-                        print("Error: \(error)")
+                    case .failure:
                         continuation.resume(returning: nil)
                     }
                 }

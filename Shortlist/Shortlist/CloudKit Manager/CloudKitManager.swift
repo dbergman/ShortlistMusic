@@ -46,7 +46,6 @@ class CloudKitManager {
     // Get the appropriate CloudKit container based on app configuration
     var container: CKContainer {
         if AppConfiguration.shared.isTestVersion {
-            // For dev version, use a specific container identifier
             return CKContainer(identifier: AppConfiguration.shared.cloudKitContainerIdentifier)
         } else {
             return CKContainer.default()
@@ -468,37 +467,75 @@ extension CloudKitManager {
         currentAlbumCount: Int,
         completion: @escaping (Result<[ShortlistAlbum], Error>) -> Void
     ) {
+        saveAlbumToShortlist(
+            album: album,
+            shortlist: shortlist,
+            rank: currentAlbumCount + 1,
+            includeAppleAlbumURL: true,
+            completion: completion
+        )
+    }
+
+    private func saveAlbumToShortlist(
+        album: AlbumDetailView.Content,
+        shortlist: Shortlist,
+        rank: Int,
+        includeAppleAlbumURL: Bool,
+        completion: @escaping (Result<[ShortlistAlbum], Error>) -> Void
+    ) {
         let record = CKRecord(recordType: "Albums")
         record.setValue(album.artist, forKey: "artist")
         if let artworkURLString = album.artworkURL?.absoluteString {
             record.setValue(artworkURLString, forKey: "artwork")
         }
-        
-        let albumRank = currentAlbumCount + 1
+
         record.setValue(album.id, forKey: "id")
-        record.setValue(albumRank, forKey: "rank")
+        record.setValue(rank, forKey: "rank")
         record.setValue(album.title, forKey: "title")
         record.setValue(album.upc, forKey: "upc")
         record.setValue(shortlist.id, forKey: "shortlistId")
-        
-        // Store Apple Music URL from MusicKit for deep-linking
-        if let appleAlbumURL = album.appleAlbumURL?.absoluteString {
+
+        if includeAppleAlbumURL, let appleAlbumURL = album.appleAlbumURL?.absoluteString {
             record.setValue(appleAlbumURL, forKey: "appleAlbumURL")
         }
-        
-        self.container.publicCloudDatabase.save(record) { savedRecord, error in
+
+        self.container.publicCloudDatabase.save(record) { [weak self] _, error in
+            guard let self else { return }
+
             if let error = error {
-                completion(.failure(error))
-            } else {
-                // Reload albums after successful save
-                self.updateShortlistAlbums(
-                    shortlistID: shortlist.id,
-                    action: .load
-                ) { result in
-                    completion(result)
+                if includeAppleAlbumURL,
+                   Self.isProductionAppleAlbumURLSchemaError(error) {
+                    self.saveAlbumToShortlist(
+                        album: album,
+                        shortlist: shortlist,
+                        rank: rank,
+                        includeAppleAlbumURL: false,
+                        completion: completion
+                    )
+                    return
                 }
+
+                completion(.failure(error))
+                return
+            }
+
+            self.updateShortlistAlbums(
+                shortlistID: shortlist.id,
+                action: .load
+            ) { result in
+                completion(result)
             }
         }
+    }
+
+    private static func isProductionAppleAlbumURLSchemaError(_ error: Error) -> Bool {
+        guard let ckError = error as? CKError,
+              ckError.code == .invalidArguments else {
+            return false
+        }
+
+        return ckError.localizedDescription.localizedCaseInsensitiveContains("appleAlbumURL")
+            && ckError.localizedDescription.localizedCaseInsensitiveContains("production schema")
     }
     
     func removeAlbumFromShortlist(

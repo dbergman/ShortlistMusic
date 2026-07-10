@@ -129,7 +129,6 @@ struct SettingsView: View {
                 }
                 
                 Section {
-                    // App Information
                     HStack {
                         Text("Version")
                             .foregroundColor(.primary)
