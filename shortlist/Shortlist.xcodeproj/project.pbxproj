@@ -214,7 +214,8 @@
 				8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */,
 				8BA847D22E63CEA00079CEF3 /* ToastView.swift */,
 				8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */,
-				8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */,				2C07DA8763C24E80B7CD6090 /* UserDefaultsManager.swift */,
+				8B5F2D172C10140E008849A2 /* UserErrorFactory.swift */,
+				2C07DA8763C24E80B7CD6090 /* UserDefaultsManager.swift */,
 				8B067D5D2E288BB8008028E4 /* ImageGridCreator.swift */,
 				8B067D612E29CC25008028E4 /* ActivityView.swift */,
 				8B067D5F2E289904008028E4 /* MailView.swift */,
@@ -787,7 +788,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
-				MARKETING_VERSION = 4.3.1;
+				MARKETING_VERSION = 4.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dus.shortList.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -833,7 +834,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
-				MARKETING_VERSION = 4.3.1;
+				MARKETING_VERSION = 4.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dus.shortList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
