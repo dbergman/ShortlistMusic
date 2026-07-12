@@ -18,6 +18,7 @@ extension AlbumDetailView {
         @Published var isloading = true
         @Published var isAddingToShortlist = false
         @Published var isRemovingFromShortlist = false
+        @Published var isAlbumOnShortlist = false
         @Published var showToast = false
         @Published var toastMessage = ""
         @Published var toastType: ToastView.ToastType = .success
@@ -92,6 +93,45 @@ extension AlbumDetailView {
             
             // CloudKit albums loaded in background (for add/remove functionality)
             currentShortlistAlbums = await cloudKitAlbumsTask
+            refreshAlbumOnShortlistState()
+        }
+        
+        func refreshAlbumOnShortlistState() {
+            isAlbumOnShortlist = album?.recordID != nil
+                || currentShortlistAlbums?.contains { $0.id == album?.id } == true
+                || currentShortlistAlbums?.contains {
+                    $0.title == album?.title && $0.artist == album?.artist
+                } == true
+        }
+        
+        private func matchingShortlistAlbum(for album: Content, in albums: [ShortlistAlbum]) -> ShortlistAlbum? {
+            albums.first(where: { $0.id == album.id })
+                ?? albums.first(where: { $0.title == album.title && $0.artist == album.artist })
+        }
+        
+        private func applyRecordID(from shortlistAlbum: ShortlistAlbum) {
+            guard var currentAlbum = album else { return }
+            currentAlbum.recordID = shortlistAlbum.recordID
+            self.album = currentAlbum
+        }
+        
+        private func resolveRecordID() async -> CKRecord.ID? {
+            if let recordID = album?.recordID {
+                return recordID
+            }
+            
+            if currentShortlistAlbums == nil {
+                currentShortlistAlbums = await loadShortlistAlbums()
+            }
+            
+            guard let album else { return nil }
+            
+            if let match = currentShortlistAlbums.flatMap({ matchingShortlistAlbum(for: album, in: $0) }) {
+                applyRecordID(from: match)
+                return match.recordID
+            }
+            
+            return nil
         }
         
         private func loadShortlistAlbums() async -> [ShortlistAlbum]? {
@@ -130,6 +170,7 @@ extension AlbumDetailView {
             // Show basic album info immediately
             self.album = basicDetails
             isloading = false
+            refreshAlbumOnShortlistState()
             
             // Log analytics for album viewed
             AnalyticsManager.shared.logAlbumViewed(
@@ -184,12 +225,11 @@ extension AlbumDetailView {
             // Check if the operation was successful
             if let updatedAlbums = currentShortlistAlbums {
                 // Find the newly added album and update the recordID
-                if let addedAlbum = updatedAlbums.first(where: { $0.id == album.id }),
-                   var currentAlbum = self.album {
-                    // Update the album's recordID so it can be removed later
-                    currentAlbum.recordID = addedAlbum.recordID
-                    self.album = currentAlbum
+                if let addedAlbum = matchingShortlistAlbum(for: album, in: updatedAlbums) {
+                    applyRecordID(from: addedAlbum)
                 }
+                
+                refreshAlbumOnShortlistState()
                 
                 // Log analytics for album added
                 AnalyticsManager.shared.logAlbumAdded(
@@ -223,7 +263,13 @@ extension AlbumDetailView {
         }
         
         func removeAlbumFromShortlist() async {
-            guard let recordID = album?.recordID, let albumTitle = album?.title else { return }
+            guard let albumTitle = album?.title else { return }
+            guard let recordID = await resolveRecordID() else {
+                toastMessage = "Can't remove album yet. Try again in a moment."
+                toastType = .error
+                showToast = true
+                return
+            }
             
             isRemovingFromShortlist = true
             
@@ -266,6 +312,7 @@ extension AlbumDetailView {
                 
                 // Hide loading overlay first
                 isRemovingFromShortlist = false
+                isAlbumOnShortlist = false
                 
                 // Show success toast
                 toastMessage = "Removed '\(albumTitle)' from '\(shortlist.name)'"
@@ -324,12 +371,11 @@ extension AlbumDetailView {
             }
         }
         
-        func isAlbumOnShortlist() async -> Bool {
-            // Load albums if not already loaded
+        func loadAlbumOnShortlistState() async {
             if currentShortlistAlbums == nil {
                 currentShortlistAlbums = await loadShortlistAlbums()
             }
-            return currentShortlistAlbums?.contains { $0.id == self.album?.id } == true
+            refreshAlbumOnShortlistState()
         }
         
         func isSpotifyInstalled() -> Bool {

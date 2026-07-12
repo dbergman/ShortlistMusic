@@ -30,6 +30,7 @@ struct ShortlistDetailsView: View {
     @State private var toastMessage = ""
     @State private var toastType: ToastView.ToastType = .success
     @State private var hasAppeared = false
+    @State private var selectedAlbumID: String?
     @Environment(\.colorScheme) private var colorScheme
     @Namespace private var albumArtworkNamespace
     
@@ -116,11 +117,31 @@ struct ShortlistDetailsView: View {
         }
         .fullScreenCover(isPresented: $isPresented, onDismiss: {
             Task {
-                try await viewModel.getAlbums(for: viewModel.shortlist)
+                try? await viewModel.getAlbumsSilently(for: viewModel.shortlist)
             }
         }, content: {
             SearchMusicView(isPresented: $isPresented, shortlist: viewModel.shortlist)
         })
+        .navigationDestination(item: $selectedAlbumID) { albumID in
+            if let album = viewModel.shortlist.albums?.first(where: { $0.id == albumID }) {
+                AlbumDetailView(
+                    albumType: .shortlistAlbum(album),
+                    shortlist: viewModel.shortlist,
+                    artworkNamespace: albumArtworkNamespace,
+                    artworkID: album.id,
+                    onShortlistDidChange: {
+                        Task {
+                            try? await viewModel.getAlbumsSilently(for: viewModel.shortlist)
+                        }
+                    }
+                )
+            } else {
+                Color.clear
+                    .onAppear {
+                        selectedAlbumID = nil
+                    }
+            }
+        }
         .onAppear() {
             // Always refresh albums when view appears, but only show loading on first appearance
             Task {
@@ -138,9 +159,6 @@ struct ShortlistDetailsView: View {
                     viewModel.isLoading = true
                     hasAppeared = true
                     try await viewModel.getAlbums(for: viewModel.shortlist)
-                } else {
-                    // Subsequent appearances - silent refresh without showing loading state
-                    try? await viewModel.getAlbumsSilently(for: viewModel.shortlist)
                 }
             }
         }
@@ -149,7 +167,7 @@ struct ShortlistDetailsView: View {
     
     @ViewBuilder
     private var mainContent: some View {
-        if viewModel.isLoading {
+        if viewModel.isLoading && (viewModel.shortlist.albums?.isEmpty ?? true) {
             loadingView()
         } else if (viewModel.shortlist.albums?.isEmpty ?? true) {
             emptyStateView
@@ -238,13 +256,8 @@ struct ShortlistDetailsView: View {
     
     @ViewBuilder
     private func albumCardView(for album: ShortlistAlbum) -> some View {
-        NavigationLink {
-            AlbumDetailView(
-                albumType: .shortlistAlbum(album),
-                shortlist: viewModel.shortlist,
-                artworkNamespace: albumArtworkNamespace,
-                artworkID: album.id
-            )
+        Button {
+            selectedAlbumID = album.id
         } label: {
             VStack(alignment: .leading) {
                 ZStack {
@@ -320,6 +333,7 @@ struct ShortlistDetailsView: View {
                 return NSItemProvider(item: nil, typeIdentifier: album.id)
             }
         }
+        .buttonStyle(.plain)
         .onDrop(
             of: [UTType.text],
             delegate: MyDropDelegate(

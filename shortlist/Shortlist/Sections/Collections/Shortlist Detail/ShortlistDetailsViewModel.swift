@@ -47,7 +47,6 @@ extension ShortlistDetailsView {
         }
         
         func getAlbumsSilently(for shortlist: Shortlist) async throws {
-            // Refresh albums without showing loading state
             do {
                 let updatedShortlist = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Shortlist, Error>) in
                     CloudKitManager.shared.getAlbums(for: shortlist, completion: { result in
@@ -64,7 +63,6 @@ extension ShortlistDetailsView {
                     self.shortlist = updatedShortlist
                 }
             } catch {
-                // Silently handle errors - don't show loading state
                 throw error
             }
         }

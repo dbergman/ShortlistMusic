@@ -184,18 +184,21 @@ extension AlbumDetailView {
 // MARK: - Album View
 extension AlbumDetailView {
     struct AlbumView: View {
+        private let album: Content
         private var shortlist: Shortlist
-        @State private var albumOnShortlist = false
         @State private var blockInteractiveDismiss = true
         @ObservedObject private var viewModel: ViewModel
         @Environment(\.colorScheme) private var colorScheme
         @Binding var albumWasAdded: Bool
+        @Binding var didModifyShortlist: Bool
         @Binding var isPresented: Bool
 
-        init(album: Content, shortlist: Shortlist, viewModel: ViewModel, albumWasAdded: Binding<Bool>, isPresented: Binding<Bool>) {
+        init(album: Content, shortlist: Shortlist, viewModel: ViewModel, albumWasAdded: Binding<Bool>, didModifyShortlist: Binding<Bool>, isPresented: Binding<Bool>) {
+            self.album = album
             self.viewModel = viewModel
             self.shortlist = shortlist
             self._albumWasAdded = albumWasAdded
+            self._didModifyShortlist = didModifyShortlist
             self._isPresented = isPresented
         }
         
@@ -212,24 +215,24 @@ extension AlbumDetailView {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    CustomBarButton(systemName: albumOnShortlist ? "trash" : "plus.circle") {
+                    CustomBarButton(systemName: viewModel.isAlbumOnShortlist ? "trash" : "plus.circle") {
                         Task {
-                            if albumOnShortlist {
+                            if viewModel.isAlbumOnShortlist {
                                 await viewModel.removeAlbumFromShortlist()
                                 albumWasAdded = false
+                                didModifyShortlist = true
                             } else {
                                 await viewModel.addAlbumToShortlist()
                                 albumWasAdded = true
+                                didModifyShortlist = true
                             }
-                            // Refresh the actual state after the operation
-                            albumOnShortlist = await viewModel.isAlbumOnShortlist()
                         }
                     }
                 }
             }
             .onAppear {
                 Task {
-                    albumOnShortlist = await viewModel.isAlbumOnShortlist()
+                    await viewModel.loadAlbumOnShortlistState()
                 }
                 // Block interactive dismiss gesture for 1 second to prevent image disappearing bug
                 blockInteractiveDismiss = true
@@ -268,11 +271,11 @@ extension AlbumDetailView {
                         .padding(.horizontal, Layout.horizontalPadding)
                 }
 
-                Text(viewModel.album?.title ?? "")
+                Text(album.title)
                     .font(Theme.shared.avenir(size: 28, weight: .bold))
                     .padding(.horizontal, Layout.horizontalPadding)
 
-                Text(viewModel.album?.artist ?? "")
+                Text(album.artist)
                     .font(Theme.shared.avenir(size: 20, weight: .medium))
                     .foregroundColor(.secondary)
                     .padding(.horizontal, Layout.horizontalPadding)
@@ -360,18 +363,31 @@ struct AlbumDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
     @State private var albumWasAdded = false
+    @State private var didModifyShortlist = false
     @Binding var isPresented: Bool
     private var isInModalContext: Bool
+    private let onShortlistDidChange: (() -> Void)?
+    private let onCloseSearch: (() -> Void)?
     
     private var navigationTitle: String {
         viewModel.album?.title ?? "Album"
     }
 
-    init(albumType: AlbumType, shortlist: Shortlist, isPresented: Binding<Bool>? = nil, artworkNamespace: Namespace.ID? = nil, artworkID: String? = nil) {
+    init(
+        albumType: AlbumType,
+        shortlist: Shortlist,
+        isPresented: Binding<Bool>? = nil,
+        artworkNamespace: Namespace.ID? = nil,
+        artworkID: String? = nil,
+        onShortlistDidChange: (() -> Void)? = nil,
+        onCloseSearch: (() -> Void)? = nil
+    ) {
         self.albumType = albumType
         self.shortlist = shortlist
         self._isPresented = isPresented ?? .constant(false)
         self.isInModalContext = isPresented != nil
+        self.onShortlistDidChange = onShortlistDidChange
+        self.onCloseSearch = onCloseSearch
         self._viewModel = StateObject(wrappedValue: ViewModel(
             album: nil,
             shortlist: shortlist,
@@ -391,6 +407,7 @@ struct AlbumDetailView: View {
                         shortlist: shortlist,
                         viewModel: viewModel,
                         albumWasAdded: $albumWasAdded,
+                        didModifyShortlist: $didModifyShortlist,
                         isPresented: $isPresented
                     )
                 }
@@ -416,8 +433,11 @@ struct AlbumDetailView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     CustomBarButton.backButton {
-                        if albumWasAdded && isInModalContext {
-                            isPresented = false
+                        if isInModalContext && (albumWasAdded || didModifyShortlist) {
+                            onCloseSearch?()
+                            if onCloseSearch == nil {
+                                isPresented = false
+                            }
                         } else {
                             dismiss()
                         }
@@ -435,6 +455,10 @@ struct AlbumDetailView: View {
                     )
                 }
             }
+            .onDisappear {
+                guard didModifyShortlist, !isInModalContext else { return }
+                onShortlistDidChange?()
+            }
             .overlay(
                 ToastOverlay(
                     showToast: $viewModel.showToast,
@@ -445,6 +469,7 @@ struct AlbumDetailView: View {
             
             if viewModel.isAddingToShortlist || viewModel.isRemovingFromShortlist {
                 loadingOverlay
+                    .allowsHitTesting(false)
             }
         }
     }
@@ -454,7 +479,6 @@ struct AlbumDetailView: View {
         ZStack {
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
-                .allowsHitTesting(true)
             
             VStack(spacing: 20) {
                 SpinningRecordView(

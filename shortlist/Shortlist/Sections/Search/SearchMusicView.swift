@@ -38,6 +38,7 @@ extension SearchMusicView {
 struct SearchMusicView: View {
     @Binding var isPresented: Bool
     @StateObject private var viewModel = ViewModel()
+    @State private var navigationPath = NavigationPath()
     @State private var searchTerm = ""
     @State private var filterByYear = true
     @State private var selectedYears: Set<String> = []
@@ -79,7 +80,7 @@ struct SearchMusicView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             VStack {
                 if shouldShowSpecificYearFilter {
                     HStack {
@@ -127,12 +128,22 @@ struct SearchMusicView: View {
                         case .album(let album):
                             if let albumMK = album.musicKitAlbum {
                                 let albumType = AlbumDetailView.AlbumType.musicKit(albumMK)
-                                AlbumDetailView(albumType:  albumType, shortlist: shortlist, isPresented: $isPresented)
+                                AlbumDetailView(
+                                    albumType: albumType,
+                                    shortlist: shortlist,
+                                    isPresented: $isPresented,
+                                    onCloseSearch: closeSearch
+                                )
                             }
                             
                         case .artist(let artist):
                             if let artistMK = artist.musicKitArtist {
-                                SearchAlbumsView(artist: artistMK, shortlist: shortlist, isPresented: $isPresented)
+                                SearchAlbumsView(
+                                    artist: artistMK,
+                                    shortlist: shortlist,
+                                    isPresented: $isPresented,
+                                    onCloseSearch: closeSearch
+                                )
                             }
                         }
                     }
@@ -160,6 +171,11 @@ struct SearchMusicView: View {
             YearPickerView(selectedYears: $selectedYears, availableYears: availableYears)
         }
         .tint(.primary)
+    }
+    
+    private func closeSearch() {
+        navigationPath = NavigationPath()
+        isPresented = false
     }
     
     private func requestUpdatedSearchResults(for searchTerm: String) {

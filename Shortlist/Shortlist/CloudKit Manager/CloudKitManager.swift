@@ -499,7 +499,7 @@ extension CloudKitManager {
             record.setValue(appleAlbumURL, forKey: "appleAlbumURL")
         }
 
-        self.container.publicCloudDatabase.save(record) { [weak self] _, error in
+        self.container.publicCloudDatabase.save(record) { [weak self] savedRecord, error in
             guard let self else { return }
 
             if let error = error {
@@ -519,11 +519,25 @@ extension CloudKitManager {
                 return
             }
 
+            guard let savedRecord, let savedAlbum = ShortlistAlbum(with: savedRecord) else {
+                completion(.failure(CKError(.internalError)))
+                return
+            }
+
             self.updateShortlistAlbums(
                 shortlistID: shortlist.id,
                 action: .load
             ) { result in
-                completion(result)
+                switch result {
+                case .success(var albums):
+                    if !albums.contains(where: { $0.recordID == savedAlbum.recordID }) {
+                        albums.append(savedAlbum)
+                    }
+                    completion(.success(albums))
+                case .failure:
+                    // Query can lag behind save; use the record we just saved.
+                    completion(.success([savedAlbum]))
+                }
             }
         }
     }
