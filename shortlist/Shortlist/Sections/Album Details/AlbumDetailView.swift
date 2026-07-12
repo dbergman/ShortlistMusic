@@ -49,43 +49,79 @@ extension AlbumDetailView {
         let artworkID: String?
         @Environment(\.colorScheme) private var colorScheme
         
+        private enum ArtworkLayout {
+            static let cornerRadius: CGFloat = 12
+        }
+        
         var body: some View {
             HStack(spacing: 0) {
                 Spacer()
                     .frame(width: Layout.horizontalPadding)
                 
-                AsyncImage(url: artworkURL) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .clipped()
-                            .cornerRadius(12)
-                            .shadow(
-                                color: colorScheme == .dark ? 
-                                    Color.black.opacity(0.5) : 
-                                    Color.black.opacity(0.2),
-                                radius: colorScheme == .dark ? 12 : 8,
-                                x: 0,
-                                y: colorScheme == .dark ? 6 : 4
-                            )
-                    case .failure:
-                        Image(systemName: "photo")
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(.gray)
-                    @unknown default:
-                        EmptyView()
+                GeometryReader { geometry in
+                    let imageSize = max(100, geometry.size.width)
+                    
+                    Group {
+                        if let artworkURL {
+                            AsyncImage(url: artworkURL) { phase in
+                                switch phase {
+                                case .empty:
+                                    artworkSkeleton(size: imageSize)
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: imageSize, height: imageSize)
+                                        .clipped()
+                                        .cornerRadius(ArtworkLayout.cornerRadius)
+                                        .shadow(
+                                            color: colorScheme == .dark ?
+                                                Color.black.opacity(0.5) :
+                                                Color.black.opacity(0.2),
+                                            radius: colorScheme == .dark ? 12 : 8,
+                                            x: 0,
+                                            y: colorScheme == .dark ? 6 : 4
+                                        )
+                                        .transition(.opacity)
+                                case .failure:
+                                    artworkFailurePlaceholder(size: imageSize)
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
+                        } else {
+                            artworkSkeleton(size: imageSize)
+                        }
                     }
+                    .frame(width: imageSize, height: imageSize)
                 }
                 .aspectRatio(1, contentMode: .fit)
                 
                 Spacer()
                     .frame(width: Layout.horizontalPadding)
             }
+        }
+        
+        private func artworkSkeleton(size: CGFloat) -> some View {
+            Rectangle()
+                .skeleton(
+                    with: true,
+                    size: CGSize(width: size, height: size),
+                    shape: .rectangle
+                )
+                .cornerRadius(ArtworkLayout.cornerRadius)
+                .frame(width: size, height: size)
+        }
+        
+        private func artworkFailurePlaceholder(size: CGFloat) -> some View {
+            RoundedRectangle(cornerRadius: ArtworkLayout.cornerRadius)
+                .fill(Color(.tertiarySystemFill))
+                .frame(width: size, height: size)
+                .overlay {
+                    Image(systemName: "photo")
+                        .font(.system(size: size * 0.2))
+                        .foregroundStyle(.secondary)
+                }
         }
     }
 }
