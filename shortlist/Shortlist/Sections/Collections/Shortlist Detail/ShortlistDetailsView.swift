@@ -244,7 +244,7 @@ struct ShortlistDetailsView: View {
         ZStack(alignment: .bottom) {
             ScrollView {
                 LazyVGrid(columns: layout) {
-                    ForEach(viewModel.shortlist.albums ?? [], id: \.self) { album in
+                    ForEach(viewModel.shortlist.albums ?? [], id: \.id) { album in
                         albumCardView(for: album)
                     }
                         }
@@ -661,36 +661,62 @@ private struct ShortlistAlbumArtworkView: View {
     let size: CGFloat
     let cornerRadius: CGFloat
 
+    @State private var loadedImage: UIImage?
+
     private var artworkPixelSize: Int {
         Int(size * 2)
     }
 
+    private var artworkLoadKey: String {
+        "\(albumID)|\(artworkURLString ?? "")|\(artworkPixelSize)"
+    }
+
     var body: some View {
         Group {
-            if let url = ArtworkURLHelper.url(from: artworkURLString, size: artworkPixelSize) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .empty:
-                        artworkSkeleton
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: size, height: size)
-                            .clipped()
-                            .cornerRadius(cornerRadius)
-                            .modifier(FluidTransitionModifier(id: albumID, namespace: namespace))
-                    case .failure:
-                        artworkSkeleton
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
+            if let loadedImage {
+                Image(uiImage: loadedImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: size, height: size)
+                    .clipped()
+                    .cornerRadius(cornerRadius)
+                    .modifier(FluidTransitionModifier(id: albumID, namespace: namespace))
             } else {
                 artworkSkeleton
             }
         }
         .frame(width: size, height: size)
+        .task(id: artworkLoadKey) {
+            await loadArtwork()
+        }
+    }
+
+    private func loadArtwork() async {
+        guard let url = ArtworkURLHelper.url(from: artworkURLString, size: artworkPixelSize) else {
+            loadedImage = nil
+            return
+        }
+
+        if loadedImage != nil { return }
+
+        // Retry cancelled downloads — LazyVGrid / CloudKit refresh commonly cancels in-flight work.
+        for attempt in 1...3 {
+            if Task.isCancelled { return }
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                guard let image = UIImage(data: data) else { return }
+                loadedImage = image
+                return
+            } catch {
+                if Task.isCancelled { return }
+                let nsError = error as NSError
+                let wasCancelled = nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorCancelled
+                if wasCancelled && attempt < 3 {
+                    continue
+                }
+                return
+            }
+        }
     }
 
     private var artworkSkeleton: some View {
