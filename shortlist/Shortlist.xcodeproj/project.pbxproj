@@ -44,12 +44,12 @@
 		8B81E3762E96074100008120 /* ShortListMusicWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8B81E3612E96073F00008120 /* ShortListMusicWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8B84E2A82E19FD6D0018FB79 /* PillControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B84E2A72E19FD6D0018FB79 /* PillControl.swift */; };
 		8B88B3532E5AAF68003E03AE /* CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */; };
-		8BART2A12F3012A100081AB /* ArtworkURLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BART2A02F3012A100081AB /* ArtworkURLHelper.swift */; };
-		8BART2A32F3012A100081AC /* ArtworkSkeletonPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BART2A22F3012A100081AC /* ArtworkSkeletonPlaceholder.swift */; };
 		8B8E12342E9ABCDE00008120 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8E12332E9ABCDE00008120 /* SettingsView.swift */; };
 		8BA847D32E63CEA00079CEF3 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA847D22E63CEA00079CEF3 /* ToastView.swift */; };
 		8BA847D52E63D95A0079CEF3 /* SpinningRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */; };
 		8BAC960429537BC0000FD9CF /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */; };
+		8BART2A12F3012A100081AB /* ArtworkURLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BART2A02F3012A100081AB /* ArtworkURLHelper.swift */; };
+		8BART2A32F3012A100081AC /* ArtworkSkeletonPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BART2A22F3012A100081AC /* ArtworkSkeletonPlaceholder.swift */; };
 		8BC843ED297FAA9C00FA6B78 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */; };
 		8BC843EF2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */; };
 		8BD097132D98BBAF005519F5 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8BD097122D98BBAF005519F5 /* SkeletonUI */; };
@@ -134,12 +134,12 @@
 		8B81E3642E96073F00008120 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		8B84E2A72E19FD6D0018FB79 /* PillControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillControl.swift; sourceTree = "<group>"; };
 		8B88B3522E5AAF68003E03AE /* CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBarButton.swift; sourceTree = "<group>"; };
-		8BART2A02F3012A100081AB /* ArtworkURLHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkURLHelper.swift; sourceTree = "<group>"; };
-		8BART2A22F3012A100081AC /* ArtworkSkeletonPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkSkeletonPlaceholder.swift; sourceTree = "<group>"; };
 		8B8E12332E9ABCDE00008120 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8BA847D22E63CEA00079CEF3 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		8BA847D42E63D95A0079CEF3 /* SpinningRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningRecordView.swift; sourceTree = "<group>"; };
 		8BAC960329537BC0000FD9CF /* AlbumDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailView.swift; sourceTree = "<group>"; };
+		8BART2A02F3012A100081AB /* ArtworkURLHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkURLHelper.swift; sourceTree = "<group>"; };
+		8BART2A22F3012A100081AC /* ArtworkSkeletonPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkSkeletonPlaceholder.swift; sourceTree = "<group>"; };
 		8BC843EC297FAA9C00FA6B78 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		8BC843EE2986E23C00FA6B78 /* ShortlistDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistDetailsViewModel.swift; sourceTree = "<group>"; };
 		8BD0974B2DA335D1005519F5 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -771,7 +771,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Shortlist/Shortlist.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 675;
+				CURRENT_PROJECT_VERSION = 676;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Shortlist/Preview Content\"";
 				ENABLE_APP_SANDBOX = YES;
@@ -817,7 +817,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Shortlist/Shortlist.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 675;
+				CURRENT_PROJECT_VERSION = 676;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Shortlist/Preview Content\"";
 				ENABLE_APP_SANDBOX = YES;
