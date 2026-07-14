@@ -68,7 +68,6 @@ struct ShortlistDetailsView: View {
             )
         }
         .overlay(
-            // Toast notification positioned at bottom of navigation bar
             ToastOverlay(
                 showToast: $showToast,
                 toastMessage: $toastMessage,
@@ -133,6 +132,9 @@ struct ShortlistDetailsView: View {
                         Task {
                             try? await viewModel.getAlbumsSilently(for: viewModel.shortlist)
                         }
+                    },
+                    onNavigateBack: {
+                        selectedAlbumID = nil
                     }
                 )
             } else {
@@ -261,22 +263,13 @@ struct ShortlistDetailsView: View {
         } label: {
             VStack(alignment: .leading) {
                 ZStack {
-                    HStack {
-                        Spacer()
-                        AsyncImage(url: URL(string: album.artworkURLString)) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .cornerRadius(20)
-                                .modifier(FluidTransitionModifier(
-                                    id: album.id,
-                                    namespace: albumArtworkNamespace
-                                ))
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        Spacer()
-                    }
+                    ShortlistAlbumArtworkView(
+                        artworkURLString: album.artworkURLString,
+                        albumID: album.id,
+                        namespace: albumArtworkNamespace,
+                        size: 150,
+                        cornerRadius: 20
+                    )
                     
                     VStack {
                         HStack {
@@ -375,13 +368,7 @@ struct ShortlistDetailsView: View {
                 ForEach(0..<6, id: \.self) { _ in
                     VStack(alignment: .leading) {
                         ZStack(alignment: .topLeading) {
-                            Rectangle()
-                                .skeleton(
-                                    with: true,
-                                    size: CGSize(width: 150, height: 150),
-                                    shape: .rectangle
-                                )
-                                .cornerRadius(20)
+                            ArtworkSkeletonPlaceholder(size: 150, cornerRadius: 20)
                             
                             ZStack {
                                 Circle()
@@ -637,7 +624,7 @@ extension ShortlistDetailsView {
             let artworkURLs: [(Int, URL)] = sortedAlbums
                 .enumerated()
                 .compactMap { index, album in
-                    guard let url = URL(string: album.artworkURLString) else { return nil }
+                    guard let url = ArtworkURLHelper.url(from: album.artworkURLString, size: 600) else { return nil }
                     return (index, url)
                 }
             
@@ -663,6 +650,51 @@ extension ShortlistDetailsView {
             // Reconstruct array in correct order
             return artworkURLs.compactMap { index, _ in imageDict[index] }
         }
+    }
+}
+
+// MARK: - Album Artwork
+private struct ShortlistAlbumArtworkView: View {
+    let artworkURLString: String?
+    let albumID: String
+    let namespace: Namespace.ID
+    let size: CGFloat
+    let cornerRadius: CGFloat
+
+    private var artworkPixelSize: Int {
+        Int(size * 2)
+    }
+
+    var body: some View {
+        Group {
+            if let url = ArtworkURLHelper.url(from: artworkURLString, size: artworkPixelSize) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .empty:
+                        artworkSkeleton
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: size, height: size)
+                            .clipped()
+                            .cornerRadius(cornerRadius)
+                            .modifier(FluidTransitionModifier(id: albumID, namespace: namespace))
+                    case .failure:
+                        artworkSkeleton
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+            } else {
+                artworkSkeleton
+            }
+        }
+        .frame(width: size, height: size)
+    }
+
+    private var artworkSkeleton: some View {
+        ArtworkSkeletonPlaceholder(size: size, cornerRadius: cornerRadius)
     }
 }
 

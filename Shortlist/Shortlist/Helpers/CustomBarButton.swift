@@ -13,22 +13,13 @@ struct CustomBarButton: View {
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 4) {
-                Image(systemName: systemName)
-                    .font(.system(size: 16, weight: isBackButton ? .semibold : .medium))
-                    .foregroundColor(.primary)
-            }
+            Image(systemName: systemName)
+                .font(.system(size: 17, weight: isBackButton ? .semibold : .medium))
+                .foregroundStyle(.primary)
         }
-        .buttonStyle(CustomButtonStyle())
-    }
-}
-
-struct CustomButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundColor(.primary)
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+        // Plain avoids oversized glass circles; don't add frame/padding here —
+        // toolbar layout uses that size for the chrome.
+        .buttonStyle(.plain)
     }
 }
 
@@ -40,17 +31,21 @@ extension CustomBarButton {
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         Text("Sample View")
             .navigationTitle("Title")
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(
-                leading: CustomBarButton.backButton {
-                    print("Back button tapped")
-                },
-                trailing: CustomBarButton(systemName: "plus.magnifyingglass") {
-                    print("Plus button tapped")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    CustomBarButton.backButton {
+                        print("Back button tapped")
+                    }
                 }
-            )
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    CustomBarButton(systemName: "plus.circle") {
+                        print("Plus button tapped")
+                    }
+                }
+            }
     }
 }

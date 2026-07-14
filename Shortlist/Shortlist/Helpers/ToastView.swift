@@ -110,6 +110,8 @@ struct ToastOverlay: View {
             )
             Spacer()
         }
+        // Spacer fills the screen and otherwise eats taps (including nav bar back).
+        .allowsHitTesting(showToast)
     }
 }
 

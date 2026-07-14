@@ -228,8 +228,8 @@ struct SmallWidgetContentView: View {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
-                } else if let album = album, !album.artworkURLString.isEmpty {
-                    let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 400)
+                } else if let album = album, let artworkURLString = album.artworkURLString {
+                    let resizedURL = WidgetDataHelper.resizeArtworkURL(artworkURLString, size: 400)
                     if let url = URL(string: resizedURL) {
                         AsyncImage(url: url) { phase in
                             switch phase {
@@ -313,8 +313,8 @@ struct AlbumCellContentView: View {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
-                } else if !album.artworkURLString.isEmpty {
-                    let resizedURL = WidgetDataHelper.resizeArtworkURL(album.artworkURLString, size: 400)
+                } else if let artworkURLString = album.artworkURLString {
+                    let resizedURL = WidgetDataHelper.resizeArtworkURL(artworkURLString, size: 400)
                     if let url = URL(string: resizedURL) {
                         AsyncImage(url: url) { phase in
                             switch phase {

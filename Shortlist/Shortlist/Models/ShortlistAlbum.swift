@@ -12,7 +12,7 @@ struct ShortlistAlbum: Hashable, Identifiable {
     let id: String
     let title: String
     let artist: String
-    let artworkURLString: String
+    let artworkURLString: String?
     let rank: Int
     let shortlistId: String
     let upc: String?
@@ -27,8 +27,7 @@ extension ShortlistAlbum {
             let title = record["title"] as? String,
             let artist = record["artist"] as? String,
             let rank = record["rank"] as? Int,
-            let shortlistId = record["shortlistId"] as? String,
-            let artworkURLString =  record["artwork"] as? String
+            let shortlistId = record["shortlistId"] as? String
         else {
             return nil
         }
@@ -36,7 +35,8 @@ extension ShortlistAlbum {
         self.id = id
         self.title = title
         self.artist = artist
-        self.artworkURLString = artworkURLString
+        let artwork = record["artwork"] as? String
+        self.artworkURLString = artwork.flatMap { $0.isEmpty ? nil : $0 }
         self.rank = rank
         self.shortlistId = shortlistId
         self.upc = record["upc"] as? String

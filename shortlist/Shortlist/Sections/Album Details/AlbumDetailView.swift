@@ -51,6 +51,8 @@ extension AlbumDetailView {
         
         private enum ArtworkLayout {
             static let cornerRadius: CGFloat = 12
+            /// Stable download size so AsyncImage isn’t recreated as layout settles.
+            static let artworkPixelSize = 600
         }
         
         var body: some View {
@@ -60,40 +62,8 @@ extension AlbumDetailView {
                 
                 GeometryReader { geometry in
                     let imageSize = max(100, geometry.size.width)
-                    
-                    Group {
-                        if let artworkURL {
-                            AsyncImage(url: artworkURL) { phase in
-                                switch phase {
-                                case .empty:
-                                    artworkSkeleton(size: imageSize)
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: imageSize, height: imageSize)
-                                        .clipped()
-                                        .cornerRadius(ArtworkLayout.cornerRadius)
-                                        .shadow(
-                                            color: colorScheme == .dark ?
-                                                Color.black.opacity(0.5) :
-                                                Color.black.opacity(0.2),
-                                            radius: colorScheme == .dark ? 12 : 8,
-                                            x: 0,
-                                            y: colorScheme == .dark ? 6 : 4
-                                        )
-                                        .transition(.opacity)
-                                case .failure:
-                                    artworkFailurePlaceholder(size: imageSize)
-                                @unknown default:
-                                    EmptyView()
-                                }
-                            }
-                        } else {
-                            artworkSkeleton(size: imageSize)
-                        }
-                    }
-                    .frame(width: imageSize, height: imageSize)
+                    artworkContent(size: imageSize)
+                        .frame(width: imageSize, height: imageSize)
                 }
                 .aspectRatio(1, contentMode: .fit)
                 
@@ -102,26 +72,38 @@ extension AlbumDetailView {
             }
         }
         
-        private func artworkSkeleton(size: CGFloat) -> some View {
-            Rectangle()
-                .skeleton(
-                    with: true,
-                    size: CGSize(width: size, height: size),
-                    shape: .rectangle
-                )
-                .cornerRadius(ArtworkLayout.cornerRadius)
-                .frame(width: size, height: size)
-        }
-        
-        private func artworkFailurePlaceholder(size: CGFloat) -> some View {
-            RoundedRectangle(cornerRadius: ArtworkLayout.cornerRadius)
-                .fill(Color(.tertiarySystemFill))
-                .frame(width: size, height: size)
-                .overlay {
-                    Image(systemName: "photo")
-                        .font(.system(size: size * 0.2))
-                        .foregroundStyle(.secondary)
+        @ViewBuilder
+        private func artworkContent(size: CGFloat) -> some View {
+            if let url = ArtworkURLHelper.url(from: artworkURL, size: ArtworkLayout.artworkPixelSize) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .empty:
+                        ArtworkSkeletonPlaceholder(size: size, cornerRadius: ArtworkLayout.cornerRadius)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: size, height: size)
+                            .clipped()
+                            .cornerRadius(ArtworkLayout.cornerRadius)
+                            .shadow(
+                                color: colorScheme == .dark ?
+                                    Color.black.opacity(0.5) :
+                                    Color.black.opacity(0.2),
+                                radius: colorScheme == .dark ? 12 : 8,
+                                x: 0,
+                                y: colorScheme == .dark ? 6 : 4
+                            )
+                            .transition(.opacity)
+                    case .failure:
+                        ArtworkSkeletonPlaceholder(size: size, cornerRadius: ArtworkLayout.cornerRadius)
+                    @unknown default:
+                        EmptyView()
+                    }
                 }
+            } else {
+                ArtworkSkeletonPlaceholder(size: size, cornerRadius: ArtworkLayout.cornerRadius)
+            }
         }
     }
 }
@@ -251,25 +233,35 @@ extension AlbumDetailView {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    CustomBarButton(systemName: viewModel.isAlbumOnShortlist ? "trash" : "plus.circle") {
+                    CustomBarButton(
+                        systemName: viewModel.isAlbumOnShortlist ? "trash" : "plus.circle"
+                    ) {
+                        guard !viewModel.isAddingToShortlist,
+                              !viewModel.isRemovingFromShortlist else { return }
+                        
                         Task {
                             if viewModel.isAlbumOnShortlist {
                                 await viewModel.removeAlbumFromShortlist()
-                                albumWasAdded = false
-                                didModifyShortlist = true
+                                if !viewModel.isAlbumOnShortlist {
+                                    albumWasAdded = false
+                                    didModifyShortlist = true
+                                }
                             } else {
-                                await viewModel.addAlbumToShortlist()
-                                albumWasAdded = true
-                                didModifyShortlist = true
+                                let didAdd = await viewModel.addAlbumToShortlist()
+                                if didAdd {
+                                    albumWasAdded = true
+                                    didModifyShortlist = true
+                                }
                             }
                         }
                     }
+                    .disabled(viewModel.isAddingToShortlist || viewModel.isRemovingFromShortlist)
                 }
             }
+            .task {
+                await viewModel.loadAlbumOnShortlistState()
+            }
             .onAppear {
-                Task {
-                    await viewModel.loadAlbumOnShortlistState()
-                }
                 // Block interactive dismiss gesture for 1 second to prevent image disappearing bug
                 blockInteractiveDismiss = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -404,6 +396,7 @@ struct AlbumDetailView: View {
     private var isInModalContext: Bool
     private let onShortlistDidChange: (() -> Void)?
     private let onCloseSearch: (() -> Void)?
+    private let onNavigateBack: (() -> Void)?
     
     private var navigationTitle: String {
         viewModel.album?.title ?? "Album"
@@ -416,7 +409,8 @@ struct AlbumDetailView: View {
         artworkNamespace: Namespace.ID? = nil,
         artworkID: String? = nil,
         onShortlistDidChange: (() -> Void)? = nil,
-        onCloseSearch: (() -> Void)? = nil
+        onCloseSearch: (() -> Void)? = nil,
+        onNavigateBack: (() -> Void)? = nil
     ) {
         self.albumType = albumType
         self.shortlist = shortlist
@@ -424,6 +418,7 @@ struct AlbumDetailView: View {
         self.isInModalContext = isPresented != nil
         self.onShortlistDidChange = onShortlistDidChange
         self.onCloseSearch = onCloseSearch
+        self.onNavigateBack = onNavigateBack
         self._viewModel = StateObject(wrappedValue: ViewModel(
             album: nil,
             shortlist: shortlist,
@@ -446,6 +441,9 @@ struct AlbumDetailView: View {
                         didModifyShortlist: $didModifyShortlist,
                         isPresented: $isPresented
                     )
+                    // Keep identity stable when tracks refresh so the add control
+                    // isn't remounted mid-tap.
+                    .id(album.id)
                 }
             }
             .background(
@@ -469,14 +467,7 @@ struct AlbumDetailView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     CustomBarButton.backButton {
-                        if isInModalContext && (albumWasAdded || didModifyShortlist) {
-                            onCloseSearch?()
-                            if onCloseSearch == nil {
-                                isPresented = false
-                            }
-                        } else {
-                            dismiss()
-                        }
+                        navigateBack()
                     }
                 }
             }
@@ -505,8 +496,25 @@ struct AlbumDetailView: View {
             
             if viewModel.isAddingToShortlist || viewModel.isRemovingFromShortlist {
                 loadingOverlay
-                    .allowsHitTesting(false)
             }
+        }
+    }
+    
+    private func navigateBack() {
+        if isInModalContext && (albumWasAdded || didModifyShortlist) {
+            onCloseSearch?()
+            if onCloseSearch == nil {
+                isPresented = false
+            }
+            return
+        }
+        
+        // Prefer clearing the parent's navigationDestination item — more reliable
+        // than dismiss() with zoom transitions.
+        if let onNavigateBack {
+            onNavigateBack()
+        } else {
+            dismiss()
         }
     }
     
@@ -548,15 +556,7 @@ struct AlbumDetailView: View {
             GeometryReader { geometry in
                 let imageSize = max(100, geometry.size.width - (Layout.horizontalPadding * 2))
                 VStack(alignment: .leading) {
-                    Rectangle()
-                        .skeleton(
-                            with: true,
-                            size: CGSize(width: imageSize, height: imageSize),
-                            shape: .rectangle
-                        )
-                        .scaledToFit()
-                        .cornerRadius(12)
-                        .frame(width: imageSize, height: imageSize)
+                    ArtworkSkeletonPlaceholder(size: imageSize, cornerRadius: 12)
                         .padding(.bottom, 20)
                         .padding(.horizontal, Layout.horizontalPadding)
                     

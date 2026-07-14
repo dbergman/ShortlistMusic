@@ -40,9 +40,9 @@ struct WidgetDataHelper {
         let lock = NSLock()
         
         for album in albums {
-            guard !album.artworkURLString.isEmpty else { continue }
+            guard let artworkURLString = album.artworkURLString, !artworkURLString.isEmpty else { continue }
             
-            let resizedURLString = resizeArtworkURL(album.artworkURLString, size: artworkSize)
+            let resizedURLString = resizeArtworkURL(artworkURLString, size: artworkSize)
             guard let url = URL(string: resizedURLString),
                   url.scheme == "https" || url.scheme == "http" else {
                 continue

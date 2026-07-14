@@ -37,11 +37,15 @@ extension AlbumDetailView {
         }
 
         func loadTracks(for album: Album, recordID: CKRecord.ID? = nil) async {
+            let preservedArtworkURL = self.album?.artworkURL
+            let artworkPixelSize = max(Int(screenSize), 300)
+            let musicKitArtworkURL = album.artwork?.url(width: artworkPixelSize, height: artworkPixelSize)
+            
             // First, create basic album content with available data (fast)
             let basicDetails = Content(
                 id: album.id.rawValue,
                 artist: album.artistName,
-                artworkURL: album.artwork?.url(width: Int(screenSize), height: Int(screenSize)),
+                artworkURL: musicKitArtworkURL ?? preservedArtworkURL,
                 title: album.title,
                 upc: album.upc,
                 releaseYear: album.releaseYear,
@@ -54,6 +58,9 @@ extension AlbumDetailView {
             // Show basic album info immediately
             self.album = basicDetails
             isloading = false
+            
+            // Prefetch membership so the add button is ready on first tap.
+            await loadAlbumOnShortlistState()
             
             // Log analytics for album viewed
             AnalyticsManager.shared.logAlbumViewed(
@@ -157,7 +164,7 @@ extension AlbumDetailView {
             let basicDetails = Content(
                 id: shortListAlbum.id,
                 artist: shortListAlbum.artist,
-                artworkURL: URL(string: shortListAlbum.artworkURLString),
+                artworkURL: ArtworkURLHelper.url(from: shortListAlbum.artworkURLString, size: max(Int(screenSize), 300)),
                 title: shortListAlbum.title,
                 upc: nil,
                 releaseYear: nil,
@@ -195,10 +202,12 @@ extension AlbumDetailView {
             }
         }
         
-        func addAlbumToShortlist() async {
-            guard let album = album else { return }
+        func addAlbumToShortlist() async -> Bool {
+            guard let album = album else { return false }
+            guard !isAddingToShortlist else { return false }
             
             isAddingToShortlist = true
+            defer { isAddingToShortlist = false }
             
             // Ensure we have current albums loaded
             if currentShortlistAlbums == nil {
@@ -247,6 +256,7 @@ extension AlbumDetailView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.showToast = false
                 }
+                return true
             } else {
                 // Show error toast
                 toastMessage = "Failed to add album to shortlist"
@@ -257,9 +267,8 @@ extension AlbumDetailView {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                     self.showToast = false
                 }
+                return false
             }
-            
-            isAddingToShortlist = false
         }
         
         func removeAlbumFromShortlist() async {

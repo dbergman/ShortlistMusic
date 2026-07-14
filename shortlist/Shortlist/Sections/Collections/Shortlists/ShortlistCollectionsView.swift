@@ -492,15 +492,7 @@ extension ShortlistCollectionsView {
         
         @ViewBuilder
         private func placeHolderRect(with size: CGFloat) -> some View {
-            Rectangle()
-                .skeleton(
-                    with: true,
-                    size: CGSize(width: size, height: size),
-                    shape: .rectangle
-                )
-                .scaledToFit()
-                .cornerRadius(10)
-                .frame(width: size, height: size)
+            ArtworkSkeletonPlaceholder(size: size, cornerRadius: 10)
         }
         
         private func getImageSize(for index: Int, screenWidth: CGFloat) -> CGFloat {
